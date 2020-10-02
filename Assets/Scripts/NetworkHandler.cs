@@ -9,7 +9,7 @@ public class NetworkHandler
 
     public Link link;
 
-    public Dictionary<ulong, GameObject> mobs = new Dictionary<ulong, GameObject>();
+    public Dictionary<ulong, NetworkMob> mobs = new Dictionary<ulong, NetworkMob>();
 
     public NetworkHandler()
     {
@@ -23,8 +23,8 @@ public class NetworkHandler
     internal void MobUpdateHandler(IPEndPoint endpoint, MobUpdate message)
     {
         if (!mobs.ContainsKey(message.id))
-            mobs.Add(message.id, Object.Instantiate(controller.prefab));
-        mobs[message.id].transform.position = message.position;
+            mobs.Add(message.id, Object.Instantiate(controller.prefab).GetComponent<NetworkMob>());
+        mobs[message.id].AddSnapshot(new NetworkMob.Snapshot { time = message.tick, position = message.position });
     }
 
     internal void PlayerUpdateHandler(IPEndPoint endpoint, PlayerUpdate message)

@@ -2,7 +2,7 @@ Heartbeat
 uint64 time
 MobUpdate
 uint64 id
-uint64 tick
+int64 tick
 vec3 position
 vec3 velocity
 vec3 facing

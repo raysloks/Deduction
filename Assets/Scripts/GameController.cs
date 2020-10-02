@@ -31,6 +31,18 @@ public class GameController : MonoBehaviour
 
         handler.link.Send(new PlayerUpdate { name = "Astronaut" });
         handler.link.Send(new MobUpdate { position = position });
+
+        Vector3 move = new Vector3();
+        if (Input.GetKey(KeyCode.W))
+            move += Vector3.up;
+        if (Input.GetKey(KeyCode.A))
+            move += Vector3.left;
+        if (Input.GetKey(KeyCode.S))
+            move += Vector3.down;
+        if (Input.GetKey(KeyCode.D))
+            move += Vector3.right;
+        move = Vector3.ClampMagnitude(move, 1f);
+        position += move * Time.deltaTime * 5f;
     }
 
 }

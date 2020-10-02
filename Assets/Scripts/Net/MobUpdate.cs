@@ -6,7 +6,7 @@ using UnityEngine;
 public struct MobUpdate
 {
 	public ulong id;
-	public ulong tick;
+	public long tick;
 	public Vector3 position;
 	public Vector3 velocity;
 	public Vector3 facing;
@@ -14,7 +14,7 @@ public struct MobUpdate
 	public void Serialize(BinaryWriter writer)
 	{
 		writer.Write((ulong)id);
-		writer.Write((ulong)tick);
+		writer.Write((long)tick);
 		writer.Write(position.x);
 		writer.Write(position.y);
 		writer.Write(position.z);
@@ -30,7 +30,7 @@ public struct MobUpdate
 	{
 		MobUpdate _ret = new MobUpdate();
 		_ret.id = (ulong)reader.ReadUInt64();
-		_ret.tick = (ulong)reader.ReadUInt64();
+		_ret.tick = (long)reader.ReadInt64();
 		_ret.position = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 		_ret.velocity = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 		_ret.facing = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
