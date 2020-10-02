@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -9,13 +10,16 @@ public class GameController : MonoBehaviour
     public NetworkHandler handler;
 
     private float heartbeat = 0f;
+    private float snapshot = 0f;
 
-    private Vector3 position;
+    private Player player;
 
     void Start()
     {
         handler = new NetworkHandler();
         handler.controller = this;
+
+        player = FindObjectOfType<Player>(); // todo fix
     }
 
     private void Update()
@@ -26,23 +30,16 @@ public class GameController : MonoBehaviour
         if (heartbeat <= 0f)
         {
             handler.link.Send(new Heartbeat());
-            heartbeat = 1f;
+            heartbeat += 1f;
         }
 
-        handler.link.Send(new PlayerUpdate { name = "Astronaut" });
-        handler.link.Send(new MobUpdate { position = position });
-
-        Vector3 move = new Vector3();
-        if (Input.GetKey(KeyCode.W))
-            move += Vector3.up;
-        if (Input.GetKey(KeyCode.A))
-            move += Vector3.left;
-        if (Input.GetKey(KeyCode.S))
-            move += Vector3.down;
-        if (Input.GetKey(KeyCode.D))
-            move += Vector3.right;
-        move = Vector3.ClampMagnitude(move, 1f);
-        position += move * Time.deltaTime * 5f;
+        snapshot -= Time.deltaTime;
+        if (snapshot <= 0f)
+        {
+            handler.link.Send(new PlayerUpdate { name = Environment.UserName });
+            handler.link.Send(new MobUpdate { position = player.transform.position });
+            snapshot += 0.05f;
+        }
     }
 
 }
