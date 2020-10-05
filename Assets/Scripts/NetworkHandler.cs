@@ -58,6 +58,7 @@ public class NetworkHandler
     internal void HeartbeatHandler(IPEndPoint endpoint, Heartbeat message)
     {
         controller.time = message.time;
+        controller.timeout = message.time + 5000000000;
     }
 
     internal void MobTeleportHandler(IPEndPoint endpoint, MobTeleport message)
@@ -94,5 +95,13 @@ public class NetworkHandler
             UnityEngine.Object.Destroy(mobs[message.id].gameObject);
             mobs.Remove(message.id);
         }
+    }
+
+    internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
+    {
+    }
+
+    internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
+    {
     }
 }

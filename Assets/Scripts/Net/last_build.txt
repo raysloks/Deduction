@@ -4,6 +4,9 @@ int64 timer
 GameStartRequested
 Heartbeat
 int64 time
+KillAttempted
+int64 time
+uint64 target
 MeetingRequested
 MobRemoved
 uint64 id
@@ -24,4 +27,7 @@ string name
 PlayerVoted
 uint64 phase
 int64 timer
+ReportAttempted
+int64 time
+uint64 target
 RestartRequested

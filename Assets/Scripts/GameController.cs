@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public Text text;
 
     public long time;
+    public long timeout;
 
     void Start()
     {
@@ -34,6 +35,9 @@ public class GameController : MonoBehaviour
         handler.link.Poll();
 
         time += (long)(Time.deltaTime * 1000000000);
+
+        if (time > timeout)
+            phase = GamePhase.None;
 
         heartbeat -= Time.deltaTime;
         if (heartbeat <= 0f)
