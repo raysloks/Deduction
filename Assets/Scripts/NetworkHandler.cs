@@ -86,4 +86,13 @@ public class NetworkHandler
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
     }
+
+    internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
+    {
+        if (mobs.ContainsKey(message.id))
+        {
+            UnityEngine.Object.Destroy(mobs[message.id].gameObject);
+            mobs.Remove(message.id);
+        }
+    }
 }

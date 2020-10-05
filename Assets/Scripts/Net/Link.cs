@@ -84,7 +84,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobTeleport message)
+	public void Send(IPEndPoint endpoint, in MobRemoved message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -94,7 +94,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobUpdate message)
+	public void Send(IPEndPoint endpoint, in MobTeleport message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -104,7 +104,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in PlayerUpdate message)
+	public void Send(IPEndPoint endpoint, in MobUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -114,7 +114,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in PlayerVoted message)
+	public void Send(IPEndPoint endpoint, in PlayerUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -124,11 +124,21 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in RestartRequested message)
+	public void Send(IPEndPoint endpoint, in PlayerVoted message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)9);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in RestartRequested message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)10);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -182,7 +192,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobTeleport message)
+	public void Send(in MobRemoved message)
 	{
 		if (endpoint == null)
 			return;
@@ -194,7 +204,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobUpdate message)
+	public void Send(in MobTeleport message)
 	{
 		if (endpoint == null)
 			return;
@@ -206,7 +216,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in PlayerUpdate message)
+	public void Send(in MobUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -218,7 +228,7 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in PlayerVoted message)
+	public void Send(in PlayerUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -230,13 +240,25 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in RestartRequested message)
+	public void Send(in PlayerVoted message)
 	{
 		if (endpoint == null)
 			return;
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)9);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in RestartRequested message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)10);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -301,29 +323,35 @@ public class Link
 		}
 		case 5:
 		{
+			MobRemoved message = MobRemoved.Deserialize(reader);
+			message_queue.Enqueue(() => handler.MobRemovedHandler(endpoint, message));
+			break;
+		}
+		case 6:
+		{
 			MobTeleport message = MobTeleport.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobTeleportHandler(endpoint, message));
 			break;
 		}
-		case 6:
+		case 7:
 		{
 			MobUpdate message = MobUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobUpdateHandler(endpoint, message));
 			break;
 		}
-		case 7:
+		case 8:
 		{
 			PlayerUpdate message = PlayerUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.PlayerUpdateHandler(endpoint, message));
 			break;
 		}
-		case 8:
+		case 9:
 		{
 			PlayerVoted message = PlayerVoted.Deserialize(reader);
 			message_queue.Enqueue(() => handler.PlayerVotedHandler(endpoint, message));
 			break;
 		}
-		case 9:
+		case 10:
 		{
 			RestartRequested message = RestartRequested.Deserialize(reader);
 			message_queue.Enqueue(() => handler.RestartRequestedHandler(endpoint, message));
@@ -334,6 +362,6 @@ public class Link
 		}
 	}
 
-	public const uint crc = 0xd25cb1c0;
+	public const uint crc = 0xe849d173;
 	private UdpClient client;
 }
