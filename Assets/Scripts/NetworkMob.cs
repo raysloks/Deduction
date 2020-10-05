@@ -14,12 +14,28 @@ public class NetworkMob : MonoBehaviour
 
     public long time;
 
+    private SpriteRenderer sprite;
+
+    private void Start()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
     private void Update()
     {
         snapshots.RemoveAll((snapshot) => snapshot.time < time - 150000000);
 
         Snapshot lower = snapshots.FindLast((snapshot) => snapshot.time < time);
         Snapshot upper = snapshots.Find((snapshot) => snapshot.time >= time);
+
+        if (lower.time == 0 || upper.time == 0)
+            return;
+
+        Vector3 diff = upper.position - lower.position;
+        if (diff.x > 0f)
+            sprite.flipX = true;
+        if (diff.x < 0f)
+            sprite.flipX = false;
 
         transform.position = Vector3.Lerp(lower.position, upper.position, (float)(time - lower.time) / (upper.time - lower.time));
 

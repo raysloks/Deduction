@@ -1,12 +1,24 @@
+GamePhaseUpdate
+uint64 phase
+int64 timer
+GameStartRequested
 Heartbeat
-uint64 time
+int64 time
+MeetingRequested
+MobTeleport
+uint64 id
+int64 tick
+vec3 from
+vec3 to
 MobUpdate
 uint64 id
 int64 tick
 vec3 position
-vec3 velocity
-vec3 facing
 PlayerUpdate
 uint64 id
 uint64 mob
 string name
+PlayerVoted
+uint64 phase
+int64 timer
+RestartRequested

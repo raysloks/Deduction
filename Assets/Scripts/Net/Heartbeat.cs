@@ -4,17 +4,17 @@ using System.IO;
 
 public struct Heartbeat
 {
-	public ulong time;
+	public long time;
 
 	public void Serialize(BinaryWriter writer)
 	{
-		writer.Write((ulong)time);
+		writer.Write((long)time);
 	}
 
 	public static Heartbeat Deserialize(BinaryReader reader)
 	{
 		Heartbeat _ret = new Heartbeat();
-		_ret.time = (ulong)reader.ReadUInt64();
+		_ret.time = (long)reader.ReadInt64();
 		return _ret;
 	}
 };
