@@ -65,12 +65,22 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            KillAttempted message = new KillAttempted
+            foreach (var n in handler.mobs)
             {
-                target = 0,
-                time = time
-            };
-            handler.link.Send(message);
+                if (n.Value.isAlive == true)
+                {
+                    float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
+                    if (distance < 2.25f)
+                    {
+                        KillAttempted message = new KillAttempted
+                        {
+                            target = n.Key,
+                            time = time
+                        };
+                        handler.link.Send(message);
+                    }
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
