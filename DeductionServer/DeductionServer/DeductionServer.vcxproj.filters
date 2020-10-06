@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Net">
+      <UniqueIdentifier>{7d0d1463-d05d-4d64-9f3c-e6c0a20eb631}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Net\NetLink.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\NetHandlerPrototypes.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\MobUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\PlayerUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Heartbeat.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Mob.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Role.h" />
+    <ClInclude Include="NetworkHandler.h" />
+    <ClInclude Include="Vec2.h" />
+    <ClInclude Include="Vec3.h" />
+    <ClInclude Include="Xoroshiro128Plus.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="Net\MobTeleport.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePhase.h" />
+    <ClInclude Include="Net\GamePhaseUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\PlayerVoted.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Net\GameStartRequested.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\MeetingRequested.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\RestartRequested.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\MobRemoved.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\KillAttempted.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\ReportAttempted.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\AbilityUsed.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\MobRoleUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\MobStateUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MobType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Net\NetLink.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MobUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\PlayerUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Heartbeat.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="NetworkHandler.cpp" />
+    <ClCompile Include="Vec2.cpp" />
+    <ClCompile Include="Vec3.cpp" />
+    <ClCompile Include="Xoroshiro128Plus.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="Net\MobTeleport.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Net\GamePhaseUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\PlayerVoted.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Net\GameStartRequested.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MeetingRequested.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\RestartRequested.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MobRemoved.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\KillAttempted.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\ReportAttempted.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\AbilityUsed.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MobRoleUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MobStateUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Net\last_build.txt">
+      <Filter>Net</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

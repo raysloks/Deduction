@@ -63,6 +63,12 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            KillAttempted message = new KillAttempted
+            {
+                target = 0,
+                time = time
+            };
+            handler.link.Send(message);
         }
 
         switch (phase)

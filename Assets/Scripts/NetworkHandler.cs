@@ -13,9 +13,9 @@ public class NetworkHandler
 
     public Dictionary<ulong, NetworkMob> mobs = new Dictionary<ulong, NetworkMob>();
     public Dictionary<ulong, string> names = new Dictionary<ulong, string>();
-    public Dictionary<ulong, ulong> types = new Dictionary<ulong, ulong>();
+    public Dictionary<ulong, long> removalTimes = new Dictionary<ulong, long>();
 
-    public ulong player_mob_id = ulong.MaxValue;
+    public ulong playerMobId = ulong.MaxValue;
 
     public NetworkHandler()
     {
@@ -32,15 +32,11 @@ public class NetworkHandler
             mobs[mob].GetComponentInChildren<TextMeshProUGUI>().text = names[mob];
     }
 
-    private void UpdateState(ulong mob)
-    {
-        if (mobs.ContainsKey(mob) && types.ContainsKey(mob))
-            mobs[mob].SetType(types[mob]);
-    }
-
     internal void MobUpdateHandler(IPEndPoint endpoint, MobUpdate message)
     {
-        if (message.id != player_mob_id)
+        if (removalTimes.ContainsKey(message.id) && removalTimes[message.id] >= message.time)
+            return;
+        if (message.id != playerMobId)
         {
             if (!mobs.ContainsKey(message.id))
             {
@@ -54,10 +50,11 @@ public class NetworkHandler
     internal void PlayerUpdateHandler(IPEndPoint endpoint, PlayerUpdate message)
     {
         if (message.id == ulong.MaxValue)
-            player_mob_id = message.mob;
+            playerMobId = message.mob;
         else
         {
             names[message.mob] = message.name;
+            Debug.Log(message.name);
             UpdateName(message.mob);
         }
     }
@@ -70,7 +67,7 @@ public class NetworkHandler
 
     internal void MobTeleportHandler(IPEndPoint endpoint, MobTeleport message)
     {
-        if (message.id == player_mob_id)
+        if (message.id == playerMobId)
             controller.player.transform.position = message.to;
     }
 
@@ -101,6 +98,7 @@ public class NetworkHandler
         {
             UnityEngine.Object.Destroy(mobs[message.id].gameObject);
             mobs.Remove(message.id);
+            removalTimes[message.id] = message.time;
         }
     }
 
@@ -123,7 +121,7 @@ public class NetworkHandler
     internal void MobStateUpdateHandler(IPEndPoint endpoint, MobStateUpdate message)
     {
         MobUpdateHandler(endpoint, message.update);
-        types[message.update.id] = message.type;
-        UpdateState(message.update.id);
+        if (mobs.ContainsKey(message.update.id))
+            mobs[message.update.id].SetType(message.type);
     }
 }

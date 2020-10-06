@@ -30,7 +30,7 @@ public class NetworkMob : MonoBehaviour
         Snapshot lower = snapshots.FindLast((snapshot) => snapshot.time < time);
         Snapshot upper = snapshots.Find((snapshot) => snapshot.time >= time);
 
-        if (lower.time == 0 || upper.time == 0)
+        if (lower.time == 0 || upper.time == 0 || lower.time == upper.time)
             return;
 
         Vector3 diff = upper.position - lower.position;
@@ -59,5 +59,6 @@ public class NetworkMob : MonoBehaviour
     {
         if (type < (ulong)sprites.Length)
             sprite.sprite = sprites[type];
+        Debug.Log(type);
     }
 }
