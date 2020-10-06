@@ -318,7 +318,7 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 	if (it != players.end())
 	{
 		auto&& player = it->second;
-		game.setPhase(GamePhase::Meeting);
+		game.setPhase(GamePhase::Meeting, 120'000'000'000 + message.time);
 
 	}
 }
