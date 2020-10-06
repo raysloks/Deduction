@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
 {
     public GameObject prefab;
 
+    public float reportDistance = 4f;
+
     public NetworkHandler handler;
 
     private float heartbeat = 0f;
@@ -69,6 +71,27 @@ public class GameController : MonoBehaviour
                 time = time
             };
             handler.link.Send(message);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            foreach (NetworkMob n in handler.mobs.Values)
+            {
+                if(n.isAlive == false)
+                {
+                    float distance = Vector2.Distance(player.transform.position, n.transform.position);
+                    if(distance < reportDistance)
+                    {
+
+                        ReportAttempted message = new ReportAttempted
+                        {
+                            target = 0,
+                            time = time
+                        };
+                        handler.link.Send(message);
+                    }
+                }
+            }
+
         }
 
         switch (phase)

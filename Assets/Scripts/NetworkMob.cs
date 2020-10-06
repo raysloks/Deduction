@@ -14,6 +14,8 @@ public class NetworkMob : MonoBehaviour
 
     public long time;
 
+    public bool isAlive = false;
+
     public Sprite[] sprites;
 
     private SpriteRenderer sprite;
@@ -57,6 +59,10 @@ public class NetworkMob : MonoBehaviour
 
     public void SetType(ulong type)
     {
+        if(type == 0)
+        {
+            isAlive = true;
+        }
         if (type < (ulong)sprites.Length)
             sprite.sprite = sprites[type];
         Debug.Log(type);
