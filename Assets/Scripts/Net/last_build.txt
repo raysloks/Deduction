@@ -1,3 +1,7 @@
+AbilityUsed
+int64 time
+uint64 ability
+uint64 target
 GamePhaseUpdate
 uint64 phase
 int64 timer
@@ -10,15 +14,23 @@ uint64 target
 MeetingRequested
 MobRemoved
 uint64 id
-int64 tick
+int64 time
+MobRoleUpdate
+uint64 id
+uint64 role
+MobStateUpdate
+MobUpdate update
+uint64 type
+uint64 state
+uint64 sprite
 MobTeleport
 uint64 id
-int64 tick
+int64 time
 vec3 from
 vec3 to
 MobUpdate
 uint64 id
-int64 tick
+int64 time
 vec3 position
 PlayerUpdate
 uint64 id

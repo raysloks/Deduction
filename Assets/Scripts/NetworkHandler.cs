@@ -13,6 +13,7 @@ public class NetworkHandler
 
     public Dictionary<ulong, NetworkMob> mobs = new Dictionary<ulong, NetworkMob>();
     public Dictionary<ulong, string> names = new Dictionary<ulong, string>();
+    public Dictionary<ulong, ulong> types = new Dictionary<ulong, ulong>();
 
     public ulong player_mob_id = ulong.MaxValue;
 
@@ -31,6 +32,12 @@ public class NetworkHandler
             mobs[mob].GetComponentInChildren<TextMeshProUGUI>().text = names[mob];
     }
 
+    private void UpdateState(ulong mob)
+    {
+        if (mobs.ContainsKey(mob) && types.ContainsKey(mob))
+            mobs[mob].SetType(types[mob]);
+    }
+
     internal void MobUpdateHandler(IPEndPoint endpoint, MobUpdate message)
     {
         if (message.id != player_mob_id)
@@ -40,7 +47,7 @@ public class NetworkHandler
                 mobs.Add(message.id, UnityEngine.Object.Instantiate(controller.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
                 UpdateName(message.id);
             }
-            mobs[message.id].AddSnapshot(new NetworkMob.Snapshot { time = message.tick, position = message.position });
+            mobs[message.id].AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
         }
     }
 
@@ -103,5 +110,20 @@ public class NetworkHandler
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
     {
+    }
+
+    internal void AbilityUsedHandler(IPEndPoint endpoint, AbilityUsed message)
+    {
+    }
+
+    internal void MobRoleUpdateHandler(IPEndPoint endpoint, MobRoleUpdate message)
+    {
+    }
+
+    internal void MobStateUpdateHandler(IPEndPoint endpoint, MobStateUpdate message)
+    {
+        MobUpdateHandler(endpoint, message.update);
+        types[message.update.id] = message.type;
+        UpdateState(message.update.id);
     }
 }

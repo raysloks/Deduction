@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
 
         time += (long)(Time.deltaTime * 1000000000);
 
-        if (time > timeout)
+        if (time > timeout && timeout != 0)
             phase = GamePhase.None;
 
         heartbeat -= Time.deltaTime;
@@ -60,6 +60,10 @@ public class GameController : MonoBehaviour
             handler.link.Send(new MeetingRequested());
         if (Input.GetKeyDown(KeyCode.Alpha3))
             handler.link.Send(new RestartRequested());
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+        }
 
         switch (phase)
         {

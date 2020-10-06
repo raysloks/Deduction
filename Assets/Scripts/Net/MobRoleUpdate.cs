@@ -2,22 +2,22 @@ using System.IO;
 
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
-public struct MobRemoved
+public struct MobRoleUpdate
 {
 	public ulong id;
-	public long time;
+	public ulong role;
 
 	public void Serialize(BinaryWriter writer)
 	{
 		writer.Write((ulong)id);
-		writer.Write((long)time);
+		writer.Write((ulong)role);
 	}
 
-	public static MobRemoved Deserialize(BinaryReader reader)
+	public static MobRoleUpdate Deserialize(BinaryReader reader)
 	{
-		MobRemoved _ret = new MobRemoved();
+		MobRoleUpdate _ret = new MobRoleUpdate();
 		_ret.id = (ulong)reader.ReadUInt64();
-		_ret.time = (long)reader.ReadInt64();
+		_ret.role = (ulong)reader.ReadUInt64();
 		return _ret;
 	}
 };

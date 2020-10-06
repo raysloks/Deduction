@@ -14,9 +14,11 @@ public class NetworkMob : MonoBehaviour
 
     public long time;
 
+    public Sprite[] sprites;
+
     private SpriteRenderer sprite;
 
-    private void Start()
+    private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -51,5 +53,11 @@ public class NetworkMob : MonoBehaviour
         if (delta > -50000000)
             time = snapshot.time - 50000000;
         snapshots.Add(snapshot);
+    }
+
+    public void SetType(ulong type)
+    {
+        if (type < (ulong)sprites.Length)
+            sprite.sprite = sprites[type];
     }
 }
