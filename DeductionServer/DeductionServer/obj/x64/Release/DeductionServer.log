@@ -6,25 +6,12 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(188,5): warning : Current project architecture 'x64' is incompatible with the remote system architecture 'ARM' ('ARM'). Please switch the project architecture to 'ARM' in Configuration Manager.
   Starting remote build
   Compiling sources:
-  Game.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,48): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,48): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,48): warning :                                                 ^~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,71): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,71): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,71): warning :                                                               ~~~~~~~~~^~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,92): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,92): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,92): warning :                                                                                             ^~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,115): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,115): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Game.cpp(74,115): warning :                                                                                                           ~~~~~~~~~^~
   NetworkHandler.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning : unused variable ‘player’ [-Wunused-variable]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning :    auto&& player = it->second;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning :           ^~~~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning : unused variable ‘player’ [-Wunused-variable]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning :    auto&& player = it->second;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning :           ^~~~~~
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning : unused variable ‘player’ [-Wunused-variable]
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning :    auto&& player = it->second;
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(311,10): warning :           ^~~~~~
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning : unused variable ‘player’ [-Wunused-variable]
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning :    auto&& player = it->second;
+C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(320,10): warning :           ^~~~~~
   Linking objects
-  DeductionServer.vcxproj -> C:\Users\Emil\source\repos\DeductionServer\DeductionServer\bin\x64\Release\DeductionServer.out
+  DeductionServer.vcxproj -> C:\Users\Emil\Documents\GitHub\Deduction\DeductionServer\DeductionServer\bin\x64\Release\DeductionServer.out
