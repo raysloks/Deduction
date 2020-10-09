@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour
         {
             foreach (var n in handler.mobs)
             {
-                if (n.Value.isAlive == true)
+                if (n.Value.IsAlive == true)
                 {
                     float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                     if (distance < 2.25f)
@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
         {
             foreach (NetworkMob n in handler.mobs.Values)
             {
-                if(n.isAlive == false)
+                if(n.IsAlive == false)
                 {
                     float distance = Vector2.Distance(player.transform.position, n.transform.position);
                     if(distance < reportDistance)

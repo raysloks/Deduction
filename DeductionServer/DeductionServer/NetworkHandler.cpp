@@ -160,6 +160,34 @@ void NetworkHandler::updateMobStates()
 	}
 }
 
+void NetworkHandler::updateMobRoles()
+{
+	for (size_t i = 0; i < mobs.size(); ++i)
+	{
+		auto&& mob = mobs[i];
+		if (mob.enabled)
+		{
+			for (auto player : players)
+			{
+				MobRoleUpdate message;
+				message.id = i;
+				switch (mobs[player.second.mob].role)
+				{
+				case Role::Crewmate:
+					message.role = Role::Crewmate;
+					break;
+				case Role::Impostor:
+					message.role = mob.role;
+					break;
+				default:
+					break;
+				}
+				link.Send(player.first, message);
+			}
+		}
+	}
+}
+
 void NetworkHandler::removeMob(uint64_t id)
 {
 	auto&& mob = mobs[id];
@@ -212,7 +240,7 @@ void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endp
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
 {
-	game.startGame();
+	game.startGameCountdown();
 }
 
 void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, const Heartbeat & message)
@@ -231,17 +259,20 @@ void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, 
 
 void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoint, const KillAttempted & message)
 {
+	if (game.phase != GamePhase::Main)
+		return;
+
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		if (mob.type == MobType::Player)// && mob.role & Role::Impostor)
+		if (mob.type == MobType::Player && mob.role == Role::Impostor)
 		{
 			if (message.target < mobs.size())
 			{
 				auto&& target = mobs[message.target];
-				if (target.enabled && target.type == MobType::Player && (target.role & Impostor) == 0)
+				if (target.enabled && target.type == MobType::Player && target.role == Role::Crewmate)
 				{
 					if ((target.position - mob.position).Len() < 2.0f)
 					{
@@ -319,7 +350,6 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 	{
 		auto&& player = it->second;
 		game.setPhase(GamePhase::Meeting, 120'000'000'000 + message.time);
-
 	}
 }
 

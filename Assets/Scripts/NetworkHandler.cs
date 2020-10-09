@@ -13,6 +13,7 @@ public class NetworkHandler
 
     public Dictionary<ulong, NetworkMob> mobs = new Dictionary<ulong, NetworkMob>();
     public Dictionary<ulong, string> names = new Dictionary<ulong, string>();
+    public Dictionary<ulong, ulong> roles = new Dictionary<ulong, ulong>();
     public Dictionary<ulong, long> removalTimes = new Dictionary<ulong, long>();
 
     public ulong playerMobId = ulong.MaxValue;
@@ -28,8 +29,18 @@ public class NetworkHandler
 
     private void UpdateName(ulong mob)
     {
-        if (mobs.ContainsKey(mob) && names.ContainsKey(mob))
-            mobs[mob].GetComponentInChildren<TextMeshProUGUI>().text = names[mob];
+        TextMeshProUGUI text = null;
+        if (mobs.ContainsKey(mob))
+            text = mobs[mob].GetComponentInChildren<TextMeshProUGUI>();
+        if (mob == playerMobId)
+            text = controller.player.GetComponentInChildren<TextMeshProUGUI>();
+        if (text)
+        {
+            if (names.ContainsKey(mob))
+                text.text = names[mob];
+            if (roles.ContainsKey(mob))
+                text.color = roles[mob] == 1 ? Color.red : Color.white;
+        }
     }
 
     internal void MobUpdateHandler(IPEndPoint endpoint, MobUpdate message)
@@ -52,11 +63,8 @@ public class NetworkHandler
         if (message.id == ulong.MaxValue)
             playerMobId = message.mob;
         else
-        {
             names[message.mob] = message.name;
-            Debug.Log(message.name);
-            UpdateName(message.mob);
-        }
+        UpdateName(message.mob);
     }
 
     internal void HeartbeatHandler(IPEndPoint endpoint, Heartbeat message)
@@ -98,8 +106,8 @@ public class NetworkHandler
         {
             UnityEngine.Object.Destroy(mobs[message.id].gameObject);
             mobs.Remove(message.id);
-            removalTimes[message.id] = message.time;
         }
+        removalTimes[message.id] = message.time;
     }
 
     internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
@@ -116,6 +124,8 @@ public class NetworkHandler
 
     internal void MobRoleUpdateHandler(IPEndPoint endpoint, MobRoleUpdate message)
     {
+        roles[message.id] = message.role;
+        UpdateName(message.id);
     }
 
     internal void MobStateUpdateHandler(IPEndPoint endpoint, MobStateUpdate message)

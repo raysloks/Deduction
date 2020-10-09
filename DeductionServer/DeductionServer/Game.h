@@ -18,9 +18,12 @@ public:
 
 	void teleportPlayersToEllipse(const Vec2& position, const Vec2& size);
 
+	void startGameCountdown();
 	void startGame();
 	void startMeeting();
 	void restartSetup();
+
+	void removeCorpses();
 
 	GamePhase phase;
 

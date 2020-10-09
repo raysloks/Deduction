@@ -15,8 +15,7 @@ void Game::tick(int64_t now)
 		switch (phase)
 		{
 		case GamePhase::Setup:
-			setPhase(GamePhase::Main, 0);
-			teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
+			startGame();
 			break;
 		case GamePhase::Main:
 			break;
@@ -80,16 +79,47 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 	}
 }
 
+void Game::startGameCountdown()
+{
+	if (phase == GamePhase::Setup && timer == 0)
+		setPhase(GamePhase::Setup, handler.time + 5'000'000'000);
+}
+
 void Game::startGame()
 {
-	if (phase == GamePhase::Setup)
-		setPhase(GamePhase::Setup, handler.time + 5'000'000'000);
+	setPhase(GamePhase::Main, 0);
+	teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
+
+	std::vector<size_t> mobs;
+	for (auto player : handler.players)
+	{
+		mobs.push_back(player.second.mob);
+	}
+
+	for (size_t i = 0; i < mobs.size() - 1; ++i)
+	{
+		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
+	}
+
+	size_t impostorCount = 1;
+
+	for (size_t i = 0; i < mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[mobs[i]];
+		mob.role = i < impostorCount ? Role::Impostor : Role::Crewmate;
+	}
+
+	handler.updateMobRoles();
 }
 
 void Game::startMeeting()
 {
 	if (phase == GamePhase::Main)
+	{
 		setPhase(GamePhase::Meeting, handler.time + 120'000'000'000);
+		teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
+		removeCorpses();
+	}
 }
 
 void Game::restartSetup()
@@ -109,5 +139,16 @@ void Game::restartSetup()
 		}
 		handler.createMob();
 		handler.updateMobStates();
+		handler.updateMobRoles();
+	}
+}
+
+void Game::removeCorpses()
+{
+	for (size_t i = 0; i < handler.mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[i];
+		if (mob.enabled && mob.type == MobType::Corpse)
+			handler.removeMob(i);
 	}
 }

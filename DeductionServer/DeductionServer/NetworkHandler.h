@@ -26,6 +26,8 @@ public:
 	void updateMobStatesForPlayer(const asio::ip::udp::endpoint& endpoint);
 	void updateMobStates();
 
+	void updateMobRoles();
+
 	void removeMob(uint64_t id);
 
 	void killMob(uint64_t id);
