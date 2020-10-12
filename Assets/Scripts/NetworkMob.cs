@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using EventCallbacks;
 
 public class NetworkMob : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class NetworkMob : MonoBehaviour
 
     public Sprite[] sprites;
 
-    private SpriteRenderer sprite;
+    [HideInInspector]public SpriteRenderer sprite;
 
     private void Awake()
     {
@@ -47,6 +48,8 @@ public class NetworkMob : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
         time += (long)(Time.deltaTime * 1000000000);
+
+
     }
 
     public void AddSnapshot(Snapshot snapshot)

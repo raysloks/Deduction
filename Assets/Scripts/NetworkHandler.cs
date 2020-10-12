@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using EventCallbacks;
 
 public class NetworkHandler
 {
@@ -17,6 +18,7 @@ public class NetworkHandler
     public Dictionary<ulong, long> removalTimes = new Dictionary<ulong, long>();
 
     public ulong playerMobId = ulong.MaxValue;
+
 
     public NetworkHandler()
     {
@@ -90,6 +92,17 @@ public class NetworkHandler
 
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
     {
+        Debug.Log("This is the phase " + message.phase);
+        
+        VoteEvent uvei = new VoteEvent();
+        uvei.EventDescription = "Player Voted";
+        uvei.totalAmountOfVotes = 2;
+        uvei.nameOfButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+        EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_VOTED, uvei);
+        if (message.phase != 2)
+        {
+          //  EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_ENDED, uvei);
+        }
     }
 
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)

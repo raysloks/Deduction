@@ -22,6 +22,8 @@ public:
 	void startGame();
 	void startMeeting();
 	void restartSetup();
+	void resetVotes();
+
 
 	void removeCorpses();
 

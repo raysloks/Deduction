@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using EventCallbacks;
 
 public class GameController : MonoBehaviour
 {
     public GameObject prefab;
 
     public float reportDistance = 4f;
-
+    public int totalAmountOfVotes = 2;
     public NetworkHandler handler;
 
     private float heartbeat = 0f;
@@ -104,6 +105,19 @@ public class GameController : MonoBehaviour
 
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
+            {
+                PlayerVoted message = new PlayerVoted
+                {                    
+                    timer = timer,
+                 };
+                handler.link.Send(message);
+                
+            }
+        }
+
         switch (phase)
         {
             case GamePhase.Setup:
@@ -117,12 +131,22 @@ public class GameController : MonoBehaviour
                 break;
             case GamePhase.Meeting:
                 if (timer != 0)
+                {
                     text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
-                break;
+                } break;
             case GamePhase.None:
                 text.text = "Connecting...";
                 break;
         }
+    }
+
+    public void MeetingUi()
+    {
+        MeetingEvent umei = new MeetingEvent();
+        umei.meetingHandler = this.handler;
+        umei.EventDescription = "Meeting Got Started";
+
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     public enum GamePhase
@@ -138,6 +162,11 @@ public class GameController : MonoBehaviour
 
     public void SetGamePhase(GamePhase phase, long timer)
     {
+        if(phase == GamePhase.Meeting)
+        {
+            Debug.Log("Meeting Started");
+            MeetingUi();
+        }
         this.phase = phase;
         this.timer = timer;
     }

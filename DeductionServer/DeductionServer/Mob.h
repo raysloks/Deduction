@@ -15,6 +15,8 @@ public:
 	Vec3 position;
 	MobType type;
 	Role role;
+	int timesVoted;
+	int totalVotes;
 	bool enabled;
 };
 

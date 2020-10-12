@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using EventCallbacks;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour
 {
@@ -8,8 +11,10 @@ public class Player : MonoBehaviour
 
     private SpriteRenderer sprite;
 
+
     private void Start()
     {
+
         sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -48,6 +53,11 @@ public class Player : MonoBehaviour
             }
         }
 
+
+       
+
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
+
+
 }

@@ -1,37 +1,13 @@
 ﻿  Validating sources
-  Copying sources remotely to '2a01:7e01::f03c:92ff:fe8e:50b4'
+  Copying sources remotely to '172.105.79.194'
   Validating architecture
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(198,5): warning : The remote systems used in deploy have incompatible platform architectures ('x64', 'ARM'). If you are cross-compiling you can disregard this warning.
   Validating architecture
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Application Type\Linux\1.0\Linux.targets(188,5): warning : Current project architecture 'x64' is incompatible with the remote system architecture 'ARM' ('ARM'). Please switch the project architecture to 'ARM' in Configuration Manager.
   Starting remote build
   Compiling sources:
-  main.cpp
   NetworkHandler.cpp
-  MobUpdate.cpp
-  NetLink.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(71,12): error : ‘class NetworkHandler’ has no member named ‘MobUpdateHandler’
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(71,12): error :    handler->MobUpdateHandler(endpoint, message);
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(71,12): error :             ^~~~~~~~~~~~~~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(78,12): error : ‘class NetworkHandler’ has no member named ‘PlayerUpdateHandler’
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(78,12): error :    handler->PlayerUpdateHandler(endpoint, message);
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\NetLink.cpp(78,12): error :             ^~~~~~~~~~~~~~~~~~~
-  PlayerUpdate.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning : conversion from ‘std::__cxx11::basic_string<char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning :    uint16_t size = this->name.size();
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning :                    ~~~~~~~~~~~~~~~^~
-  Vec2.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning : conversion from ‘double’ to ‘float’ may change value [-Wfloat-conversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning :   float rads = degs * M_PI / 180.0f;
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning :                ~~~~~~~~~~~~^~~~~~~~
-  Vec3.cpp
-  Xoroshiro128Plus.cpp
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning : conversion from ‘uint64_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning :   return (next() >> 40) * (1.0f / (1ull << 24));
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning :          ~~~~~~~~^~~~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning : comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning :   for (int i = 0; i < sizeof JUMP / sizeof * JUMP; i++)
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning :                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning : comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning :   for (int i = 0; i < sizeof LONG_JUMP / sizeof * LONG_JUMP; i++)
-C:\Users\Emil\source\repos\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning :                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(355,60): warning : suggest parentheses around ‘&&’ within ‘||’ [-Wparentheses]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(378,10): warning : unused variable ‘player’ [-Wunused-variable]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(378,10): warning :    auto&& player = it->second;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(378,10): warning :           ^~~~~~
+  Linking objects
+  DeductionServer.vcxproj -> C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\bin\x64\Debug\DeductionServer.out

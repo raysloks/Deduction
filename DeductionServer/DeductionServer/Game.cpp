@@ -119,6 +119,7 @@ void Game::startMeeting()
 		setPhase(GamePhase::Meeting, handler.time + 120'000'000'000);
 		teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
 		removeCorpses();
+		resetVotes();
 	}
 }
 
@@ -140,6 +141,16 @@ void Game::restartSetup()
 		handler.createMob();
 		handler.updateMobStates();
 		handler.updateMobRoles();
+	}
+}
+
+void Game::resetVotes()
+{
+	for (size_t i = 0; i < handler.mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[i];
+		if (mob.enabled && mob.type == MobType::Player)
+			mob.timesVoted = 0;
 	}
 }
 
