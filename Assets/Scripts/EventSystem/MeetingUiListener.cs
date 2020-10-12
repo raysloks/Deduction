@@ -15,6 +15,8 @@ public class MeetingUiListener : MonoBehaviour
     private Dictionary<ulong, GameObject> players = new Dictionary<ulong, GameObject>();
 
     public bool killOnTies = false;
+    public bool enableSkipButton = true;
+
     private float circleSpeed = 1f;
     private int maxAngle;
     public int circleLayoutDistance = 215;
@@ -23,6 +25,7 @@ public class MeetingUiListener : MonoBehaviour
     private bool firstMeeting = true;
     public int youCanVoteTimes = 2;
     private NetworkHandler handler;
+    private GameObject skipButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,7 @@ public class MeetingUiListener : MonoBehaviour
         {
             layoutGroup = MeetingCanvas.gameObject.transform.GetChild(0).gameObject;
             radialLayout = layoutGroup.GetComponent<RadialLayout>();
+            skipButton = MeetingCanvas.gameObject.transform.GetChild(1).gameObject;
         }
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
      ///   EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
@@ -57,12 +61,24 @@ public class MeetingUiListener : MonoBehaviour
 
     void MeetingStarted(EventCallbacks.Event eventInfo)
     {
-        MeetingCanvas.gameObject.SetActive(true);
-
+        
         if (MeetingCanvas == null)
         {
             return;
         }
+        MeetingCanvas.gameObject.SetActive(true);
+        if (enableSkipButton == true)
+        {
+            skipButton.GetComponent<VoteButton>().amountVoted = 0;
+            skipButton.GetComponent<VoteButton>().myText.text = "0";
+            skipButton.gameObject.SetActive(true);
+
+        }
+        else
+        {
+            skipButton.gameObject.SetActive(false);
+        }
+
         radialLayout.fDistance = circleLayoutDistance;
         radialLayout.MaxAngle = 0;
 
@@ -152,15 +168,23 @@ public class MeetingUiListener : MonoBehaviour
         ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
-        foreach (KeyValuePair<ulong, GameObject> go in players)
+        if(voteEvent.nameOfButton == skipButton.name)
         {
-            if (voteEvent.nameOfButton == go.Value.name)
-            {
-                go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
-                break;
-            }
-
+            skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
         }
+        else
+        {
+            foreach (KeyValuePair<ulong, GameObject> go in players)
+            {
+                if (voteEvent.nameOfButton == go.Value.name)
+                {
+                    go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
+                    break;
+                }
+
+            }
+        }
+       
         checkVotes();
     }
 
