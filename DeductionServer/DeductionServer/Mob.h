@@ -1,9 +1,13 @@
 #pragma once
 
+#include <vector>
+
 #include "Vec3.h"
 
 #include "MobType.h"
 #include "Role.h"
+
+#include "Task.h"
 
 class Mob
 {
@@ -18,5 +22,7 @@ public:
 	int timesVoted;
 	int totalVotes;
 	bool enabled;
+
+	std::vector<Task> tasks;
 };
 

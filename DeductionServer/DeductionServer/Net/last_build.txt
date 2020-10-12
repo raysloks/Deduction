@@ -43,3 +43,6 @@ ReportAttempted
 int64 time
 uint64 target
 RestartRequested
+VoiceFrame
+uint64 id
+uint8 data[]

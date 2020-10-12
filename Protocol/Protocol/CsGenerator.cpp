@@ -3,12 +3,12 @@
 #include <fstream>
 
 const std::map<std::string, std::string> writer_translations = { {"float", "float"}, {"double", "double"},
-	{"int8", "int"}, {"int16", "int"}, {"int32", "int"}, {"int64", "long"},
-	{"uint8", "uint"}, {"uint16", "uint"}, {"uint32", "uint"}, {"uint64", "ulong"} };
+	{"int8", "sbyte"}, {"int16", "short"}, {"int32", "int"}, {"int64", "long"},
+	{"uint8", "byte"}, {"uint16", "ushort"}, {"uint32", "uint"}, {"uint64", "ulong"} };
 
 const std::map<std::string, std::string> reader_translations = { {"float", "Single"}, {"double", "Double"},
-	{"int8", "Int32"}, {"int16", "Int32"}, {"int32", "Int32"}, {"int64", "Int64"},
-	{"uint8", "UInt32"}, {"uint16", "UInt32"}, {"uint32", "UInt32"}, {"uint64", "UInt64"} };
+	{"int8", "SByte"}, {"int16", "Int16"}, {"int32", "Int32"}, {"int64", "Int64"},
+	{"uint8", "Byte"}, {"uint16", "UInt16"}, {"uint32", "UInt32"}, {"uint64", "UInt64"} };
 
 const std::map<std::string, std::string> basic_translations = { {"float", "float"}, {"double", "double"},
 	{"int8", "sbyte"}, {"int16", "short"}, {"int32", "int"}, {"int64", "long"},
@@ -85,7 +85,7 @@ void serializeFieldCs(std::ofstream& f, Field field)
 		break;
 	case FS_VECTOR:
 		f << "		{" << std::endl;
-		f << "			ushort size = this." << field.name << ".Count;" << std::endl;
+		f << "			ushort size = (ushort)this." << field.name << ".Count;" << std::endl;
 		f << "			writer.Write(size);" << std::endl;
 		Field i = field;
 		i.name = "i";
@@ -145,20 +145,21 @@ void deserializeFieldCs(std::ofstream& f, Field field)
 		break;
 	case FS_VECTOR:
 		f << "	{" << std::endl;
+		f << "		" << field.name << " = new List<" << translateCs(field.type_name) << ">();" << std::endl;
 		f << "		ushort size = reader.ReadUInt16();" << std::endl;
 		f << "		for (int i = 0; i < size; ++i)" << std::endl;
 		f << "		{" << std::endl;
 		if (field.type)
 		{
-			f << "			" << field.type_name << " element = new " << field.type_name << "();" << std::endl;
+			f << "			" << translateCs(field.type_name) << " element = new " << translateCs(field.type_name) << "();" << std::endl;
 		}
 		else
 		{
-			f << "			" << field.type_name << " element;" << std::endl;
+			f << "			" << translateCs(field.type_name) << " element;" << std::endl;
 		}
 		Field element = field;
-		field.name = "element";
-		field.special = FS_NONE;
+		element.name = "element";
+		element.special = FS_NONE;
 		deserializeFieldCs(f, element);
 		f << "			" << field.name << ".Add(element);" << std::endl;
 		f << "		}" << std::endl;
@@ -176,6 +177,11 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 		std::ofstream f(destination_path / (type.first + ".cs"));
 
 		f << "using System.IO;" << std::endl;
+
+		if (type.second.system_dependencies.find("vector") != type.second.system_dependencies.end())
+		{
+			f << "using System.Collections.Generic;" << std::endl;
+		}
 		
 		if (type.second.application_dependencies.size())
 		{

@@ -384,3 +384,16 @@ void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & end
 {
 	game.restartSetup();
 }
+
+void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint, const VoiceFrame & message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		VoiceFrame frame = message;
+		frame.id = player.mob;
+		Broadcast(frame);
+		std::cout << "AIR" << std::endl;
+	}
+}

@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
 
     public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
-    public NetworkHandler handler;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -22,6 +21,9 @@ public class GameController : MonoBehaviour
     public long time;
     public long timeout;
 
+    public NetworkHandler handler;
+    public VoiceManager voice;
+
     void Start()
     {
         handler = new NetworkHandler();
@@ -31,10 +33,15 @@ public class GameController : MonoBehaviour
 
         if (!player)
             player = FindObjectOfType<Player>(); // todo fix
+
+        voice = new VoiceManager();
+        voice.handler = handler;
     }
 
     private void Update()
     {
+        voice.Stream();
+
         handler.link.Poll();
 
         time += (long)(Time.deltaTime * 1000000000);

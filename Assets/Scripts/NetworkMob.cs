@@ -48,8 +48,6 @@ public class NetworkMob : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
         time += (long)(Time.deltaTime * 1000000000);
-
-
     }
 
     public void AddSnapshot(Snapshot snapshot)

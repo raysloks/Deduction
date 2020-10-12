@@ -19,13 +19,14 @@ public class NetworkHandler
 
     public ulong playerMobId = ulong.MaxValue;
 
+    public int port = 16343;
 
     public NetworkHandler()
     {
         link = new Link();
         link.handler = this;
         link.Open(new IPEndPoint(IPAddress.Any, 0));
-        link.Connect(new IPEndPoint(IPAddress.Parse("172.105.79.194"), 16343));
+        link.Connect(new IPEndPoint(IPAddress.Parse("172.105.79.194"), port));
         link.Receive();
     }
 
@@ -146,5 +147,16 @@ public class NetworkHandler
         MobUpdateHandler(endpoint, message.update);
         if (mobs.ContainsKey(message.update.id))
             mobs[message.update.id].SetType(message.type);
+    }
+
+    internal void VoiceFrameHandler(IPEndPoint endpoint, VoiceFrame message)
+    {
+        VoicePlayer voicePlayer = null;
+        if (message.id == playerMobId)
+            voicePlayer = controller.player.GetComponentInChildren<VoicePlayer>();
+        if (mobs.ContainsKey(message.id))
+            voicePlayer = mobs[message.id].GetComponentInChildren<VoicePlayer>();
+        if (voicePlayer)
+            voicePlayer.ProcessFrame(message.data);
     }
 }

@@ -96,6 +96,7 @@
     <ClCompile Include="Net\PlayerVoted.cpp" />
     <ClCompile Include="Net\ReportAttempted.cpp" />
     <ClCompile Include="Net\RestartRequested.cpp" />
+    <ClCompile Include="Net\VoiceFrame.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Vec2.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Net\PlayerVoted.h" />
     <ClInclude Include="Net\ReportAttempted.h" />
     <ClInclude Include="Net\RestartRequested.h" />
+    <ClInclude Include="Net\VoiceFrame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Role.h" />
     <ClInclude Include="Task.h" />

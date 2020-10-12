@@ -69,6 +69,9 @@
       <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="MobType.h" />
+    <ClInclude Include="Net\VoiceFrame.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -127,6 +130,9 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\MobStateUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\VoiceFrame.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
