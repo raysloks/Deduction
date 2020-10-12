@@ -34,7 +34,6 @@ public class VoteButton : MonoBehaviour
     {
         if (sr.Count > 0 && disapering == false)
         {
-            Debug.Log("Img can be seen");
             mySecondaryImg.sprite = sr[0].sprite;
             //    colorWhite = mySecondaryImg.color;
             
@@ -46,10 +45,6 @@ public class VoteButton : MonoBehaviour
         }
         else if(disapering == true)
         {
-            Debug.Log("Alpha" + mySecondaryImg.color.a );
-            //   float c = mySecondaryImg.color.a;
-            //   colorWhite.a = c - (1f * speedOfDisaperance * Time.deltaTime);
-
             colorWhite = Color.Lerp(colorWhite, lerpedColor, 1f * Time.deltaTime);
             mySecondaryImg.color = colorWhite;
 
