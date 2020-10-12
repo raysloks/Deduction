@@ -69,9 +69,9 @@ public class MeetingUiListener : MonoBehaviour
         MeetingCanvas.gameObject.SetActive(true);
         if (enableSkipButton == true)
         {
-            skipButton.GetComponent<VoteButton>().amountVoted = 0;
-            skipButton.GetComponent<VoteButton>().myText.text = "0";
             skipButton.gameObject.SetActive(true);
+            skipButton.GetComponent<VoteButton>().amountVoted = 0;
+          //  skipButton.GetComponent<VoteButton>().myText.text = "0";
 
         }
         else
@@ -168,21 +168,27 @@ public class MeetingUiListener : MonoBehaviour
         ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
-        if(voteEvent.nameOfButton == skipButton.name)
-        {
-            skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
+        if (handler.mobs.ContainsKey(voterId - 1)){
+            if (voteEvent.nameOfButton == skipButton.name)
+            {
+                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
+            }
+            else
+            {
+                foreach (KeyValuePair<ulong, GameObject> go in players)
+                {
+                    if (voteEvent.nameOfButton == go.Value.name)
+                    {
+                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
+                        break;
+                    }
+
+                }
+            }
         }
         else
         {
-            foreach (KeyValuePair<ulong, GameObject> go in players)
-            {
-                if (voteEvent.nameOfButton == go.Value.name)
-                {
-                    go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
-                    break;
-                }
-
-            }
+            Debug.Log("Vote Failed With this id: " + voterId);
         }
        
         checkVotes();

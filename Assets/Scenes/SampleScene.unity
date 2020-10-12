@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 159368545}
   m_Layer: 5
   m_Name: ' Skip Vote'
-  m_TagString: Untagged
+  m_TagString: VoteButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,7 +160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -279, y: -132}
+  m_AnchoredPosition: {x: -497, y: -238}
   m_SizeDelta: {x: 89.7, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &159368542
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd5f9638ee446d4893cf89112a912a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedOfDisaperance: 2
+  speedOfDisaperance: 90
   myText: {fileID: 0}
   amountVoted: 0
 --- !u!1 &243459933
@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &243459934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,6 +963,7 @@ MonoBehaviour:
   imagePrefab: {fileID: 9008728179313552692, guid: 957df12c835b5954989e85bce82fa8a9,
     type: 3}
   killOnTies: 0
+  enableSkipButton: 1
   circleLayoutDistance: 215
   youCanVoteTimes: 2
 --- !u!1 &635580921
@@ -6234,7 +6235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 97.6, y: 0}
+  m_AnchoredPosition: {x: 92, y: 0}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1611765013

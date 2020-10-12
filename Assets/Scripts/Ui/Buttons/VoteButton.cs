@@ -14,8 +14,8 @@ public class VoteButton : MonoBehaviour
     private List<SpriteRenderer> sr = new List<SpriteRenderer>();
 
     private Image mySecondaryImg;
-    private bool disapering;
-    public float speedOfDisaperance = 2f;
+    private bool disapering = false;
+    public float speedOfDisaperance = 90f;
     [HideInInspector]public TMP_Text myText;
 
     [HideInInspector]public int amountVoted = 0;
@@ -23,31 +23,35 @@ public class VoteButton : MonoBehaviour
     void Start()
     {
         myButton = this.GetComponent<Button>();
-        myText = this.gameObject.transform.GetChild(1).GetComponent<TMP_Text>();
-        mySecondaryImg = this.gameObject.transform.GetChild(2).GetComponent<Image>();
+        myText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TMP_Text>();
+        mySecondaryImg = this.gameObject.transform.GetChild(2).gameObject.GetComponent<Image>();
         //  myButton.onClick.AddListener(delegate { vote(); });
         //     EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
 
 
     }
-    void update()
+    void Update()
     {
         if (sr.Count > 0 && disapering == false)
-        {            
+        {
+            Debug.Log("Img can be seen");
             mySecondaryImg.sprite = sr[0].sprite;
+            colorWhite = mySecondaryImg.color;
             colorWhite.a = 255f;
             mySecondaryImg.color = colorWhite;
             disapering = true;
         }
         else if(disapering == true)
         {
+            Debug.Log("Alpha" + colorWhite.a);
             float c = mySecondaryImg.color.a;
-            colorWhite.a = c - (1f * Time.deltaTime * speedOfDisaperance);
+            colorWhite.a = c - (1f * speedOfDisaperance * Time.deltaTime);
             mySecondaryImg.color = colorWhite;
-            if(5f > mySecondaryImg.color.a)
+            if(1.0f > mySecondaryImg.color.a)
             {
                 colorWhite.a = 0f;
                 mySecondaryImg.color = colorWhite;
+                sr.RemoveAt(0);
                 disapering = false;
             }
         }
@@ -55,6 +59,8 @@ public class VoteButton : MonoBehaviour
     public void voteExternal(SpriteRenderer votedSprite)
     {
         sr.Add(votedSprite);
+        Debug.Log("sr added " + sr.Count);
+
         amountVoted++;
         myText.text = amountVoted.ToString();
     }
