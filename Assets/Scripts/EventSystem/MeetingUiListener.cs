@@ -88,7 +88,7 @@ public class MeetingUiListener : MonoBehaviour
                         newObj.name = handler.names[((ulong)n.Key + 1)];
                     }
                     newObj.transform.SetParent(layoutGroup.transform);
-                    players.Add(n.Key, newObj);
+                    players.Add((n.Key + 1), newObj);
                 }
             }
             firstMeeting = false;
@@ -149,19 +149,21 @@ public class MeetingUiListener : MonoBehaviour
     {
 
         VoteEvent voteEvent = (VoteEvent)eventInfo;
+        ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
         foreach (KeyValuePair<ulong, GameObject> go in players)
         {
             if (voteEvent.nameOfButton == go.Value.name)
             {
-                go.Value.GetComponent<VoteButton>().voteExternal();
+                go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
                 break;
             }
 
         }
         checkVotes();
     }
+
     void checkVotes()
     {
         int totalVotes = 0;
@@ -214,7 +216,7 @@ public class MeetingUiListener : MonoBehaviour
 
                     MobRemoved message = new MobRemoved
                     {
-                        id = (l + 1),
+                        id = (l),
                     };
                     handler.link.Send(message);
                 }
@@ -222,10 +224,10 @@ public class MeetingUiListener : MonoBehaviour
             else if(ties.Count == 1)
             {
                 ulong id2 = ties[0];
-                Debug.Log("Remove this" + id2 + " name: " + handler.names[id2 + 1]);
+                Debug.Log("Remove this" + id2 + " name: " + handler.names[id2]);
                 MobRemoved message = new MobRemoved
                 {
-                    id = (id2 + 1),
+                    id = (id2),
                 };
                 handler.link.Send(message);
                 

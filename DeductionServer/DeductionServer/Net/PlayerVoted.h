@@ -10,6 +10,8 @@ class PlayerVoted
 public:
 	uint64_t phase;
 	int64_t timer;
+	uint64_t id;
+	int64_t totalVotes;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

@@ -112,6 +112,7 @@ public class GameController : MonoBehaviour
                 PlayerVoted message = new PlayerVoted
                 {                    
                     timer = timer,
+                    totalVotes = totalAmountOfVotes
                  };
                 handler.link.Send(message);
                 

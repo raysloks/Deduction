@@ -10,7 +10,12 @@ public class VoteButton : MonoBehaviour
 {
         
     private Button myButton;
+    private Color colorWhite = Color.white;
+    private List<SpriteRenderer> sr = new List<SpriteRenderer>();
 
+    private Image mySecondaryImg;
+    private bool disapering;
+    public float speedOfDisaperance = 2f;
     [HideInInspector]public TMP_Text myText;
 
     [HideInInspector]public int amountVoted = 0;
@@ -19,13 +24,37 @@ public class VoteButton : MonoBehaviour
     {
         myButton = this.GetComponent<Button>();
         myText = this.gameObject.transform.GetChild(1).GetComponent<TMP_Text>();
-      //  myButton.onClick.AddListener(delegate { vote(); });
-   //     EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
+        mySecondaryImg = this.gameObject.transform.GetChild(2).GetComponent<Image>();
+        //  myButton.onClick.AddListener(delegate { vote(); });
+        //     EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
 
 
     }
-    public void voteExternal()
+    void update()
     {
+        if (sr.Count > 0 && disapering == false)
+        {            
+            mySecondaryImg.sprite = sr[0].sprite;
+            colorWhite.a = 255f;
+            mySecondaryImg.color = colorWhite;
+            disapering = true;
+        }
+        else if(disapering == true)
+        {
+            float c = mySecondaryImg.color.a;
+            colorWhite.a = c - (1f * Time.deltaTime * speedOfDisaperance);
+            mySecondaryImg.color = colorWhite;
+            if(5f > mySecondaryImg.color.a)
+            {
+                colorWhite.a = 0f;
+                mySecondaryImg.color = colorWhite;
+                disapering = false;
+            }
+        }
+    }
+    public void voteExternal(SpriteRenderer votedSprite)
+    {
+        sr.Add(votedSprite);
         amountVoted++;
         myText.text = amountVoted.ToString();
     }

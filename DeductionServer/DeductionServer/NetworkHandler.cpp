@@ -342,9 +342,10 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		mob.totalVotes = 2;
 		
-		if (mob.totalVotes > mob.timesVoted) {
+		int totalvotes = (int)message.totalVotes;
+
+		if (totalvotes > mob.timesVoted) {
 			mob.timesVoted++;
 			int phase2 = 2;
 			int alive = 0;
@@ -352,19 +353,21 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 		
 			for (auto mob : mobs)
 			{
-				if (mob.type == MobType::Player && mob.enabled == true && mob.role == Role::Crewmate || mob.role == Role::Impostor) {
+				if (mob.type == MobType::Player && mob.enabled == true && (mob.role == Role::Crewmate || mob.role == Role::Impostor)) {
 					alive++;
 					total += mob.timesVoted;
 				}
 
 			}
-			if ((alive * mob.totalVotes) <= total) {
+			if ((alive * totalvotes) <= total) {
 				game.setPhase(GamePhase::Main, message.timer);
 				phase2 = 1;
 			}
 			PlayerVoted message;
 			message.phase = phase2;
 			message.timer = time;
+		    message.id = player.mob;
+			message.totalVotes = totalvotes;
 			Broadcast(message);
 		}
 	}
