@@ -397,6 +397,5 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint,
 		VoiceFrame frame = message;
 		frame.id = player.mob;
 		Broadcast(frame);
-		std::cout << "AIR" << std::endl;
 	}
 }

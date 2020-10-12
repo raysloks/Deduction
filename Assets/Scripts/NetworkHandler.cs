@@ -151,7 +151,7 @@ public class NetworkHandler
     internal void VoiceFrameHandler(IPEndPoint endpoint, VoiceFrame message)
     {
         VoicePlayer voicePlayer = null;
-        if (message.id == playerMobId)
+        if (message.id == playerMobId && controller.listenToSelf)
             voicePlayer = controller.player.GetComponentInChildren<VoicePlayer>();
         if (mobs.ContainsKey(message.id))
             voicePlayer = mobs[message.id].GetComponentInChildren<VoicePlayer>();

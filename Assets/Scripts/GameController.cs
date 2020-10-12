@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     public NetworkHandler handler;
     public VoiceManager voice;
 
+    public bool listenToSelf = false;
+
     void Start()
     {
         handler = new NetworkHandler();
