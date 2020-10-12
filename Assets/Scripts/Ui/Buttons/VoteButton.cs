@@ -12,10 +12,10 @@ public class VoteButton : MonoBehaviour
     private Button myButton;
     private Color colorWhite = Color.white;
     private List<SpriteRenderer> sr = new List<SpriteRenderer>();
-
+    Color lerpedColor = Color.white;
     private Image mySecondaryImg;
     private bool disapering = false;
-    public float speedOfDisaperance = 90f;
+    public float speedOfDisaperance = 10f;
     [HideInInspector]public TMP_Text myText;
 
     [HideInInspector]public int amountVoted = 0;
@@ -36,18 +36,25 @@ public class VoteButton : MonoBehaviour
         {
             Debug.Log("Img can be seen");
             mySecondaryImg.sprite = sr[0].sprite;
-            colorWhite = mySecondaryImg.color;
-            colorWhite.a = 255f;
+            //    colorWhite = mySecondaryImg.color;
+            
+            colorWhite.a = 1f;
+            lerpedColor = colorWhite;
+            lerpedColor.a = 0f;
             mySecondaryImg.color = colorWhite;
             disapering = true;
         }
         else if(disapering == true)
         {
-            Debug.Log("Alpha" + colorWhite.a);
-            float c = mySecondaryImg.color.a;
-            colorWhite.a = c - (1f * speedOfDisaperance * Time.deltaTime);
+            Debug.Log("Alpha" + mySecondaryImg.color.a );
+            //   float c = mySecondaryImg.color.a;
+            //   colorWhite.a = c - (1f * speedOfDisaperance * Time.deltaTime);
+
+            colorWhite = Color.Lerp(colorWhite, lerpedColor, 1f * Time.deltaTime);
             mySecondaryImg.color = colorWhite;
-            if(1.0f > mySecondaryImg.color.a)
+
+
+            if (0.01f >= mySecondaryImg.color.a)
             {
                 colorWhite.a = 0f;
                 mySecondaryImg.color = colorWhite;
