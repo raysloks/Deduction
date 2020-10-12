@@ -5,7 +5,7 @@
 // Application should implement this class using the prototypes in HandlerPrototypes.h
 #include "../NetworkHandler.h"
 
-const uint32_t NetLink::crc = 0xb9bf8dfd;
+const uint32_t NetLink::crc = 0x4fcbf598;
 NetLink::NetLink() : io_context(), socket(io_context)
 {
 }
@@ -187,13 +187,6 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 		handler->RestartRequestedHandler(endpoint, message);
 		break;
 	}
-	case 16:
-	{
-		VoiceFrame message;
-		message.deserialize(is);
-		handler->VoiceFrameHandler(endpoint, message);
-		break;
-	}
 	default:
 		break;
 	}
@@ -330,15 +323,6 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const RestartRequest
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
 	os.put(15);
-	message.serialize(os);
-	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
-}
-
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message)
-{
-	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
-	std::ostream os(buffer.get());
-	os.put(16);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }

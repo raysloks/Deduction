@@ -194,16 +194,6 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in VoiceFrame message)
-	{
-		MemoryStream stream = new MemoryStream();
-		BinaryWriter writer = new BinaryWriter(stream);
-		writer.Write((byte)16);
-		message.Serialize(writer);
-		byte[] bytes = stream.ToArray();
-		client.SendAsync(bytes, bytes.Length, endpoint);
-	}
-
 	public void Send(in AbilityUsed message)
 	{
 		if (endpoint == null)
@@ -384,18 +374,6 @@ public class Link
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in VoiceFrame message)
-	{
-		if (endpoint == null)
-			return;
-		MemoryStream stream = new MemoryStream();
-		BinaryWriter writer = new BinaryWriter(stream);
-		writer.Write((byte)16);
-		message.Serialize(writer);
-		byte[] bytes = stream.ToArray();
-		client.SendAsync(bytes, bytes.Length, endpoint);
-	}
-
 	public void Dispatch(byte[] bytes, IPEndPoint endpoint)
 	{
 		BinaryReader reader = new BinaryReader(new MemoryStream(bytes));
@@ -519,17 +497,11 @@ public class Link
 			message_queue.Enqueue(() => handler.RestartRequestedHandler(endpoint, message));
 			break;
 		}
-		case 16:
-		{
-			VoiceFrame message = VoiceFrame.Deserialize(reader);
-			message_queue.Enqueue(() => handler.VoiceFrameHandler(endpoint, message));
-			break;
-		}
 		default:
 			break;
 		}
 	}
 
-	public const uint crc = 0xb9bf8dfd;
+	public const uint crc = 0x4fcbf598;
 	private UdpClient client;
 }

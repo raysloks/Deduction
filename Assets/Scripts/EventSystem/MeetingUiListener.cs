@@ -15,6 +15,8 @@ public class MeetingUiListener : MonoBehaviour
     private Dictionary<ulong, GameObject> players = new Dictionary<ulong, GameObject>();
 
     public bool killOnTies = false;
+    public bool enableSkipButton = true;
+
     private float circleSpeed = 1f;
     private int maxAngle;
     public int circleLayoutDistance = 215;
@@ -23,6 +25,7 @@ public class MeetingUiListener : MonoBehaviour
     private bool firstMeeting = true;
     public int youCanVoteTimes = 2;
     private NetworkHandler handler;
+    private GameObject skipButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,7 @@ public class MeetingUiListener : MonoBehaviour
         {
             layoutGroup = MeetingCanvas.gameObject.transform.GetChild(0).gameObject;
             radialLayout = layoutGroup.GetComponent<RadialLayout>();
+            skipButton = MeetingCanvas.gameObject.transform.GetChild(1).gameObject;
         }
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
      ///   EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
@@ -57,12 +61,24 @@ public class MeetingUiListener : MonoBehaviour
 
     void MeetingStarted(EventCallbacks.Event eventInfo)
     {
-        MeetingCanvas.gameObject.SetActive(true);
-
+        
         if (MeetingCanvas == null)
         {
             return;
         }
+        MeetingCanvas.gameObject.SetActive(true);
+        if (enableSkipButton == true)
+        {
+            skipButton.gameObject.SetActive(true);
+            skipButton.GetComponent<VoteButton>().amountVoted = 0;
+          //  skipButton.GetComponent<VoteButton>().myText.text = "0";
+
+        }
+        else
+        {
+            skipButton.gameObject.SetActive(false);
+        }
+
         radialLayout.fDistance = circleLayoutDistance;
         radialLayout.MaxAngle = 0;
 
@@ -88,7 +104,7 @@ public class MeetingUiListener : MonoBehaviour
                         newObj.name = handler.names[((ulong)n.Key + 1)];
                     }
                     newObj.transform.SetParent(layoutGroup.transform);
-                    players.Add(n.Key, newObj);
+                    players.Add((n.Key + 1), newObj);
                 }
             }
             firstMeeting = false;
@@ -149,19 +165,35 @@ public class MeetingUiListener : MonoBehaviour
     {
 
         VoteEvent voteEvent = (VoteEvent)eventInfo;
+        ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
-        foreach (KeyValuePair<ulong, GameObject> go in players)
-        {
-            if (voteEvent.nameOfButton == go.Value.name)
+        if (handler.mobs.ContainsKey(voterId - 1)){
+            if (voteEvent.nameOfButton == skipButton.name)
             {
-                go.Value.GetComponent<VoteButton>().voteExternal();
-                break;
+                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
             }
+            else
+            {
+                foreach (KeyValuePair<ulong, GameObject> go in players)
+                {
+                    if (voteEvent.nameOfButton == go.Value.name)
+                    {
+                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
+                        break;
+                    }
 
+                }
+            }
         }
+        else
+        {
+            Debug.Log("Vote Failed With this id: " + voterId);
+        }
+       
         checkVotes();
     }
+
     void checkVotes()
     {
         int totalVotes = 0;
@@ -214,7 +246,7 @@ public class MeetingUiListener : MonoBehaviour
 
                     MobRemoved message = new MobRemoved
                     {
-                        id = (l + 1),
+                        id = (l),
                     };
                     handler.link.Send(message);
                 }
@@ -222,10 +254,10 @@ public class MeetingUiListener : MonoBehaviour
             else if(ties.Count == 1)
             {
                 ulong id2 = ties[0];
-                Debug.Log("Remove this" + id2 + " name: " + handler.names[id2 + 1]);
+                Debug.Log("Remove this" + id2 + " name: " + handler.names[id2]);
                 MobRemoved message = new MobRemoved
                 {
-                    id = (id2 + 1),
+                    id = (id2),
                 };
                 handler.link.Send(message);
                 
