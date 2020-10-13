@@ -119,7 +119,7 @@ public class NetworkHandler
 
     internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
     {
-        if (mobs.ContainsKey(message.id))
+        if (mobs.ContainsKey(message.id) && message.id != playerMobId)
         {
             UnityEngine.Object.Destroy(mobs[message.id].gameObject);
             mobs.Remove(message.id);
