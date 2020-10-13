@@ -5,19 +5,8 @@ using TMPro;
 using EventCallbacks;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+public class Player : Mob
 {
-    private Vector2 last_normal;
-
-    private SpriteRenderer sprite;
-
-
-    private void Start()
-    {
-
-        sprite = GetComponent<SpriteRenderer>();
-    }
-
     private void Update()
     {
         Vector3 move = new Vector2();
@@ -53,11 +42,6 @@ public class Player : MonoBehaviour
             }
         }
 
-
-       
-
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
     }
-
-
 }

@@ -12,7 +12,7 @@ public class NetworkHandler
 
     public Link link;
 
-    public Dictionary<ulong, NetworkMob> mobs = new Dictionary<ulong, NetworkMob>();
+    public Dictionary<ulong, Mob> mobs = new Dictionary<ulong, Mob>();
     public Dictionary<ulong, string> names = new Dictionary<ulong, string>();
     public Dictionary<ulong, ulong> roles = new Dictionary<ulong, ulong>();
     public Dictionary<ulong, long> removalTimes = new Dictionary<ulong, long>();
@@ -57,14 +57,18 @@ public class NetworkHandler
                 mobs.Add(message.id, UnityEngine.Object.Instantiate(controller.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
                 UpdateName(message.id);
             }
-            mobs[message.id].AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
+            if (mobs[message.id] is NetworkMob mob)
+                mob.AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
         }
     }
 
     internal void PlayerUpdateHandler(IPEndPoint endpoint, PlayerUpdate message)
     {
         if (message.id == ulong.MaxValue)
+        {
             playerMobId = message.mob;
+            mobs[playerMobId] = controller.player;
+        }
         else
             names[message.mob] = message.name;
         UpdateName(message.mob);

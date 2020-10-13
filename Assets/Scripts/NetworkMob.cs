@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using EventCallbacks;
 
-public class NetworkMob : MonoBehaviour
+public class NetworkMob : Mob
 {
     public struct Snapshot
     {
@@ -14,19 +14,6 @@ public class NetworkMob : MonoBehaviour
     public List<Snapshot> snapshots = new List<Snapshot>();
 
     public long time;
-
-    public bool IsAlive => type == 0;
-
-    public ulong type;
-
-    public Sprite[] sprites;
-
-    [HideInInspector]public SpriteRenderer sprite;
-
-    private void Awake()
-    {
-        sprite = GetComponent<SpriteRenderer>();
-    }
 
     private void Update()
     {
@@ -58,12 +45,5 @@ public class NetworkMob : MonoBehaviour
         if (delta > -50000000)
             time = snapshot.time - 50000000;
         snapshots.Add(snapshot);
-    }
-
-    public void SetType(ulong type)
-    {
-        this.type = type;
-        if (type < (ulong)sprites.Length)
-            sprite.sprite = sprites[type];
     }
 }

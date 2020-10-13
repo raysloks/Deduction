@@ -89,7 +89,7 @@ public class MeetingUiListener : MonoBehaviour
         int amountOfPlayersAlive = 0;
         if(firstMeeting == true)
         {
-            foreach (KeyValuePair<ulong, NetworkMob> n in handler.mobs)
+            foreach (KeyValuePair<ulong, Mob> n in handler.mobs)
             {
 
                 if (n.Value.IsAlive == true)
