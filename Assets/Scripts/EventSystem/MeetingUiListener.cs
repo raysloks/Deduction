@@ -80,7 +80,6 @@ public class MeetingUiListener : MonoBehaviour
         }
 
         radialLayout.fDistance = circleLayoutDistance;
-        radialLayout.MaxAngle = 0;
 
         MeetingEvent meetingEvent = (MeetingEvent)eventInfo;
         handler = meetingEvent.meetingHandler;
@@ -97,14 +96,14 @@ public class MeetingUiListener : MonoBehaviour
                     amountOfPlayersAlive++;
                     newObj = (GameObject)Instantiate(imagePrefab, layoutGroup.transform);
                     newObj.GetComponent<Image>().sprite = n.Value.sprite.sprite;
-                    if (handler.names.ContainsKey(((ulong)n.Key + 1)))
+                    if (handler.names.ContainsKey(n.Key))
                     {
-                        Debug.Log("THIS IS THE NAME " + handler.names[((ulong)n.Key + 1)]);
-                        newObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = handler.names[((ulong)n.Key + 1)];
-                        newObj.name = handler.names[((ulong)n.Key + 1)];
+                        Debug.Log("THIS IS THE NAME " + handler.names[n.Key]);
+                        newObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = handler.names[n.Key];
+                        newObj.name = handler.names[n.Key];
                     }
                     newObj.transform.SetParent(layoutGroup.transform);
-                    players.Add((n.Key + 1), newObj);
+                    players.Add(n.Key, newObj);
                 }
             }
             firstMeeting = false;
@@ -155,7 +154,10 @@ public class MeetingUiListener : MonoBehaviour
                 maxAngle = 323; break;
         }
 
-        circleUpdate = true;
+        radialLayout.MaxAngle = maxAngle;
+
+
+        circleUpdate = false;
         meetingDone = false;
 
 

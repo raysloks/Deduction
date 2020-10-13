@@ -46,6 +46,10 @@ C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServ
   PlayerVoted.cpp
   ReportAttempted.cpp
   RestartRequested.cpp
+  VoiceFrame.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning : conversion from ‘std::vector<unsigned char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning :    uint16_t size = this->data.size();
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning :                    ~~~~~~~~~~~~~~~^~
   Player.cpp
   Task.cpp
   Vec2.cpp
