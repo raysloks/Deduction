@@ -56,7 +56,7 @@ public class VoicePlayer : MonoBehaviour
         for (int i = 0; i < size; ++i)
             data[i] = frame[i] / 32767f;
 
-        if (mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -2400)
+        if (mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -1200)
             audioSource.timeSamples = mod(offset - 2400, audioClip.samples);
 
         audioClip.SetData(data, offset);

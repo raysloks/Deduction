@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 1315676431393324653}
   - component: {fileID: 8540644939252530586}
   - component: {fileID: 8027173137582873319}
+  - component: {fileID: 4664533791362606826}
   m_Layer: 0
   m_Name: VoiceAudioSource
   m_TagString: Untagged
@@ -287,7 +288,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -370,6 +371,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d5fe6fc20cfab14780269f1137c9924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4664533791362606826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7276069933197916914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b9c5d123318074abc37163f04453ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8796570029264027741
