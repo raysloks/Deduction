@@ -22,7 +22,7 @@ public class VoicePlayer : MonoBehaviour
         decoder = OpusDecoder.Create(48000, 1);
 
         audioSource = GetComponent<AudioSource>();
-        audioClip = AudioClip.Create("Voice", 4800, 1, 48000, false);
+        audioClip = AudioClip.Create("Voice", 9600, 1, 48000, false);
         audioSource.clip = audioClip;
     }
 
@@ -45,11 +45,19 @@ public class VoicePlayer : MonoBehaviour
         ProcessFrame(outputBuffer, thisFrameSize);
     }
 
+    int mod(int x, int m)
+    {
+        return (x % m + m) % m;
+    }
+
     public void ProcessFrame(short[] frame, int size)
     {
         float[] data = new float[size];
         for (int i = 0; i < size; ++i)
             data[i] = frame[i] / 32767f;
+
+        if (mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -2400)
+            audioSource.timeSamples = mod(offset - 2400, audioClip.samples);
 
         audioClip.SetData(data, offset);
         offset += size;
