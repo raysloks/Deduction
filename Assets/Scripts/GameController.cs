@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour
 
     public bool listenToSelf = false;
 
+    public Xoroshiro128Plus rng = new Xoroshiro128Plus();
+
     public enum ConnectionState
     {
         None,
@@ -54,9 +56,6 @@ public class GameController : MonoBehaviour
 
         voice = new VoiceManager();
         voice.handler = handler;
-
-        if (!player)
-            player = FindObjectOfType<Player>(); // todo fix
     }
 
     private void Update()
@@ -85,7 +84,14 @@ public class GameController : MonoBehaviour
         snapshot -= Time.deltaTime;
         if (snapshot <= 0f)
         {
-            handler.link.Send(new PlayerUpdate { name = nameInputField.text });
+            if (connectionState == ConnectionState.JoiningLobby)
+            {
+                string name = nameInputField.text;
+                name = name.Trim();
+                if (name.Length == 0)
+                    name = "Agent " + rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
+                handler.link.Send(new PlayerUpdate { name = name });
+            }
             handler.link.Send(new MobUpdate { position = player.transform.position });
             snapshot += 0.05f;
         }
@@ -126,7 +132,6 @@ public class GameController : MonoBehaviour
                     float distance = Vector2.Distance(player.transform.position, mob.transform.position);
                     if(distance < reportDistance)
                     {
-
                         ReportAttempted message = new ReportAttempted
                         {
                             target = 0,
@@ -149,7 +154,6 @@ public class GameController : MonoBehaviour
                     totalVotes = totalAmountOfVotes
                  };
                 handler.link.Send(message);
-                
             }
         }
 
@@ -179,7 +183,7 @@ public class GameController : MonoBehaviour
                         if (timer != 0)
                             text.text = "Game starting in " + (timer - time + 999999999) / 1000000000;
                         else
-                            text.text = "Setup";
+                            text.text = "Setup " + matchmaker.lobby;
                         break;
                     case GamePhase.Main:
                         text.text = "";
