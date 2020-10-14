@@ -5,7 +5,7 @@
 NetworkHandler::NetworkHandler() : game(*this)
 {
 	link.handler = this;
-	link.Open(asio::ip::udp::endpoint(asio::ip::udp::v4(), 16343));
+	link.Open(asio::ip::udp::endpoint(asio::ip::udp::v4(), 0));
 	link.Receive();
 
 	createMob();
@@ -228,6 +228,10 @@ void NetworkHandler::killMob(uint64_t id)
 			link.Send(player.first, message);
 		}
 	}
+}
+
+void NetworkHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)
+{
 }
 
 void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint, const AbilityUsed & message)

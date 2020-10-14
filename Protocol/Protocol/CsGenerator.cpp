@@ -243,7 +243,7 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 	bool can_accept = true;
 
 	{
-		std::ofstream f(destination_path / "Link.cs");
+		std::ofstream f(destination_path / (protocol.prefix + "Link.cs"));
 
 		f << "using System;" << std::endl;
 		f << "using System.Collections.Concurrent;" << std::endl;
@@ -253,7 +253,7 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 
 		f << "// WARNING : Auto-generated file, changes made will disappear when re-generated." << std::endl << std::endl;
 
-		f << "public class Link" << std::endl;
+		f << "public class " << protocol.prefix << "Link" << std::endl;
 		f << "{" << std::endl;
 
 		f << "	public " << protocol.handler << " handler;" << std::endl << std::endl;
@@ -366,6 +366,7 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 				if (can_connect)
 				{
 					f << "						this.endpoint = endpoint;" << std::endl;
+					f << "						message_queue.Enqueue(() => handler.ConnectionHandler(endpoint));" << std::endl;
 				}
 				f << "						break;" << std::endl;
 				f << "					}" << std::endl;
