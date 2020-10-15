@@ -240,6 +240,13 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 
 void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
 {
+	if (message.phase == 1 && game.phase != GamePhase::Main) {
+		game.removeCorpses();
+		game.setPhase(GamePhase::Main, message.timer);
+	}
+	else if (message.phase == 2 && game.phase != GamePhase::Meeting) {
+		game.setPhase(GamePhase::Meeting, message.timer);
+	}
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
@@ -346,7 +353,7 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		
+
 		int totalvotes = (int)message.totalVotes;
 
 		if (totalvotes > mob.timesVoted) {
@@ -354,7 +361,7 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 			int phase2 = 2;
 			int alive = 0;
 			int total = 0;
-		
+
 			for (auto mob : mobs)
 			{
 				if (mob.type == MobType::Player && mob.enabled == true && (mob.role == Role::Crewmate || mob.role == Role::Impostor)) {
@@ -364,14 +371,17 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 
 			}
 			if ((alive * totalvotes) <= total) {
-				game.setPhase(GamePhase::Main, message.timer);
+				//game.setPhase(GamePhase::Main, message.timer);
 				phase2 = 1;
 			}
+			std::string name = message.buttonName;
 			PlayerVoted message;
 			message.phase = phase2;
 			message.timer = time;
-		    message.id = player.mob;
+			message.id = player.mob;
 			message.totalVotes = totalvotes;
+			message.buttonName = name;
+			message.votesLeft = mob.timesVoted - totalvotes;
 			Broadcast(message);
 		}
 	}

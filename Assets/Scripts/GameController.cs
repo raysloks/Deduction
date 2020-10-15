@@ -25,12 +25,15 @@ public class GameController : MonoBehaviour
 
     public long time;
     public long timeout;
+    public bool timerOn = true;
+
 
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
 
     public bool listenToSelf = false;
+
 
     public Xoroshiro128Plus rng = new Xoroshiro128Plus();
 
@@ -189,7 +192,7 @@ public class GameController : MonoBehaviour
                         text.text = "";
                         break;
                     case GamePhase.Meeting:
-                        if (timer != 0)
+                        if (timer != 0 && timerOn == true)
                         {
                             text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
                         }

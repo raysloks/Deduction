@@ -19,6 +19,7 @@ namespace EventCallbacks
         public string nameOfButton;
         public int totalAmountOfVotes;
         public ulong idOfVoter;
+        public bool doneVoting;
 
     }
     public class DebugEvent : Event
