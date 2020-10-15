@@ -22,6 +22,14 @@ namespace EventCallbacks
         public bool doneVoting;
 
     }
+
+    public class MeetingDieEvent : Event
+    {
+        public Vector3 UnitGameObjectPos;
+        public GameObject UnitGameObject;
+        public AudioClip UnitSound;
+        public GameObject UnitParticle;
+    }
     public class DebugEvent : Event
     {
 

@@ -2,17 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundListener : MonoBehaviour
+namespace EventCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
+    public class SoundListener : MonoBehaviour
     {
-        
-    }
+        private int NoOfcurrentlyPlayingSounds = 0;
+        [SerializeField] private int maxNoOfSimultaneousSounds;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Start is called before the first frame update
+        void Start()
+        {
+            EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_DIED, OnDiePlaySound);
+        }
+
+        void OnDiePlaySound(Event eventInfo)
+        {
+            MeetingDieEvent dieEventInfo = (MeetingDieEvent)eventInfo;
+            AudioClip dieSound = dieEventInfo.UnitSound;
+
+            if (NoOfcurrentlyPlayingSounds < maxNoOfSimultaneousSounds && dieSound != null)
+            {
+                NoOfcurrentlyPlayingSounds++;
+                AudioSource.PlayClipAtPoint(dieSound, dieEventInfo.UnitGameObjectPos);
+                Invoke("SubtractCurrentlyPlayingSounds", dieSound.length);
+
+
+            }
+        }
+
+        public void SubtractCurrentlyPlayingSounds()
+        {
+            NoOfcurrentlyPlayingSounds--;
+        }
     }
 }
