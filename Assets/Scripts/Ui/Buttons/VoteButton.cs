@@ -38,6 +38,8 @@ public class VoteButton : MonoBehaviour
 
     private float timer = 0;
     private bool timerOn = false;
+    [HideInInspector] public bool showAfterEveryoneVoted = false;
+    [HideInInspector] public bool done = false;
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +65,7 @@ public class VoteButton : MonoBehaviour
 
     void Update()
     {
-        if (timerOn == true)
+        if (timerOn == true && done == true)
         {
             timer += 0.2f * Time.deltaTime;
             if (timer < 1f)
@@ -97,14 +99,13 @@ public class VoteButton : MonoBehaviour
             }
         }
 
-
-        if (sr.Count > 0 && disapering == false)
+        if (sr.Count > 0 && disapering == false && showAfterEveryoneVoted == false)
         {
             amountVotedinternal++;
             myText.text = amountVotedinternal.ToString();
 
             mySecondaryImg.sprite = sr[0].sprite;
-            //    colorWhite = mySecondaryImg.color;
+            //   colorWhite = mySecondaryImg.color;
 
             colorWhite.a = 1f;
             lerpedColor = colorWhite;
@@ -123,22 +124,25 @@ public class VoteButton : MonoBehaviour
                 colorWhite.a = 0f;
                 mySecondaryImg.color = colorWhite;
                 sr.RemoveAt(0);
+                if(sr.Count == 0)
+                {
+                    done = true;
+                }
                 disapering = false;
             }
         }
     }
 
-    public void voteExternal(SpriteRenderer votedSprite)
+    public void voteExternal(SpriteRenderer votedSprite, bool showAfterEveryoneVoted2)
     {
-
+        done = false;
+        showAfterEveryoneVoted = showAfterEveryoneVoted2;
         amountVoted++;
         if (amountVoted == 1)
         {
             amountVotedinternal = 0;
         }
         sr.Add(votedSprite);
-
-        //   myText.text = amountVoted.ToString();
     }
 
 
@@ -162,29 +166,10 @@ public class VoteButton : MonoBehaviour
     }
     public void setMaterial()
     {
-        //   this.gameObject.GetComponent<AllIn1Shader>().MakeCopy();
         myImage = this.GetComponent<Image>();
         myImage.material = m;
         myVotedImg.material = m;
         this.gameObject.GetComponent<AllIn1Shader>().ToggleSetAtlasUvs(true);
         timerOn = true;
-        if (myImage != null)
-        {
-            myImage.material.SetFloat("_ShakeUvSpeed", 20f);
-            myImage.material.SetFloat("_ShakeUvX", 5f);
-            myImage.material.SetFloat("_ShakeUvY", 5f);
-
-            myImage.material.SetFloat("_NegativeAmount", 1f);
-            myImage.material.SetFloat("_PinchUvAmount", 0.5f);
-            myImage.material.SetFloat("_HitEffectBlend", 0.7f);
-
-
-            // myImage.material.SetFloat("_Pinch", 0.5f);
-
-        }
-        else
-        {
-            Debug.Log("imageGONE");
-        }
     }
 }

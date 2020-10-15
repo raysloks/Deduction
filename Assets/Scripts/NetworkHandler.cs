@@ -85,12 +85,18 @@ public class NetworkHandler
     }
 
     internal void GamePhaseUpdateHandler(IPEndPoint endpoint, GamePhaseUpdate message)
-    {
+    {      
         controller.SetGamePhase((GameController.GamePhase)message.phase, message.timer);
     }
 
     internal void MeetingRequestedHandler(IPEndPoint endpoint, MeetingRequested message)
     {
+        MeetingEvent umei = new MeetingEvent();
+        umei.meetingHandler = this;
+        umei.idOfInitiator = message.idOfInitiator;
+
+        umei.EventDescription = "Meeting Got Started";
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
@@ -121,7 +127,6 @@ public class NetworkHandler
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)
     {
     }
-
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
     }
@@ -142,6 +147,12 @@ public class NetworkHandler
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
     {
+        MeetingEvent umei = new MeetingEvent();
+        umei.meetingHandler = this;
+        umei.idOfInitiator = message.idOfInitiator;
+        umei.idOfBody = message.target;
+        umei.EventDescription = "BodyReported";
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     internal void AbilityUsedHandler(IPEndPoint endpoint, AbilityUsed message)

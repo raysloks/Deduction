@@ -306,7 +306,20 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)
 {
-	game.startMeeting();
+	
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		game.startMeeting();
+
+		auto&& player = it->second;
+
+		MeetingRequested message;
+		message.idOfInitiator = player.mob;
+	
+		Broadcast(message);
+	}
+	
 }
 
 void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)
@@ -394,6 +407,14 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 	{
 		auto&& player = it->second;
 		game.startMeeting();
+
+
+		ReportAttempted message;
+		message.idOfInitiator = player.mob;
+		message.target = message.target;
+
+		Broadcast(message);
+		
 	}
 }
 

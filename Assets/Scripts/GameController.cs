@@ -128,16 +128,16 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
         {
-            foreach (var mob in handler.mobs.Values)
+            foreach (var n in handler.mobs)
             {
-                if(mob.IsAlive == false)
+                if(n.Value.IsAlive == false)
                 {
-                    float distance = Vector2.Distance(player.transform.position, mob.transform.position);
+                    float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                     if(distance < reportDistance)
                     {
                         ReportAttempted message = new ReportAttempted
                         {
-                            target = 0,
+                            target = n.Key,
                             time = time
                         };
                         handler.link.Send(message);
@@ -147,7 +147,7 @@ public class GameController : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting)
+        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
         {
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
             {
@@ -193,9 +193,19 @@ public class GameController : MonoBehaviour
                         text.text = "";
                         break;
                     case GamePhase.Meeting:
-                        if (timer != 0 && timerOn == true)
+                        if(timerOn == false)
+                        {
+                            text.text = "Meeting Ending";
+                        }
+                        if (((timer - time + 999999999) / 1000000000) > 0 && timerOn == true)
                         {
                             text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
+                        }
+                        else if(timerOn == true)
+                        {
+                            timerOn = false;
+                            MeetingEvent me = new MeetingEvent();
+                            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_ENDED, me);
                         }
                         break;
                     case GamePhase.None:
@@ -206,14 +216,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void MeetingUi()
-    {
-        MeetingEvent umei = new MeetingEvent();
-        umei.meetingHandler = this.handler;
-        umei.EventDescription = "Meeting Got Started";
-
-        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
-    }
 
     public void Connect()
     {
@@ -237,7 +239,7 @@ public class GameController : MonoBehaviour
         if(phase == GamePhase.Meeting)
         {
             Debug.Log("Meeting Started");
-            MeetingUi();
+          //  MeetingUi();
         }
         this.phase = phase;
         this.timer = timer;

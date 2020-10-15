@@ -8,6 +8,8 @@
 class MeetingRequested
 {
 public:
+	uint64_t idOfInitiator;
+
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);
 };

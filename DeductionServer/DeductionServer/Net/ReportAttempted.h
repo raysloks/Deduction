@@ -9,6 +9,7 @@ class ReportAttempted
 {
 public:
 	int64_t time;
+	uint64_t idOfInitiator;
 	uint64_t target;
 
 	void serialize(std::ostream& os) const;

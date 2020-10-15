@@ -9,6 +9,7 @@ public class MeetingUiListener : MonoBehaviour
 {
     public Canvas MeetingCanvas;
     public GameObject imagePrefab;
+    public GameObject noticeBoardImage;
     
     private CanvasGroup csGrp;
     private GameObject skipButton;
@@ -24,18 +25,24 @@ public class MeetingUiListener : MonoBehaviour
 
     public bool killOnTies = false;
     public bool enableSkipButton = true;
+    public bool showVotesWhenAllVoted = true;
     private bool circleUpdate = false;
     private bool meetingDone = false;
     private bool firstMeeting = true;
     private bool waitForDramaticEffect = false;
     private bool fadeAway = false;
     private bool fadeIn = false;
+    private bool waitForAllTheVotes = false;
+    private bool votesShown = false;
+
 
     private NetworkHandler handler;
 
     private float timer = 0f;
     private int youCanVoteTimes;
     private float fadeTime = 2f;
+    private int index = 0;
+    private ulong mostVotesId;
 
 
 
@@ -50,7 +57,7 @@ public class MeetingUiListener : MonoBehaviour
             csGrp = MeetingCanvas.gameObject.GetComponent<CanvasGroup>();
         }
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
-        //  EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
         //  EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_CHECKVOTES, checkVotes);
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
@@ -87,58 +94,107 @@ public class MeetingUiListener : MonoBehaviour
         //Effect done at the end of the meeting
         if(meetingDone == true)
         {
-
-            if (waitForDramaticEffect == false && fadeAway == false)
+            if (showVotesWhenAllVoted == true && votesShown == false)
             {
                 timer += Time.deltaTime;
-            }
-
-            if (waitForDramaticEffect == false && timer > 4f && fadeAway == false)
-            {
-                Debug.Log("Dramatic Effect");
-
-                foreach (ulong id in ties)
+                if (timer > 2f)
                 {
-                    players[id].GetComponent<VoteButton>().setMaterial();
+                    skipButton.GetComponent<VoteButton>().showAfterEveryoneVoted = false;
+                    foreach (KeyValuePair<ulong, GameObject> go in players)
+                    {
+                        go.Value.GetComponent<VoteButton>().showAfterEveryoneVoted = false;
+                    }
+                    votesShown = true;
+                    timer = 0;
                 }
-                waitForDramaticEffect = true;
-                timer = 0f;
-            }
-            else if (waitForDramaticEffect == true && fadeAway == false) ;
-            {
 
+            }
+            else if(ties.Count > 0 && fadeAway == false)
+            {               
+                    if (mostVotesId == (ulong)100)
+                    {
+                        if (skipButton.GetComponent<VoteButton>().done == true)
+                        {
+                            EndMeetingEffect();
+                        }
+                    }
+                    else if (players[mostVotesId].GetComponent<VoteButton>().done == true)
+                    {
+
+                        EndMeetingEffect();
+                    }
+            }
+            else if(fadeAway == false)
+            {
+                
+                //if no one dies MAKE COOL TRANSITION
                 timer += Time.deltaTime;
-                if(timer > 8f)
+                if(timer > 4f)
                 {
-                    Debug.Log("Remove Effect");
-                    timer = 0f;
+                    noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("No one was voted out", null, null);
                     fadeAway = true;
-                    waitForDramaticEffect = false;
-                    csGrp.alpha = 1;
+                    timer = 0;
                 }
             }
 
-            if(fadeAway == true)
+            if (fadeAway == true )
             {
-              
+
                 csGrp.alpha -= Time.deltaTime;
 
-                if(csGrp.alpha < 0.01f)
+                if (csGrp.alpha < 0.01f)
                 {
                     csGrp.alpha = 0f;
                     RemoveMostVotedPlayer();
 
+                    handler.controller.timerOn = true;
                     fadeAway = false;
                     meetingDone = false;
+                    votesShown = false;
+
 
                 }
             }
-        
-            
+
+
         }
 
     }
 
+    void EndMeetingEffect()
+    {
+        if (waitForDramaticEffect == false && fadeAway == false)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (waitForDramaticEffect == false && timer > 4f && fadeAway == false)
+        {
+            Debug.Log("Dramatic Effect");
+
+            foreach (ulong id in ties)
+            {
+                players[id].GetComponent<VoteButton>().setMaterial();
+            }
+            waitForDramaticEffect = true;
+            timer = 0f;
+        }
+        else if (waitForDramaticEffect == true && fadeAway == false) ;
+        {
+
+            timer += Time.deltaTime;
+            if (timer > 8f)
+            {
+                Debug.Log("Remove Effect");
+                timer = 0f;
+                fadeAway = true;
+                waitForDramaticEffect = false;
+                csGrp.alpha = 1;
+            }
+        }
+
+       
+    }
     //Start the meeting. Add all vote buttons for each alive player
     void MeetingStarted(EventCallbacks.Event eventInfo)
     {
@@ -148,6 +204,18 @@ public class MeetingUiListener : MonoBehaviour
             return;
         }
         MeetingCanvas.gameObject.SetActive(true);
+        MeetingEvent meetingEvent = (MeetingEvent)eventInfo;
+        handler = meetingEvent.meetingHandler;
+        ulong initiator = meetingEvent.idOfInitiator;
+        ulong body = meetingEvent.idOfBody;
+        if(meetingEvent.EventDescription == "BodyReported")
+        {
+            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Found a Body", handler.mobs[initiator].sprite.sprite, handler.mobs[body].sprite.sprite);
+        }
+        else
+        {
+            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Meeting Started by", null , handler.mobs[initiator].sprite.sprite);
+        }
         csGrp.alpha = 0;
         fadeIn = true;
 
@@ -165,8 +233,7 @@ public class MeetingUiListener : MonoBehaviour
 
         radialLayout.fDistance = circleLayoutDistance;
 
-        MeetingEvent meetingEvent = (MeetingEvent)eventInfo;
-        handler = meetingEvent.meetingHandler;
+        
         GameObject newObj;
 
         int amountOfPlayersAlive = 0;
@@ -256,11 +323,13 @@ public class MeetingUiListener : MonoBehaviour
         ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
+       
+
         if (handler.mobs.ContainsKey(voterId))
         {
             if (voteEvent.nameOfButton == skipButton.name)
             {
-                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
+                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite, showVotesWhenAllVoted);
             }
             else
             {
@@ -268,7 +337,7 @@ public class MeetingUiListener : MonoBehaviour
                 {
                     if (voteEvent.nameOfButton == go.Value.name)
                     {
-                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
+                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite, showVotesWhenAllVoted);
                         break;
                     }
 
@@ -279,15 +348,16 @@ public class MeetingUiListener : MonoBehaviour
         {
             Debug.Log("Vote Failed With this id: " + voterId);
         }
+
         if (voteEvent.doneVoting == true)
         {
             players[voterId].transform.GetChild(3).GetComponent<Image>().enabled = true;
         }
-        checkVotes();
+        checkVotes(eventInfo);
     }
 
     //Check if everyone has voted
-    void checkVotes()
+    void checkVotes(EventCallbacks.Event eventInfo)
     {
         int totalVotes = 0;
         int AllRealPlayers = 0;
@@ -309,15 +379,16 @@ public class MeetingUiListener : MonoBehaviour
             Debug.Log("This is bigger: " + totalVotes + " Than this " + (AllRealPlayers * youCanVoteTimes));
             handler.controller.timerOn = false;
 
-            MeetingDone();
+            MeetingDone(eventInfo);
         }
 
     }
    
     
     //Check who has the most votes and put them into a list
-    void MeetingDone()
+    void MeetingDone(EventCallbacks.Event eventInfo)
     {
+        Debug.Log("Meeting Done");
         int mostVotes = 0;
         foreach (KeyValuePair<ulong, GameObject> go in players)
         {
@@ -326,10 +397,12 @@ public class MeetingUiListener : MonoBehaviour
             {
                 if (checkVotes == mostVotes)
                 {
+
                     ties.Add(go.Key);
                 }
                 else
                 {
+                    mostVotesId = go.Key;
                     ties.Clear();
                     ties.Add(go.Key);
                 }
@@ -339,6 +412,7 @@ public class MeetingUiListener : MonoBehaviour
             {
                 if (mostVotes < skipButton.GetComponent<VoteButton>().amountVoted)
                 {
+                    mostVotesId = (ulong)100;
                     ties.Clear();
                 }
                 if (mostVotes == skipButton.GetComponent<VoteButton>().amountVoted && killOnTies == false)
@@ -346,6 +420,10 @@ public class MeetingUiListener : MonoBehaviour
                     ties.Clear();
                 }
             }
+        }
+        if(ties.Count > 1 && killOnTies == false)
+        {
+            ties.Clear();
         }
         meetingDone = true;
 
@@ -359,7 +437,6 @@ public class MeetingUiListener : MonoBehaviour
             foreach (ulong l in ties)
             {
                 Debug.Log("Remove multiple" + l);
-
                 MobRemoved message = new MobRemoved
                 {
                     id = (l),

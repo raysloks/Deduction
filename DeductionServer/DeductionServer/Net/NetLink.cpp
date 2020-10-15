@@ -5,7 +5,7 @@
 // Application should implement this class using the prototypes in HandlerPrototypes.h
 #include "../NetworkHandler.h"
 
-const uint32_t NetLink::crc = 0xed65627d;
+const uint32_t NetLink::crc = 0xe150febb;
 NetLink::NetLink() : io_context(), socket(io_context)
 {
 }

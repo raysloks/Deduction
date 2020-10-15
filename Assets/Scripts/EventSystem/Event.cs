@@ -12,6 +12,9 @@ namespace EventCallbacks
     public class MeetingEvent : Event
     {
         public NetworkHandler meetingHandler;
+        public ulong idOfInitiator;
+        public ulong idOfBody;
+
 
     }
     public class VoteEvent : Event

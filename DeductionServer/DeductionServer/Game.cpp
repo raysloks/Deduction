@@ -20,7 +20,8 @@ void Game::tick(int64_t now)
 		case GamePhase::Main:
 			break;
 		case GamePhase::Meeting:
-			setPhase(GamePhase::Main, 0);
+		//	handler.Broadcast(message);
+		//	setPhase(GamePhase::Main, 0);
 			teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
 			break;
 		default:
