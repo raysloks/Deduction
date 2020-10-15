@@ -8,6 +8,8 @@ public struct PlayerVoted
 	public long timer;
 	public ulong id;
 	public long totalVotes;
+	public string buttonName;
+	public long votesLeft;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -15,6 +17,13 @@ public struct PlayerVoted
 		writer.Write((long)timer);
 		writer.Write((ulong)id);
 		writer.Write((long)totalVotes);
+		{
+			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(buttonName);
+			ushort size = (ushort)bytes.Length;
+			writer.Write(size);
+			writer.Write(bytes);
+		}
+		writer.Write((long)votesLeft);
 	}
 
 	public static PlayerVoted Deserialize(BinaryReader reader)
@@ -24,6 +33,12 @@ public struct PlayerVoted
 		_ret.timer = (long)reader.ReadInt64();
 		_ret.id = (ulong)reader.ReadUInt64();
 		_ret.totalVotes = (long)reader.ReadInt64();
+		{
+			ushort size = reader.ReadUInt16();
+			byte[] bytes = reader.ReadBytes(size);
+			_ret.buttonName = System.Text.Encoding.UTF8.GetString(bytes);
+		}
+		_ret.votesLeft = (long)reader.ReadInt64();
 		return _ret;
 	}
 };

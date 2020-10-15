@@ -9,6 +9,8 @@ public class MeetingUiListener : MonoBehaviour
 {
     public Canvas MeetingCanvas;
     public GameObject imagePrefab;
+    public Sprite votedSprite;
+
     private GameObject layoutGroup;
     private RadialLayout radialLayout;
 
@@ -31,9 +33,9 @@ public class MeetingUiListener : MonoBehaviour
     {
         if(MeetingCanvas != null)
         {
-            layoutGroup = MeetingCanvas.gameObject.transform.GetChild(0).gameObject;
+            layoutGroup = MeetingCanvas.gameObject.transform.GetChild(1).gameObject;
             radialLayout = layoutGroup.GetComponent<RadialLayout>();
-            skipButton = MeetingCanvas.gameObject.transform.GetChild(1).gameObject;
+            skipButton = MeetingCanvas.gameObject.transform.GetChild(2).gameObject;
         }
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
      ///   EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
@@ -67,11 +69,12 @@ public class MeetingUiListener : MonoBehaviour
             return;
         }
         MeetingCanvas.gameObject.SetActive(true);
+        
         if (enableSkipButton == true)
         {
             skipButton.gameObject.SetActive(true);
             skipButton.GetComponent<VoteButton>().amountVoted = 0;
-          //  skipButton.GetComponent<VoteButton>().myText.text = "0";
+         //   skipButton.GetComponent<VoteButton>().setText("0");
 
         }
         else
@@ -98,11 +101,11 @@ public class MeetingUiListener : MonoBehaviour
                     newObj.GetComponent<Image>().sprite = n.Value.sprite.sprite;
                     if (handler.names.ContainsKey(n.Key))
                     {
-                        Debug.Log("THIS IS THE NAME " + handler.names[n.Key]);
                         newObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = handler.names[n.Key];
                         newObj.name = handler.names[n.Key];
                     }
                     newObj.transform.SetParent(layoutGroup.transform);
+                  
                     players.Add(n.Key, newObj);
                 }
             }
@@ -128,7 +131,14 @@ public class MeetingUiListener : MonoBehaviour
                 }
             }
         }
-       
+        foreach (KeyValuePair<ulong, GameObject> go in players)
+        {
+            if (go.Value.name != "VoteButton(Clone)")
+            {
+                Debug.Log("Change material of " + go.Value.name);
+                go.Value.GetComponent<VoteButton>().setMaterial();
+            }
+        }
 
         //change angle of layout based on number of players;
         switch (amountOfPlayersAlive) {
@@ -170,10 +180,11 @@ public class MeetingUiListener : MonoBehaviour
         ulong voterId = voteEvent.idOfVoter;
         Debug.Log("Vote for: " + voteEvent.nameOfButton);
         youCanVoteTimes = voteEvent.totalAmountOfVotes;
-        if (handler.mobs.ContainsKey(voterId - 1)){
+        if (handler.mobs.ContainsKey(voterId))
+        {
             if (voteEvent.nameOfButton == skipButton.name)
             {
-                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
+                skipButton.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
             }
             else
             {
@@ -181,7 +192,7 @@ public class MeetingUiListener : MonoBehaviour
                 {
                     if (voteEvent.nameOfButton == go.Value.name)
                     {
-                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId - 1].sprite);
+                        go.Value.GetComponent<VoteButton>().voteExternal(handler.mobs[voterId].sprite);
                         break;
                     }
 
@@ -192,28 +203,40 @@ public class MeetingUiListener : MonoBehaviour
         {
             Debug.Log("Vote Failed With this id: " + voterId);
         }
-       
+        if(voteEvent.doneVoting == true)
+        {
+            players[voterId].transform.GetChild(3).GetComponent<Image>().enabled = true;
+        }
         checkVotes();
     }
 
     void checkVotes()
     {
         int totalVotes = 0;
-        
+        int AllRealPlayers = 0;
          foreach (KeyValuePair<ulong, GameObject> go in players)
          {
+            string name = go.Value.name;
+            if (name != "New Text" && name != "Player Name" && name != "VoteButton(Clone)" && name != "")
+            {
+                Debug.Log("One of the names: " + name);
+                AllRealPlayers++;
+            }
             totalVotes += go.Value.GetComponent<VoteButton>().amountVoted;
-         }
-         if(totalVotes >= (players.Count * youCanVoteTimes))
+        }
+        if (totalVotes >= (AllRealPlayers * youCanVoteTimes))
          {
-            Debug.Log("This is bigger: " + totalVotes + " Than this " + (players.Count * youCanVoteTimes));
+            Debug.Log("This is bigger: " + totalVotes + " Than this " + (AllRealPlayers * youCanVoteTimes));
+            handler.controller.timerOn = false;
+            
             MeetingDone();
-         }
+        }
         else
         {
-            Debug.Log("This is bigger: " + (players.Count * youCanVoteTimes) + " Than this " + totalVotes);
+            Debug.Log("This is bigger: " + (AllRealPlayers * youCanVoteTimes) + " Than this " + totalVotes);
+
         }
-        
+
     }
 
     void MeetingDone()
@@ -222,6 +245,7 @@ public class MeetingUiListener : MonoBehaviour
         {
             return;
         }
+
         List<ulong> ties = new List<ulong>();
         int mostVotes = 0;
         foreach (KeyValuePair<ulong, GameObject> go in players)
@@ -240,31 +264,53 @@ public class MeetingUiListener : MonoBehaviour
                 }
                 mostVotes = checkVotes;
             }
-            if(ties.Count > 1 && killOnTies == true)
+            if (enableSkipButton == true)
             {
-                foreach(ulong l in ties)
+                if (mostVotes < skipButton.GetComponent<VoteButton>().amountVoted)
                 {
-                    Debug.Log("Remove multiple" + l);
-
-                    MobRemoved message = new MobRemoved
-                    {
-                        id = (l),
-                    };
-                    handler.link.Send(message);
+                    Debug.Log("Skipvotebutton Clear no tie");
+                    ties.Clear();
+                }
+                if(mostVotes == skipButton.GetComponent<VoteButton>().amountVoted && killOnTies == false)
+                {
+                    Debug.Log("Skipvotebutton Clear");
+                    ties.Clear();
                 }
             }
-            else if(ties.Count == 1)
+        }
+        //Kill most voted player. If killOnties is on it will kill all tied players otherwise it wont kill tied players
+        if (ties.Count > 1 && killOnTies == true)
+        {
+            foreach (ulong l in ties)
             {
-                ulong id2 = ties[0];
-                Debug.Log("Remove this" + id2 + " name: " + handler.names[id2]);
+                Debug.Log("Remove multiple" + l);
+
                 MobRemoved message = new MobRemoved
                 {
-                    id = (id2),
+                    id = (l),
                 };
                 handler.link.Send(message);
-                
             }
-           
+        }
+        else if (ties.Count == 1)
+        {
+            ulong id2 = ties[0];
+           // Debug.Log("Remove this" + id2 + " name: " + handler.names[id2]);
+            MobRemoved message = new MobRemoved
+            {
+                id = (id2),
+            };
+            handler.link.Send(message);
+
+        }
+        else
+        {
+            Debug.Log("Noone died");
+        }
+
+        //Reset vote text and remove dead players from menu**
+        foreach (KeyValuePair<ulong, GameObject> go in players)
+        {
             if (handler.mobs.ContainsKey(go.Key))
             {
                 if (handler.mobs[go.Key].IsAlive == true)
@@ -280,10 +326,20 @@ public class MeetingUiListener : MonoBehaviour
                 }
             }
         }
-
+        //**
+        
         MeetingCanvas.gameObject.SetActive(false);
-
+        changeGamePhase((ulong)1);
         meetingDone = true;
 
+    }
+
+    void changeGamePhase(ulong phase)
+    {
+        GamePhaseUpdate message = new GamePhaseUpdate
+        {
+            phase = phase
+        };
+        handler.link.Send(message);
     }
 }

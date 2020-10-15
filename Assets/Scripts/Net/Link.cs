@@ -530,6 +530,6 @@ public class Link
 		}
 	}
 
-	public const uint crc = 0x14b1ed65;
+	public const uint crc = 0xed65627d;
 	private UdpClient client;
 }
