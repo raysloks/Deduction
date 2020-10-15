@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
             handler.link.Send(new RestartRequested());
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && phase == GamePhase.Main)
         {
             foreach (var n in handler.mobs)
             {
@@ -126,7 +126,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
         {
             foreach (var mob in handler.mobs.Values)
             {
@@ -147,14 +147,15 @@ public class GameController : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting)
         {
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
             {
                 PlayerVoted message = new PlayerVoted
-                {                    
+                {
                     timer = timer,
-                    totalVotes = totalAmountOfVotes
+                    totalVotes = totalAmountOfVotes,
+                    buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
                  };
                 handler.link.Send(message);
             }
