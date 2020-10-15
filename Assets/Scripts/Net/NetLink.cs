@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
-public class Link
+public class NetLink
 {
 	public NetworkHandler handler;
 
@@ -422,6 +422,7 @@ public class Link
 					case 1:
 					{
 						this.endpoint = endpoint;
+						message_queue.Enqueue(() => handler.ConnectionHandler(endpoint));
 						break;
 					}
 					default:

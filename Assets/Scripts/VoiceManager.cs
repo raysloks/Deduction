@@ -38,6 +38,10 @@ public class VoiceManager
                 //handler.controller.voicePlayer.ProcessFrame(inputAudioSamples);
                 byte[] outputBuffer = new byte[1000];
 
+                if (!Input.GetKey(KeyCode.V))
+                    for (int i = 0; i < inputAudioSamples.Length; ++i)
+                        inputAudioSamples[i] = 0;
+
                 for (int i = 0; i < inputAudioSamples.Length - 1; ++i)
                 {
                     Debug.DrawLine(new Vector3(i / 100f, inputAudioSamples[i] / 10000f), new Vector3((i + 1) / 100f, inputAudioSamples[i + 1] / 10000f), Color.white);

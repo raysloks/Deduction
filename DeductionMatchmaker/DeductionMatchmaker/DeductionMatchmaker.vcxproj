@@ -35,9 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6dfd1767-a259-44a6-8b17-5208c4e8dead}</ProjectGuid>
+    <ProjectGuid>{172c0e38-628c-439a-a38d-b71beb9cb29a}</ProjectGuid>
     <Keyword>Linux</Keyword>
-    <RootNamespace>DeductionServer</RootNamespace>
+    <RootNamespace>DeductionMatchmaker</RootNamespace>
     <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <ApplicationType>Linux</ApplicationType>
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
@@ -75,102 +75,26 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MatchmakerHandler.cpp" />
     <ClCompile Include="Matchmaker\LobbyIdentity.cpp" />
     <ClCompile Include="Matchmaker\LobbyRequest.cpp" />
     <ClCompile Include="Matchmaker\MatchmakerLink.cpp" />
-    <ClCompile Include="Mob.cpp" />
-    <ClCompile Include="NetworkHandler.cpp" />
-    <ClCompile Include="Net\AbilityUsed.cpp" />
-    <ClCompile Include="Net\GamePhaseUpdate.cpp" />
-    <ClCompile Include="Net\GameStartRequested.cpp" />
-    <ClCompile Include="Net\Heartbeat.cpp" />
-    <ClCompile Include="Net\KillAttempted.cpp" />
-    <ClCompile Include="Net\MeetingRequested.cpp" />
-    <ClCompile Include="Net\MobRemoved.cpp" />
-    <ClCompile Include="Net\MobRoleUpdate.cpp" />
-    <ClCompile Include="Net\MobStateUpdate.cpp" />
-    <ClCompile Include="Net\MobTeleport.cpp" />
-    <ClCompile Include="Net\MobUpdate.cpp" />
-    <ClCompile Include="Net\NetLink.cpp" />
-    <ClCompile Include="Net\PlayerUpdate.cpp" />
-    <ClCompile Include="Net\PlayerVoted.cpp" />
-    <ClCompile Include="Net\ReportAttempted.cpp" />
-    <ClCompile Include="Net\RestartRequested.cpp" />
-    <ClCompile Include="Net\VoiceFrame.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Task.cpp" />
-    <ClCompile Include="Vec2.cpp" />
-    <ClCompile Include="Vec3.cpp" />
     <ClCompile Include="Xoroshiro128Plus.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GamePhase.h" />
-    <ClInclude Include="Map.h" />
+    <Text Include="Matchmaker\last_build.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="MatchmakerHandler.h" />
     <ClInclude Include="Matchmaker\LobbyIdentity.h" />
     <ClInclude Include="Matchmaker\LobbyRequest.h" />
     <ClInclude Include="Matchmaker\MatchmakerHandlerPrototypes.h" />
     <ClInclude Include="Matchmaker\MatchmakerLink.h" />
-    <ClInclude Include="Mob.h" />
-    <ClInclude Include="MobType.h" />
-    <ClInclude Include="NetworkHandler.h" />
-    <ClInclude Include="Net\AbilityUsed.h" />
-    <ClInclude Include="Net\GamePhaseUpdate.h" />
-    <ClInclude Include="Net\GameStartRequested.h" />
-    <ClInclude Include="Net\Heartbeat.h" />
-    <ClInclude Include="Net\KillAttempted.h" />
-    <ClInclude Include="Net\MeetingRequested.h" />
-    <ClInclude Include="Net\MobRemoved.h" />
-    <ClInclude Include="Net\MobRoleUpdate.h" />
-    <ClInclude Include="Net\MobStateUpdate.h" />
-    <ClInclude Include="Net\MobTeleport.h" />
-    <ClInclude Include="Net\MobUpdate.h" />
-    <ClInclude Include="Net\NetHandlerPrototypes.h" />
-    <ClInclude Include="Net\NetLink.h" />
-    <ClInclude Include="Net\PlayerUpdate.h" />
-    <ClInclude Include="Net\PlayerVoted.h" />
-    <ClInclude Include="Net\ReportAttempted.h" />
-    <ClInclude Include="Net\RestartRequested.h" />
-    <ClInclude Include="Net\VoiceFrame.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Role.h" />
-    <ClInclude Include="Task.h" />
-    <ClInclude Include="Vec2.h" />
-    <ClInclude Include="Vec3.h" />
     <ClInclude Include="Xoroshiro128Plus.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Matchmaker\last_build.txt" />
-    <Text Include="Net\last_build.txt" />
-  </ItemGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
-      <CppLanguageStandard>c++17</CppLanguageStandard>
-    </ClCompile>
-    <Link>
-      <LibraryDependencies>pthread</LibraryDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
-      <CppLanguageStandard>c++17</CppLanguageStandard>
-    </ClCompile>
-    <Link>
-      <LibraryDependencies>pthread</LibraryDependencies>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -179,7 +103,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -188,7 +111,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -197,7 +119,22 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
+      <CppLanguageStandard>c++17</CppLanguageStandard>
+    </ClCompile>
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <CppLanguageStandard>c++17</CppLanguageStandard>
+    </ClCompile>
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -206,7 +143,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
@@ -215,7 +151,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <ClCompile>
-      <AdditionalIncludeDirectories />
       <CppLanguageStandard>c++17</CppLanguageStandard>
     </ClCompile>
     <Link>
