@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MatchmakerHandler.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matchmaker\LobbyIdentity.cpp" />
+    <ClCompile Include="Matchmaker\LobbyRequest.cpp" />
+    <ClCompile Include="Matchmaker\MatchmakerLink.cpp" />
+    <ClCompile Include="Xoroshiro128Plus.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MatchmakerHandler.h" />
+    <ClInclude Include="Matchmaker\LobbyIdentity.h" />
+    <ClInclude Include="Matchmaker\LobbyRequest.h" />
+    <ClInclude Include="Matchmaker\MatchmakerHandlerPrototypes.h" />
+    <ClInclude Include="Matchmaker\MatchmakerLink.h" />
+    <ClInclude Include="Xoroshiro128Plus.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Matchmaker\last_build.txt" />
+  </ItemGroup>
+</Project>

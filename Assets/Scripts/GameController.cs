@@ -18,25 +18,43 @@ public class GameController : MonoBehaviour
 
     public Text text;
 
+    public InputField nameInputField;
+    public InputField lobbyInputField;
+
+    public GameObject connectionMenu;
+
     public long time;
     public long timeout;
 
     public NetworkHandler handler;
+    public MatchmakerHandler matchmaker;
     public VoiceManager voice;
 
     [HideInInspector] public bool timerOn = true;
 
     public bool listenToSelf = false;
 
+    public Xoroshiro128Plus rng = new Xoroshiro128Plus();
+
+    public enum ConnectionState
+    {
+        None,
+        ConnectingToMatchmaker,
+        RequestingLobby,
+        ConnectingToLobby,
+        JoiningLobby,
+        Connected
+    }
+
+    public ConnectionState connectionState;
+
     void Start()
     {
         handler = new NetworkHandler();
         handler.controller = this;
 
-        phase = GamePhase.None;
-
-        if (!player)
-            player = FindObjectOfType<Player>(); // todo fix
+        matchmaker = new MatchmakerHandler();
+        matchmaker.controller = this;
 
         voice = new VoiceManager();
         voice.handler = handler;
@@ -47,12 +65,17 @@ public class GameController : MonoBehaviour
         voice.Stream();
 
         handler.link.Poll();
+        matchmaker.link.Poll();
 
-       
+
         time += (long)(Time.deltaTime * 1000000000);
 
         if (time > timeout && timeout != 0)
+        {
+            connectionState = ConnectionState.None;
             phase = GamePhase.None;
+            timeout = 0;
+        }
 
         heartbeat -= Time.deltaTime;
         if (heartbeat <= 0f)
@@ -64,7 +87,14 @@ public class GameController : MonoBehaviour
         snapshot -= Time.deltaTime;
         if (snapshot <= 0f)
         {
-            handler.link.Send(new PlayerUpdate { name = Environment.UserName });
+            if (connectionState == ConnectionState.JoiningLobby)
+            {
+                string name = nameInputField.text;
+                name = name.Trim();
+                if (name.Length == 0)
+                    name = "Agent " + rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
+                handler.link.Send(new PlayerUpdate { name = name });
+            }
             handler.link.Send(new MobUpdate { position = player.transform.position });
             snapshot += 0.05f;
         }
@@ -95,16 +125,16 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
+
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            foreach (var n in handler.mobs.Values)
+            foreach (var mob in handler.mobs.Values)
             {
-                if(n.IsAlive == false)
+                if(mob.IsAlive == false)
                 {
-                    float distance = Vector2.Distance(player.transform.position, n.transform.position);
+                    float distance = Vector2.Distance(player.transform.position, mob.transform.position);
                     if(distance < reportDistance)
                     {
-
                         ReportAttempted message = new ReportAttempted
                         {
                             target = 0,
@@ -122,33 +152,65 @@ public class GameController : MonoBehaviour
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
             {
                 PlayerVoted message = new PlayerVoted
-                {                    
+                {
                     timer = timer,
                     totalVotes = totalAmountOfVotes,
                     buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
                 };
                 handler.link.Send(message);
-                
             }
         }
 
-        switch (phase)
+        connectionMenu.SetActive(connectionState == ConnectionState.None);
+
+        switch (connectionState)
         {
-            case GamePhase.Setup:
-                if (timer != 0)
-                    text.text = "Game starting in " + (timer - time + 999999999) / 1000000000;
-                else
-                    text.text = "Setup";
-                break;
-            case GamePhase.Main:
+            case ConnectionState.None:
                 text.text = "";
                 break;
+<<<<<<< HEAD
             case GamePhase.Meeting:
-                if (timer != 0 && timerOn == true)               
+                if (timer != 0 && timerOn == true)
                     text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
                  break;
             case GamePhase.None:
                 text.text = "Connecting...";
+=======
+            case ConnectionState.ConnectingToMatchmaker:
+                text.text = "Connecting to matchmaker...";
+                break;
+            case ConnectionState.RequestingLobby:
+                text.text = "Requesting lobby...";
+                break;
+            case ConnectionState.ConnectingToLobby:
+                text.text = "Connecting to lobby...";
+                break;
+            case ConnectionState.JoiningLobby:
+                text.text = "Joining lobby...";
+                break;
+            case ConnectionState.Connected:
+                switch (phase)
+                {
+                    case GamePhase.Setup:
+                        if (timer != 0)
+                            text.text = "Game starting in " + (timer - time + 999999999) / 1000000000;
+                        else
+                            text.text = "Setup " + matchmaker.lobby;
+                        break;
+                    case GamePhase.Main:
+                        text.text = "";
+                        break;
+                    case GamePhase.Meeting:
+                        if (timer != 0)
+                        {
+                            text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
+                        }
+                        break;
+                    case GamePhase.None:
+                        text.text = "Waiting for server...";
+                        break;
+                }
+>>>>>>> b4a8b0d8f00c74fa835981059632baf0855dd5e5
                 break;
         }
     }
@@ -162,6 +224,12 @@ public class GameController : MonoBehaviour
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
+    public void Connect()
+    {
+        matchmaker.ConnectToLobby(lobbyInputField.text);
+        timeout = time + 20000000000;
+    }
+
     public enum GamePhase
     {
         Setup,
@@ -170,7 +238,7 @@ public class GameController : MonoBehaviour
         None
     }
 
-    public GamePhase phase;
+    public GamePhase phase = GamePhase.None;
     public long timer;
 
     public void SetGamePhase(GamePhase phase, long timer)
