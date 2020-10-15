@@ -38,16 +38,6 @@ void NetLink::Receive()
 	t.detach();
 }
 
-void NetLink::Connect(const asio::ip::udp::endpoint& endpoint)
-{
-	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
-	std::ostream os(buffer.get());
-	os.put(0);
-	os.write((const char*)&crc, sizeof(crc));
-	os.put(0);
-	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
-}
-
 void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint)
 {
 	int64_t time = std::chrono::steady_clock::now().time_since_epoch().count();
@@ -59,7 +49,6 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 			is.read((char*)&remote_crc, sizeof(remote_crc));
 			if (remote_crc != crc)
 				return;
-			connections[endpoint] = time;
 			switch (is.get())
 			{
 				case 0:
@@ -70,11 +59,11 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 					os.write((const char*)&crc, sizeof(crc));
 					os.put(1);
 					socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
+					connections[endpoint] = time;
 					break;
 				}
 				case 1:
 				{
-					handler->ConnectionHandler(endpoint);
 					break;
 				}
 				default:

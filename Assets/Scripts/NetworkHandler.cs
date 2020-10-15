@@ -7,9 +7,10 @@ using EventCallbacks;
 
 public class NetworkHandler
 {
+
     public GameController controller;
 
-    public NetLink link;
+    public Link link;
 
     public Dictionary<ulong, Mob> mobs = new Dictionary<ulong, Mob>();
     public Dictionary<ulong, string> names = new Dictionary<ulong, string>();
@@ -22,7 +23,7 @@ public class NetworkHandler
 
     public NetworkHandler()
     {
-        link = new NetLink();
+        link = new Link();
         link.handler = this;
         link.Open(new IPEndPoint(IPAddress.Any, 0));
         link.Connect(new IPEndPoint(IPAddress.Parse("172.105.79.194"), port));
@@ -34,6 +35,8 @@ public class NetworkHandler
         TextMeshProUGUI text = null;
         if (mobs.ContainsKey(mob))
             text = mobs[mob].GetComponentInChildren<TextMeshProUGUI>();
+        if (mob == playerMobId)
+            text = controller.player.GetComponentInChildren<TextMeshProUGUI>();
         if (text)
         {
             if (names.ContainsKey(mob))
@@ -65,7 +68,6 @@ public class NetworkHandler
         {
             playerMobId = message.mob;
             mobs[playerMobId] = controller.player;
-            controller.connectionState = GameController.ConnectionState.Connected;
         }
         else
             names[message.mob] = message.name;
@@ -168,10 +170,5 @@ public class NetworkHandler
             voicePlayer = mobs[message.id].GetComponentInChildren<VoicePlayer>();
         if (voicePlayer)
             voicePlayer.ProcessFrame(message.data);
-    }
-
-    internal void ConnectionHandler(IPEndPoint endpoint)
-    {
-        controller.connectionState = GameController.ConnectionState.JoiningLobby;
     }
 }

@@ -255,7 +255,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 	}
 
 	bool can_accept = true;
-	bool can_connect = true;
+	bool can_connect = false;
 
 	std::string link_name = protocol.prefix + "Link";
 
@@ -308,7 +308,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 		f << "	static const uint32_t crc;" << std::endl << std::dec;
 
-		//f << "private:" << std::endl;
+		f << "private:" << std::endl;
 
 		f << "	asio::io_context io_context;" << std::endl;
 		f << "	asio::ip::udp::socket socket;" << std::endl;
@@ -375,7 +375,8 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 			f << "	std::ostream os(buffer.get());" << std::endl;
 			f << "	os.put(0);" << std::endl;
 			f << "	os.write((const char*)&crc, sizeof(crc));" << std::endl;
-			f << "	os.put(0);" << std::endl;
+			f << "	os.put(1);" << std::endl;
+			f << "	message.serialize(os);" << std::endl;
 			f << "	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});" << std::endl;
 			f << "}" << std::endl << std::endl;
 		}
@@ -394,7 +395,6 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 				f << "			is.read((char*)&remote_crc, sizeof(remote_crc));" << std::endl;
 				f << "			if (remote_crc != crc)" << std::endl;
 				f << "				return;" << std::endl; // todo send error message
-				f << "			connections[endpoint] = time;" << std::endl;
 				f << "			switch (is.get())" << std::endl;
 				f << "			{" << std::endl;
 				f << "				case 0:" << std::endl;
@@ -407,15 +407,12 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 					f << "					os.write((const char*)&crc, sizeof(crc));" << std::endl;
 					f << "					os.put(1);" << std::endl;
 					f << "					socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});" << std::endl;
+					f << "					connections[endpoint] = time;" << std::endl;
 				}
 				f << "					break;" << std::endl;
 				f << "				}" << std::endl;
 				f << "				case 1:" << std::endl;
 				f << "				{" << std::endl;
-				if (can_connect)
-				{
-					f << "					handler->ConnectionHandler(endpoint);" << std::endl;
-				}
 				f << "					break;" << std::endl;
 				f << "				}" << std::endl;
 				f << "				default:" << std::endl;
@@ -484,11 +481,6 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 	{
 		std::ofstream f(destination_path / (protocol.prefix + "HandlerPrototypes.h"));
-
-		if (can_connect)
-		{
-			f << "	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);" << std::endl;
-		}
 
 		for (auto type : types) // TODO only message types
 		{

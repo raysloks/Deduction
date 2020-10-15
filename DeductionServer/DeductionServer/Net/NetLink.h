@@ -32,7 +32,6 @@ public:
 	NetLink();
 	void Open(const asio::ip::udp::endpoint& endpoint);
 	void Receive();
-	void Connect(const asio::ip::udp::endpoint& endpoint);
 	void Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint);
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
@@ -51,6 +50,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);
 	static const uint32_t crc;
+private:
 	asio::io_context io_context;
 	asio::ip::udp::socket socket;
 	std::map<asio::ip::udp::endpoint, int64_t> connections;

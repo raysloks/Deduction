@@ -78,10 +78,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MatchmakerHandler.cpp" />
-    <ClCompile Include="Matchmaker\LobbyIdentity.cpp" />
-    <ClCompile Include="Matchmaker\LobbyRequest.cpp" />
-    <ClCompile Include="Matchmaker\MatchmakerLink.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="Net\AbilityUsed.cpp" />
@@ -111,11 +107,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="MatchmakerHandler.h" />
-    <ClInclude Include="Matchmaker\LobbyIdentity.h" />
-    <ClInclude Include="Matchmaker\LobbyRequest.h" />
-    <ClInclude Include="Matchmaker\MatchmakerHandlerPrototypes.h" />
-    <ClInclude Include="Matchmaker\MatchmakerLink.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="MobType.h" />
     <ClInclude Include="NetworkHandler.h" />
@@ -145,7 +136,6 @@
     <ClInclude Include="Xoroshiro128Plus.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Matchmaker\last_build.txt" />
     <Text Include="Net\last_build.txt" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

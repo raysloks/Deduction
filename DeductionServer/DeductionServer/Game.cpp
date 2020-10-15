@@ -39,9 +39,6 @@ void Game::tick(int64_t now)
 	default:
 		break;
 	}
-
-	if (phase != GamePhase::Setup && handler.players.empty())
-		restartSetup();
 }
 
 void Game::setPhase(GamePhase phase, int64_t timer)
@@ -62,7 +59,7 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 		mobs.push_back(player.second.mob);
 	}
 
-	for (size_t i = 0; i + 1 < mobs.size(); ++i)
+	for (size_t i = 0; i < mobs.size() - 1; ++i)
 	{
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}

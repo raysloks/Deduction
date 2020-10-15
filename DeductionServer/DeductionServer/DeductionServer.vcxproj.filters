@@ -4,9 +4,6 @@
     <Filter Include="Net">
       <UniqueIdentifier>{7d0d1463-d05d-4d64-9f3c-e6c0a20eb631}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Matchmaker">
-      <UniqueIdentifier>{4ab79756-eb63-44fa-8710-13c62d8659ac}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Net\NetLink.h">
@@ -75,19 +72,6 @@
     <ClInclude Include="Net\VoiceFrame.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="Matchmaker\LobbyIdentity.h">
-      <Filter>Matchmaker</Filter>
-    </ClInclude>
-    <ClInclude Include="Matchmaker\LobbyRequest.h">
-      <Filter>Matchmaker</Filter>
-    </ClInclude>
-    <ClInclude Include="Matchmaker\MatchmakerHandlerPrototypes.h">
-      <Filter>Matchmaker</Filter>
-    </ClInclude>
-    <ClInclude Include="Matchmaker\MatchmakerLink.h">
-      <Filter>Matchmaker</Filter>
-    </ClInclude>
-    <ClInclude Include="MatchmakerHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -151,23 +135,10 @@
     <ClCompile Include="Net\VoiceFrame.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="Matchmaker\LobbyIdentity.cpp">
-      <Filter>Matchmaker</Filter>
-    </ClCompile>
-    <ClCompile Include="Matchmaker\LobbyRequest.cpp">
-      <Filter>Matchmaker</Filter>
-    </ClCompile>
-    <ClCompile Include="Matchmaker\MatchmakerLink.cpp">
-      <Filter>Matchmaker</Filter>
-    </ClCompile>
-    <ClCompile Include="MatchmakerHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">
       <Filter>Net</Filter>
-    </Text>
-    <Text Include="Matchmaker\last_build.txt">
-      <Filter>Matchmaker</Filter>
     </Text>
   </ItemGroup>
 </Project>

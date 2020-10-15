@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using EventCallbacks;
 using UnityEngine.EventSystems;
 
 public class Player : Mob
@@ -9,17 +10,14 @@ public class Player : Mob
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (!EventSystem.current.currentSelectedGameObject)
-        {
-            if (Input.GetKey(KeyCode.W))
-                move += Vector3.up;
-            if (Input.GetKey(KeyCode.A))
-                move += Vector3.left;
-            if (Input.GetKey(KeyCode.S))
-                move += Vector3.down;
-            if (Input.GetKey(KeyCode.D))
-                move += Vector3.right;
-        }
+        if (Input.GetKey(KeyCode.W))
+            move += Vector3.up;
+        if (Input.GetKey(KeyCode.A))
+            move += Vector3.left;
+        if (Input.GetKey(KeyCode.S))
+            move += Vector3.down;
+        if (Input.GetKey(KeyCode.D))
+            move += Vector3.right;
         move = Vector3.ClampMagnitude(move, 1f);
 
         if (move.x > 0f)
