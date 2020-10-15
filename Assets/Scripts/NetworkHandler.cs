@@ -96,24 +96,13 @@ public class NetworkHandler
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
     {
         Debug.Log("This is the phase " + message.phase + " this player voted " + names[message.id]);
-      
-
+        
+        
         VoteEvent uvei = new VoteEvent();
-
-        if (message.votesLeft == 0)
-        {
-            uvei.doneVoting = true;
-            Debug.Log("Done Voting");
-        }
-        else
-        {
-            uvei.doneVoting = false;
-        }
-
         uvei.idOfVoter = message.id;
         uvei.EventDescription = "Player Voted";
         uvei.totalAmountOfVotes = (int)message.totalVotes;
-        uvei.nameOfButton = message.buttonName;
+        uvei.nameOfButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
         EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_VOTED, uvei);
        
     }

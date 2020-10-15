@@ -4,9 +4,68 @@
   Validating architecture
   Starting remote build
   Compiling sources:
+  Game.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,48): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,48): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,48): warning :                                                 ^~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,71): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,71): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,71): warning :                                                               ~~~~~~~~~^~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,92): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,92): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,92): warning :                                                                                             ^~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,115): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,115): warning :    message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(73,115): warning :                                                                                                           ~~~~~~~~~^~
+  main.cpp
+  Map.cpp
+  Mob.cpp
   NetworkHandler.cpp
-C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(391,10): warning : unused variable ‘player’ [-Wunused-variable]
-C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(391,10): warning :    auto&& player = it->second;
-C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(391,10): warning :           ^~~~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(381,10): warning : unused variable ‘player’ [-Wunused-variable]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(381,10): warning :    auto&& player = it->second;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(381,10): warning :           ^~~~~~
+  AbilityUsed.cpp
+  GamePhaseUpdate.cpp
+  GameStartRequested.cpp
+  Heartbeat.cpp
+  KillAttempted.cpp
+  MeetingRequested.cpp
+  MobRemoved.cpp
+  MobRoleUpdate.cpp
+  MobStateUpdate.cpp
+  MobTeleport.cpp
+  MobUpdate.cpp
+  NetLink.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\NetLink.cpp(45,17): warning : conversion from ‘std::basic_istream<char>::int_type’ {aka ‘int’} to ‘char’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\NetLink.cpp(45,17): warning :   char c = is.get();
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\NetLink.cpp(45,17): warning :            ~~~~~~^~
+  PlayerUpdate.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning : conversion from ‘std::__cxx11::basic_string<char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning :    uint16_t size = this->name.size();
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\PlayerUpdate.cpp(12,34): warning :                    ~~~~~~~~~~~~~~~^~
+  PlayerVoted.cpp
+  ReportAttempted.cpp
+  RestartRequested.cpp
+  VoiceFrame.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning : conversion from ‘std::vector<unsigned char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning :    uint16_t size = this->data.size();
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\VoiceFrame.cpp(11,34): warning :                    ~~~~~~~~~~~~~~~^~
+  Player.cpp
+  Task.cpp
+  Vec2.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning : conversion from ‘double’ to ‘float’ may change value [-Wfloat-conversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning :   float rads = degs * M_PI / 180.0f;
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Vec2.cpp(78,27): warning :                ~~~~~~~~~~~~^~~~~~~~
+  Vec3.cpp
+  Xoroshiro128Plus.cpp
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning : conversion from ‘uint64_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning :   return (next() >> 40) * (1.0f / (1ull << 24));
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(74,17): warning :          ~~~~~~~~^~~~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning : comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning :   for (int i = 0; i < sizeof JUMP / sizeof * JUMP; i++)
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(134,20): warning :                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning : comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning :   for (int i = 0; i < sizeof LONG_JUMP / sizeof * LONG_JUMP; i++)
+C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Xoroshiro128Plus.cpp(158,20): warning :                   ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   Linking objects
   DeductionServer.vcxproj -> C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\DeductionServer\DeductionServer\bin\x64\Debug\DeductionServer.out

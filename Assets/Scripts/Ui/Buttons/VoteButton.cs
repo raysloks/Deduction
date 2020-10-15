@@ -16,16 +16,9 @@ public class VoteButton : MonoBehaviour
     private Image mySecondaryImg;
     private bool disapering = false;
     public float speedOfDisaperance = 10f;
-    public Material m;
     [HideInInspector]public TMP_Text myText;
 
     [HideInInspector]public int amountVoted = 0;
-    [HideInInspector]public int amountVotedinternal = 0;
-    private Image myImage;
-
-    private float timer = 0;
-    private bool timerOn = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -37,35 +30,10 @@ public class VoteButton : MonoBehaviour
 
 
     }
-
     void Update()
     {
-        if(timerOn == true)
-        {
-            timer += 0.1f * Time.deltaTime;
-            if (timer > 0 && timer < 1f)
-            {
-                //Mathf.Lerp(0f, 1f, timer);
-                myImage.material.SetFloat("_ShakeUvSpeed", timer * 20f);
-                myImage.material.SetFloat("_ShakeUvX", timer * 5f);
-                myImage.material.SetFloat("_ShakeUvY", timer * 5f);
-
-                myImage.material.SetFloat("_NegativeAmount", timer * 1f);
-                myImage.material.SetFloat("_PinchUvAmount", timer * 0.5f);
-                myImage.material.SetFloat("_HitEffectBlend", timer * 0.5f);
-            }
-            else
-            {
-                Debug.Log("Done");
-            }
-        }
-
-        
         if (sr.Count > 0 && disapering == false)
         {
-            amountVotedinternal++;
-            myText.text = amountVotedinternal.ToString();
-
             mySecondaryImg.sprite = sr[0].sprite;
             //    colorWhite = mySecondaryImg.color;
             
@@ -77,7 +45,7 @@ public class VoteButton : MonoBehaviour
         }
         else if(disapering == true)
         {
-            colorWhite = Color.Lerp(colorWhite, lerpedColor, 3f * Time.deltaTime);
+            colorWhite = Color.Lerp(colorWhite, lerpedColor, 1f * Time.deltaTime);
             mySecondaryImg.color = colorWhite;
 
 
@@ -90,22 +58,14 @@ public class VoteButton : MonoBehaviour
             }
         }
     }
-
     public void voteExternal(SpriteRenderer votedSprite)
     {
-        
-        amountVoted++;
-        if(amountVoted == 1)
-        {
-            amountVotedinternal = 0;
-        }
         sr.Add(votedSprite);
+        Debug.Log("sr added " + sr.Count);
 
-        //   myText.text = amountVoted.ToString();
+        amountVoted++;
+        myText.text = amountVoted.ToString();
     }
-
-    
-
     void vote(EventCallbacks.Event Eventinfo)
     {
         VoteEvent votingEvent = (VoteEvent)Eventinfo;
@@ -118,35 +78,5 @@ public class VoteButton : MonoBehaviour
             
         }
 
-    }
-    public void setText(string t)
-    {
-        myText.text = t;
-    }
-    public void setMaterial()
-    {
-     //   this.gameObject.GetComponent<AllIn1Shader>().MakeCopy();
-        myImage = this.GetComponent<Image>();
-        myImage.material = m;
-        this.gameObject.GetComponent<AllIn1Shader>().ToggleSetAtlasUvs(true);
-        timerOn = true;
-        if (myImage != null)
-        {
-            myImage.material.SetFloat("_ShakeUvSpeed", 20f);
-            myImage.material.SetFloat("_ShakeUvX", 5f);
-            myImage.material.SetFloat("_ShakeUvY", 5f);
-
-            myImage.material.SetFloat("_NegativeAmount", 1f);
-            myImage.material.SetFloat("_PinchUvAmount", 0.5f);
-            myImage.material.SetFloat("_HitEffectBlend", 0.7f);
-
-
-            // myImage.material.SetFloat("_Pinch", 0.5f);
-
-        }
-        else
-        {
-            Debug.Log("imageGONE");
-        }
     }
 }

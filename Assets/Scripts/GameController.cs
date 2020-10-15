@@ -30,8 +30,6 @@ public class GameController : MonoBehaviour
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
 
-    [HideInInspector] public bool timerOn = true;
-
     public bool listenToSelf = false;
 
     public Xoroshiro128Plus rng = new Xoroshiro128Plus();
@@ -66,7 +64,6 @@ public class GameController : MonoBehaviour
 
         handler.link.Poll();
         matchmaker.link.Poll();
-
 
         time += (long)(Time.deltaTime * 1000000000);
 
@@ -106,7 +103,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
             handler.link.Send(new RestartRequested());
 
-        if (Input.GetKeyDown(KeyCode.Q) && phase == GamePhase.Main)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             foreach (var n in handler.mobs)
             {
@@ -147,16 +144,15 @@ public class GameController : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting )
+        if (Input.GetMouseButtonDown(0))
         {
             if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
             {
                 PlayerVoted message = new PlayerVoted
-                {
+                {                    
                     timer = timer,
-                    totalVotes = totalAmountOfVotes,
-                    buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
-                };
+                    totalVotes = totalAmountOfVotes
+                 };
                 handler.link.Send(message);
             }
         }
@@ -168,14 +164,6 @@ public class GameController : MonoBehaviour
             case ConnectionState.None:
                 text.text = "";
                 break;
-<<<<<<< HEAD
-            case GamePhase.Meeting:
-                if (timer != 0 && timerOn == true)
-                    text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
-                 break;
-            case GamePhase.None:
-                text.text = "Connecting...";
-=======
             case ConnectionState.ConnectingToMatchmaker:
                 text.text = "Connecting to matchmaker...";
                 break;
@@ -210,7 +198,6 @@ public class GameController : MonoBehaviour
                         text.text = "Waiting for server...";
                         break;
                 }
->>>>>>> b4a8b0d8f00c74fa835981059632baf0855dd5e5
                 break;
         }
     }
@@ -248,7 +235,6 @@ public class GameController : MonoBehaviour
             Debug.Log("Meeting Started");
             MeetingUi();
         }
-        timerOn = true;
         this.phase = phase;
         this.timer = timer;
     }

@@ -41,8 +41,6 @@ uint64 phase
 int64 timer
 uint64 id
 int64 totalVotes
-string buttonName
-int64 votesLeft
 ReportAttempted
 int64 time
 uint64 target
