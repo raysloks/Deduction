@@ -91,15 +91,7 @@ public class GameSettings : MonoBehaviour
 
     public GameSetting GetSetting(string name)
     {
-        int index = settings.FindIndex(item => item.name == name);
-        if (index >= 0)
-        {
-            return settings[index];
-        }
-        else
-        {
-            return null;
-        }
+        return settings.Find(item => item.name == name);
     }
 
     private void UpdateInputDisplay(int setting)
