@@ -287,7 +287,7 @@ public class MeetingUiListener : MonoBehaviour
                     else
                     {
                         go.Value.SetActive(false);
-                        players.Remove(go.Key);
+                       // players.Remove(go.Key);
                     }
                 }
             }
@@ -376,13 +376,18 @@ public class MeetingUiListener : MonoBehaviour
         int AllRealPlayers = 0;
         foreach (KeyValuePair<ulong, GameObject> go in players)
         {
-            string name = go.Value.name;
-            if (name != "New Text" && name != "Player Name" && name != "VoteButton(Clone)" && name != "")
+            if (go.Value.active == true)
             {
-                Debug.Log("One of the names: " + name);
-                AllRealPlayers++;
+                string name = go.Value.name;
+                if (name != "New Text" && name != "Player Name" && name != "VoteButton(Clone)" && name != "")
+                {
+                    Debug.Log("One of the names: " + name);
+
+                    AllRealPlayers++;
+                }
+            
+                totalVotes += go.Value.GetComponent<VoteButton>().amountVoted;
             }
-            totalVotes += go.Value.GetComponent<VoteButton>().amountVoted;
         }
 
         totalVotes += skipButton.GetComponent<VoteButton>().amountVoted;
@@ -445,6 +450,7 @@ public class MeetingUiListener : MonoBehaviour
     //Kill most voted player. If killOnties is on it will kill all tied players otherwise it wont kill tied players
     void RemoveMostVotedPlayer()
     {
+
         if (ties.Count > 1 && killOnTies == true)
         {
             foreach (ulong l in ties)
@@ -475,7 +481,6 @@ public class MeetingUiListener : MonoBehaviour
 
         ties.Clear();
 
-
         //Reset vote text and remove dead players from menu**
         foreach (KeyValuePair<ulong, GameObject> go in players)
         {
@@ -491,11 +496,14 @@ public class MeetingUiListener : MonoBehaviour
                 }
                 else
                 {
+                    go.Value.GetComponent<VoteButton>().amountVoted = 0;
+                    go.Value.GetComponent<VoteButton>().myText.text = "0";
                     go.Value.SetActive(false);
-                    players.Remove(go.Key);
+                   // players.Remove(go.Key);
                 }
             }
         }
+
 
         //Disable meeting canvas and change gamephase to main
         MeetingCanvas.gameObject.SetActive(false);
