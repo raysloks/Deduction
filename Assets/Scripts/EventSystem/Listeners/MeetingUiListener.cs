@@ -69,7 +69,7 @@ public class MeetingUiListener : MonoBehaviour
     void Update()
     {
         //Fade in effect done at beginning of meetings
-        if(fadeIn = true)
+        if(fadeIn == true)
         {
 
             csGrp.alpha += Time.deltaTime / fadeTime;
