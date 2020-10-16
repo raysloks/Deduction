@@ -11,6 +11,8 @@ public class Mob : MonoBehaviour
 
     public ulong type;
 
+    public ulong role;
+
     public Sprite[] sprites;
 
     private void Awake()

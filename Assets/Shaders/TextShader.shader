@@ -240,9 +240,10 @@ SubShader{
 			#endif
 
 			half4 light = tex2D(_ShapeLightTexture0, input.lightingUV);
-			c.rgb *= light.rgb;
-			half shade = (light.r + light.g + light.b) / 3.0;
-			c.a *= min(1, shade * 2.5);
+			light.a = (light.r + light.g + light.b) / 3.0 * 1.5;
+			light = max(0, min(1, sqrt(light) / 0.93875 - 0.06125));
+			c *= light;
+			c *= light.a;
 
 			return c;
 		}

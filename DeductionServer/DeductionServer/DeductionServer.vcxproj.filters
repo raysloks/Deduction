@@ -88,6 +88,13 @@
       <Filter>Matchmaker</Filter>
     </ClInclude>
     <ClInclude Include="MatchmakerHandler.h" />
+    <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="Net\TaskListUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\TaskUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -161,6 +168,13 @@
       <Filter>Matchmaker</Filter>
     </ClCompile>
     <ClCompile Include="MatchmakerHandler.cpp" />
+    <ClCompile Include="GameSettings.cpp" />
+    <ClCompile Include="Net\TaskListUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TaskUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

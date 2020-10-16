@@ -4,6 +4,7 @@ using Concentus.Enums;
 using System.Text;
 using System.Linq;
 using System;
+using UnityEditor.PackageManager.UI;
 
 public class VoiceManager
 {
@@ -39,13 +40,12 @@ public class VoiceManager
                 byte[] outputBuffer = new byte[1000];
 
                 if (!Input.GetKey(KeyCode.V))
-                    for (int i = 0; i < inputAudioSamples.Length; ++i)
-                        inputAudioSamples[i] = 0;
+                    inputAudioSamples = new short[frameSize];
 
-                for (int i = 0; i < inputAudioSamples.Length - 1; ++i)
-                {
-                    Debug.DrawLine(new Vector3(i / 100f, inputAudioSamples[i] / 10000f), new Vector3((i + 1) / 100f, inputAudioSamples[i + 1] / 10000f), Color.white);
-                }
+                //for (int i = 0; i < inputAudioSamples.Length - 1; ++i)
+                //{
+                //    Debug.DrawLine(new Vector3(i / 100f, inputAudioSamples[i] / 10000f), new Vector3((i + 1) / 100f, inputAudioSamples[i + 1] / 10000f), Color.white);
+                //}
 
                 int thisPacketSize = encoder.Encode(inputAudioSamples, 0, frameSize, outputBuffer, 0, outputBuffer.Length);
 
@@ -69,22 +69,21 @@ public class VoiceManager
         if (!recording.GetData(data, offset))
             return false;
         int matches = 0;
-        float[] replacement = new float[samples.Length];
-        for (int i = 0; i < data.Length; ++i)
+        for (int i = data.Length - 1; i > samples.Length; --i)
         {
             float pattern = (((i + offset) % 2) == 0) ? 0.9f : -0.9f;
             if (Mathf.Abs(data[i] - pattern) < 0.1f)
                 ++matches;
-            else
-                matches = 0;
-            if (i < samples.Length)
-            {
-                samples[i] = (short)(data[i] * 32767f);
-                replacement[i] = pattern;
-            }
         }
         if (matches > 8)
             return false;
+        float[] replacement = new float[samples.Length];
+        for (int i = 0; i < samples.Length; ++i)
+        {
+            samples[i] = (short)(data[i] * 32767f);
+            float pattern = (((i + offset) % 2) == 0) ? 0.9f : -0.9f;
+            replacement[i] = pattern;
+        }
         recording.SetData(replacement, offset);
         offset += samples.Length;
         offset %= recording.samples;

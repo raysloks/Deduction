@@ -71,6 +71,12 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 	player.timeout = time + 10'000'000'000;
 	players.emplace(endpoint, player);
 
+	mobs[player.mob].color = Vec3(
+		rng.next_float() * 0.6f + 0.2f,
+		rng.next_float() * 0.6f + 0.2f,
+		rng.next_float() * 0.6f + 0.2f
+	);
+
 	{
 		PlayerUpdate message;
 		message.id = 0;
@@ -115,6 +121,7 @@ void NetworkHandler::updateMobState(uint64_t id)
 	message.update.id = id;
 	message.update.time = time;
 	message.update.position = mob.position;
+	message.color = mob.color;
 	message.type = (uint64_t)mob.type;
 
 	for (auto player : players)
@@ -141,6 +148,7 @@ void NetworkHandler::updateMobStatesForPlayer(const asio::ip::udp::endpoint & en
 				message.update.id = i;
 				message.update.time = time;
 				message.update.position = mob.position;
+				message.color = mob.color;
 				message.type = (uint64_t)mob.type;
 				link.Send(endpoint, message);
 			}
@@ -211,6 +219,7 @@ void NetworkHandler::killMob(uint64_t id)
 
 	Mob corpse;
 	corpse.position = mob.position;
+	corpse.color = mob.color;
 	corpse.type = MobType::Corpse;
 	corpse.role = mob.role;
 	createMob(corpse);
@@ -278,7 +287,7 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		if (mob.type == MobType::Player && mob.role == Role::Impostor)
+		if (mob.type == MobType::Player && mob.role == Role::Impostor && mob.killCooldown < time)
 		{
 			if (message.target < mobs.size())
 			{
@@ -297,6 +306,11 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 						Broadcast(message);
 
 						mob.position = message.to;
+						mob.killCooldown = time + game.settings.killCooldown;
+
+						KillAttempted reply;
+						reply.time = mob.killCooldown;
+						link.Send(endpoint, reply);
 					}
 				}
 			}
@@ -421,6 +435,14 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
 {
 	game.restartSetup();
+}
+
+void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskListUpdate & message)
+{
+}
+
+void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskUpdate & message)
+{
 }
 
 void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint, const VoiceFrame & message)

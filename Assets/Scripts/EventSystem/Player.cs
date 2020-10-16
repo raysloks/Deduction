@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Player : Mob
 {
+    public long killCooldown;
+
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (!EventSystem.current.currentSelectedGameObject)
+        if (!EventSystem.current.currentSelectedGameObject || 
+            !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>())
         {
             if (Input.GetKey(KeyCode.W))
                 move += Vector3.up;

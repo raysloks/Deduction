@@ -21,6 +21,8 @@
 #include "PlayerVoted.h"
 #include "ReportAttempted.h"
 #include "RestartRequested.h"
+#include "TaskListUpdate.h"
+#include "TaskUpdate.h"
 #include "VoiceFrame.h"
 
 class NetworkHandler;
@@ -49,6 +51,8 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);
 	static const uint32_t crc;
 	asio::io_context io_context;

@@ -9,6 +9,8 @@
 
 #include "Task.h"
 
+#include <cstdint>
+
 class Mob
 {
 public:
@@ -24,5 +26,9 @@ public:
 	bool enabled;
 
 	std::vector<Task> tasks;
+
+	int64_t killCooldown;
+
+	Vec3 color;
 };
 

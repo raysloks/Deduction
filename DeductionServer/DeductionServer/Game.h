@@ -4,6 +4,7 @@
 
 #include "GamePhase.h"
 #include "Vec2.h"
+#include "GameSettings.h"
 
 class NetworkHandler;
 
@@ -32,5 +33,7 @@ public:
 	int64_t timer;
 
 	NetworkHandler& handler;
+
+	GameSettings settings;
 };
 

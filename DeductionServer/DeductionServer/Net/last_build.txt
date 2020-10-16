@@ -24,6 +24,7 @@ MobUpdate update
 uint64 type
 uint64 state
 uint64 sprite
+vec3 color
 MobTeleport
 uint64 id
 int64 time
@@ -49,6 +50,10 @@ int64 time
 uint64 idOfInitiator
 uint64 target
 RestartRequested
+TaskListUpdate
+uint16 tasks[]
+TaskUpdate
+uint16 task
 VoiceFrame
 uint64 id
 uint8 data[]
