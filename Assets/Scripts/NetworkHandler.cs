@@ -78,7 +78,8 @@ public class NetworkHandler
 
     internal void HeartbeatHandler(IPEndPoint endpoint, Heartbeat message)
     {
-        controller.time = message.time;
+        if (Math.Abs(controller.time - message.time) > 50000000)
+            controller.time = message.time;
         controller.timeout = message.time + 5000000000;
     }
 

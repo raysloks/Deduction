@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
     public Button killButton;
     public Text killCooldownText;
 
+    public Button reportButton;
+
     public GameObject targetMarker;
 
     public long time;
@@ -97,7 +99,7 @@ public class GameController : MonoBehaviour
         if (snapshot <= 0f)
         {
             if (connectionState == ConnectionState.Connected)
-                handler.link.Send(new MobUpdate { position = player.transform.position });
+                handler.link.Send(new MobUpdate { position = player.transform.position, time = time });
             snapshot += 0.05f;
         }
 
@@ -112,67 +114,85 @@ public class GameController : MonoBehaviour
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1);
-        if (player.role == 1 && phase == GamePhase.Main)
+        reportButton.gameObject.SetActive(phase == GamePhase.Main);
+        if (phase == GamePhase.Main)
         {
-            ulong target = ulong.MaxValue;
-            float targetDistance = 1.75f;
-            if (player.killCooldown < time)
+            // Kill
+            if (player.role == 1)
             {
-                foreach (var n in handler.mobs)
+                ulong target = ulong.MaxValue;
+                float targetDistance = 1.75f;
+                if (player.killCooldown < time)
                 {
-                    if (n.Value.IsAlive == true && n.Value.role == 0)
+                    foreach (var n in handler.mobs)
                     {
-                        float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
-                        if (distance < targetDistance)
+                        if (n.Value.IsAlive == true && n.Value.role == 0)
                         {
-                            target = n.Key;
-                            targetDistance = distance;
+                            float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
+                            if (distance < targetDistance)
+                            {
+                                target = n.Key;
+                                targetDistance = distance;
+                            }
                         }
                     }
+                    killCooldownText.text = "";
                 }
-                killCooldownText.text = "";
-            }
-            else
-            {
-                killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
-            }
-            killButton.interactable = target != ulong.MaxValue;
-            if (target != ulong.MaxValue)
-            {
-                targetMarker.SetActive(true);
-                targetMarker.transform.position = handler.mobs[target].transform.position;
-                if (Input.GetKeyDown(KeyCode.Q))
+                else
                 {
-                    KillAttempted message = new KillAttempted
-                    {
-                        target = target,
-                        time = time
-                    };
-                    handler.link.Send(message);
+                    killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
                 }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
-        {
-            foreach (var n in handler.mobs)
-            {
-                if(n.Value.IsAlive == false)
+                killButton.interactable = target != ulong.MaxValue;
+                if (target != ulong.MaxValue)
                 {
-                    float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
-                    if(distance < reportDistance)
+                    targetMarker.SetActive(true);
+                    targetMarker.transform.position = handler.mobs[target].transform.position;
+                    if (Input.GetKeyDown(KeyCode.Q))
                     {
-                        ReportAttempted message = new ReportAttempted
+                        KillAttempted message = new KillAttempted
                         {
-                            target = n.Key,
+                            target = target,
                             time = time
                         };
                         handler.link.Send(message);
-                        break;
                     }
                 }
             }
 
+            // Report
+            {
+                ulong target = ulong.MaxValue;
+                float targetDistance = reportDistance;
+                foreach (var n in handler.mobs)
+                {
+                    if (n.Value.IsAlive == false)
+                    {
+                        Vector2 diff = n.Value.transform.position - player.transform.position;
+                        float distance = diff.magnitude;
+                        if (distance < targetDistance)
+                        {
+                            if (!Physics2D.Raycast(player.transform.position, diff / distance, distance))
+                            {
+                                target = n.Key;
+                                targetDistance = distance;
+                            }
+                        }
+                    }
+                }
+                reportButton.interactable = target != ulong.MaxValue;
+                if (target != ulong.MaxValue)
+                {
+                    if (Input.GetKeyDown(KeyCode.R))
+                    {
+                        ReportAttempted message = new ReportAttempted
+                        {
+                            target = target,
+                            time = time
+                        };
+                        handler.link.Send(message);
+                    }
+                }
+            }
         }
 
         if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)

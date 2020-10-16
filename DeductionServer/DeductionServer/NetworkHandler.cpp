@@ -25,6 +25,8 @@ void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 			MobUpdate message;
 			message.id = i;
 			message.time = time;
+			if (mob.time)
+				message.time = mob.time;
 			message.position = mob.position;
 			for (auto player : players)
 			{
@@ -382,6 +384,7 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 		mob.position = message.position;
+		mob.time = message.time;
 	}
 }
 

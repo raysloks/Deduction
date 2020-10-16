@@ -19,6 +19,7 @@ public class GameSettings : MonoBehaviour
     };
 
     public RectTransform window;
+    public RectTransform content;
     public GameObject textFieldPrefab;
     public GameObject togglePrefab;
 
@@ -36,7 +37,7 @@ public class GameSettings : MonoBehaviour
             int index = i;
             if (setting is GameSettingBoolean boolean)
             {
-                go = Instantiate(togglePrefab, window);
+                go = Instantiate(togglePrefab, content);
                 var toggle = go.GetComponentInChildren<Toggle>();
                 toggle.isOn = setting.value != 0;
                 toggle.onValueChanged.AddListener((bool value) =>
@@ -51,7 +52,7 @@ public class GameSettings : MonoBehaviour
             }
             else
             {
-                go = Instantiate(textFieldPrefab, window);
+                go = Instantiate(textFieldPrefab, content);
                 var inputField = go.GetComponentInChildren<InputField>();
                 inputField.text = setting.Get();
                 inputField.onEndEdit.AddListener((string text) =>
@@ -79,7 +80,7 @@ public class GameSettings : MonoBehaviour
 
     private void Update()
     {
-        window.gameObject.SetActive(controller.phase == GameController.GamePhase.Setup);
+        window.gameObject.SetActive(controller.phase == GameController.GamePhase.Setup && controller.timer == 0);
     }
 
     public void SetSetting(int setting, long value)
@@ -90,15 +91,7 @@ public class GameSettings : MonoBehaviour
 
     public GameSetting GetSetting(string name)
     {
-        int index = settings.FindIndex(item => item.name == name);
-        if (index >= 0)
-        {
-            return settings[index];
-        }
-        else
-        {
-            return null;
-        }
+        return settings.Find(item => item.name == name);
     }
 
     private void UpdateInputDisplay(int setting)
