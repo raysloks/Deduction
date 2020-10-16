@@ -97,7 +97,7 @@ public class MeetingUiListener : MonoBehaviour
             if (showVotesWhenAllVoted == true && votesShown == false)
             {
                 timer += Time.deltaTime;
-                if (timer > 2f)
+                if (timer > 1f)
                 {
                     skipButton.GetComponent<VoteButton>().showAfterEveryoneVoted = false;
                     foreach (KeyValuePair<ulong, GameObject> go in players)
@@ -210,11 +210,11 @@ public class MeetingUiListener : MonoBehaviour
         ulong body = meetingEvent.idOfBody;
         if(meetingEvent.EventDescription == "BodyReported")
         {
-            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Found a Body", handler.mobs[initiator].sprite.sprite, handler.mobs[body].sprite.sprite);
+            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Found a Body", handler.mobs[initiator].sprite, handler.mobs[body].sprite);
         }
         else
         {
-            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Meeting Started by", null , handler.mobs[initiator].sprite.sprite);
+            noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Meeting Started by", null , handler.mobs[initiator].sprite);
         }
         csGrp.alpha = 0;
         fadeIn = true;
@@ -247,6 +247,7 @@ public class MeetingUiListener : MonoBehaviour
                     amountOfPlayersAlive++;
                     newObj = (GameObject)Instantiate(imagePrefab, layoutGroup.transform);
                     newObj.GetComponent<Image>().sprite = n.Value.sprite.sprite;
+                    newObj.GetComponent<Image>().color = n.Value.sprite.color;
                     if (handler.names.ContainsKey(n.Key))
                     {
                         newObj.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = handler.names[n.Key];

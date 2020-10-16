@@ -12,8 +12,7 @@ public class Player : Mob
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (!EventSystem.current.currentSelectedGameObject || 
-            !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>())
+        if (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>())
         {
             if (Input.GetKey(KeyCode.W))
                 move += Vector3.up;
