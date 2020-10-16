@@ -10,6 +10,8 @@ public class MeetingUiListener : MonoBehaviour
     public Canvas MeetingCanvas;
     public GameObject imagePrefab;
     public GameObject noticeBoardImage;
+    public GameObject killButton;
+    public GameObject gameController;
     
     private CanvasGroup csGrp;
     private GameObject skipButton;
@@ -43,7 +45,7 @@ public class MeetingUiListener : MonoBehaviour
     private float fadeTime = 2f;
     private int index = 0;
     private ulong mostVotesId;
-
+    private GameController controller;
 
 
     // Start is called before the first frame update
@@ -56,11 +58,13 @@ public class MeetingUiListener : MonoBehaviour
             skipButton = MeetingCanvas.gameObject.transform.GetChild(2).gameObject;
             csGrp = MeetingCanvas.gameObject.GetComponent<CanvasGroup>();
         }
+        
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
         //  EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_CHECKVOTES, checkVotes);
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.SETTINGS, MySettings);
 
 
     }
@@ -151,6 +155,10 @@ public class MeetingUiListener : MonoBehaviour
                     fadeAway = false;
                     meetingDone = false;
                     votesShown = false;
+                    if(controller.player.role == 1)
+                    {
+                        killButton.SetActive(true);
+                    }
 
 
                 }
@@ -202,6 +210,10 @@ public class MeetingUiListener : MonoBehaviour
         if (MeetingCanvas == null)
         {
             return;
+        }
+        if (controller.player.role == 1)
+        {
+            killButton.SetActive(false);
         }
         MeetingCanvas.gameObject.SetActive(true);
         MeetingEvent meetingEvent = (MeetingEvent)eventInfo;
@@ -497,5 +509,21 @@ public class MeetingUiListener : MonoBehaviour
             phase = phase
         };
         handler.link.Send(message);
+    }
+
+    void MySettings(EventCallbacks.Event eventinfo)
+    {
+        //set the settings
+        if (gameController != null)
+        {
+            controller = gameController.GetComponent<GameController>();
+            GameSettingBoolean s = (GameSettingBoolean)controller.settings.GetSetting("Kill On Ties");
+            killOnTies = s.GetBool();
+            s = (GameSettingBoolean)controller.settings.GetSetting("Enable Skip Button");
+            enableSkipButton = s.GetBool();
+            s = (GameSettingBoolean)controller.settings.GetSetting("Show Votes When Everyone Has Voted");
+            showVotesWhenAllVoted = s.GetBool();
+
+        }
     }
 }

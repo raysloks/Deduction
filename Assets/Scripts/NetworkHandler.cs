@@ -130,6 +130,7 @@ public class NetworkHandler
 
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)
     {
+        controller.ApplySettings();
     }
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {

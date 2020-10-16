@@ -8,10 +8,14 @@ public class GameSettings : MonoBehaviour
     public List<GameSetting> settings = new List<GameSetting>
     {
         new GameSettingInteger{ name = "Impostor Count", value = 1 },
+        new GameSettingInteger{ name = "Votes Per Player", value = 1 },
         new GameSettingTime{name = "Kill Cooldown" , value = 30000000000 },
         new GameSettingTime{name = "Vote Time" , value = 30000000000 },
         new GameSettingTime{name = "Discussion Time" , value = 90000000000 },
-        new GameSettingBoolean{name = "Test", value = 0 }
+        new GameSettingBoolean{name = "Kill On Ties", value = 0 },
+        new GameSettingBoolean{name = "Enable Skip Button", value = 0 },
+        new GameSettingBoolean{name = "Show Votes When Everyone Has Voted", value = 0 }
+
     };
 
     public RectTransform window;
@@ -82,6 +86,19 @@ public class GameSettings : MonoBehaviour
     {
         settings[setting].value = value;
         UpdateInputDisplay(setting);
+    }
+
+    public GameSetting GetSetting(string name)
+    {
+        int index = settings.FindIndex(item => item.name == name);
+        if (index >= 0)
+        {
+            return settings[index];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void UpdateInputDisplay(int setting)

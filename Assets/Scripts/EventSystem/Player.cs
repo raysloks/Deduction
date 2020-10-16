@@ -9,10 +9,12 @@ public class Player : Mob
 {
     public long killCooldown;
 
+    [HideInInspector] public bool cantMove = false;
+
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>())
+        if (!cantMove && (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>()))
         {
             if (Input.GetKey(KeyCode.W))
                 move += Vector3.up;

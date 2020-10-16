@@ -281,6 +281,7 @@ void NetworkHandler::GameSettingsUpdateHandler(const asio::ip::udp::endpoint & e
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
 {
 	game.startGameCountdown();
+	Broadcast(message);
 }
 
 void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, const Heartbeat & message)

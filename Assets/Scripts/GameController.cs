@@ -66,6 +66,8 @@ public class GameController : MonoBehaviour
 
         voice = new VoiceManager();
         voice.handler = handler;
+
+
     }
 
     private void Update()
@@ -102,8 +104,8 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Setup)
             if (Input.GetKeyDown(KeyCode.Space))
                 handler.link.Send(new GameStartRequested());
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //    handler.link.Send(new MeetingRequested());
+        if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
+            handler.link.Send(new MeetingRequested());
         if (phase != GamePhase.Setup)
             if (Input.GetKeyDown(KeyCode.Escape))
                 handler.link.Send(new RestartRequested());
@@ -264,11 +266,21 @@ public class GameController : MonoBehaviour
     {
         if(phase == GamePhase.Meeting)
         {
-            Debug.Log("Meeting Started");
-          //  MeetingUi();
+            player.cantMove = true;
+        }
+        else
+        {
+            player.cantMove = false;
         }
         this.phase = phase;
         this.timer = timer;
+    }
+
+    public void ApplySettings()
+    {
+        totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
+        DebugEvent se = new DebugEvent();
+        EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 
 }
