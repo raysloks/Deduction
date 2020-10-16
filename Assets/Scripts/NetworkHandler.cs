@@ -208,4 +208,13 @@ public class NetworkHandler
     internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)
     {
     }
+
+    internal void GameSettingSetHandler(IPEndPoint endpoint, GameSettingSet message)
+    {
+        controller.settings.SetSetting(message.setting, message.value);
+    }
+
+    internal void GameSettingsUpdateHandler(IPEndPoint endpoint, GameSettingsUpdate message)
+    {
+    }
 }

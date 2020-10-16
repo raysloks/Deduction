@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
+    public GameSettings settings;
 
     public bool listenToSelf = false;
 
@@ -98,12 +99,14 @@ public class GameController : MonoBehaviour
             snapshot += 0.05f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            handler.link.Send(new GameStartRequested());
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            handler.link.Send(new MeetingRequested());
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            handler.link.Send(new RestartRequested());
+        if (phase == GamePhase.Setup)
+            if (Input.GetKeyDown(KeyCode.Space))
+                handler.link.Send(new GameStartRequested());
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //    handler.link.Send(new MeetingRequested());
+        if (phase != GamePhase.Setup)
+            if (Input.GetKeyDown(KeyCode.Escape))
+                handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1);

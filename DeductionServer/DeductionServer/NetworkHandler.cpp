@@ -108,6 +108,12 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 		link.Send(endpoint, message);
 	}
 
+	{
+		GameSettingsUpdate message;
+		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
+		link.Send(endpoint, message);
+	}
+
 	updateMobStatesForPlayer(endpoint);
 
 	std::cout << name << " connected from " << endpoint << std::endl;
@@ -256,6 +262,20 @@ void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endp
 	else if (message.phase == 2 && game.phase != GamePhase::Meeting) {
 		game.setPhase(GamePhase::Meeting, message.timer);
 	}
+}
+
+void NetworkHandler::GameSettingSetHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingSet & message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		game.settings.settings[message.setting] = message.value;
+		Broadcast(message);
+	}
+}
+
+void NetworkHandler::GameSettingsUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingsUpdate & message)
+{
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)

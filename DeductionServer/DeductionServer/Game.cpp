@@ -105,12 +105,10 @@ void Game::startGame()
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}
 
-	size_t impostorCount = 1;
-
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{
 		auto&& mob = handler.mobs[mobs[i]];
-		mob.role = i < impostorCount ? Role::Impostor : Role::Crewmate;
+		mob.role = i < settings.impostorCount ? Role::Impostor : Role::Crewmate;
 	}
 
 	handler.updateMobRoles();
@@ -120,7 +118,7 @@ void Game::startMeeting()
 {
 	if (phase == GamePhase::Main)
 	{
-		setPhase(GamePhase::Meeting, handler.time + 120'000'000'000);
+		setPhase(GamePhase::Meeting, handler.time + settings.discussionTime + settings.voteTime);
 		teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
 		removeCorpses();
 		resetVotes();

@@ -8,6 +8,8 @@
 
 #include "AbilityUsed.h"
 #include "GamePhaseUpdate.h"
+#include "GameSettingSet.h"
+#include "GameSettingsUpdate.h"
 #include "GameStartRequested.h"
 #include "Heartbeat.h"
 #include "KillAttempted.h"
@@ -38,6 +40,8 @@ public:
 	void Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint);
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);

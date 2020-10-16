@@ -95,6 +95,12 @@
     <ClInclude Include="Net\TaskUpdate.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\GameSettingSet.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\GameSettingsUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -173,6 +179,12 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\TaskUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\GameSettingSet.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\GameSettingsUpdate.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,6 +5,11 @@ uint64 target
 GamePhaseUpdate
 uint64 phase
 int64 timer
+GameSettingSet
+uint16 setting
+int64 value
+GameSettingsUpdate
+int64 values[]
 GameStartRequested
 Heartbeat
 int64 time
