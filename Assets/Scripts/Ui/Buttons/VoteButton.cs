@@ -76,7 +76,7 @@ public class VoteButton : MonoBehaviour
 
              //   myImage.material.SetFloat("_NegativeAmount", timer * 1f);
                 myImage.material.SetFloat("_PinchUvAmount", timer * 0.5f);
-                myImage.material.SetFloat("_HitEffectBlend", timer * 0.5f);
+                myImage.material.SetFloat("_HitEffectBlend", timer * 1f);
             }
             else
             {
@@ -105,8 +105,9 @@ public class VoteButton : MonoBehaviour
             myText.text = amountVotedinternal.ToString();
 
             mySecondaryImg.sprite = sr[0].sprite;
+           // mySecondaryImg.color = sr[0].color;
             //   colorWhite = mySecondaryImg.color;
-
+            colorWhite = sr[0].color;
             colorWhite.a = 1f;
             lerpedColor = colorWhite;
             lerpedColor.a = 0f;
