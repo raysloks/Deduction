@@ -155,11 +155,6 @@ public class MeetingUiListener : MonoBehaviour
                     fadeAway = false;
                     meetingDone = false;
                     votesShown = false;
-                    if(controller.player.role == 1)
-                    {
-                        killButton.SetActive(true);
-                    }
-
 
                 }
             }
@@ -210,10 +205,6 @@ public class MeetingUiListener : MonoBehaviour
         if (MeetingCanvas == null)
         {
             return;
-        }
-        if (controller.player.role == 1)
-        {
-            killButton.SetActive(false);
         }
         MeetingCanvas.gameObject.SetActive(true);
         MeetingEvent meetingEvent = (MeetingEvent)eventInfo;

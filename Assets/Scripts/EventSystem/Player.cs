@@ -10,6 +10,8 @@ public class Player : Mob
     public long killCooldown;
 
     [HideInInspector] public bool cantMove = false;
+    [HideInInspector] public bool nearEmergencyButton = false;
+
 
     private void Update()
     {
@@ -40,12 +42,16 @@ public class Player : Mob
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
             foreach (var collider in colliders)
             {
-                Vector2 point = Physics2D.ClosestPoint(transform.position, collider);
-                Vector2 diff = point - (Vector2)transform.position;
-                if (diff.magnitude < radius)
+                if(collider.isTrigger == false)
                 {
-                    transform.position += (Vector3)(diff.normalized * (diff.magnitude - radius));
+                    Vector2 point = Physics2D.ClosestPoint(transform.position, collider);
+                    Vector2 diff = point - (Vector2)transform.position;
+                    if (diff.magnitude < radius)
+                    {
+                        transform.position += (Vector3)(diff.normalized * (diff.magnitude - radius));
+                    }
                 }
+                
             }
         }
 
