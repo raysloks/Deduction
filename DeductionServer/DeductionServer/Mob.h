@@ -19,6 +19,7 @@ public:
 	bool visibleTo(const Mob& mob) const;
 
 	Vec3 position;
+	int64_t time;
 	MobType type;
 	Role role;
 	int timesVoted;

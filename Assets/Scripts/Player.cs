@@ -16,14 +16,8 @@ public class Player : Mob
         Vector3 move = new Vector2();
         if (!cantMove && (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>()))
         {
-            if (Input.GetKey(KeyCode.W))
-                move += Vector3.up;
-            if (Input.GetKey(KeyCode.A))
-                move += Vector3.left;
-            if (Input.GetKey(KeyCode.S))
-                move += Vector3.down;
-            if (Input.GetKey(KeyCode.D))
-                move += Vector3.right;
+            move.x += Input.GetAxis("Horizontal");
+            move.y += Input.GetAxis("Vertical");
         }
         move = Vector3.ClampMagnitude(move, 1f);
 

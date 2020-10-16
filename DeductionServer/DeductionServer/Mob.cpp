@@ -6,6 +6,7 @@ Mob::Mob()
 	role = Role::Crewmate;
 	killCooldown = 0;
 	color = Vec3(0.8f, 0.2f, 0.2f);
+	time = 0;
 }
 
 bool Mob::visibleTo(const Mob& mob) const
