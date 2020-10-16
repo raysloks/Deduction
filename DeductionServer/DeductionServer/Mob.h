@@ -24,6 +24,7 @@ public:
 	Role role;
 	int timesVoted;
 	int totalVotes;
+	int meetingsCalled;
 	bool enabled;
 
 	std::vector<Task> tasks;

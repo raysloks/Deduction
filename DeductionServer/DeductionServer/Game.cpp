@@ -85,8 +85,17 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 
 void Game::startGameCountdown()
 {
-	if (phase == GamePhase::Setup && timer == 0)
+	if (phase == GamePhase::Setup && timer == 0) {
 		setPhase(GamePhase::Setup, handler.time + 5'000'000'000);
+		std::vector<size_t> mobs;
+		for (size_t i = 0; i < mobs.size(); ++i)
+		{
+			auto&& mob = handler.mobs[mobs[i]];
+			mob.timesVoted = 0;
+			mob.meetingsCalled = 0;
+		}
+
+	}
 }
 
 void Game::startGame()

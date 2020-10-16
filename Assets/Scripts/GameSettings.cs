@@ -9,6 +9,7 @@ public class GameSettings : MonoBehaviour
     {
         new GameSettingInteger{ name = "Impostor Count", value = 1 },
         new GameSettingInteger{ name = "Votes Per Player", value = 1 },
+        new GameSettingInteger{ name = "Emergency Meetings Per Player", value = 1 },
         new GameSettingTime{name = "Kill Cooldown" , value = 30000000000 },
         new GameSettingTime{name = "Vote Time" , value = 30000000000 },
         new GameSettingTime{name = "Discussion Time" , value = 90000000000 },

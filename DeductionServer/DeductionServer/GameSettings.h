@@ -12,6 +12,7 @@ public:
 		{
 			int64_t impostorCount = 1;
 			int64_t votesPerPlayer = 1;
+			int64_t emergencyMeetingsPerPlayer = 1;
 			int64_t killCooldown = 30'000'000'000;
 			int64_t voteTime = 30'000'000'000;
 			int64_t discussionTime = 90'000'000'000;

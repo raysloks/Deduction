@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
+    private int totalAmountOfMeetings = 1;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -113,7 +114,7 @@ public class GameController : MonoBehaviour
                 handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
-        killButton.gameObject.SetActive(player.role == 1);
+        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
         reportButton.gameObject.SetActive(phase == GamePhase.Main);
         if (phase == GamePhase.Main)
         {
@@ -209,6 +210,15 @@ public class GameController : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Main && player.nearEmergencyButton)
+        {
+            MeetingRequested message = new MeetingRequested
+            {
+                EmergencyMeetings = (ulong)totalAmountOfMeetings
+            };
+            handler.link.Send(message);
+        }
+
         connectionMenu.SetActive(connectionState == ConnectionState.None);
 
         switch (connectionState)
@@ -299,6 +309,7 @@ public class GameController : MonoBehaviour
     public void ApplySettings()
     {
         totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
+        totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
         DebugEvent se = new DebugEvent();
         EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
