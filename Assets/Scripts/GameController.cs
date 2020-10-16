@@ -121,6 +121,7 @@ public class GameController : MonoBehaviour
                             time = time
                         };
                         handler.link.Send(message);
+                        break;
                     }
                 }
             }
@@ -141,6 +142,7 @@ public class GameController : MonoBehaviour
                             time = time
                         };
                         handler.link.Send(message);
+                        break;
                     }
                 }
             }
