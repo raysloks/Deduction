@@ -167,7 +167,7 @@ public class GameController : MonoBehaviour
                 {
                     if (n.Value.IsAlive == false)
                     {
-                        Vector2 diff = player.transform.position - n.Value.transform.position;
+                        Vector2 diff = n.Value.transform.position - player.transform.position;
                         float distance = diff.magnitude;
                         if (distance < targetDistance)
                         {
