@@ -99,7 +99,19 @@ public class NetworkHandler
         MeetingEvent umei = new MeetingEvent();
         umei.meetingHandler = this;
         umei.idOfInitiator = message.idOfInitiator;
-
+        if(message.EmergencyMeetings == (ulong)controller.totalAmountOfMeetings)
+        {
+            umei.emergencyMeetingDone = true;
+            if(message.idOfInitiator == playerMobId)
+            {
+                controller.player.emergencyButtonLeft = false;
+                Debug.Log("ye this was the player" + message.idOfInitiator + "ye " + playerMobId);
+            }
+        }
+        else
+        {
+            umei.emergencyMeetingDone = false;
+        }
         umei.EventDescription = "Meeting Got Started";
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }

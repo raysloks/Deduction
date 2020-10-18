@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 
     public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
-    private int totalAmountOfMeetings = 1;
+    public int totalAmountOfMeetings = 1;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -294,13 +294,12 @@ public class GameController : MonoBehaviour
 
     public void SetGamePhase(GamePhase phase, long timer)
     {
-        if(phase == GamePhase.Meeting)
+        player.cantMove = (phase == GamePhase.Meeting);
+        if(phase == GamePhase.Main)
         {
-            player.cantMove = true;
-        }
-        else
-        {
-            player.cantMove = false;
+            DebugEvent ee = new DebugEvent();
+            ee.EventDescription = "Reset Emergency Button Timer";
+            EventSystem.Current.FireEvent(EVENT_TYPE.RESET_TIMER, ee);
         }
         this.phase = phase;
         this.timer = timer;
@@ -310,7 +309,8 @@ public class GameController : MonoBehaviour
     {
         totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
         totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
-        DebugEvent se = new DebugEvent();
+        SettingEvent se = new SettingEvent();
+        se.settings = settings;
         EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 

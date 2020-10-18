@@ -510,21 +510,22 @@ public class MeetingUiListener : MonoBehaviour
         handler.link.Send(message);
     }
 
-    void MySettings(EventCallbacks.Event eventinfo)
+    void MySettings(EventCallbacks.Event eventInfo)
     {
+        SettingEvent settingEvent = (SettingEvent)eventInfo;
+        GameSettings settings = settingEvent.settings;
+
         //set the settings
-        if (gameController != null)
+        if (settings != null)
         {
-            Debug.Log("set Settings");
-            controller = gameController.GetComponent<GameController>();
-            GameSettingBoolean s = (GameSettingBoolean)controller.settings.GetSetting("Kill On Ties");
+            GameSettingBoolean s = (GameSettingBoolean)settings.GetSetting("Kill On Ties");
             killOnTies = s.GetBool();
             Debug.Log("Kill on ties set too " + killOnTies);
-            s = (GameSettingBoolean)controller.settings.GetSetting("Enable Skip Button");
+            s = (GameSettingBoolean)settings.GetSetting("Enable Skip Button");
             enableSkipButton = s.GetBool();
             Debug.Log("Enable Skip Button set too " + enableSkipButton);
 
-            s = (GameSettingBoolean)controller.settings.GetSetting("Show Votes When Everyone Has Voted");
+            s = (GameSettingBoolean)settings.GetSetting("Show Votes When Everyone Has Voted");
             showVotesWhenAllVoted = s.GetBool();
             Debug.Log("Show Votes When Everyone Has Voted set too " + showVotesWhenAllVoted);
 

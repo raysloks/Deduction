@@ -11,7 +11,12 @@ public class Player : Mob
 
     [HideInInspector] public bool cantMove = false;
     [HideInInspector] public bool nearEmergencyButton = false;
+    [HideInInspector] public bool emergencyButtonLeft = true;
 
+    void Start()
+    {
+        emergencyButtonLeft = true;
+    }
 
     private void Update()
     {

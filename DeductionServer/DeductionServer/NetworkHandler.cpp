@@ -359,12 +359,22 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 			game.startMeeting();
 
 			mob.meetingsCalled++;
+			if (message.EmergencyMeetings == mob.meetingsCalled) {
+				MeetingRequested message;
+				message.idOfInitiator = player.mob;
+				message.EmergencyMeetings = mob.meetingsCalled;
 
-			MeetingRequested message;
-			message.idOfInitiator = player.mob;
+			    Broadcast(message);
+			}
+			else {
+				MeetingRequested message;
+				message.idOfInitiator = player.mob;
 
-			Broadcast(message);
+				Broadcast(message);
+			}
+			
 		}
+		
 
 		
 	}
