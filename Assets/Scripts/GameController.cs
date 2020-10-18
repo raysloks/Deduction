@@ -115,16 +115,11 @@ public class GameController : MonoBehaviour
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
-<<<<<<< Updated upstream
+
         reportButton.gameObject.SetActive(phase == GamePhase.Main);
-        if (phase == GamePhase.Main)
-=======
+
         if (player.role == 1 && phase == GamePhase.Main)
->>>>>>> Stashed changes
         {
-            // Kill
-            if (player.role == 1)
-            {
                 ulong target = ulong.MaxValue;
                 float targetDistance = 1.75f;
                 if (player.killCooldown < time)
@@ -162,11 +157,9 @@ public class GameController : MonoBehaviour
                         handler.link.Send(message);
                     }
                 }
-            }
+            
+        }
 
-<<<<<<< Updated upstream
-            // Report
-=======
         if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Main && player.nearEmergencyButton)
         {
             handler.link.Send(new MeetingRequested());
@@ -174,9 +167,6 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
         {
-            foreach (var n in handler.mobs)
->>>>>>> Stashed changes
-            {
                 ulong target = ulong.MaxValue;
                 float targetDistance = reportDistance;
                 foreach (var n in handler.mobs)
@@ -208,7 +198,7 @@ public class GameController : MonoBehaviour
                         handler.link.Send(message);
                     }
                 }
-            }
+            
         }
 
         if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
