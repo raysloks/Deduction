@@ -257,11 +257,13 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 
 void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
 {
-	if (message.phase == 1 && game.phase != GamePhase::Main) {
+	if (message.phase == 1 && game.phase != GamePhase::Main)
+	{
 		game.removeCorpses();
 		game.setPhase(GamePhase::Main, message.timer);
 	}
-	else if (message.phase == 2 && game.phase != GamePhase::Meeting) {
+	else if (message.phase == 2 && game.phase != GamePhase::Meeting)
+	{
 		game.setPhase(GamePhase::Meeting, message.timer);
 	}
 }
@@ -278,6 +280,14 @@ void NetworkHandler::GameSettingSetHandler(const asio::ip::udp::endpoint & endpo
 
 void NetworkHandler::GameSettingsUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingsUpdate & message)
 {
+	if (game.phase == GamePhase::Setup)
+	{
+		game.settings = GameSettings();
+
+		GameSettingsUpdate message;
+		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
+		Broadcast(message);
+	}
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
@@ -360,14 +370,16 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 			game.startMeeting();
 
 			mob.meetingsCalled++;
-			if (message.EmergencyMeetings == mob.meetingsCalled) {
+			if (message.EmergencyMeetings == mob.meetingsCalled)
+			{
 				MeetingRequested message;
 				message.idOfInitiator = player.mob;
 				message.EmergencyMeetings = mob.meetingsCalled;
 
 			    Broadcast(message);
 			}
-			else {
+			else
+			{
 				MeetingRequested message;
 				message.idOfInitiator = player.mob;
 

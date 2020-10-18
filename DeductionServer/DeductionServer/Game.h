@@ -25,6 +25,8 @@ public:
 	void restartSetup();
 	void resetVotes();
 
+	void resetKillCooldowns();
+
 	void checkForGameOver();
 
 	void removeCorpses();

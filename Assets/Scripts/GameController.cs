@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
+    public Button startGameButton;
+
     public Button killButton;
     public Text killCooldownText;
 
@@ -120,10 +122,8 @@ public class GameController : MonoBehaviour
             snapshot += 0.05f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Setup)
-            handler.link.Send(new GameStartRequested());
-        if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
-            handler.link.Send(new MeetingRequested());
+        //if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
+        //    handler.link.Send(new MeetingRequested());
         if (Input.GetKeyDown(KeyCode.Escape) && phase != GamePhase.Setup)
             handler.link.Send(new RestartRequested());
 
@@ -220,6 +220,7 @@ public class GameController : MonoBehaviour
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
+        startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         switch (connectionState)
         {
@@ -282,6 +283,7 @@ public class GameController : MonoBehaviour
 
     public void SetGamePhase(GamePhase phase, long timer)
     {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
         player.cantMove = phase == GamePhase.Meeting;
         if(phase == GamePhase.Main)
         {
@@ -326,6 +328,18 @@ public class GameController : MonoBehaviour
             };
             handler.link.Send(message);
         }
+    }
+
+    public void StartGame()
+    {
+        if (phase == GamePhase.Setup)
+            handler.link.Send(new GameStartRequested());
+    }
+
+    public void ResetSettings()
+    {
+        if (phase == GamePhase.Setup)
+            handler.link.Send(new GameSettingsUpdate { values = new List<long>() });
     }
 
 }

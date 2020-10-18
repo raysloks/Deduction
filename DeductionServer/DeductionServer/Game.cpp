@@ -20,9 +20,10 @@ void Game::tick(int64_t now)
 		case GamePhase::Main:
 			break;
 		case GamePhase::Meeting:
-		//	handler.Broadcast(message);
-		//	setPhase(GamePhase::Main, 0);
+			//handler.Broadcast(message);
+			//setPhase(GamePhase::Main, 0);
 			teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
+			resetKillCooldowns();
 			break;
 		default:
 			break;
@@ -85,16 +86,14 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 
 void Game::startGameCountdown()
 {
-	if (phase == GamePhase::Setup && timer == 0) {
+	if (phase == GamePhase::Setup && timer == 0)
+	{
 		setPhase(GamePhase::Setup, handler.time + 5'000'000'000);
-		std::vector<size_t> mobs;
-		for (size_t i = 0; i < mobs.size(); ++i)
+		for (auto&& mob : handler.mobs)
 		{
-			auto&& mob = handler.mobs[mobs[i]];
 			mob.timesVoted = 0;
 			mob.meetingsCalled = 0;
 		}
-
 	}
 }
 
@@ -121,6 +120,8 @@ void Game::startGame()
 	}
 
 	handler.updateMobRoles();
+
+	resetKillCooldowns();
 }
 
 void Game::startMeeting()
@@ -163,6 +164,15 @@ void Game::resetVotes()
 		if (mob.enabled && mob.type == MobType::Player)
 			mob.timesVoted = 0;
 	}
+}
+
+void Game::resetKillCooldowns()
+{
+	KillAttempted message;
+	message.time = handler.time + settings.killCooldown;
+	handler.Broadcast(message);
+	for (auto&& mob : handler.mobs)
+		mob.killCooldown = message.time;
 }
 
 void Game::checkForGameOver()
