@@ -165,6 +165,36 @@ void Game::resetVotes()
 	}
 }
 
+void Game::checkForGameOver()
+{
+	if (settings.killVictoryEnabled)
+	{
+		size_t crew = 0;
+		size_t impostors = 0;
+		for (auto player : handler.players)
+		{
+			auto&& mob = handler.mobs[player.second.mob];
+			if (mob.type == MobType::Player)
+			{
+				if (mob.role == Role::Crewmate)
+					++crew;
+				if (mob.role == Role::Impostor)
+					++impostors;
+			}
+		}
+
+		if (impostors >= crew)
+		{
+			// impostor victory
+		}
+
+		if (impostors == 0)
+		{
+			// crew victory
+		}
+	}
+}
+
 void Game::removeCorpses()
 {
 	for (size_t i = 0; i < handler.mobs.size(); ++i)

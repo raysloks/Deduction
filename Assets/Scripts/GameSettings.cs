@@ -13,6 +13,10 @@ public class GameSettings : MonoBehaviour
         new GameSettingTime{name = "Kill Cooldown" , value = 30000000000 },
         new GameSettingTime{name = "Vote Time" , value = 30000000000 },
         new GameSettingTime{name = "Discussion Time" , value = 90000000000 },
+        new GameSettingBoolean{name = "Kill Victory Enabled", value = 0 },
+        new GameSettingReal{name = "Crewmate Vision" , value = 500, resolution = 100 },
+        new GameSettingReal{name = "Impostor Vision" , value = 1000, resolution = 100 },
+        new GameSettingReal{name = "Player Speed" , value = 400, resolution = 100 },
         new GameSettingBoolean{name = "Kill On Ties", value = 0 },
         new GameSettingBoolean{name = "Enable Skip Button", value = 0 },
         new GameSettingBoolean{name = "Show Votes When Everyone Has Voted", value = 0 }
@@ -86,8 +90,11 @@ public class GameSettings : MonoBehaviour
 
     public void SetSetting(int setting, long value)
     {
-        settings[setting].value = value;
-        UpdateInputDisplay(setting);
+        if (setting < settings.Count)
+        {
+            settings[setting].value = value;
+            UpdateInputDisplay(setting);
+        }
     }
 
     public GameSetting GetSetting(string name)
@@ -95,7 +102,7 @@ public class GameSettings : MonoBehaviour
         return settings.Find(item => item.name == name);
     }
 
-    private void UpdateInputDisplay(int setting)
+    public void UpdateInputDisplay(int setting)
     {
         var input = inputs[setting];
         if (input is InputField inputField)

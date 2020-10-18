@@ -218,5 +218,7 @@ public class NetworkHandler
 
     internal void GameSettingsUpdateHandler(IPEndPoint endpoint, GameSettingsUpdate message)
     {
+        for (int i = 0; i < message.values.Count; ++i)
+            controller.settings.SetSetting(i, message.values[i]);
     }
 }

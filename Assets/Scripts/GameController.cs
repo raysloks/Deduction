@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
 {
     public GameObject prefab;
 
-    public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
     private int totalAmountOfMeetings = 1;
 
@@ -36,14 +35,12 @@ public class GameController : MonoBehaviour
     public long timeout;
     public bool timerOn = true;
 
-
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
     public GameSettings settings;
 
     public bool listenToSelf = false;
-
 
     public Xoroshiro128Plus rng = new Xoroshiro128Plus();
 
@@ -59,6 +56,20 @@ public class GameController : MonoBehaviour
 
     public ConnectionState connectionState;
 
+    public enum GamePhase
+    {
+        Setup,
+        Main,
+        Meeting,
+        None
+    }
+
+    public GamePhase phase = GamePhase.None;
+    public long timer;
+
+    private ulong killTarget = ulong.MaxValue;
+    private ulong reportTarget = ulong.MaxValue;
+
     void Start()
     {
         handler = new NetworkHandler();
@@ -70,7 +81,10 @@ public class GameController : MonoBehaviour
         voice = new VoiceManager();
         voice.handler = handler;
 
+        player.controller = this;
 
+        killButton.onClick.AddListener(Kill);
+        reportButton.onClick.AddListener(Report);
     }
 
     private void Update()
@@ -104,14 +118,12 @@ public class GameController : MonoBehaviour
             snapshot += 0.05f;
         }
 
-        if (phase == GamePhase.Setup)
-            if (Input.GetKeyDown(KeyCode.Space))
-                handler.link.Send(new GameStartRequested());
+        if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Setup)
+            handler.link.Send(new GameStartRequested());
         if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
             handler.link.Send(new MeetingRequested());
-        if (phase != GamePhase.Setup)
-            if (Input.GetKeyDown(KeyCode.Escape))
-                handler.link.Send(new RestartRequested());
+        if (Input.GetKeyDown(KeyCode.Escape) && phase != GamePhase.Setup)
+            handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
@@ -121,7 +133,7 @@ public class GameController : MonoBehaviour
             // Kill
             if (player.role == 1)
             {
-                ulong target = ulong.MaxValue;
+                killTarget = ulong.MaxValue;
                 float targetDistance = 1.75f;
                 if (player.killCooldown < time)
                 {
@@ -132,7 +144,7 @@ public class GameController : MonoBehaviour
                             float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                             if (distance < targetDistance)
                             {
-                                target = n.Key;
+                                killTarget = n.Key;
                                 targetDistance = distance;
                             }
                         }
@@ -143,27 +155,20 @@ public class GameController : MonoBehaviour
                 {
                     killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
                 }
-                killButton.interactable = target != ulong.MaxValue;
-                if (target != ulong.MaxValue)
+                killButton.interactable = killTarget != ulong.MaxValue;
+                if (killTarget != ulong.MaxValue)
                 {
                     targetMarker.SetActive(true);
-                    targetMarker.transform.position = handler.mobs[target].transform.position;
+                    targetMarker.transform.position = handler.mobs[killTarget].transform.position;
                     if (Input.GetKeyDown(KeyCode.Q))
-                    {
-                        KillAttempted message = new KillAttempted
-                        {
-                            target = target,
-                            time = time
-                        };
-                        handler.link.Send(message);
-                    }
+                        Kill();
                 }
             }
 
             // Report
             {
-                ulong target = ulong.MaxValue;
-                float targetDistance = reportDistance;
+                reportTarget = ulong.MaxValue;
+                float targetDistance = player.GetVision();
                 foreach (var n in handler.mobs)
                 {
                     if (n.Value.IsAlive == false)
@@ -172,27 +177,17 @@ public class GameController : MonoBehaviour
                         float distance = diff.magnitude;
                         if (distance < targetDistance)
                         {
-                            if (!Physics2D.Raycast(player.transform.position, diff / distance, distance))
+                            if (!Physics2D.Raycast(player.transform.position, diff / distance, distance, 1 << 10))
                             {
-                                target = n.Key;
+                                reportTarget = n.Key;
                                 targetDistance = distance;
                             }
                         }
                     }
                 }
-                reportButton.interactable = target != ulong.MaxValue;
-                if (target != ulong.MaxValue)
-                {
-                    if (Input.GetKeyDown(KeyCode.R))
-                    {
-                        ReportAttempted message = new ReportAttempted
-                        {
-                            target = target,
-                            time = time
-                        };
-                        handler.link.Send(message);
-                    }
-                }
+                reportButton.interactable = reportTarget != ulong.MaxValue;
+                if (Input.GetKeyDown(KeyCode.R))
+                    Report();
             }
         }
 
@@ -274,34 +269,15 @@ public class GameController : MonoBehaviour
         }
     }
 
-
     public void Connect()
     {
         matchmaker.ConnectToLobby(lobbyInputField.text);
         timeout = time + 20000000000;
     }
 
-    public enum GamePhase
-    {
-        Setup,
-        Main,
-        Meeting,
-        None
-    }
-
-    public GamePhase phase = GamePhase.None;
-    public long timer;
-
     public void SetGamePhase(GamePhase phase, long timer)
     {
-        if(phase == GamePhase.Meeting)
-        {
-            player.cantMove = true;
-        }
-        else
-        {
-            player.cantMove = false;
-        }
+        player.cantMove = phase == GamePhase.Meeting;
         this.phase = phase;
         this.timer = timer;
     }
@@ -312,6 +288,32 @@ public class GameController : MonoBehaviour
         totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
         DebugEvent se = new DebugEvent();
         EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
+    }
+
+    public void Kill()
+    {
+        if (killTarget != ulong.MaxValue)
+        {
+            KillAttempted message = new KillAttempted
+            {
+                target = killTarget,
+                time = time
+            };
+            handler.link.Send(message);
+        }
+    }
+
+    public void Report()
+    {
+        if (reportTarget != ulong.MaxValue)
+        {
+            ReportAttempted message = new ReportAttempted
+            {
+                target = reportTarget,
+                time = time
+            };
+            handler.link.Send(message);
+        }
     }
 
 }

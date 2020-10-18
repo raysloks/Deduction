@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 
 public class Player : Mob
@@ -12,6 +10,15 @@ public class Player : Mob
     [HideInInspector] public bool cantMove = false;
     [HideInInspector] public bool nearEmergencyButton = false;
 
+    public GameController controller;
+
+    private Light2D visionLight;
+
+    private new void Awake()
+    {
+        base.Awake();
+        visionLight = GetComponent<Light2D>();
+    }
 
     private void Update()
     {
@@ -28,15 +35,17 @@ public class Player : Mob
         if (move.x < 0f)
             sprite.flipX = false;
 
-        transform.position += move * Time.deltaTime * 4f;
+        transform.position += move * Time.deltaTime * float.Parse(controller.settings.GetSetting("Player Speed").Get());
 
-        for (int i = 0; i < 2; ++i)
+        visionLight.pointLightOuterRadius = GetVision();
+
+        if (type == 0)
         {
-            float radius = 0.5f;
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
-            foreach (var collider in colliders)
+            for (int i = 0; i < 2; ++i)
             {
-                if(collider.isTrigger == false)
+                float radius = 0.5f;
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, 1 << 10);
+                foreach (var collider in colliders)
                 {
                     Vector2 point = Physics2D.ClosestPoint(transform.position, collider);
                     Vector2 diff = point - (Vector2)transform.position;
@@ -45,10 +54,16 @@ public class Player : Mob
                         transform.position += (Vector3)(diff.normalized * (diff.magnitude - radius));
                     }
                 }
-                
             }
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+    }
+
+    public float GetVision()
+    {
+        return role == 0 ?
+            float.Parse(controller.settings.GetSetting("Crewmate Vision").Get()) :
+            float.Parse(controller.settings.GetSetting("Impostor Vision").Get());
     }
 }

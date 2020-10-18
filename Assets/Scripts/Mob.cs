@@ -9,13 +9,13 @@ public class Mob : MonoBehaviour
 
     public bool IsAlive => type == 0;
 
-    public ulong type;
+    public ulong type = 0;
 
-    public ulong role;
+    public ulong role = 0;
 
     public Sprite[] sprites;
 
-    private void Awake()
+    protected void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
     }

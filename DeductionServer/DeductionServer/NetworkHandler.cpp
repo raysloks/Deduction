@@ -334,6 +334,8 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 						KillAttempted reply;
 						reply.time = mob.killCooldown;
 						link.Send(endpoint, reply);
+
+						game.checkForGameOver();
 					}
 				}
 			}
@@ -343,15 +345,14 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)
 {
-	
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
-
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 
-		if (message.EmergencyMeetings > mob.meetingsCalled) {
+		if (message.EmergencyMeetings > mob.meetingsCalled)
+		{
 			for (auto mob : mobs)
 			{
 				mob.timesVoted = 0;
@@ -365,10 +366,7 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 
 			Broadcast(message);
 		}
-
-		
 	}
-	
 }
 
 void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)

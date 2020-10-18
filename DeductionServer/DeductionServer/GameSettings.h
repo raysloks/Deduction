@@ -16,6 +16,10 @@ public:
 			int64_t killCooldown = 30'000'000'000;
 			int64_t voteTime = 30'000'000'000;
 			int64_t discussionTime = 90'000'000'000;
+			int64_t killVictoryEnabled = 0;
+			int64_t crewmateVision = 500;
+			int64_t impostorVision = 1000;
+			int64_t playerSpeed = 400;
 			int64_t killOnTies = 0;
 			int64_t enableSkipButton = 0;
 			int64_t showVotesWhenEveryoneHasVoted = 0;
