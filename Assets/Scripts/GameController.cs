@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
     public long time;
     public long timeout;
     public bool timerOn = true;
-
+   // public bool nearEmergencyButton = false;
 
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
@@ -115,8 +115,12 @@ public class GameController : MonoBehaviour
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
+<<<<<<< Updated upstream
         reportButton.gameObject.SetActive(phase == GamePhase.Main);
         if (phase == GamePhase.Main)
+=======
+        if (player.role == 1 && phase == GamePhase.Main)
+>>>>>>> Stashed changes
         {
             // Kill
             if (player.role == 1)
@@ -160,7 +164,18 @@ public class GameController : MonoBehaviour
                 }
             }
 
+<<<<<<< Updated upstream
             // Report
+=======
+        if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Main && player.nearEmergencyButton)
+        {
+            handler.link.Send(new MeetingRequested());
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
+        {
+            foreach (var n in handler.mobs)
+>>>>>>> Stashed changes
             {
                 ulong target = ulong.MaxValue;
                 float targetDistance = reportDistance;
