@@ -7,7 +7,8 @@
         MEETING_ENDED,
         MEETING_CHECKVOTES,
         MEETING_DIED,
-        SETTINGS
+        SETTINGS,
+        RESET_TIMER
 
     }
 }

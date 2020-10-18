@@ -9,6 +9,7 @@ public class Player : Mob
 
     [HideInInspector] public bool cantMove = false;
     [HideInInspector] public bool nearEmergencyButton = false;
+    [HideInInspector] public bool emergencyButtonLeft = true;
 
     public GameController controller;
 
@@ -18,6 +19,7 @@ public class Player : Mob
     {
         base.Awake();
         visionLight = GetComponent<Light2D>();
+        emergencyButtonLeft = true;
     }
 
     private void Update()

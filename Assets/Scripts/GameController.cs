@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public GameObject prefab;
 
     public int totalAmountOfVotes = 2;
-    private int totalAmountOfMeetings = 1;
+    public int totalAmountOfMeetings = 1;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour
     public long time;
     public long timeout;
     public bool timerOn = true;
+	
+    // public bool nearEmergencyButton = false;
 
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
@@ -127,7 +129,9 @@ public class GameController : MonoBehaviour
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
+
         reportButton.gameObject.SetActive(phase == GamePhase.Main);
+
         if (phase == GamePhase.Main)
         {
             // Kill
@@ -163,7 +167,7 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Q))
                         Kill();
                 }
-            }
+		    }
 
             // Report
             {
@@ -189,6 +193,16 @@ public class GameController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                     Report();
             }
+
+            // Emergency Meeting
+            if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
+            {
+                MeetingRequested message = new MeetingRequested
+                {
+                    EmergencyMeetings = (ulong)totalAmountOfMeetings
+                };
+                handler.link.Send(message);
+            }
         }
 
         if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
@@ -203,15 +217,6 @@ public class GameController : MonoBehaviour
                  };
                 handler.link.Send(message);
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && phase == GamePhase.Main && player.nearEmergencyButton)
-        {
-            MeetingRequested message = new MeetingRequested
-            {
-                EmergencyMeetings = (ulong)totalAmountOfMeetings
-            };
-            handler.link.Send(message);
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
@@ -278,6 +283,12 @@ public class GameController : MonoBehaviour
     public void SetGamePhase(GamePhase phase, long timer)
     {
         player.cantMove = phase == GamePhase.Meeting;
+        if(phase == GamePhase.Main)
+        {
+            DebugEvent ee = new DebugEvent();
+            ee.EventDescription = "Reset Emergency Button Timer";
+            EventSystem.Current.FireEvent(EVENT_TYPE.RESET_TIMER, ee);
+        }
         this.phase = phase;
         this.timer = timer;
     }
@@ -286,7 +297,8 @@ public class GameController : MonoBehaviour
     {
         totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
         totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
-        DebugEvent se = new DebugEvent();
+        SettingEvent se = new SettingEvent();
+        se.settings = settings;
         EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 
