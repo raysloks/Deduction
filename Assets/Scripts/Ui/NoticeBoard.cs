@@ -56,24 +56,28 @@ public class NoticeBoard : MonoBehaviour
         }
     }
 
-    public void MoveTheBoard(string text, Sprite initiator, Sprite body)
+    public void MoveTheBoard(string text, SpriteRenderer left, SpriteRenderer right)
     {
         transform.position = startPos;
         myText.text = text;
-        if(initiator != null)
+        if(left != null)
         {
             myImage.enabled = true;
-            myImage.sprite = initiator;
+            myImage.sprite = left.sprite;
+            myImage.color = left.color;
+
         }
         else
         {
             myImage.enabled = false;
         }
 
-        if(body != null)
+        if(right != null)
         {
             myImage2.enabled = true;
-            myImage2.sprite = body;
+            myImage2.sprite = right.sprite;
+            myImage2.color = right.color;
+
         }
         else
         {

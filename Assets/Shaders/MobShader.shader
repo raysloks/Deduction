@@ -100,9 +100,10 @@
                 half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
 
                 half4 light = CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV);
+                light.a = (light.r + light.g + light.b) / 3.0;
+                light.rgb = 0.5 - cos(min(1, light.rgb + 0.2) * 3.14159265) * 0.5;
+                light.a = 0.5 - cos(min(1, light.a * 5) * 3.14159265) * 0.5;
                 main *= light;
-                half shade = (light.r + light.g + light.b) / 3.0;
-                main.a *= min(1, shade * 2.5);
                 return main;
             }
             ENDHLSL

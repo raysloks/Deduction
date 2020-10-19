@@ -14,6 +14,8 @@ namespace EventCallbacks
         public NetworkHandler meetingHandler;
         public ulong idOfInitiator;
         public ulong idOfBody;
+        public bool emergencyMeetingDone;
+
 
 
     }
@@ -36,6 +38,10 @@ namespace EventCallbacks
     public class DebugEvent : Event
     {
 
+    }
+    public class SettingEvent : Event
+    {
+        public GameSettings settings;
     }
 
 }

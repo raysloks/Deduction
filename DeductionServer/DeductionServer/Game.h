@@ -4,6 +4,7 @@
 
 #include "GamePhase.h"
 #include "Vec2.h"
+#include "GameSettings.h"
 
 class NetworkHandler;
 
@@ -24,6 +25,9 @@ public:
 	void restartSetup();
 	void resetVotes();
 
+	void resetKillCooldowns();
+
+	void checkForGameOver();
 
 	void removeCorpses();
 
@@ -32,5 +36,7 @@ public:
 	int64_t timer;
 
 	NetworkHandler& handler;
+
+	GameSettings settings;
 };
 

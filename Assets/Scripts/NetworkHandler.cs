@@ -33,13 +33,17 @@ public class NetworkHandler
     {
         TextMeshProUGUI text = null;
         if (mobs.ContainsKey(mob))
-            text = mobs[mob].GetComponentInChildren<TextMeshProUGUI>();
-        if (text)
         {
-            if (names.ContainsKey(mob))
-                text.text = names[mob];
+            text = mobs[mob].GetComponentInChildren<TextMeshProUGUI>();
+            if (text)
+            {
+                if (names.ContainsKey(mob))
+                    text.text = names[mob];
+                if (roles.ContainsKey(mob))
+                    text.color = roles[mob] == 1 ? Color.red : Color.white;
+            }
             if (roles.ContainsKey(mob))
-                text.color = roles[mob] == 1 ? Color.red : Color.white;
+                mobs[mob].role = roles[mob];
         }
     }
 
@@ -74,7 +78,8 @@ public class NetworkHandler
 
     internal void HeartbeatHandler(IPEndPoint endpoint, Heartbeat message)
     {
-        controller.time = message.time;
+        if (Math.Abs(controller.time - message.time) > 50000000)
+            controller.time = message.time;
         controller.timeout = message.time + 5000000000;
     }
 
@@ -94,7 +99,19 @@ public class NetworkHandler
         MeetingEvent umei = new MeetingEvent();
         umei.meetingHandler = this;
         umei.idOfInitiator = message.idOfInitiator;
-
+        if(message.EmergencyMeetings == (ulong)controller.totalAmountOfMeetings)
+        {
+            umei.emergencyMeetingDone = true;
+            if(message.idOfInitiator == playerMobId)
+            {
+                controller.player.emergencyButtonLeft = false;
+                Debug.Log("ye this was the player" + message.idOfInitiator + "ye " + playerMobId);
+            }
+        }
+        else
+        {
+            umei.emergencyMeetingDone = false;
+        }
         umei.EventDescription = "Meeting Got Started";
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
@@ -126,6 +143,7 @@ public class NetworkHandler
 
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)
     {
+        controller.ApplySettings();
     }
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
@@ -143,6 +161,7 @@ public class NetworkHandler
 
     internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
     {
+        controller.player.killCooldown = message.time;
     }
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
@@ -169,7 +188,11 @@ public class NetworkHandler
     {
         MobUpdateHandler(endpoint, message.update);
         if (mobs.ContainsKey(message.update.id))
-            mobs[message.update.id].SetType(message.type);
+        {
+            Mob mob = mobs[message.update.id];
+            mob.SetType(message.type);
+            mob.sprite.color = new Color(message.color.x, message.color.y, message.color.z);
+        }
     }
 
     internal void VoiceFrameHandler(IPEndPoint endpoint, VoiceFrame message)
@@ -184,5 +207,30 @@ public class NetworkHandler
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
         controller.connectionState = GameController.ConnectionState.JoiningLobby;
+
+        string name = controller.nameInputField.text;
+        name = name.Trim();
+        if (name.Length == 0)
+            name = "Agent " + controller.rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
+        link.Send(new PlayerUpdate { name = name });
+    }
+
+    internal void TaskListUpdateHandler(IPEndPoint endpoint, TaskListUpdate message)
+    {
+    }
+
+    internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)
+    {
+    }
+
+    internal void GameSettingSetHandler(IPEndPoint endpoint, GameSettingSet message)
+    {
+        controller.settings.SetSetting(message.setting, message.value);
+    }
+
+    internal void GameSettingsUpdateHandler(IPEndPoint endpoint, GameSettingsUpdate message)
+    {
+        for (int i = 0; i < message.values.Count; ++i)
+            controller.settings.SetSetting(i, message.values[i]);
     }
 }

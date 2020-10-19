@@ -64,7 +64,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in GameStartRequested message)
+	public void Send(IPEndPoint endpoint, in GameSettingSet message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -74,7 +74,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in GivenTasks message)
+	public void Send(IPEndPoint endpoint, in GameSettingsUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -84,7 +84,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in Heartbeat message)
+	public void Send(IPEndPoint endpoint, in GameStartRequested message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -94,7 +94,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in KillAttempted message)
+	public void Send(IPEndPoint endpoint, in Heartbeat message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -104,7 +104,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MeetingRequested message)
+	public void Send(IPEndPoint endpoint, in KillAttempted message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -114,7 +114,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobRemoved message)
+	public void Send(IPEndPoint endpoint, in MeetingRequested message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -124,7 +124,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobRoleUpdate message)
+	public void Send(IPEndPoint endpoint, in MobRemoved message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -134,7 +134,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobStateUpdate message)
+	public void Send(IPEndPoint endpoint, in MobRoleUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -144,7 +144,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobTeleport message)
+	public void Send(IPEndPoint endpoint, in MobStateUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -154,7 +154,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in MobUpdate message)
+	public void Send(IPEndPoint endpoint, in MobTeleport message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -164,7 +164,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in PlayerUpdate message)
+	public void Send(IPEndPoint endpoint, in MobUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -174,7 +174,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in PlayerVoted message)
+	public void Send(IPEndPoint endpoint, in PlayerUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -184,7 +184,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in ReportAttempted message)
+	public void Send(IPEndPoint endpoint, in PlayerVoted message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -194,7 +194,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in RestartRequested message)
+	public void Send(IPEndPoint endpoint, in ReportAttempted message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -204,11 +204,41 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	public void Send(IPEndPoint endpoint, in RestartRequested message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)17);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in TaskListUpdate message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)18);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in TaskUpdate message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)19);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)20);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -238,7 +268,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in GameStartRequested message)
+	public void Send(in GameSettingSet message)
 	{
 		if (endpoint == null)
 			return;
@@ -250,7 +280,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in GivenTasks message)
+	public void Send(in GameSettingsUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -262,7 +292,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in Heartbeat message)
+	public void Send(in GameStartRequested message)
 	{
 		if (endpoint == null)
 			return;
@@ -274,7 +304,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in KillAttempted message)
+	public void Send(in Heartbeat message)
 	{
 		if (endpoint == null)
 			return;
@@ -286,7 +316,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MeetingRequested message)
+	public void Send(in KillAttempted message)
 	{
 		if (endpoint == null)
 			return;
@@ -298,7 +328,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobRemoved message)
+	public void Send(in MeetingRequested message)
 	{
 		if (endpoint == null)
 			return;
@@ -310,7 +340,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobRoleUpdate message)
+	public void Send(in MobRemoved message)
 	{
 		if (endpoint == null)
 			return;
@@ -322,7 +352,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobStateUpdate message)
+	public void Send(in MobRoleUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -334,7 +364,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobTeleport message)
+	public void Send(in MobStateUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -346,7 +376,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in MobUpdate message)
+	public void Send(in MobTeleport message)
 	{
 		if (endpoint == null)
 			return;
@@ -358,7 +388,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in PlayerUpdate message)
+	public void Send(in MobUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -370,7 +400,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in PlayerVoted message)
+	public void Send(in PlayerUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -382,7 +412,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in ReportAttempted message)
+	public void Send(in PlayerVoted message)
 	{
 		if (endpoint == null)
 			return;
@@ -394,7 +424,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in RestartRequested message)
+	public void Send(in ReportAttempted message)
 	{
 		if (endpoint == null)
 			return;
@@ -406,13 +436,49 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in VoiceFrame message)
+	public void Send(in RestartRequested message)
 	{
 		if (endpoint == null)
 			return;
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)17);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in TaskListUpdate message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)18);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in TaskUpdate message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)19);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in VoiceFrame message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)20);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -466,89 +532,107 @@ public class NetLink
 		}
 		case 3:
 		{
-			GameStartRequested message = GameStartRequested.Deserialize(reader);
-			message_queue.Enqueue(() => handler.GameStartRequestedHandler(endpoint, message));
+			GameSettingSet message = GameSettingSet.Deserialize(reader);
+			message_queue.Enqueue(() => handler.GameSettingSetHandler(endpoint, message));
 			break;
 		}
 		case 4:
 		{
-			GivenTasks message = GivenTasks.Deserialize(reader);
-			message_queue.Enqueue(() => handler.GivenTasksHandler(endpoint, message));
+			GameSettingsUpdate message = GameSettingsUpdate.Deserialize(reader);
+			message_queue.Enqueue(() => handler.GameSettingsUpdateHandler(endpoint, message));
 			break;
 		}
 		case 5:
+		{
+			GameStartRequested message = GameStartRequested.Deserialize(reader);
+			message_queue.Enqueue(() => handler.GameStartRequestedHandler(endpoint, message));
+			break;
+		}
+		case 6:
 		{
 			Heartbeat message = Heartbeat.Deserialize(reader);
 			message_queue.Enqueue(() => handler.HeartbeatHandler(endpoint, message));
 			break;
 		}
-		case 6:
+		case 7:
 		{
 			KillAttempted message = KillAttempted.Deserialize(reader);
 			message_queue.Enqueue(() => handler.KillAttemptedHandler(endpoint, message));
 			break;
 		}
-		case 7:
+		case 8:
 		{
 			MeetingRequested message = MeetingRequested.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MeetingRequestedHandler(endpoint, message));
 			break;
 		}
-		case 8:
+		case 9:
 		{
 			MobRemoved message = MobRemoved.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobRemovedHandler(endpoint, message));
 			break;
 		}
-		case 9:
+		case 10:
 		{
 			MobRoleUpdate message = MobRoleUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobRoleUpdateHandler(endpoint, message));
 			break;
 		}
-		case 10:
+		case 11:
 		{
 			MobStateUpdate message = MobStateUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobStateUpdateHandler(endpoint, message));
 			break;
 		}
-		case 11:
+		case 12:
 		{
 			MobTeleport message = MobTeleport.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobTeleportHandler(endpoint, message));
 			break;
 		}
-		case 12:
+		case 13:
 		{
 			MobUpdate message = MobUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.MobUpdateHandler(endpoint, message));
 			break;
 		}
-		case 13:
+		case 14:
 		{
 			PlayerUpdate message = PlayerUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.PlayerUpdateHandler(endpoint, message));
 			break;
 		}
-		case 14:
+		case 15:
 		{
 			PlayerVoted message = PlayerVoted.Deserialize(reader);
 			message_queue.Enqueue(() => handler.PlayerVotedHandler(endpoint, message));
 			break;
 		}
-		case 15:
+		case 16:
 		{
 			ReportAttempted message = ReportAttempted.Deserialize(reader);
 			message_queue.Enqueue(() => handler.ReportAttemptedHandler(endpoint, message));
 			break;
 		}
-		case 16:
+		case 17:
 		{
 			RestartRequested message = RestartRequested.Deserialize(reader);
 			message_queue.Enqueue(() => handler.RestartRequestedHandler(endpoint, message));
 			break;
 		}
-		case 17:
+		case 18:
+		{
+			TaskListUpdate message = TaskListUpdate.Deserialize(reader);
+			message_queue.Enqueue(() => handler.TaskListUpdateHandler(endpoint, message));
+			break;
+		}
+		case 19:
+		{
+			TaskUpdate message = TaskUpdate.Deserialize(reader);
+			message_queue.Enqueue(() => handler.TaskUpdateHandler(endpoint, message));
+			break;
+		}
+		case 20:
 		{
 			VoiceFrame message = VoiceFrame.Deserialize(reader);
 			message_queue.Enqueue(() => handler.VoiceFrameHandler(endpoint, message));
@@ -559,6 +643,6 @@ public class NetLink
 		}
 	}
 
-	public const uint crc = 0x74c1f973;
+	public const uint crc = 0x6cce03d1;
 	private UdpClient client;
 }

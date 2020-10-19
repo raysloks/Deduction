@@ -1,6 +1,8 @@
 	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);
 	void AbilityUsedHandler(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void GamePhaseUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
+	void GameSettingSetHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
+	void GameSettingsUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
 	void GameStartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
 	void GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void HeartbeatHandler(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
@@ -15,4 +17,6 @@
 	void PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
+	void TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
+	void TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);

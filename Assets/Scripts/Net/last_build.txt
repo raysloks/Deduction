@@ -5,6 +5,11 @@ uint64 target
 GamePhaseUpdate
 uint64 phase
 int64 timer
+GameSettingSet
+uint16 setting
+int64 value
+GameSettingsUpdate
+int64 values[]
 GameStartRequested
 GivenTasks
 uint8 taskId[]
@@ -15,6 +20,7 @@ int64 time
 uint64 target
 MeetingRequested
 uint64 idOfInitiator
+uint64 EmergencyMeetings
 MobRemoved
 uint64 id
 int64 time
@@ -26,6 +32,7 @@ MobUpdate update
 uint64 type
 uint64 state
 uint64 sprite
+vec3 color
 MobTeleport
 uint64 id
 int64 time
@@ -51,6 +58,10 @@ int64 time
 uint64 idOfInitiator
 uint64 target
 RestartRequested
+TaskListUpdate
+uint16 tasks[]
+TaskUpdate
+uint16 task
 VoiceFrame
 uint64 id
 uint8 data[]

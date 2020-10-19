@@ -20,9 +20,10 @@ void Game::tick(int64_t now)
 		case GamePhase::Main:
 			break;
 		case GamePhase::Meeting:
-		//	handler.Broadcast(message);
-		//	setPhase(GamePhase::Main, 0);
+			//handler.Broadcast(message);
+			//setPhase(GamePhase::Main, 0);
 			teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
+			resetKillCooldowns();
 			break;
 		default:
 			break;
@@ -86,7 +87,14 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 void Game::startGameCountdown()
 {
 	if (phase == GamePhase::Setup && timer == 0)
+	{
 		setPhase(GamePhase::Setup, handler.time + 5'000'000'000);
+		for (auto&& mob : handler.mobs)
+		{
+			mob.timesVoted = 0;
+			mob.meetingsCalled = 0;
+		}
+	}
 }
 
 void Game::startGame()
@@ -105,22 +113,22 @@ void Game::startGame()
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}
 
-	size_t impostorCount = 1;
-
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{
 		auto&& mob = handler.mobs[mobs[i]];
-		mob.role = i < impostorCount ? Role::Impostor : Role::Crewmate;
+		mob.role = i < settings.impostorCount ? Role::Impostor : Role::Crewmate;
 	}
 
 	handler.updateMobRoles();
+
+	resetKillCooldowns();
 }
 
 void Game::startMeeting()
 {
 	if (phase == GamePhase::Main)
 	{
-		setPhase(GamePhase::Meeting, handler.time + 120'000'000'000);
+		setPhase(GamePhase::Meeting, handler.time + settings.discussionTime + settings.voteTime);
 		teleportPlayersToEllipse(Vec2(), Vec2(1.0f));
 		removeCorpses();
 		resetVotes();
@@ -155,6 +163,45 @@ void Game::resetVotes()
 		auto&& mob = handler.mobs[i];
 		if (mob.enabled && mob.type == MobType::Player)
 			mob.timesVoted = 0;
+	}
+}
+
+void Game::resetKillCooldowns()
+{
+	KillAttempted message;
+	message.time = handler.time + settings.killCooldown;
+	handler.Broadcast(message);
+	for (auto&& mob : handler.mobs)
+		mob.killCooldown = message.time;
+}
+
+void Game::checkForGameOver()
+{
+	if (settings.killVictoryEnabled)
+	{
+		size_t crew = 0;
+		size_t impostors = 0;
+		for (auto player : handler.players)
+		{
+			auto&& mob = handler.mobs[player.second.mob];
+			if (mob.type == MobType::Player)
+			{
+				if (mob.role == Role::Crewmate)
+					++crew;
+				if (mob.role == Role::Impostor)
+					++impostors;
+			}
+		}
+
+		if (impostors >= crew)
+		{
+			// impostor victory
+		}
+
+		if (impostors == 0)
+		{
+			// crew victory
+		}
 	}
 }
 

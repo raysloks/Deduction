@@ -76,6 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MatchmakerHandler.cpp" />
@@ -86,6 +87,8 @@
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="Net\AbilityUsed.cpp" />
     <ClCompile Include="Net\GamePhaseUpdate.cpp" />
+    <ClCompile Include="Net\GameSettingSet.cpp" />
+    <ClCompile Include="Net\GameSettingsUpdate.cpp" />
     <ClCompile Include="Net\GameStartRequested.cpp" />
     <ClCompile Include="Net\Heartbeat.cpp" />
     <ClCompile Include="Net\KillAttempted.cpp" />
@@ -100,6 +103,8 @@
     <ClCompile Include="Net\PlayerVoted.cpp" />
     <ClCompile Include="Net\ReportAttempted.cpp" />
     <ClCompile Include="Net\RestartRequested.cpp" />
+    <ClCompile Include="Net\TaskListUpdate.cpp" />
+    <ClCompile Include="Net\TaskUpdate.cpp" />
     <ClCompile Include="Net\VoiceFrame.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -110,6 +115,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase.h" />
+    <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MatchmakerHandler.h" />
     <ClInclude Include="Matchmaker\LobbyIdentity.h" />
@@ -121,6 +127,8 @@
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="Net\AbilityUsed.h" />
     <ClInclude Include="Net\GamePhaseUpdate.h" />
+    <ClInclude Include="Net\GameSettingSet.h" />
+    <ClInclude Include="Net\GameSettingsUpdate.h" />
     <ClInclude Include="Net\GameStartRequested.h" />
     <ClInclude Include="Net\Heartbeat.h" />
     <ClInclude Include="Net\KillAttempted.h" />
@@ -136,6 +144,8 @@
     <ClInclude Include="Net\PlayerVoted.h" />
     <ClInclude Include="Net\ReportAttempted.h" />
     <ClInclude Include="Net\RestartRequested.h" />
+    <ClInclude Include="Net\TaskListUpdate.h" />
+    <ClInclude Include="Net\TaskUpdate.h" />
     <ClInclude Include="Net\VoiceFrame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Role.h" />

@@ -9,5 +9,6 @@ public:
 	uint64_t mob;
 	std::string name;
 	int64_t timeout;
+
 };
 

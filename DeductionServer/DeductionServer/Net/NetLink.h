@@ -8,6 +8,8 @@
 
 #include "AbilityUsed.h"
 #include "GamePhaseUpdate.h"
+#include "GameSettingSet.h"
+#include "GameSettingsUpdate.h"
 #include "GameStartRequested.h"
 #include "GivenTasks.h"
 #include "Heartbeat.h"
@@ -22,6 +24,8 @@
 #include "PlayerVoted.h"
 #include "ReportAttempted.h"
 #include "RestartRequested.h"
+#include "TaskListUpdate.h"
+#include "TaskUpdate.h"
 #include "VoiceFrame.h"
 
 class NetworkHandler;
@@ -37,6 +41,8 @@ public:
 	void Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint);
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
@@ -51,6 +57,8 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);
 	static const uint32_t crc;
 	asio::io_context io_context;

@@ -25,6 +25,8 @@ void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 			MobUpdate message;
 			message.id = i;
 			message.time = time;
+			if (mob.time)
+				message.time = mob.time;
 			message.position = mob.position;
 			for (auto player : players)
 			{
@@ -71,6 +73,12 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 	player.timeout = time + 10'000'000'000;
 	players.emplace(endpoint, player);
 
+	mobs[player.mob].color = Vec3(
+		rng.next_float() * 0.6f + 0.2f,
+		rng.next_float() * 0.6f + 0.2f,
+		rng.next_float() * 0.6f + 0.2f
+	);
+
 	{
 		PlayerUpdate message;
 		message.id = 0;
@@ -102,6 +110,12 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 		link.Send(endpoint, message);
 	}
 
+	{
+		GameSettingsUpdate message;
+		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
+		link.Send(endpoint, message);
+	}
+
 	updateMobStatesForPlayer(endpoint);
 
 	std::cout << name << " connected from " << endpoint << std::endl;
@@ -115,6 +129,7 @@ void NetworkHandler::updateMobState(uint64_t id)
 	message.update.id = id;
 	message.update.time = time;
 	message.update.position = mob.position;
+	message.color = mob.color;
 	message.type = (uint64_t)mob.type;
 
 	for (auto player : players)
@@ -141,6 +156,7 @@ void NetworkHandler::updateMobStatesForPlayer(const asio::ip::udp::endpoint & en
 				message.update.id = i;
 				message.update.time = time;
 				message.update.position = mob.position;
+				message.color = mob.color;
 				message.type = (uint64_t)mob.type;
 				link.Send(endpoint, message);
 			}
@@ -211,6 +227,7 @@ void NetworkHandler::killMob(uint64_t id)
 
 	Mob corpse;
 	corpse.position = mob.position;
+	corpse.color = mob.color;
 	corpse.type = MobType::Corpse;
 	corpse.role = mob.role;
 	createMob(corpse);
@@ -240,18 +257,43 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 
 void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
 {
-	if (message.phase == 1 && game.phase != GamePhase::Main) {
+	if (message.phase == 1 && game.phase != GamePhase::Main)
+	{
 		game.removeCorpses();
 		game.setPhase(GamePhase::Main, message.timer);
 	}
-	else if (message.phase == 2 && game.phase != GamePhase::Meeting) {
+	else if (message.phase == 2 && game.phase != GamePhase::Meeting)
+	{
 		game.setPhase(GamePhase::Meeting, message.timer);
+	}
+}
+
+void NetworkHandler::GameSettingSetHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingSet & message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		game.settings.settings[message.setting] = message.value;
+		Broadcast(message);
+	}
+}
+
+void NetworkHandler::GameSettingsUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingsUpdate & message)
+{
+	if (game.phase == GamePhase::Setup)
+	{
+		game.settings = GameSettings();
+
+		GameSettingsUpdate message;
+		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
+		Broadcast(message);
 	}
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
 {
 	game.startGameCountdown();
+	Broadcast(message);
 }
 
 void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, const Heartbeat & message)
@@ -278,7 +320,7 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		if (mob.type == MobType::Player && mob.role == Role::Impostor)
+		if (mob.type == MobType::Player && mob.role == Role::Impostor && mob.killCooldown < time)
 		{
 			if (message.target < mobs.size())
 			{
@@ -297,6 +339,13 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 						Broadcast(message);
 
 						mob.position = message.to;
+						mob.killCooldown = time + game.settings.killCooldown;
+
+						KillAttempted reply;
+						reply.time = mob.killCooldown;
+						link.Send(endpoint, reply);
+
+						game.checkForGameOver();
 					}
 				}
 			}
@@ -306,20 +355,39 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)
 {
-	
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
-		game.startMeeting();
-
 		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
 
-		MeetingRequested message;
-		message.idOfInitiator = player.mob;
-	
-		Broadcast(message);
+		if (message.EmergencyMeetings > mob.meetingsCalled)
+		{
+			for (auto mob : mobs)
+			{
+				mob.timesVoted = 0;
+			}
+			game.startMeeting();
+
+			mob.meetingsCalled++;
+			if (message.EmergencyMeetings == mob.meetingsCalled)
+			{
+				MeetingRequested message;
+				message.idOfInitiator = player.mob;
+				message.EmergencyMeetings = mob.meetingsCalled;
+
+			    Broadcast(message);
+			}
+			else
+			{
+				MeetingRequested message;
+				message.idOfInitiator = player.mob;
+
+				Broadcast(message);
+			}
+			
+		}
 	}
-	
 }
 
 void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)
@@ -347,6 +415,7 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 		mob.position = message.position;
+		mob.time = message.time;
 	}
 }
 
@@ -421,6 +490,14 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
 {
 	game.restartSetup();
+}
+
+void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskListUpdate & message)
+{
+}
+
+void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskUpdate & message)
+{
 }
 
 void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint, const VoiceFrame & message)

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using EventCallbacks;
+using System.Xml;
 
 public class GameController : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class GameController : MonoBehaviour
     public GameObject popup;
     public GameObject ini;
 
-    public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
+    public int totalAmountOfMeetings = 1;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -25,17 +26,27 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
+    public Button startGameButton;
+
+    public Button killButton;
+    public Text killCooldownText;
+
+    public Button reportButton;
+
+    public GameObject targetMarker;
+
     public long time;
     public long timeout;
     public bool timerOn = true;
-
+	
+    // public bool nearEmergencyButton = false;
 
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
+    public GameSettings settings;
 
     public bool listenToSelf = false;
-
 
     public Xoroshiro128Plus rng = new Xoroshiro128Plus();
 
@@ -51,6 +62,20 @@ public class GameController : MonoBehaviour
 
     public ConnectionState connectionState;
 
+    public enum GamePhase
+    {
+        Setup,
+        Main,
+        Meeting,
+        None
+    }
+
+    public GamePhase phase = GamePhase.None;
+    public long timer;
+
+    private ulong killTarget = ulong.MaxValue;
+    private ulong reportTarget = ulong.MaxValue;
+
     void Start()
     {
         handler = new NetworkHandler();
@@ -61,6 +86,11 @@ public class GameController : MonoBehaviour
 
         voice = new VoiceManager();
         voice.handler = handler;
+
+        player.controller = this;
+
+        killButton.onClick.AddListener(Kill);
+        reportButton.onClick.AddListener(Report);
     }
 
     private void Update()
@@ -89,64 +119,92 @@ public class GameController : MonoBehaviour
         snapshot -= Time.deltaTime;
         if (snapshot <= 0f)
         {
-            if (connectionState == ConnectionState.JoiningLobby)
-            {
-                string name = nameInputField.text;
-                name = name.Trim();
-                if (name.Length == 0)
-                    name = "Agent " + rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
-                handler.link.Send(new PlayerUpdate { name = name });
-            }
-            handler.link.Send(new MobUpdate { position = player.transform.position });
+            if (connectionState == ConnectionState.Connected)
+                handler.link.Send(new MobUpdate { position = player.transform.position, time = time });
             snapshot += 0.05f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            handler.link.Send(new GameStartRequested());
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            handler.link.Send(new MeetingRequested());
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        //if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
+        //    handler.link.Send(new MeetingRequested());
+        if (Input.GetKeyDown(KeyCode.Escape) && phase != GamePhase.Setup)
             handler.link.Send(new RestartRequested());
 
-        if (Input.GetKeyDown(KeyCode.Q) && phase == GamePhase.Main)
+        targetMarker.SetActive(false);
+        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
+
+        reportButton.gameObject.SetActive(phase == GamePhase.Main);
+
+        if (phase == GamePhase.Main)
         {
-            foreach (var n in handler.mobs)
+            // Kill
+            if (player.role == 1)
             {
-                if (n.Value.IsAlive == true)
+                killTarget = ulong.MaxValue;
+                float targetDistance = 1.75f;
+                if (player.killCooldown < time)
                 {
-                    float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
-                    if (distance < 2.25f)
+                    foreach (var n in handler.mobs)
                     {
-                        KillAttempted message = new KillAttempted
+                        if (n.Value.IsAlive == true && n.Value.role == 0)
                         {
-                            target = n.Key,
-                            time = time
-                        };
-                        handler.link.Send(message);
+                            float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
+                            if (distance < targetDistance)
+                            {
+                                killTarget = n.Key;
+                                targetDistance = distance;
+                            }
+                        }
+                    }
+                    killCooldownText.text = "";
+                }
+                else
+                {
+                    killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
+                }
+                killButton.interactable = killTarget != ulong.MaxValue;
+                if (killTarget != ulong.MaxValue)
+                {
+                    targetMarker.SetActive(true);
+                    targetMarker.transform.position = handler.mobs[killTarget].transform.position;
+                    if (Input.GetKeyDown(KeyCode.Q))
+                        Kill();
+                }
+		    }
+
+            // Report
+            {
+                reportTarget = ulong.MaxValue;
+                float targetDistance = player.GetVision();
+                foreach (var n in handler.mobs)
+                {
+                    if (n.Value.IsAlive == false)
+                    {
+                        Vector2 diff = n.Value.transform.position - player.transform.position;
+                        float distance = diff.magnitude;
+                        if (distance < targetDistance)
+                        {
+                            if (!Physics2D.Raycast(player.transform.position, diff / distance, distance, 1 << 10))
+                            {
+                                reportTarget = n.Key;
+                                targetDistance = distance;
+                            }
+                        }
                     }
                 }
+                reportButton.interactable = reportTarget != ulong.MaxValue;
+                if (Input.GetKeyDown(KeyCode.R))
+                    Report();
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.R) && phase == GamePhase.Main)
-        {
-            foreach (var n in handler.mobs)
+            // Emergency Meeting
+            if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
             {
-                if(n.Value.IsAlive == false)
+                MeetingRequested message = new MeetingRequested
                 {
-                    float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
-                    if(distance < reportDistance)
-                    {
-                        ReportAttempted message = new ReportAttempted
-                        {
-                            target = n.Key,
-                            time = time
-                        };
-                        handler.link.Send(message);
-                    }
-                }
+                    EmergencyMeetings = (ulong)totalAmountOfMeetings
+                };
+                handler.link.Send(message);
             }
-
         }
 
         if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
@@ -174,6 +232,7 @@ public class GameController : MonoBehaviour
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
+        startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         switch (connectionState)
         {
@@ -228,33 +287,71 @@ public class GameController : MonoBehaviour
         }
     }
 
-
     public void Connect()
     {
         matchmaker.ConnectToLobby(lobbyInputField.text);
         timeout = time + 20000000000;
     }
 
-    public enum GamePhase
-    {
-        Setup,
-        Main,
-        Meeting,
-        None
-    }
-
-    public GamePhase phase = GamePhase.None;
-    public long timer;
-
     public void SetGamePhase(GamePhase phase, long timer)
     {
-        if(phase == GamePhase.Meeting)
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+        player.cantMove = phase == GamePhase.Meeting;
+        if(phase == GamePhase.Main)
         {
-            Debug.Log("Meeting Started");
-          //  MeetingUi();
+            DebugEvent ee = new DebugEvent();
+            ee.EventDescription = "Reset Emergency Button Timer";
+            EventSystem.Current.FireEvent(EVENT_TYPE.RESET_TIMER, ee);
         }
         this.phase = phase;
         this.timer = timer;
+    }
+
+    public void ApplySettings()
+    {
+        totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
+        totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
+        SettingEvent se = new SettingEvent();
+        se.settings = settings;
+        EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
+    }
+
+    public void Kill()
+    {
+        if (killTarget != ulong.MaxValue)
+        {
+            KillAttempted message = new KillAttempted
+            {
+                target = killTarget,
+                time = time
+            };
+            handler.link.Send(message);
+        }
+    }
+
+    public void Report()
+    {
+        if (reportTarget != ulong.MaxValue)
+        {
+            ReportAttempted message = new ReportAttempted
+            {
+                target = reportTarget,
+                time = time
+            };
+            handler.link.Send(message);
+        }
+    }
+
+    public void StartGame()
+    {
+        if (phase == GamePhase.Setup)
+            handler.link.Send(new GameStartRequested());
+    }
+
+    public void ResetSettings()
+    {
+        if (phase == GamePhase.Setup)
+            handler.link.Send(new GameSettingsUpdate { values = new List<long>() });
     }
 
 }

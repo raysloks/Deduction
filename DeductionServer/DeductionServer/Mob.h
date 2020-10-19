@@ -9,6 +9,8 @@
 
 #include "Task.h"
 
+#include <cstdint>
+
 class Mob
 {
 public:
@@ -17,12 +19,18 @@ public:
 	bool visibleTo(const Mob& mob) const;
 
 	Vec3 position;
+	int64_t time;
 	MobType type;
 	Role role;
 	int timesVoted;
 	int totalVotes;
+	int meetingsCalled;
 	bool enabled;
 
 	std::vector<Task> tasks;
+
+	int64_t killCooldown;
+
+	Vec3 color;
 };
 
