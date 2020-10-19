@@ -84,6 +84,7 @@ void serializeFieldCs(std::ofstream& f, Field field)
 		f << "		}" << std::endl;
 		break;
 	case FS_VECTOR:
+	{
 		f << "		{" << std::endl;
 		f << "			ushort size = (ushort)this." << field.name << ".Count;" << std::endl;
 		f << "			writer.Write(size);" << std::endl;
@@ -93,6 +94,9 @@ void serializeFieldCs(std::ofstream& f, Field field)
 		f << "			foreach (var i in this." << field.name << ")" << std::endl;
 		serializeFieldCs(f, i);
 		f << "		}" << std::endl;
+	}
+		break;
+	default:
 		break;
 	}
 }
@@ -144,6 +148,7 @@ void deserializeFieldCs(std::ofstream& f, Field field)
 		f << "		}" << std::endl;
 		break;
 	case FS_VECTOR:
+	{
 		f << "	{" << std::endl;
 		f << "		" << field.name << " = new List<" << translateCs(field.type_name) << ">();" << std::endl;
 		f << "		ushort size = reader.ReadUInt16();" << std::endl;
@@ -164,6 +169,9 @@ void deserializeFieldCs(std::ofstream& f, Field field)
 		f << "			" << field.name << ".Add(element);" << std::endl;
 		f << "		}" << std::endl;
 		f << "	}" << std::endl;
+	}
+		break;
+	default:
 		break;
 	}
 }
