@@ -6,6 +6,8 @@ GamePhaseUpdate
 uint64 phase
 int64 timer
 GameStartRequested
+GivenTasks
+uint8 taskId[]
 Heartbeat
 int64 time
 KillAttempted

@@ -7,6 +7,8 @@ using EventCallbacks;
 public class GameController : MonoBehaviour
 {
     public GameObject prefab;
+    public GameObject popup;
+    public GameObject ini;
 
     public float reportDistance = 4f;
     public int totalAmountOfVotes = 2;
@@ -159,6 +161,16 @@ public class GameController : MonoBehaviour
                  };
                 handler.link.Send(message);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            popup.GetComponent<MinigamePopupScript>().ActivatePopup("MinigameScene", ini);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            popup.GetComponent<MinigamePopupScript>().DeactivatePopup(true);
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
