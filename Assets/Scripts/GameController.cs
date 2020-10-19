@@ -7,6 +7,8 @@ using System.Xml;
 
 public class GameController : MonoBehaviour
 {
+    public GameSettings settings;
+
     public GameObject prefab;
     public GameObject popup;
     public GameObject ini;
@@ -44,7 +46,8 @@ public class GameController : MonoBehaviour
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
-    public GameSettings settings;
+
+    public GameSettingsManager settingsManager;
 
     public bool listenToSelf = false;
 
@@ -309,10 +312,10 @@ public class GameController : MonoBehaviour
 
     public void ApplySettings()
     {
-        totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
-        totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
+        totalAmountOfVotes = (int)settings.votesPerPlayer;
+        totalAmountOfMeetings = (int)settings.emergencyMeetingsPerPlayer;
         SettingEvent se = new SettingEvent();
-        se.settings = settings;
+        //se.settings = settings;
         EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 
@@ -351,7 +354,7 @@ public class GameController : MonoBehaviour
     public void ResetSettings()
     {
         if (phase == GamePhase.Setup)
-            handler.link.Send(new GameSettingsUpdate { values = new List<long>() });
+            handler.link.Send(new ResetGameSettings());
     }
 
 }

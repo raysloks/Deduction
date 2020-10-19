@@ -2,14 +2,26 @@ AbilityUsed
 int64 time
 uint64 ability
 uint64 target
+GameOver
+uint64 winners[]
 GamePhaseUpdate
 uint64 phase
 int64 timer
-GameSettingSet
-uint16 setting
-int64 value
-GameSettingsUpdate
-int64 values[]
+GameSettings
+int64 impostorCount
+int64 votesPerPlayer
+int64 emergencyMeetingsPerPlayer
+int64 emergencyMeetingCooldown
+int64 killCooldown
+int64 voteTime
+int64 discussionTime
+bool killVictoryEnabled
+float crewmateVision
+float impostorVision
+float playerSpeed
+bool killOnTies
+bool enableSkipButton
+bool showVotesWhenEveryoneHasVoted
 GameStartRequested
 GivenTasks
 uint8 taskId[]
@@ -57,6 +69,7 @@ ReportAttempted
 int64 time
 uint64 idOfInitiator
 uint64 target
+ResetGameSettings
 RestartRequested
 TaskListUpdate
 uint16 tasks[]

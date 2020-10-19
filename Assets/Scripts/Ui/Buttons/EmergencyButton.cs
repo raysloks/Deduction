@@ -19,27 +19,22 @@ public class EmergencyButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m = this.GetComponent<SpriteRenderer>().material;
-        text = this.transform.GetChild(0).transform.gameObject.GetComponent<TextMeshPro>();
-        EventSystem.Current.RegisterListener(EVENT_TYPE.RESET_TIMER, buttonTimer);
-        EventSystem.Current.RegisterListener(EVENT_TYPE.SETTINGS, settings);
-
-
+        m = GetComponent<SpriteRenderer>().material;
+        text = transform.GetChild(0).transform.gameObject.GetComponent<TextMeshPro>();
+        EventSystem.Current.RegisterListener(EVENT_TYPE.RESET_TIMER, ButtonTimer);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.SETTINGS, Settings);
     }
-
-
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player")
+        if (col.CompareTag("Player"))
         {
-           
             if (ButtonActive == true && col.gameObject.GetComponent<Player>().emergencyButtonLeft == true)
             {
                 Debug.Log("PlayerEntered1");
 
-                //   this.GetComponent<SpriteRenderer>().material = outline;
-                //   outline.SetFloat("_OutlineAlpha", 1f);
+                //this.GetComponent<SpriteRenderer>().material = outline;
+                //outline.SetFloat("_OutlineAlpha", 1f);
                 text.text = "Vote";
 
                 text.color = Color.green;
@@ -47,45 +42,47 @@ public class EmergencyButton : MonoBehaviour
             }
             else
             {
-                if(ButtonActive == true)
+                if (ButtonActive == true)
                 {
                     text.text = "X";
                 }
                 player = col.gameObject;
             }
-            //  ButtonActive = true;
-            // buttonTimer();
+            //ButtonActive = true;
+            //buttonTimer();
         }
     }
+
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.CompareTag("Player"))
         {
             if (ButtonActive == true)
             {
                 text.text = "Vote";
             }
             Debug.Log("PlayerExited");
-            this.GetComponent<SpriteRenderer>().material = m;
+            GetComponent<SpriteRenderer>().material = m;
 
-          //  outline.SetFloat("_OutlineAlpha", 0f);
+            //outline.SetFloat("_OutlineAlpha", 0f);
             text.color = Color.black;
             col.gameObject.GetComponent<Player>().nearEmergencyButton = false;
             player = null;
             
-            //  ButtonActive = false;
+            //ButtonActive = false;
         }
     }
-    void buttonTimer(EventCallbacks.Event eventinfo)
+
+    void ButtonTimer(EventCallbacks.Event eventinfo)
     {
         ButtonActive = false;
-        StartCoroutine(waitFunction2());
+        StartCoroutine(WaitFunction2());
         text.text = "Vote";
-
     }
-    IEnumerator waitFunction2()
+
+    IEnumerator WaitFunction2()
     {
-     //   const float waitTime = 3f;
+        //const float waitTime = 3f;
         float counter = maxTimer;
 
         while (counter > 0)
@@ -98,26 +95,23 @@ public class EmergencyButton : MonoBehaviour
         text.text = "Vote";
         ButtonActive = true;
 
-        if (player != null )
+        if (player != null)
         {
-            if(player.GetComponent<Player>().emergencyButtonLeft == false)
+            if (player.GetComponent<Player>().emergencyButtonLeft == false)
             {
-              //  ButtonActive = false;
+                //ButtonActive = false;
             }
             else
             {
                 text.color = Color.green;
                 player.GetComponent<Player>().nearEmergencyButton = true;
             }
-           
         }
     }
-    void settings(EventCallbacks.Event eventInfo)
-    {
 
+    void Settings(EventCallbacks.Event eventInfo)
+    {
         SettingEvent settingEvent = (SettingEvent)eventInfo;
-        GameSettings settings = settingEvent.settings;
-        GameSettingTime s = (GameSettingTime)settings.GetSetting("Emergency Meeting Cooldown");
-        maxTimer = (s.value / 1000000000);
+        maxTimer = settingEvent.settings.emergencyMeetingCooldown / 1000000000;
     }
 }

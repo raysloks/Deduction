@@ -61,12 +61,10 @@ public class MeetingUiListener : MonoBehaviour
         
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_ENDED, MeetingDone);
-        //  EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_CHECKVOTES, checkVotes);
+        //EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_CHECKVOTES, checkVotes);
 
-        EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, Vote);
         EventSystem.Current.RegisterListener(EVENT_TYPE.SETTINGS, MySettings);
-
-
     }
 
     // Update is called once per frame
@@ -115,22 +113,21 @@ public class MeetingUiListener : MonoBehaviour
             }
             else if(ties.Count > 0 && fadeAway == false)
             {               
-                    if (mostVotesId == (ulong)100)
+                if (mostVotesId == (ulong)100)
+                {
+                    if (skipButton.GetComponent<VoteButton>().done == true)
                     {
-                        if (skipButton.GetComponent<VoteButton>().done == true)
-                        {
-                            EndMeetingEffect();
-                        }
-                    }
-                    else if (players[mostVotesId].GetComponent<VoteButton>().done == true)
-                    {
-
                         EndMeetingEffect();
                     }
+                }
+                else if (players[mostVotesId].GetComponent<VoteButton>().done == true)
+                {
+
+                    EndMeetingEffect();
+                }
             }
             else if(fadeAway == false)
             {
-                
                 //if no one dies MAKE COOL TRANSITION
                 timer += Time.deltaTime;
                 if(timer > 4f)
@@ -143,7 +140,6 @@ public class MeetingUiListener : MonoBehaviour
 
             if (fadeAway == true )
             {
-
                 csGrp.alpha -= Time.deltaTime;
 
                 if (csGrp.alpha < 0.01f)
@@ -158,10 +154,7 @@ public class MeetingUiListener : MonoBehaviour
 
                 }
             }
-
-
         }
-
     }
 
     void EndMeetingEffect()
@@ -195,9 +188,8 @@ public class MeetingUiListener : MonoBehaviour
                 csGrp.alpha = 1;
             }
         }
-
-       
     }
+
     //Start the meeting. Add all vote buttons for each alive player
     void MeetingStarted(EventCallbacks.Event eventInfo)
     {
@@ -320,7 +312,7 @@ public class MeetingUiListener : MonoBehaviour
     }
 
     //Event thats fired when someone votes
-    void vote(EventCallbacks.Event eventInfo)
+    void Vote(EventCallbacks.Event eventInfo)
     {
 
         VoteEvent voteEvent = (VoteEvent)eventInfo;
@@ -357,17 +349,17 @@ public class MeetingUiListener : MonoBehaviour
         {
             players[voterId].transform.GetChild(3).GetComponent<Image>().enabled = true;
         }
-        checkVotes(eventInfo);
+        CheckVotes(eventInfo);
     }
 
     //Check if everyone has voted
-    void checkVotes(EventCallbacks.Event eventInfo)
+    void CheckVotes(EventCallbacks.Event eventInfo)
     {
         int totalVotes = 0;
         int AllRealPlayers = 0;
         foreach (KeyValuePair<ulong, GameObject> go in players)
         {
-            if (go.Value.active == true)
+            if (go.Value.activeInHierarchy == true)
             {
                 string name = go.Value.name;
                 if (name != "New Text" && name != "Player Name" && name != "VoteButton(Clone)" && name != "")
@@ -490,7 +482,7 @@ public class MeetingUiListener : MonoBehaviour
                     go.Value.GetComponent<VoteButton>().amountVoted = 0;
                     go.Value.GetComponent<VoteButton>().myText.text = "0";
                     go.Value.SetActive(false);
-                   // players.Remove(go.Key);
+                    //players.Remove(go.Key);
                 }
             }
         }
@@ -498,10 +490,10 @@ public class MeetingUiListener : MonoBehaviour
 
         //Disable meeting canvas and change gamephase to main
         MeetingCanvas.gameObject.SetActive(false);
-        changeGamePhase((ulong)1);
+        ChangeGamePhase((ulong)1);
     }
 
-    void changeGamePhase(ulong phase)
+    void ChangeGamePhase(ulong phase)
     {
         GamePhaseUpdate message = new GamePhaseUpdate
         {
@@ -516,19 +508,8 @@ public class MeetingUiListener : MonoBehaviour
         GameSettings settings = settingEvent.settings;
 
         //set the settings
-        if (settings != null)
-        {
-            GameSettingBoolean s = (GameSettingBoolean)settings.GetSetting("Kill On Ties");
-            killOnTies = s.GetBool();
-            Debug.Log("Kill on ties set too " + killOnTies);
-            s = (GameSettingBoolean)settings.GetSetting("Enable Skip Button");
-            enableSkipButton = s.GetBool();
-            Debug.Log("Enable Skip Button set too " + enableSkipButton);
-
-            s = (GameSettingBoolean)settings.GetSetting("Show Votes When Everyone Has Voted");
-            showVotesWhenAllVoted = s.GetBool();
-            Debug.Log("Show Votes When Everyone Has Voted set too " + showVotesWhenAllVoted);
-
-        }
+        killOnTies = settings.killOnTies;
+        enableSkipButton = settings.enableSkipButton;
+        showVotesWhenAllVoted = settings.showVotesWhenEveryoneHasVoted;
     }
 }
