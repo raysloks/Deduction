@@ -11,6 +11,7 @@
 #include "GameSettingSet.h"
 #include "GameSettingsUpdate.h"
 #include "GameStartRequested.h"
+#include "GivenTasks.h"
 #include "Heartbeat.h"
 #include "KillAttempted.h"
 #include "MeetingRequested.h"
@@ -43,6 +44,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);

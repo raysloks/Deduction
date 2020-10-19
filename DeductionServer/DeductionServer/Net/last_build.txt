@@ -11,6 +11,8 @@ int64 value
 GameSettingsUpdate
 int64 values[]
 GameStartRequested
+GivenTasks
+uint8 taskId[]
 Heartbeat
 int64 time
 KillAttempted

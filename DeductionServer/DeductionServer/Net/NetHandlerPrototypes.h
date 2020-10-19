@@ -4,6 +4,7 @@
 	void GameSettingSetHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
 	void GameSettingsUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
 	void GameStartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
+	void GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void HeartbeatHandler(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
 	void KillAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void MeetingRequestedHandler(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);

@@ -511,3 +511,25 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint,
 		Broadcast(frame);
 	}
 }
+
+//void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message) 
+//{
+//	auto it = players.find(endpoint);
+//	if (it != players.end())
+//	{
+//		auto&& player = it->second;
+//		GivenTasks message;
+//		message.taskId = new int[5];
+//		for (size_t i = 0; i < mobs.size(); ++i)
+//		{
+//			for (int i = 0; i < 5; ++i) 
+//			{
+//				message.taskId[i] = 0;
+//			}
+//			for (int i = 0; i < 5; ++i)
+//			{
+//				
+//			}
+//		}
+//	}
+//}
