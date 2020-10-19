@@ -385,7 +385,6 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 
 				Broadcast(message);
 			}
-			
 		}
 	}
 }
@@ -438,7 +437,8 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 
 		int totalvotes = (int)message.totalVotes;
 
-		if (totalvotes > mob.timesVoted) {
+		if (totalvotes > mob.timesVoted)
+		{
 			mob.timesVoted++;
 			int phase2 = 2;
 			int alive = 0;
@@ -446,13 +446,15 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 
 			for (auto mob : mobs)
 			{
-				if (mob.type == MobType::Player && mob.enabled == true && (mob.role == Role::Crewmate || mob.role == Role::Impostor)) {
+				if (mob.type == MobType::Player && mob.enabled == true && (mob.role == Role::Crewmate || mob.role == Role::Impostor))
+				{
 					alive++;
 					total += mob.timesVoted;
 				}
 
 			}
-			if ((alive * totalvotes) <= total) {
+			if (alive * totalvotes <= total)
+			{
 				//game.setPhase(GamePhase::Main, message.timer);
 				phase2 = 1;
 			}
@@ -477,13 +479,11 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 		auto&& player = it->second;
 		game.startMeeting();
 
-
 		ReportAttempted message;
 		message.idOfInitiator = player.mob;
 		message.target = message.target;
 
 		Broadcast(message);
-		
 	}
 }
 
