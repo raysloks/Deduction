@@ -110,11 +110,7 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 		link.Send(endpoint, message);
 	}
 
-	{
-		GameSettingsUpdate message;
-		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
-		link.Send(endpoint, message);
-	}
+	link.Send(endpoint, game.settings);
 
 	updateMobStatesForPlayer(endpoint);
 
@@ -255,6 +251,10 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 {
 }
 
+void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint & endpoint, const GameOver & message)
+{
+}
+
 void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
 {
 	if (message.phase == 1 && game.phase != GamePhase::Main)
@@ -268,25 +268,13 @@ void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endp
 	}
 }
 
-void NetworkHandler::GameSettingSetHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingSet & message)
+void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoint, const GameSettings & message)
 {
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
-		game.settings.settings[message.setting] = message.value;
-		Broadcast(message);
-	}
-}
-
-void NetworkHandler::GameSettingsUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GameSettingsUpdate & message)
-{
-	if (game.phase == GamePhase::Setup)
-	{
-		game.settings = GameSettings();
-
-		GameSettingsUpdate message;
-		message.values = std::vector<int64_t>(std::begin(game.settings.settings), std::end(game.settings.settings));
-		Broadcast(message);
+		game.settings = message;
+		Broadcast(game.settings);
 	}
 }
 
@@ -294,6 +282,10 @@ void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & e
 {
 	game.startGameCountdown();
 	Broadcast(message);
+}
+
+void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
+{
 }
 
 void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, const Heartbeat & message)
@@ -487,7 +479,12 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint& endpo
 	}
 }
 
-void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message)
+void NetworkHandler::ResetGameSettingsHandler(const asio::ip::udp::endpoint & endpoint, const ResetGameSettings & message)
+{
+	game.resetSettings();
+}
+
+void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
 {
 	game.restartSetup();
 }
@@ -518,7 +515,7 @@ void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint& endpoint, co
 
 }
 
-//void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message) 
+//void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{
 //	auto it = players.find(endpoint);
 //	if (it != players.end())
@@ -528,13 +525,13 @@ void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint& endpoint, co
 //		message.taskId = new int[5];
 //		for (size_t i = 0; i < mobs.size(); ++i)
 //		{
-//			for (int i = 0; i < 5; ++i) 
+//			for (int i = 0; i < 5; ++i)
 //			{
 //				message.taskId[i] = 0;
 //			}
 //			for (int i = 0; i < 5; ++i)
 //			{
-//				
+//
 //			}
 //		}
 //	}

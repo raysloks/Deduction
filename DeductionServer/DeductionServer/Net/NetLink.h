@@ -9,8 +9,7 @@
 #include "AbilityUsed.h"
 #include "GameOver.h"
 #include "GamePhaseUpdate.h"
-#include "GameSettingSet.h"
-#include "GameSettingsUpdate.h"
+#include "GameSettings.h"
 #include "GameStartRequested.h"
 #include "GivenTasks.h"
 #include "Heartbeat.h"
@@ -24,6 +23,7 @@
 #include "PlayerUpdate.h"
 #include "PlayerVoted.h"
 #include "ReportAttempted.h"
+#include "ResetGameSettings.h"
 #include "RestartRequested.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
@@ -43,8 +43,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameOver& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
-	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
-	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
@@ -58,6 +57,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);

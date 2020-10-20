@@ -223,15 +223,22 @@ public class NetworkHandler
     {
     }
 
-    internal void GameSettingSetHandler(IPEndPoint endpoint, GameSettingSet message)
+    internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
     {
-        controller.settings.SetSetting(message.setting, message.value);
     }
 
-    internal void GameSettingsUpdateHandler(IPEndPoint endpoint, GameSettingsUpdate message)
+    internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)
     {
-        for (int i = 0; i < message.values.Count; ++i)
-            controller.settings.SetSetting(i, message.values[i]);
+    }
+
+    internal void GameSettingsHandler(IPEndPoint endpoint, GameSettings message)
+    {
+        controller.settings = message;
+        controller.settingsManager.UpdateInputDisplay();
+    }
+
+    internal void ResetGameSettingsHandler(IPEndPoint endpoint, ResetGameSettings message)
+    {
     }
     internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
     {

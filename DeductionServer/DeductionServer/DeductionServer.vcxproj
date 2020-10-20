@@ -76,7 +76,6 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MatchmakerHandler.cpp" />
@@ -88,6 +87,7 @@
     <ClCompile Include="Net\AbilityUsed.cpp" />
     <ClCompile Include="Net\GameOver.cpp" />
     <ClCompile Include="Net\GamePhaseUpdate.cpp" />
+    <ClCompile Include="Net\GameSettings.cpp" />
     <ClCompile Include="Net\GameSettingSet.cpp" />
     <ClCompile Include="Net\GameSettingsUpdate.cpp" />
     <ClCompile Include="Net\GameStartRequested.cpp" />
@@ -104,6 +104,7 @@
     <ClCompile Include="Net\PlayerUpdate.cpp" />
     <ClCompile Include="Net\PlayerVoted.cpp" />
     <ClCompile Include="Net\ReportAttempted.cpp" />
+    <ClCompile Include="Net\ResetGameSettings.cpp" />
     <ClCompile Include="Net\RestartRequested.cpp" />
     <ClCompile Include="Net\TaskListUpdate.cpp" />
     <ClCompile Include="Net\TaskUpdate.cpp" />
@@ -117,7 +118,6 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase.h" />
-    <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MatchmakerHandler.h" />
     <ClInclude Include="Matchmaker\LobbyIdentity.h" />
@@ -130,6 +130,7 @@
     <ClInclude Include="Net\AbilityUsed.h" />
     <ClInclude Include="Net\GameOver.h" />
     <ClInclude Include="Net\GamePhaseUpdate.h" />
+    <ClInclude Include="Net\GameSettings.h" />
     <ClInclude Include="Net\GameSettingSet.h" />
     <ClInclude Include="Net\GameSettingsUpdate.h" />
     <ClInclude Include="Net\GameStartRequested.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Net\PlayerUpdate.h" />
     <ClInclude Include="Net\PlayerVoted.h" />
     <ClInclude Include="Net\ReportAttempted.h" />
+    <ClInclude Include="Net\ResetGameSettings.h" />
     <ClInclude Include="Net\RestartRequested.h" />
     <ClInclude Include="Net\TaskListUpdate.h" />
     <ClInclude Include="Net\TaskUpdate.h" />

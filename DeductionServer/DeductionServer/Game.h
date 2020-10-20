@@ -4,7 +4,7 @@
 
 #include "GamePhase.h"
 #include "Vec2.h"
-#include "GameSettings.h"
+#include "Net/GameSettings.h"
 
 class NetworkHandler;
 
@@ -26,6 +26,8 @@ public:
 	void resetVotes();
 
 	void resetKillCooldowns();
+
+	void resetSettings();
 
 	void checkForGameOver();
 

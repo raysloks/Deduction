@@ -1,0 +1,14 @@
+int64 impostorCount
+int64 votesPerPlayer
+int64 emergencyMeetingsPerPlayer
+int64 emergencyMeetingCooldown
+int64 killCooldown
+int64 voteTime
+int64 discussionTime
+bool killVictoryEnabled
+float crewmateVision
+float impostorVision
+float playerSpeed
+bool killOnTies
+bool enableSkipButton
+bool showVotesWhenEveryoneHasVoted

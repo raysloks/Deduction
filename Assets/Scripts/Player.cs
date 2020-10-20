@@ -31,7 +31,7 @@ public class Player : Mob
             move.y += Input.GetAxis("Vertical");
 
             move = Vector3.ClampMagnitude(move, 1f);
-            transform.position += move * Time.deltaTime * float.Parse(controller.settings.GetSetting("Player Speed").Get());
+            transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
 
         }
 
@@ -40,6 +40,7 @@ public class Player : Mob
         if (move.x < 0f)
             sprite.flipX = false;
 
+        transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
 
         visionLight.pointLightOuterRadius = GetVision();
 
@@ -66,8 +67,6 @@ public class Player : Mob
 
     public float GetVision()
     {
-        return role == 0 ?
-            float.Parse(controller.settings.GetSetting("Crewmate Vision").Get()) :
-            float.Parse(controller.settings.GetSetting("Impostor Vision").Get());
+        return role == 0 ? controller.settings.crewmateVision : controller.settings.impostorVision;
     }
 }

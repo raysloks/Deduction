@@ -6,6 +6,8 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 {
 	phase = GamePhase::Setup;
 	timer = 0;
+
+	resetSettings();
 }
 
 void Game::tick(int64_t now)
@@ -173,6 +175,29 @@ void Game::resetKillCooldowns()
 	handler.Broadcast(message);
 	for (auto&& mob : handler.mobs)
 		mob.killCooldown = message.time;
+}
+
+void Game::resetSettings()
+{
+	if (phase == GamePhase::Setup)
+	{
+		settings.impostorCount = 1;
+		settings.votesPerPlayer = 1;
+		settings.emergencyMeetingsPerPlayer = 1;
+		settings.emergencyMeetingCooldown = 15'000'000'000;
+		settings.killCooldown = 30'000'000'000;
+		settings.voteTime = 30'000'000'000;
+		settings.discussionTime = 90'000'000'000;
+		settings.killVictoryEnabled = false;
+		settings.crewmateVision = 5.0f;
+		settings.impostorVision = 10.0f;
+		settings.playerSpeed = 4.0f;
+		settings.killOnTies = false;
+		settings.enableSkipButton = true;
+		settings.showVotesWhenEveryoneHasVoted = false;
+
+		handler.Broadcast(settings);
+	}
 }
 
 void Game::checkForGameOver()
