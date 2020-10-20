@@ -2,6 +2,8 @@ AbilityUsed
 int64 time
 uint64 ability
 uint64 target
+GameOver
+uint64 winners[]
 GamePhaseUpdate
 uint64 phase
 int64 timer

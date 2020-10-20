@@ -101,6 +101,12 @@
     <ClInclude Include="Net\GameSettingsUpdate.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\GameOver.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\GivenTasks.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -185,6 +191,12 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\GameSettingsUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\GameOver.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\GivenTasks.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

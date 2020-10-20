@@ -414,11 +414,11 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 		mob.position = message.position;
-		mob.time = message.time;
+mob.time = message.time;
 	}
 }
 
-void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint & endpoint, const PlayerUpdate & message)
+void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
 {
 	auto it = players.find(endpoint);
 	if (it == players.end())
@@ -427,7 +427,7 @@ void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint & endpoin
 	}
 }
 
-void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint, const PlayerVoted & message)
+void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message)
 {
 	auto it = players.find(endpoint);
 	if (it != players.end())
@@ -471,7 +471,7 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint & endpoint
 	}
 }
 
-void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endpoint, const ReportAttempted & message)
+void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message)
 {
 	auto it = players.find(endpoint);
 	if (it != players.end())
@@ -487,20 +487,20 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint & endp
 	}
 }
 
-void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
+void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message)
 {
 	game.restartSetup();
 }
 
-void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskListUpdate & message)
+void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message)
 {
 }
 
-void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint & endpoint, const TaskUpdate & message)
+void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message)
 {
 }
 
-void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint, const VoiceFrame & message)
+void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message)
 {
 	auto it = players.find(endpoint);
 	if (it != players.end())
@@ -510,6 +510,12 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint & endpoint,
 		frame.id = player.mob;
 		Broadcast(frame);
 	}
+}
+void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message) {
+
+}
+void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint& endpoint, const GameOver& message){
+
 }
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message) 

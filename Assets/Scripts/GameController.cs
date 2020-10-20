@@ -130,12 +130,14 @@ public class GameController : MonoBehaviour
             handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
-        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
+        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.isPlayerAlive());
+        reportButton.gameObject.SetActive(phase == GamePhase.Main && player.isPlayerAlive());
 
-        reportButton.gameObject.SetActive(phase == GamePhase.Main);
-
-        if (phase == GamePhase.Main)
+        if (phase == GamePhase.Main && player.isPlayerAlive())
         {
+           
+
+
             // Kill
             if (player.role == 1)
             {
@@ -172,39 +174,44 @@ public class GameController : MonoBehaviour
 		    }
 
             // Report
-            {
+            
                 reportTarget = ulong.MaxValue;
-                float targetDistance = player.GetVision();
+                float targetDistance2 = player.GetVision();
                 foreach (var n in handler.mobs)
                 {
                     if (n.Value.IsAlive == false)
                     {
                         Vector2 diff = n.Value.transform.position - player.transform.position;
                         float distance = diff.magnitude;
-                        if (distance < targetDistance)
+                        if (distance < targetDistance2)
                         {
                             if (!Physics2D.Raycast(player.transform.position, diff / distance, distance, 1 << 10))
                             {
                                 reportTarget = n.Key;
-                                targetDistance = distance;
+                                targetDistance2 = distance;
                             }
                         }
                     }
                 }
                 reportButton.interactable = reportTarget != ulong.MaxValue;
-                if (Input.GetKeyDown(KeyCode.R))
-                    Report();
-            }
-
-            // Emergency Meeting
-            if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
-            {
-                MeetingRequested message = new MeetingRequested
+                if (killTarget != ulong.MaxValue)
                 {
-                    EmergencyMeetings = (ulong)totalAmountOfMeetings
-                };
-                handler.link.Send(message);
-            }
+                    if (Input.GetKeyDown(KeyCode.R))
+                         Report();
+                }
+            
+
+            
+        }
+
+        // Emergency Meeting
+        if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
+        {
+            MeetingRequested message = new MeetingRequested
+            {
+                EmergencyMeetings = (ulong)totalAmountOfMeetings
+            };
+            handler.link.Send(message);
         }
 
         if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)

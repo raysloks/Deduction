@@ -1,5 +1,6 @@
 	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);
 	void AbilityUsedHandler(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
+	void GameOverHandler(const asio::ip::udp::endpoint& endpoint, const GameOver& message);
 	void GamePhaseUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
 	void GameSettingSetHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
 	void GameSettingsUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);

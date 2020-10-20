@@ -86,10 +86,12 @@
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="Net\AbilityUsed.cpp" />
+    <ClCompile Include="Net\GameOver.cpp" />
     <ClCompile Include="Net\GamePhaseUpdate.cpp" />
     <ClCompile Include="Net\GameSettingSet.cpp" />
     <ClCompile Include="Net\GameSettingsUpdate.cpp" />
     <ClCompile Include="Net\GameStartRequested.cpp" />
+    <ClCompile Include="Net\GivenTasks.cpp" />
     <ClCompile Include="Net\Heartbeat.cpp" />
     <ClCompile Include="Net\KillAttempted.cpp" />
     <ClCompile Include="Net\MeetingRequested.cpp" />
@@ -126,10 +128,12 @@
     <ClInclude Include="MobType.h" />
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="Net\AbilityUsed.h" />
+    <ClInclude Include="Net\GameOver.h" />
     <ClInclude Include="Net\GamePhaseUpdate.h" />
     <ClInclude Include="Net\GameSettingSet.h" />
     <ClInclude Include="Net\GameSettingsUpdate.h" />
     <ClInclude Include="Net\GameStartRequested.h" />
+    <ClInclude Include="Net\GivenTasks.h" />
     <ClInclude Include="Net\Heartbeat.h" />
     <ClInclude Include="Net\KillAttempted.h" />
     <ClInclude Include="Net\MeetingRequested.h" />

@@ -31,4 +31,9 @@ public class Mob : MonoBehaviour
     {
         GetComponentInChildren<TextMeshProUGUI>().text = name;
     }
+
+    public bool isPlayerAlive(){
+        return this.IsAlive;
+    }
+
 }

@@ -7,6 +7,7 @@
 #include <map>
 
 #include "AbilityUsed.h"
+#include "GameOver.h"
 #include "GamePhaseUpdate.h"
 #include "GameSettingSet.h"
 #include "GameSettingsUpdate.h"
@@ -40,6 +41,7 @@ public:
 	void Connect(const asio::ip::udp::endpoint& endpoint);
 	void Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint);
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GameOver& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingSet& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettingsUpdate& message);

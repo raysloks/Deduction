@@ -108,9 +108,13 @@ public class MeetingUiListener : MonoBehaviour
                     {
                         go.Value.GetComponent<VoteButton>().showAfterEveryoneVoted = false;
                     }
-                    votesShown = true;
-                    timer = 0;
+                    if(players[mostVotesId].GetComponent<VoteButton>().done == true)
+                    {
+                        votesShown = true;
+                        timer = 0;
+                    }
                 }
+
 
             }
             else if(ties.Count > 0 && fadeAway == false)
@@ -130,12 +134,16 @@ public class MeetingUiListener : MonoBehaviour
             }
             else if(fadeAway == false)
             {
-                
+                if(timer == 0)
+                {
+                    noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("No one was voted out", null, null);
+                }
                 //if no one dies MAKE COOL TRANSITION
                 timer += Time.deltaTime;
                 if(timer > 4f)
                 {
-                    noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("No one was voted out", null, null);
+                    Debug.Log("Fadeaway " + ties.Count);
+
                     fadeAway = true;
                     timer = 0;
                 }
@@ -210,9 +218,9 @@ public class MeetingUiListener : MonoBehaviour
         MeetingEvent meetingEvent = (MeetingEvent)eventInfo;
         handler = meetingEvent.meetingHandler;
         ulong initiator = meetingEvent.idOfInitiator;
-        ulong body = meetingEvent.idOfBody;
         if(meetingEvent.EventDescription == "BodyReported")
         {
+            ulong body = meetingEvent.idOfBody;
             noticeBoardImage.GetComponent<NoticeBoard>().MoveTheBoard("Found a Body", handler.mobs[initiator].sprite, handler.mobs[body].sprite);
         }
         else
@@ -271,6 +279,8 @@ public class MeetingUiListener : MonoBehaviour
                 {
                     if (handler.mobs[go.Key].IsAlive == true)
                     {
+                        amountOfPlayersAlive++;
+
                         go.Value.GetComponent<VoteButton>().amountVoted = 0;
                         go.Value.GetComponent<VoteButton>().myText.text = "0";
                         go.Value.SetActive(true);
@@ -281,6 +291,12 @@ public class MeetingUiListener : MonoBehaviour
                        // players.Remove(go.Key);
                     }
                 }
+                else
+                {
+                    go.Value.SetActive(false);
+                    // players.Remove(go.Key);
+                }
+
             }
         }
 
@@ -315,7 +331,7 @@ public class MeetingUiListener : MonoBehaviour
         circleUpdate = false;
         meetingDone = false;
 
-
+        amountOfPlayersAlive = 0;
 
     }
 
@@ -514,6 +530,7 @@ public class MeetingUiListener : MonoBehaviour
     {
         SettingEvent settingEvent = (SettingEvent)eventInfo;
         GameSettings settings = settingEvent.settings;
+        firstMeeting = true;
 
         //set the settings
         if (settings != null)

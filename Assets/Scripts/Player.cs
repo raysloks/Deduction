@@ -29,15 +29,17 @@ public class Player : Mob
         {
             move.x += Input.GetAxis("Horizontal");
             move.y += Input.GetAxis("Vertical");
+
+            move = Vector3.ClampMagnitude(move, 1f);
+            transform.position += move * Time.deltaTime * float.Parse(controller.settings.GetSetting("Player Speed").Get());
+
         }
-        move = Vector3.ClampMagnitude(move, 1f);
 
         if (move.x > 0f)
             sprite.flipX = true;
         if (move.x < 0f)
             sprite.flipX = false;
 
-        transform.position += move * Time.deltaTime * float.Parse(controller.settings.GetSetting("Player Speed").Get());
 
         visionLight.pointLightOuterRadius = GetVision();
 

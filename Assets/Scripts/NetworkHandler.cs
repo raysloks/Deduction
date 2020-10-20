@@ -233,4 +233,13 @@ public class NetworkHandler
         for (int i = 0; i < message.values.Count; ++i)
             controller.settings.SetSetting(i, message.values[i]);
     }
+    internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
+    {
+
+    }
+
+    internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)
+    {
+
+    }
 }
