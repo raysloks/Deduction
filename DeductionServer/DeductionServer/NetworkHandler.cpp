@@ -508,12 +508,6 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 		Broadcast(frame);
 	}
 }
-void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message) {
-
-}
-void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint& endpoint, const GameOver& message){
-
-}
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{
