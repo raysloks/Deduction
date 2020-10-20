@@ -40,8 +40,6 @@ public class Player : Mob
         if (move.x < 0f)
             sprite.flipX = false;
 
-        transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
-
         visionLight.pointLightOuterRadius = GetVision();
 
         if (type == 0)
