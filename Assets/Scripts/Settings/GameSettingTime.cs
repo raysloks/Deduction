@@ -11,6 +11,8 @@
 
     protected override void Set(string text)
     {
-        field.SetValue(game.settings, long.Parse(text.Replace("s", "")) * 1000000000);
+        object settings = game.settings;
+        field.SetValue(settings, long.Parse(text.Replace("s", "")) * 1000000000);
+        game.settings = (GameSettings)settings;
     }
 }
