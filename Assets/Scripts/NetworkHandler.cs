@@ -240,13 +240,4 @@ public class NetworkHandler
     internal void ResetGameSettingsHandler(IPEndPoint endpoint, ResetGameSettings message)
     {
     }
-    internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
-    {
-
-    }
-
-    internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)
-    {
-
-    }
 }
