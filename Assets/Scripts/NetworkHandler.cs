@@ -7,7 +7,7 @@ using EventCallbacks;
 
 public class NetworkHandler
 {
-    public GameController controller;
+    public GameController game;
 
     public NetLink link;
 
@@ -55,9 +55,10 @@ public class NetworkHandler
         {
             if (!mobs.ContainsKey(message.id))
             {
-                mobs.Add(message.id, UnityEngine.Object.Instantiate(controller.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
+                mobs.Add(message.id, UnityEngine.Object.Instantiate(game.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
                 UpdateName(message.id);
             }
+            mobs[message.id].gameObject.SetActive(true);
             if (mobs[message.id] is NetworkMob mob)
                 mob.AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
         }
@@ -68,8 +69,8 @@ public class NetworkHandler
         if (message.id == ulong.MaxValue)
         {
             playerMobId = message.mob;
-            mobs[playerMobId] = controller.player;
-            controller.connectionState = GameController.ConnectionState.Connected;
+            mobs[playerMobId] = game.player;
+            game.connectionState = GameController.ConnectionState.Connected;
         }
         else
             names[message.mob] = message.name;
@@ -78,73 +79,53 @@ public class NetworkHandler
 
     internal void HeartbeatHandler(IPEndPoint endpoint, Heartbeat message)
     {
-        if (Math.Abs(controller.time - message.time) > 50000000)
-            controller.time = message.time;
-        controller.timeout = message.time + 5000000000;
+        if (Math.Abs(game.time - message.time) > 50000000)
+            game.time = message.time;
+        game.timeout = message.time + 5000000000;
     }
 
     internal void MobTeleportHandler(IPEndPoint endpoint, MobTeleport message)
     {
-        if (message.id == playerMobId)
-            controller.player.transform.position = message.to;
+        if (mobs.ContainsKey(message.id))
+        {
+            Mob mob = mobs[message.id];
+            mob.transform.position = message.to;
+            if (mob is NetworkMob networkMob)
+                networkMob.snapshots.Clear();
+        }
     }
 
     internal void GamePhaseUpdateHandler(IPEndPoint endpoint, GamePhaseUpdate message)
     {      
-        controller.SetGamePhase((GameController.GamePhase)message.phase, message.timer);
+        game.SetGamePhase((GamePhase)message.phase, message.timer, (GamePhase)message.previous);
     }
 
     internal void MeetingRequestedHandler(IPEndPoint endpoint, MeetingRequested message)
     {
         MeetingEvent umei = new MeetingEvent();
-        umei.meetingHandler = this;
+        umei.game = game;
         umei.idOfInitiator = message.idOfInitiator;
-        if(message.EmergencyMeetings == (ulong)controller.totalAmountOfMeetings)
-        {
-            umei.emergencyMeetingDone = true;
-            if(message.idOfInitiator == playerMobId)
-            {
-                controller.player.emergencyButtonLeft = false;
-                Debug.Log("ye this was the player" + message.idOfInitiator + "ye " + playerMobId);
-            }
-        }
-        else
-        {
-            umei.emergencyMeetingDone = false;
-        }
+
+        if (message.idOfInitiator == playerMobId)
+            game.player.emergencyButtonsLeft -= 1;
+
         umei.EventDescription = "Meeting Got Started";
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
     {
-        Debug.Log("This is the phase " + message.phase + " this player voted " + names[message.id]);
-
-
         VoteEvent uvei = new VoteEvent();
-
-        if (message.votesLeft == 0)
-        {
-            uvei.doneVoting = true;
-            Debug.Log("Done Voting");
-        }
-        else
-        {
-            uvei.doneVoting = false;
-        }
-
-        uvei.idOfVoter = message.id;
+        uvei.idOfVoter = message.voter;
+        uvei.idOfTarget = message.target;
         uvei.EventDescription = "Player Voted";
-        uvei.totalAmountOfVotes = (int)message.totalVotes;
-        uvei.nameOfButton = message.buttonName;
         EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_VOTED, uvei);
-
     }
 
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)
     {
-        controller.ApplySettings();
     }
+
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
     }
@@ -152,22 +133,19 @@ public class NetworkHandler
     internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
     {
         if (mobs.ContainsKey(message.id) && message.id != playerMobId)
-        {
-            UnityEngine.Object.Destroy(mobs[message.id].gameObject);
-            mobs.Remove(message.id);
-        }
+            mobs[message.id].gameObject.SetActive(false);
         removalTimes[message.id] = message.time;
     }
 
     internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
     {
-        controller.player.killCooldown = message.time;
+        game.player.killCooldown = message.time;
     }
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
     {
         MeetingEvent umei = new MeetingEvent();
-        umei.meetingHandler = this;
+        umei.game = game;
         umei.idOfInitiator = message.idOfInitiator;
         umei.idOfBody = message.target;
         umei.EventDescription = "BodyReported";
@@ -198,7 +176,7 @@ public class NetworkHandler
     internal void VoiceFrameHandler(IPEndPoint endpoint, VoiceFrame message)
     {
         VoicePlayer voicePlayer = null;
-        if (mobs.ContainsKey(message.id) && (message.id != playerMobId || controller.listenToSelf))
+        if (mobs.ContainsKey(message.id) && (message.id != playerMobId || game.listenToSelf))
             voicePlayer = mobs[message.id].GetComponentInChildren<VoicePlayer>();
         if (voicePlayer)
             voicePlayer.ProcessFrame(message.data);
@@ -206,12 +184,12 @@ public class NetworkHandler
 
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
-        controller.connectionState = GameController.ConnectionState.JoiningLobby;
+        game.connectionState = GameController.ConnectionState.JoiningLobby;
 
-        string name = controller.nameInputField.text;
+        string name = game.nameInputField.text;
         name = name.Trim();
         if (name.Length == 0)
-            name = "Agent " + controller.rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
+            name = "Agent " + game.rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
         link.Send(new PlayerUpdate { name = name });
     }
 
@@ -225,6 +203,10 @@ public class NetworkHandler
 
     internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
     {
+        if (message.winners.Contains(playerMobId))
+            Debug.Log("VICTORY");
+        else
+            Debug.Log("DEFEAT");
     }
 
     internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)
@@ -233,8 +215,8 @@ public class NetworkHandler
 
     internal void GameSettingsHandler(IPEndPoint endpoint, GameSettings message)
     {
-        controller.settings = message;
-        controller.settingsManager.UpdateInputDisplay();
+        game.settings = message;
+        game.settingsManager.UpdateInputDisplay();
     }
 
     internal void ResetGameSettingsHandler(IPEndPoint endpoint, ResetGameSettings message)

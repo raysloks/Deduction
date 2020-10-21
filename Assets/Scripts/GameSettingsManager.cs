@@ -31,7 +31,8 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingInputField<float>("Player Speed", "playerSpeed", game),
             new GameSettingToggle("Kill On Ties", "killOnTies", game),
             new GameSettingToggle("Enable Skip Button", "enableSkipButton", game),
-            new GameSettingToggle("Show Votes When Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
+            new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
+            new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
         };
 
         game.settings.crewmateVision = 5.0f;
@@ -43,7 +44,7 @@ public class GameSettingsManager : MonoBehaviour
 
     private void Update()
     {
-        window.gameObject.SetActive(game.phase == GameController.GamePhase.Setup && game.timer == 0);
+        window.gameObject.SetActive(game.phase == GamePhase.Setup && game.timer == 0);
     }
 
     public void UpdateInputDisplay()

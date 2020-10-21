@@ -11,21 +11,15 @@ namespace EventCallbacks
 
     public class MeetingEvent : Event
     {
-        public NetworkHandler meetingHandler;
+        public GameController game;
         public ulong idOfInitiator;
         public ulong idOfBody;
-        public bool emergencyMeetingDone;
-
-
-
     }
+
     public class VoteEvent : Event
     {
-        public string nameOfButton;
-        public int totalAmountOfVotes;
+        public ulong idOfTarget;
         public ulong idOfVoter;
-        public bool doneVoting;
-
     }
 
     public class MeetingDieEvent : Event
@@ -35,13 +29,22 @@ namespace EventCallbacks
         public AudioClip UnitSound;
         public GameObject UnitParticle;
     }
+
     public class DebugEvent : Event
     {
 
     }
+
     public class SettingEvent : Event
     {
         public GameSettings settings;
+    }
+
+    public class PhaseChangedEvent : Event
+    {
+        public GamePhase phase;
+        public long timer;
+        public GamePhase previous;
     }
 
 }

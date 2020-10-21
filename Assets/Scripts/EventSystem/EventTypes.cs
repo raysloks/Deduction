@@ -8,7 +8,6 @@
         MEETING_CHECKVOTES,
         MEETING_DIED,
         SETTINGS,
-        RESET_TIMER
-
+        PHASE_CHANGED
     }
 }

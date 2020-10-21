@@ -7,49 +7,29 @@ using EventCallbacks;
 
 public class EmergencyButton : MonoBehaviour
 {
-    private bool ButtonActive = true;
     public Material outline;
     private Material m;
     private TextMeshPro text;
-    private float maxTimer = 5f;
-    private float timer = 0;
-    private GameObject player = null;
-    private List<GameObject> goPlayers = new List<GameObject>();
+    private Player player = null;
+    private bool coolingDown = false;
+
+    private GameController game;
 
     // Start is called before the first frame update
     void Start()
     {
         m = GetComponent<SpriteRenderer>().material;
         text = transform.GetChild(0).transform.gameObject.GetComponent<TextMeshPro>();
-        EventSystem.Current.RegisterListener(EVENT_TYPE.RESET_TIMER, ButtonTimer);
-        EventSystem.Current.RegisterListener(EVENT_TYPE.SETTINGS, Settings);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, (EventCallbacks.Event ev) => PhaseChanged((PhaseChangedEvent)ev));
+        game = FindObjectOfType<GameController>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            if (ButtonActive == true && col.gameObject.GetComponent<Player>().emergencyButtonLeft == true)
-            {
-                Debug.Log("PlayerEntered1");
-
-                //this.GetComponent<SpriteRenderer>().material = outline;
-                //outline.SetFloat("_OutlineAlpha", 1f);
-                text.text = "Vote";
-
-                text.color = Color.green;
-                col.gameObject.GetComponent<Player>().nearEmergencyButton = true;
-            }
-            else
-            {
-                if (ButtonActive == true)
-                {
-                    text.text = "X";
-                }
-                player = col.gameObject;
-            }
-            //ButtonActive = true;
-            //buttonTimer();
+            player = col.GetComponent<Player>();
+            UpdateState();
         }
     }
 
@@ -57,33 +37,24 @@ public class EmergencyButton : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            if (ButtonActive == true)
-            {
-                text.text = "Vote";
-            }
-            Debug.Log("PlayerExited");
-            GetComponent<SpriteRenderer>().material = m;
-
-            //outline.SetFloat("_OutlineAlpha", 0f);
-            text.color = Color.black;
-            col.gameObject.GetComponent<Player>().nearEmergencyButton = false;
+            player.canRequestMeeting = false;
             player = null;
-            
-            //ButtonActive = false;
+            UpdateState();
         }
     }
 
-    void ButtonTimer(EventCallbacks.Event eventinfo)
+    void PhaseChanged(PhaseChangedEvent ev)
     {
-        ButtonActive = false;
-        StartCoroutine(WaitFunction2());
-        text.text = "Vote";
+        // start cooldown process
+        if (ev.phase == GamePhase.Main)
+            StartCoroutine(WaitFunction());
     }
 
-    IEnumerator WaitFunction2()
+    IEnumerator WaitFunction()
     {
-        //const float waitTime = 3f;
-        float counter = maxTimer;
+        float counter = game.settings.emergencyMeetingCooldown / 1000000000f;
+
+        coolingDown = true;
 
         while (counter > 0)
         {
@@ -93,25 +64,16 @@ public class EmergencyButton : MonoBehaviour
         }
 
         text.text = "Vote";
-        ButtonActive = true;
+        coolingDown = false;
 
-        if (player != null)
-        {
-            if (player.GetComponent<Player>().emergencyButtonLeft == false)
-            {
-                //ButtonActive = false;
-            }
-            else
-            {
-                text.color = Color.green;
-                player.GetComponent<Player>().nearEmergencyButton = true;
-            }
-        }
+        UpdateState();
     }
 
-    void Settings(EventCallbacks.Event eventInfo)
+    private void UpdateState()
     {
-        SettingEvent settingEvent = (SettingEvent)eventInfo;
-        maxTimer = settingEvent.settings.emergencyMeetingCooldown / 1000000000;
+        bool active = player != null && player.emergencyButtonsLeft > 0 && coolingDown == false;
+        if (player != null)
+            player.canRequestMeeting = active;
+        text.color = active ? Color.green : Color.black;
     }
 }

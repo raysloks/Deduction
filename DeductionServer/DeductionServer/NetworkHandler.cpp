@@ -8,6 +8,8 @@ NetworkHandler::NetworkHandler() : game(*this)
 	link.Open(asio::ip::udp::endpoint(asio::ip::udp::v4(), 0));
 	link.Receive();
 
+	mobs.reserve(1024); // lul
+
 	createMob();
 }
 
@@ -214,19 +216,22 @@ void NetworkHandler::removeMob(uint64_t id)
 	}
 }
 
-void NetworkHandler::killMob(uint64_t id)
+void NetworkHandler::killMob(uint64_t id, bool eject)
 {
 	auto&& mob = mobs[id];
 	mob.type = MobType::Ghost;
 
 	updateMobState(id);
 
-	Mob corpse;
-	corpse.position = mob.position;
-	corpse.color = mob.color;
-	corpse.type = MobType::Corpse;
-	corpse.role = mob.role;
-	createMob(corpse);
+	if (!eject)
+	{
+		Mob corpse;
+		corpse.position = mob.position;
+		corpse.color = mob.color;
+		corpse.type = MobType::Corpse;
+		corpse.role = mob.role;
+		createMob(corpse);
+	}
 
 	MobRemoved message;
 	message.id = id;
@@ -257,15 +262,17 @@ void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint & endpoint, c
 
 void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
 {
-	if (message.phase == 1 && game.phase != GamePhase::Main)
-	{
-		game.removeCorpses();
-		game.setPhase(GamePhase::Main, message.timer);
-	}
-	else if (message.phase == 2 && game.phase != GamePhase::Meeting)
-	{
-		game.setPhase(GamePhase::Meeting, message.timer);
-	}
+	// client shouldn't tell server when to switch phase like this
+
+	//if (message.phase == 1 && game.phase != GamePhase::Main)
+	//{
+	//	game.removeCorpses();
+	//	game.setPhase(GamePhase::Main, message.timer);
+	//}
+	//else if (message.phase == 2 && game.phase != GamePhase::Meeting)
+	//{
+	//	game.setPhase(GamePhase::Meeting, message.timer);
+	//}
 }
 
 void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoint, const GameSettings & message)
@@ -273,15 +280,21 @@ void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoin
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
-		game.settings = message;
-		Broadcast(game.settings);
+		if (game.phase == GamePhase::Setup)
+		{
+			game.settings = message;
+			Broadcast(game.settings);
+		}
 	}
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
 {
-	game.startGameCountdown();
-	Broadcast(message);
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		game.startGameCountdown();
+	}
 }
 
 void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
@@ -321,7 +334,7 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 				{
 					if ((target.position - mob.position).Len() < 2.0f)
 					{
-						killMob(message.target);
+						killMob(message.target, false);
 
 						MobTeleport message;
 						message.from = mob.position;
@@ -353,37 +366,19 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 
-		if (message.EmergencyMeetings > mob.meetingsCalled)
+		if (mob.type == MobType::Player && mob.meetingsCalled < game.settings.emergencyMeetingsPerPlayer)
 		{
-			for (auto mob : mobs)
-			{
-				mob.timesVoted = 0;
-			}
-			game.startMeeting();
-
-			mob.meetingsCalled++;
-			if (message.EmergencyMeetings == mob.meetingsCalled)
-			{
-				MeetingRequested message;
-				message.idOfInitiator = player.mob;
-				message.EmergencyMeetings = mob.meetingsCalled;
-
-			    Broadcast(message);
-			}
-			else
-			{
-				MeetingRequested message;
-				message.idOfInitiator = player.mob;
-
-				Broadcast(message);
-			}
+			++mob.meetingsCalled;
+			game.startMeeting(player.mob);
 		}
 	}
 }
 
 void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)
 {
-	killMob(message.id);
+	// client should not be able to tell server to kill a mob this way
+
+	//killMob(message.id);
 }
 
 void NetworkHandler::MobRoleUpdateHandler(const asio::ip::udp::endpoint & endpoint, const MobRoleUpdate & message)
@@ -406,7 +401,7 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 		mob.position = message.position;
-mob.time = message.time;
+		mob.time = message.time;
 	}
 }
 
@@ -421,44 +416,46 @@ void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint
 
 void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message)
 {
+	if (game.phase != GamePhase::Voting)
+		return;
+
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 
-		int totalvotes = (int)message.totalVotes;
-
-		if (totalvotes > mob.timesVoted)
+		if (mob.votesCast < game.settings.votesPerPlayer)
 		{
-			mob.timesVoted++;
-			int phase2 = 2;
+			mob.votesCast++;
+			game.votes.push_back(std::make_pair(player.mob, message.target));
+
 			int alive = 0;
 			int total = 0;
-
 			for (auto mob : mobs)
 			{
-				if (mob.type == MobType::Player && mob.enabled == true && (mob.role == Role::Crewmate || mob.role == Role::Impostor))
+				if (mob.type == MobType::Player && mob.enabled == true)
 				{
 					alive++;
-					total += mob.timesVoted;
+					total += mob.votesCast;
 				}
+			}
 
-			}
-			if (alive * totalvotes <= total)
+			if (total == alive * game.settings.votesPerPlayer)
 			{
-				//game.setPhase(GamePhase::Main, message.timer);
-				phase2 = 1;
+				game.endMeeting(time);
 			}
-			std::string name = message.buttonName;
-			PlayerVoted message;
-			message.phase = phase2;
-			message.timer = time;
-			message.id = player.mob;
-			message.totalVotes = totalvotes;
-			message.buttonName = name;
-			message.votesLeft = mob.timesVoted - totalvotes;
-			Broadcast(message);
+
+			PlayerVoted reply;
+			if (game.settings.anonymousVotes)
+				reply.voter = -1;
+			else
+				reply.voter = player.mob;
+			if (game.settings.showVotesWhenEveryoneHasVoted)
+				reply.target = -2;
+			else
+				reply.target = message.target;
+			Broadcast(reply);
 		}
 	}
 }
@@ -469,13 +466,17 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint& endpo
 	if (it != players.end())
 	{
 		auto&& player = it->second;
-		game.startMeeting();
+		auto&& mob = mobs[player.mob];
 
-		ReportAttempted message;
-		message.idOfInitiator = player.mob;
-		message.target = message.target;
-
-		Broadcast(message);
+		if (mob.type == MobType::Player)
+		{
+			if (message.target < mobs.size())
+			{
+				auto&& target = mobs[message.target];
+				if (target.type == MobType::Corpse)
+					game.startMeeting(player.mob, message.target);
+			}
+		}
 	}
 }
 

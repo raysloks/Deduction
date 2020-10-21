@@ -7,9 +7,9 @@ public class Player : Mob
 {
     public long killCooldown;
 
-    [HideInInspector] public bool cantMove = false;
-    [HideInInspector] public bool nearEmergencyButton = false;
-    [HideInInspector] public bool emergencyButtonLeft = true;
+    [HideInInspector] public bool canMove = true;
+    [HideInInspector] public bool canRequestMeeting = false;
+    [HideInInspector] public int emergencyButtonsLeft = 0;
 
     public GameController controller;
 
@@ -19,20 +19,18 @@ public class Player : Mob
     {
         base.Awake();
         visionLight = GetComponent<Light2D>();
-        emergencyButtonLeft = true;
     }
 
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (!cantMove && (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>()))
+        if (canMove && (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>()))
         {
             move.x += Input.GetAxis("Horizontal");
             move.y += Input.GetAxis("Vertical");
 
             move = Vector3.ClampMagnitude(move, 1f);
             transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
-
         }
 
         if (move.x > 0f)

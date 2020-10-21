@@ -6,6 +6,8 @@
         _MaskTex("Mask", 2D) = "white" {}
         _NormalMap("Normal Map", 2D) = "bump" {}
 
+        _AmbientLight("AmbientLight", Color) = (0,0,0,0)
+
         // Legacy properties. They're here so that materials using this shader can gracefully fallback to the legacy sprite shader.
         [HideInInspector] _Color("Tint", Color) = (1,1,1,1)
         [HideInInspector] _RendererColor("RendererColor", Color) = (1,1,1,1)
@@ -63,6 +65,7 @@
                 SAMPLER(sampler_NormalMap);
                 half4 _MainTex_ST;
                 half4 _NormalMap_ST;
+                half4 _AmbientLight;
 
                 #if USE_SHAPE_LIGHT_TYPE_0
                 SHAPE_LIGHT(0)
@@ -101,6 +104,7 @@
 
                     half4 light = CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV);
                     //light.a = (light.r + light.g + light.b) / 3.0 * 1.5;
+                    light += _AmbientLight;
                     light = 0.5 - cos(min(1, light) * 3.14159265) * 0.5;
                     main *= light;
                     return main;

@@ -30,7 +30,7 @@ public:
 
 	void removeMob(uint64_t id);
 
-	void killMob(uint64_t id);
+	void killMob(uint64_t id, bool eject);
 
 	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);
 	void AbilityUsedHandler(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);

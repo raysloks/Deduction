@@ -22,6 +22,7 @@ public:
 	bool killOnTies;
 	bool enableSkipButton;
 	bool showVotesWhenEveryoneHasVoted;
+	bool anonymousVotes;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

@@ -5,7 +5,7 @@
 // Application should implement this class using the prototypes in HandlerPrototypes.h
 #include "../NetworkHandler.h"
 
-const uint32_t NetLink::crc = 0x9a87396a;
+const uint32_t NetLink::crc = 0xaee8b0b2;
 NetLink::NetLink() : io_context(), socket(io_context)
 {
 }
@@ -24,7 +24,7 @@ void NetLink::Receive()
 			{
 				try
 				{
-					asio::streambuf buffer(65507);
+					asio::streambuf buffer(65507); 
 					asio::ip::udp::endpoint endpoint;
 					buffer.commit(socket.receive_from(buffer.prepare(65507), endpoint));
 					Dispatch(buffer, endpoint);
@@ -449,3 +449,4 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& me
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
+

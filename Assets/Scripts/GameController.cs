@@ -13,9 +13,6 @@ public class GameController : MonoBehaviour
     public GameObject popup;
     public GameObject ini;
 
-    public int totalAmountOfVotes = 2;
-    public int totalAmountOfMeetings = 1;
-
     private float heartbeat = 0f;
     private float snapshot = 0f;
 
@@ -39,7 +36,7 @@ public class GameController : MonoBehaviour
 
     public long time;
     public long timeout;
-    public bool timerOn = true;
+    public bool TimerOn => timer != 0;
 	
     // public bool nearEmergencyButton = false;
 
@@ -65,14 +62,6 @@ public class GameController : MonoBehaviour
 
     public ConnectionState connectionState;
 
-    public enum GamePhase
-    {
-        Setup,
-        Main,
-        Meeting,
-        None
-    }
-
     public GamePhase phase = GamePhase.None;
     public long timer;
 
@@ -82,7 +71,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         handler = new NetworkHandler();
-        handler.controller = this;
+        handler.game = this;
 
         matchmaker = new MatchmakerHandler();
         matchmaker.controller = this;
@@ -138,9 +127,6 @@ public class GameController : MonoBehaviour
 
         if (phase == GamePhase.Main && player.isPlayerAlive())
         {
-           
-
-
             // Kill
             if (player.role == 1)
             {
@@ -150,7 +136,7 @@ public class GameController : MonoBehaviour
                 {
                     foreach (var n in handler.mobs)
                     {
-                        if (n.Value.IsAlive == true && n.Value.role == 0)
+                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf)
                         {
                             float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                             if (distance < targetDistance)
@@ -176,58 +162,37 @@ public class GameController : MonoBehaviour
                 }
 		    }
 
+
             // Report
-            
+            {
                 reportTarget = ulong.MaxValue;
-                float targetDistance2 = player.GetVision();
+                float targetDistance = player.GetVision();
                 foreach (var n in handler.mobs)
                 {
-                    if (n.Value.IsAlive == false)
+                    if (n.Value.IsAlive == false && n.Value.gameObject.activeSelf)
                     {
                         Vector2 diff = n.Value.transform.position - player.transform.position;
                         float distance = diff.magnitude;
-                        if (distance < targetDistance2)
+                        if (distance < targetDistance)
                         {
                             if (!Physics2D.Raycast(player.transform.position, diff / distance, distance, 1 << 10))
                             {
                                 reportTarget = n.Key;
-                                targetDistance2 = distance;
+                                targetDistance = distance;
                             }
                         }
                     }
                 }
                 reportButton.interactable = reportTarget != ulong.MaxValue;
-                if (killTarget != ulong.MaxValue)
-                {
-                    if (Input.GetKeyDown(KeyCode.R))
-                         Report();
-                }
-            
+                if (Input.GetKeyDown(KeyCode.R))
+                    Report();
+            }
 
-            
-        }
 
-        // Emergency Meeting
-        if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
-        {
-            MeetingRequested message = new MeetingRequested
+            // Emergency Meeting
+            if (Input.GetKeyDown(KeyCode.Space) && player.canRequestMeeting)
             {
-                EmergencyMeetings = (ulong)totalAmountOfMeetings
-            };
-            handler.link.Send(message);
-        }
-
-        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
-        {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
-            {
-                PlayerVoted message = new PlayerVoted
-                {
-                    timer = timer,
-                    totalVotes = totalAmountOfVotes,
-                    buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
-                 };
-                handler.link.Send(message);
+                handler.link.Send(new MeetingRequested());
             }
         }
 
@@ -273,21 +238,20 @@ public class GameController : MonoBehaviour
                     case GamePhase.Main:
                         text.text = "";
                         break;
-                    case GamePhase.Meeting:
-                        if(timerOn == false)
-                        {
-                            text.text = "Meeting Ending";
-                        }
-                        if (((timer - time + 999999999) / 1000000000) > 0 && timerOn == true)
-                        {
-                            text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
-                        }
-                        else if(timerOn == true)
-                        {
-                            timerOn = false;
-                            MeetingEvent me = new MeetingEvent();
-                            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_ENDED, me);
-                        }
+                    case GamePhase.Discussion:
+                        text.text = "Voting begins in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.Voting:
+                        text.text = "Voting ends in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.EndOfMeeting:
+                        text.text = "Meeting ends in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.Ejection:
+                        text.text = "Ejecting";
+                        long dots = 5 - (timer - time + 999999999) / 1000000000;
+                        for (int i = 0; i < dots; ++i)
+                            text.text += ".";
                         break;
                     case GamePhase.None:
                         text.text = "Waiting for server...";
@@ -303,27 +267,24 @@ public class GameController : MonoBehaviour
         timeout = time + 20000000000;
     }
 
-    public void SetGamePhase(GamePhase phase, long timer)
+    public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
     {
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-        player.cantMove = phase == GamePhase.Meeting;
-        if(phase == GamePhase.Main)
+        if (phase == GamePhase.Main && previous == GamePhase.Setup)
         {
-            DebugEvent ee = new DebugEvent();
-            ee.EventDescription = "Reset Emergency Button Timer";
-            EventSystem.Current.FireEvent(EVENT_TYPE.RESET_TIMER, ee);
+            player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
         }
+
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+        player.canMove = phase == GamePhase.Setup || phase == GamePhase.Main || phase == GamePhase.GameOver;
+        PhaseChangedEvent ee = new PhaseChangedEvent
+        {
+            phase = phase,
+            timer = timer,
+            previous = previous
+        };
+        EventSystem.Current.FireEvent(EVENT_TYPE.PHASE_CHANGED, ee);
         this.phase = phase;
         this.timer = timer;
-    }
-
-    public void ApplySettings()
-    {
-        totalAmountOfVotes = (int)settings.votesPerPlayer;
-        totalAmountOfMeetings = (int)settings.emergencyMeetingsPerPlayer;
-        SettingEvent se = new SettingEvent();
-        //se.settings = settings;
-        EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 
     public void Kill()

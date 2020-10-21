@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 #include "GamePhase.h"
 #include "Vec2.h"
@@ -21,8 +22,10 @@ public:
 
 	void startGameCountdown();
 	void startGame();
-	void startMeeting();
 	void restartSetup();
+
+	void startMeeting(uint64_t caller, uint64_t corpse = -1ul);
+	void endMeeting(int64_t now);
 	void resetVotes();
 
 	void resetKillCooldowns();
@@ -40,5 +43,9 @@ public:
 	NetworkHandler& handler;
 
 	GameSettings settings;
+
+	std::vector<std::pair<uint64_t, uint64_t>> votes;
+
+	std::vector<uint64_t> toBeEjected;
 };
 
