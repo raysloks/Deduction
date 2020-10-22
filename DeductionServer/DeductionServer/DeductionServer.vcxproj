@@ -110,6 +110,7 @@
     <ClCompile Include="Net\TaskUpdate.cpp" />
     <ClCompile Include="Net\VoiceFrame.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Sabotage.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Vec2.cpp" />
     <ClCompile Include="Vec3.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Net\VoiceFrame.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Role.h" />
+    <ClInclude Include="Sabotage.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />

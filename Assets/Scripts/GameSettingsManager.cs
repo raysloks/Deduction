@@ -11,6 +11,7 @@ public class GameSettingsManager : MonoBehaviour
     public RectTransform content;
     public GameObject textFieldPrefab;
     public GameObject togglePrefab;
+    public GameObject dropdownPrefab;
 
     public GameController game;
 

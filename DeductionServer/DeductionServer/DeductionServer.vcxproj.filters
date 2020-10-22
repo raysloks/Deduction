@@ -106,6 +106,9 @@
     <ClInclude Include="Net\GivenTasks.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\GameSettings.h" />
+    <ClInclude Include="Net\ResetGameSettings.h" />
+    <ClInclude Include="Sabotage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -197,6 +200,9 @@
     <ClCompile Include="Net\GivenTasks.cpp">
       <Filter>Net</Filter>
     </ClCompile>
+    <ClCompile Include="Net\GameSettings.cpp" />
+    <ClCompile Include="Net\ResetGameSettings.cpp" />
+    <ClCompile Include="Sabotage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">
