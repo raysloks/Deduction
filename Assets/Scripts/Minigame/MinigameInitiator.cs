@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class MinigameInitiator : MonoBehaviour
 {
     public bool isSolved;
-    public string minigame;
+    public GameObject minigame;
     public MinigamePopupScript popup;
     
     //GameObject.Find("PopupWindow").GetComponent<MinigamePopupScript>();

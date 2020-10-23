@@ -11,6 +11,7 @@ public class MinigamePopupScript : MonoBehaviour
     public RectTransform minigameContainer;
 
     private GameObject minigame;
+    private MinigameInitiator initiator;
 
     private void Awake()
     {
@@ -28,22 +29,27 @@ public class MinigamePopupScript : MonoBehaviour
         
     }
 
-    public void ActivatePopup(string sceneName, GameObject ini)
+    public void ActivatePopup(GameObject prefab, GameObject ini)
     {
         if (minigame == null)
-            minigame = Instantiate(minigamePrefab, minigameContainer);
+        {
+            minigame = Instantiate(prefab, minigameContainer);
+            initiator = ini.GetComponent<MinigameInitiator>();
+        }
     }
 
-    public void DeactivatePopup(bool complete)
+    public void DeactivatePopup()
     {
         if (minigame != null)
         {
             Destroy(minigame);
             minigame = null;
+            initiator = null;
         }   
     }
 
     public void MinigameWon()
     {
+        initiator.Solved();
     }
 }

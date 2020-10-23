@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
 
     public GameObject prefab;
     public MinigamePopupScript popup;
-    public GameObject ini;
+    public List<MinigameInitiator> MinigameInitiators;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -199,12 +199,25 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            popup.ActivatePopup("FredrikMinigame2", ini);
+            float targetDistance = (player.GetVision()) / 2;
+            foreach(MinigameInitiator n in MinigameInitiators) 
+            {
+                if (n.isSolved == false)
+                {
+                    Vector2 diff = n.transform.position - player.transform.position;
+                    float distance = diff.magnitude;
+                    if (distance < targetDistance)
+                    {
+                        n.StartMinigame();
+                    }
+                }
+            }
+            //popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            popup.DeactivatePopup(true);
+            popup.DeactivatePopup();
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
