@@ -209,6 +209,7 @@ public class GameController : MonoBehaviour
                     if (distance < targetDistance)
                     {
                         n.StartMinigame();
+                        player.canMove = false;
                     }
                 }
             }
@@ -218,6 +219,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             popup.DeactivatePopup();
+            player.canMove = true;
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
