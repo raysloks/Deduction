@@ -9,7 +9,7 @@ public class DrawLineMouseDrag : MonoBehaviour
     public LineRenderer Line;
     public float lineWidth = 0.04f;
     public float minimumVertexDistance = 0.1f;
-    public float winAmount = 3f;
+    public float winAmount = 4f;
     private float passed = 0f;
     
     private bool isLineStarted;
@@ -56,14 +56,14 @@ public class DrawLineMouseDrag : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0))
             {
-            
             if (parametersPassed.Count > 0)
             {
                 foreach (GameObject go in parametersPassed)
                 {
-                    go.GetComponent<Image>().color = Color.red;
+                    go.GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }
+
             passed = 0f;
             isLineStarted = false;
             Destroy(this.gameObject);
@@ -95,7 +95,7 @@ public class DrawLineMouseDrag : MonoBehaviour
             {
                 foreach(GameObject go in parametersPassed)
                 {
-                    go.GetComponent<Image>().color = Color.red;
+                    go.GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }
             passed = 0f;
@@ -111,7 +111,7 @@ public class DrawLineMouseDrag : MonoBehaviour
         if (col.gameObject.tag == "Wall")
         {
             passed++;
-            col.gameObject.GetComponent<Image>().color = Color.green;
+            col.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
             parametersPassed.Add(col.gameObject);
             if( passed >= winAmount)
             {

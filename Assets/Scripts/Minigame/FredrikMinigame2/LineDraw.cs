@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class LineDraw : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class LineDraw : MonoBehaviour
 {
 
 
@@ -24,7 +24,7 @@ public class LineDraw : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private bool isLineStarted;
     private Vector2 sizeVector;
     public LayerMask layerMask;
-    private TextMeshProUGUI myText;
+    public TextMeshProUGUI myText;
 
     private bool isDone;
     private bool canStart = true;
@@ -34,7 +34,7 @@ public class LineDraw : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         isLineStarted = false;
         sizeVector = new Vector2(lineWidth, lineWidth);
-        myText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+      //  myText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         circleCollider = this.transform.GetChild(1).GetComponent<CircleCollider2D>();
 
     }
@@ -45,9 +45,10 @@ public class LineDraw : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (Input.GetMouseButtonDown(0) && canStart)
         {
             Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 mousePos = new Vector3(tempFingerPos.x, tempFingerPos.y, 0);
+            Vector2 mousePos = new Vector2(tempFingerPos.x, tempFingerPos.y);
             Debug.Log(mousePos.y);
-            if(Vector2.Distance(transform.position, mousePos) < 1.4f)
+            Collider2D overlap = Physics2D.OverlapPoint(mousePos);
+            if (overlap == null)
             {
                 CreateLine();
                 isLineStarted = true;
@@ -121,16 +122,4 @@ public class LineDraw : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     }
 
-    public void OnPointerEnter(PointerEventData ped)
-    {
-        canStart = true;
-        Debug.Log("Pointer Enters");
-    }
-    public void OnPointerExit(PointerEventData ped)
-    {
-        canStart = false;
-
-        Debug.Log("Pointer exits");
-
-    }
 }
