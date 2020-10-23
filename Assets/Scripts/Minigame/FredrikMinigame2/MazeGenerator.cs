@@ -58,11 +58,17 @@ public class MazeGenerator : MonoBehaviour {
 
     private GameObject mazeParent;
     #endregion
+    private GameObject player;
 
-   
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     private void Start()
     {
         GenerateMaze(mazeRows, mazeColumns);
+        
     }
 
     private void GenerateMaze(int rows, int columns)
@@ -79,8 +85,13 @@ public class MazeGenerator : MonoBehaviour {
     {
         InitValues();
 
+        //Vi Vill förmodligen ändra hur startpositionen hämtas i framtiden.
+
         // Set starting point, set spawn point to start.
-        Vector2 startPos = new Vector2(-(cellSize * (mazeColumns / 2)) + (cellSize / 2), -(cellSize * (mazeRows / 2)) + (cellSize / 2));
+        //Vector2 startPos = new Vector2(-(cellSize * (mazeColumns / 2)) + (cellSize / 2), -(cellSize * (mazeRows / 2)) + (cellSize / 2));
+        Vector2 startPos = player.transform.position;
+        startPos.x = startPos.x - 3.5f;
+        startPos.y = startPos.y - 3.5f;
         Vector2 spawnPos = startPos;
 
         for (int x = 1; x <= mazeColumns; x++)
@@ -304,6 +315,7 @@ public class MazeGenerator : MonoBehaviour {
 
         // Create an empty parent object to hold the maze in the scene.
         mazeParent = new GameObject();
+        mazeParent.transform.SetParent(this.transform.parent);
         mazeParent.transform.position = Vector2.zero;
         mazeParent.name = "Maze";
     }

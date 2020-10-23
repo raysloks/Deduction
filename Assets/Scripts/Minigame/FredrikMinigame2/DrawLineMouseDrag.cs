@@ -116,6 +116,7 @@ public class DrawLineMouseDrag : MonoBehaviour
             if( passed >= winAmount)
             {
                 isDone = true;
+                FindObjectOfType<MinigamePopupScript>().MinigameWon();
             }
         }
 
