@@ -39,13 +39,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         if (data.dragging)
         {
-          //  Debug.Log("Dragging:" + data.position);
-
-            Ray ray = Camera.main.ScreenPointToRay(data.position);
-            //Calculate the distance between the Camera and the GameObject, and go this distance along the ray
-            Vector2 rayPoint = ray.GetPoint(Vector2.Distance(transform.position, Camera.main.transform.position));
-            //Move the GameObject when you drag it
-            transform.position = rayPoint;
+            transform.position = data.position;
         }
     }
 

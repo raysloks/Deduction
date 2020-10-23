@@ -91,6 +91,7 @@ public class Spawner : MonoBehaviour
             text.text = "Done";
 
             taskCompleted = true;
+            FindObjectOfType<MinigamePopupScript>().MinigameWon();
         }
     }
 

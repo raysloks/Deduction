@@ -10,8 +10,8 @@ public class GameController : MonoBehaviour
     public GameSettings settings;
 
     public GameObject prefab;
-    public GameObject popup;
-    public GameObject ini;
+    public MinigamePopupScript popup;
+    public List<MinigameInitiator> MinigameInitiators;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
+    public GameObject copyCodeButton;
     public Button startGameButton;
 
     public Button killButton;
@@ -198,15 +199,29 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            popup.GetComponent<MinigamePopupScript>().ActivatePopup("MinigameScene", ini);
+            float targetDistance = (player.GetVision()) / 2;
+            foreach(MinigameInitiator n in MinigameInitiators) 
+            {
+                if (n.isSolved == false)
+                {
+                    Vector2 diff = n.transform.position - player.transform.position;
+                    float distance = diff.magnitude;
+                    if (distance < targetDistance)
+                    {
+                        n.StartMinigame();
+                    }
+                }
+            }
+            //popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            popup.GetComponent<MinigamePopupScript>().DeactivatePopup(true);
+            popup.DeactivatePopup();
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
+        copyCodeButton.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
         startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         switch (connectionState)
