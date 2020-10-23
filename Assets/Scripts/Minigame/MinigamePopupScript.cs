@@ -35,8 +35,9 @@ public class MinigamePopupScript : MonoBehaviour
     {
         initiator = ini;
         scene = sceneName;
-        popup.transform.position = player.transform.position;
-        popup.GetComponent<MeshRenderer>().enabled = true;
+        //popup.transform.position = player.transform.position;
+        //popup.transform.position = new Vector3(popup.transform.position.x, popup.transform.position.y, 2);
+        //popup.GetComponent<MeshRenderer>().enabled = true;
         SceneManager.LoadScene(scene, LoadSceneMode.Additive);
     }
 

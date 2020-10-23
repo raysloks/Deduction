@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 72765263}
   - component: {fileID: 72765262}
   - component: {fileID: 72765261}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Wall (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 235936245}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Parameters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 321725087}
   - component: {fileID: 321725086}
   - component: {fileID: 321725088}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 406968926}
   - component: {fileID: 406968925}
   - component: {fileID: 406968924}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 580804432}
   - component: {fileID: 580804431}
   - component: {fileID: 580804430}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Parameter
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 694480719}
   - component: {fileID: 694480721}
   - component: {fileID: 694480722}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 797352499}
   - component: {fileID: 797352498}
   - component: {fileID: 797352497}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Parameter
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -815,7 +815,7 @@ GameObject:
   - component: {fileID: 934194975}
   - component: {fileID: 934194974}
   - component: {fileID: 934194973}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Parameter
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 1134089524}
   - component: {fileID: 1134089527}
   - component: {fileID: 1134089526}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 1297289639}
   - component: {fileID: 1297289638}
   - component: {fileID: 1297289641}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -1018,7 +1018,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -1029,16 +1029,16 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 5
+  far clip plane: 1000.01
+  field of view: 146.80002
+  orthographic: 0
+  orthographic size: 6.437748
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2048
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 8d34f4572261c5543ab05421a0fd8d98, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 1381076760}
   - component: {fileID: 1381076759}
   - component: {fileID: 1381076763}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: LineGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 1785374938}
   - component: {fileID: 1785374937}
   - component: {fileID: 1785374939}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 1858399308}
   - component: {fileID: 1858399310}
   - component: {fileID: 1858399309}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

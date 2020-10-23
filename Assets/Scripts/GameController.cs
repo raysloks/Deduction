@@ -198,7 +198,7 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            popup.GetComponent<MinigamePopupScript>().ActivatePopup("MinigameScene", ini);
+            popup.GetComponent<MinigamePopupScript>().ActivatePopup("FredrikMinigame2", ini);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
