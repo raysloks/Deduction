@@ -24,8 +24,9 @@ public class TargetSpawner : MonoBehaviour
         maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         target = RandomPointInScreenBounds();
         currentPrefab = TargetPrefab;
-        Instantiate(currentPrefab, target);
-        StartCourutine(SpawnTarget(2));
+        
+       // Instantiate(currentPrefab, target);
+        StartCoroutine(SpawnTarget(2));
 
     }
 
@@ -50,9 +51,9 @@ public class TargetSpawner : MonoBehaviour
         }
         Destroy(currentPrefab);
         currentPrefab = TargetPrefab;
-        Instantiate(currentPrefab, target);
+      //  Instantiate(currentPrefab, target);
         target = RandomPointInScreenBounds();
-        StartCourutine(SpawnTarget(2));
+        StartCoroutine(SpawnTarget(2));
     }
 
         public Vector2 RandomPointInScreenBounds()
