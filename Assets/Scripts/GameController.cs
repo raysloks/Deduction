@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public GameSettings settings;
 
     public GameObject prefab;
-    public GameObject popup;
+    public MinigamePopupScript popup;
     public GameObject ini;
 
     private float heartbeat = 0f;
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
+    public GameObject copyCodeButton;
     public Button startGameButton;
 
     public Button killButton;
@@ -198,15 +199,16 @@ public class GameController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            popup.GetComponent<MinigamePopupScript>().ActivatePopup("FredrikMinigame2", ini);
+            popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            popup.GetComponent<MinigamePopupScript>().DeactivatePopup(true);
+            popup.DeactivatePopup(true);
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
+        copyCodeButton.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
         startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         switch (connectionState)

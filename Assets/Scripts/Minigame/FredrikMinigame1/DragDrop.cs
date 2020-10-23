@@ -56,13 +56,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if (data.dragging)
         {
-          //  Debug.Log("Dragging:" + data.position);
-
-            Ray ray = Camera.main.ScreenPointToRay((Vector2)data.position);
-            //Calculate the distance between the Camera and the GameObject, and go this distance along the ray
-            Vector2 rayPoint = (Vector2)ray.GetPoint(Vector2.Distance(transform.position, Camera.main.transform.position));
-            //Move the GameObject when you drag it
-            transform.position = rayPoint;
+            transform.position = data.position;
             child.position = new Vector3(child.position.x, child.position.y, 0f);
 
         }
@@ -70,7 +64,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData data)
     {
-        if(Vector2.Distance(transform.position, target.position) < 1f && stamped == true)
+        if(Vector2.Distance(transform.position, target.position) < 200f && stamped == true)
         {
             Debug.Log("hit it");
             float r = Random.Range(-0.5f, 0.5f);

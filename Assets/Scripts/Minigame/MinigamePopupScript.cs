@@ -6,17 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class MinigamePopupScript : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject popup;
-    
-    private string scene;
-    private GameObject initiator;
-    
+    public Player player;
+    public GameObject minigamePrefab;
+    public RectTransform minigameContainer;
+
+    private GameObject minigame;
 
     private void Awake()
     {
-        popup.GetComponent<MeshRenderer>().enabled = false;
-        initiator = null;
     }
 
     // Start is called before the first frame update
@@ -33,24 +30,20 @@ public class MinigamePopupScript : MonoBehaviour
 
     public void ActivatePopup(string sceneName, GameObject ini)
     {
-        initiator = ini;
-        scene = sceneName;
-        //popup.transform.position = player.transform.position;
-        //popup.transform.position = new Vector3(popup.transform.position.x, popup.transform.position.y, 2);
-        //popup.GetComponent<MeshRenderer>().enabled = true;
-        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+        if (minigame == null)
+            minigame = Instantiate(minigamePrefab, minigameContainer);
     }
 
     public void DeactivatePopup(bool complete)
     {
-        popup.GetComponent<MeshRenderer>().enabled = false;
-        SceneManager.UnloadScene(scene);
-        scene = null;
-        initiator = null;
+        if (minigame != null)
+        {
+            Destroy(minigame);
+            minigame = null;
+        }   
     }
 
     public void MinigameWon()
     {
-        initiator.GetComponent<MinigameInitiator>().Solved();
     }
 }
