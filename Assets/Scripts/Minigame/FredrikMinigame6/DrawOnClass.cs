@@ -50,7 +50,7 @@ public class DrawOnClass : MonoBehaviour
             {
                 text.text = "Done";
                 isDone = true;
-                Debug.Log("DOne");
+                FindObjectOfType<MinigamePopupScript>().MinigameWon();
             }
         }
     }

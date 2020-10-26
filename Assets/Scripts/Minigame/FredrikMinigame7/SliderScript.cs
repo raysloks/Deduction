@@ -25,6 +25,13 @@ public class SliderScript : MonoBehaviour
     {
        
     }
+
+    private void Awake()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Politican.transform.position = player.transform.position;
+
+    }
     void ValueChangeCheck()
     {
         if (mainSlider.value == mainSlider.maxValue)
@@ -41,6 +48,7 @@ public class SliderScript : MonoBehaviour
             isDone = true;
             text.text = "Done";
             mainSlider.interactable = false;
+            FindObjectOfType<MinigamePopupScript>().MinigameWon();
         }
     }
     IEnumerator disableSliderFor(float Sec)
