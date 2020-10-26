@@ -37,6 +37,8 @@ public class AbortButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
                     isDone = true;
                     pressing = false;
                     myText.text = "Nuclear Launch Aborted";
+                    FindObjectOfType<MinigamePopupScript>().MinigameWon();
+
                 }
             }
         }

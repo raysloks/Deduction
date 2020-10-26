@@ -99,6 +99,7 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         transform.GetChild(0).GetComponent<Image>().enabled = false;
 
         text.text = "Done";
+        FindObjectOfType<MinigamePopupScript>().MinigameWon();
 
         noMoreDragging = true;
         isDone = true;

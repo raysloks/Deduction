@@ -15,6 +15,12 @@ public class PlayerBall : MonoBehaviour
     public GameObject jumpRope;
     private BoxCollider2D collider;
     private bool jumpDone = false;
+    void Awake()
+    {
+        GameObject Player = GameObject.FindWithTag("Player");
+        transform.parent.position = Player.transform.position;
+      //  transform.position = Player.transform.position;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +54,7 @@ public class PlayerBall : MonoBehaviour
                     {
                         text.text = "Done";
                         isDone = true;
+                        FindObjectOfType<MinigamePopupScript>().MinigameWon();
                         jumpRope.GetComponent<JumpRope>().speed = 0f;
                         jumpRope.GetComponent<JumpRope>().enabled = false;
 

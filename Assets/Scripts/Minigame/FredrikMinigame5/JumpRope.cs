@@ -18,6 +18,12 @@ public class JumpRope : MonoBehaviour
     private CircleCollider2D col2d;
     public LayerMask layerMask;
     Vector3 axis;
+
+    void Awake()
+    {
+        GameObject Player = GameObject.FindWithTag("Player");
+        transform.parent.position = Player.transform.position; 
+    }
     // Start is called before the first frame update
     void Start()
     {
