@@ -73,6 +73,7 @@ public class TargetSpawner : MonoBehaviour
                 {
                     text.text = "Done";
                     isDone = true;
+                    FindObjectOfType<MinigamePopupScript>().MinigameWon();
                 }
                 break;
             }

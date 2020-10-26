@@ -45,11 +45,25 @@ public class MinigamePopupScript : MonoBehaviour
             Destroy(minigame);
             minigame = null;
             initiator = null;
+            player.canMove = true;
         }   
     }
 
     public void MinigameWon()
     {
         initiator.Solved();
+        StartCoroutine(EndIn(2));
+    }
+
+    IEnumerator EndIn(float sec)
+    {
+        float counter = sec;
+
+        while (counter > 0)
+        {
+            counter -= Time.deltaTime;
+            yield return null;
+        }
+        DeactivatePopup();
     }
 }

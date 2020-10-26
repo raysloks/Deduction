@@ -94,6 +94,7 @@ public class CircleChecker : MonoBehaviour
             isDone = true;
             target = Vector2.zero;
             gameStarted = false;
+            FindObjectOfType<MinigamePopupScript>().MinigameWon();
         }
 
     }
@@ -110,10 +111,9 @@ public class CircleChecker : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if(col.gameObject.tag == "Player" && gameStarted)
+        if(col.gameObject.tag == "Ball" && gameStarted)
         {
             PlayerInside = false;
-            Debug.Log("FAIL");
             transform.position = startPos;
             gameStarted = false;
             sr.color = Color.white;
@@ -122,7 +122,7 @@ public class CircleChecker : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Player" )
+        if (col.gameObject.tag == "Ball" )
         {
             PlayerInside = true;
         }
