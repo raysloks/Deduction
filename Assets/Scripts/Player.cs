@@ -45,7 +45,7 @@ public class Player : Mob
         {
             for (int i = 0; i < 2; ++i)
             {
-                float radius = 0.5f;
+                float radius = 0.45f;
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, 1 << 10);
                 foreach (var collider in colliders)
                 {
