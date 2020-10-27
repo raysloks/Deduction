@@ -28,6 +28,8 @@ public:
 	void endMeeting(int64_t now);
 	void resetVotes();
 
+	void createTaskLists();
+
 	void resetKillCooldowns();
 
 	void resetSettings();

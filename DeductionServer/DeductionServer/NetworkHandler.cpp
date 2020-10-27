@@ -496,6 +496,18 @@ void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoi
 
 void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message)
 {
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
+
+		if (message.task < mob.tasks.size())
+		{
+			mob.tasks[message.task].completed = true;
+			game.checkForGameOver();
+		}
+	}
 }
 
 void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message)
