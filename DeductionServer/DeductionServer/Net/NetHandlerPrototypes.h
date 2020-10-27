@@ -7,6 +7,7 @@
 	void GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void HeartbeatHandler(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
 	void KillAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
+	void LightUpdateHandler(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void MeetingRequestedHandler(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);
 	void MobRemovedHandler(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message);
 	void MobRoleUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message);

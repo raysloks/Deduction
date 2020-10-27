@@ -122,7 +122,7 @@ public class GameController : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
         //    handler.link.Send(new MeetingRequested());
-        if (Input.GetKeyDown(KeyCode.Escape) && phase != GamePhase.Setup)
+        if (Input.GetKeyDown(KeyCode.F5) && phase != GamePhase.Setup)
             handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
@@ -200,7 +200,12 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            popup.DeactivatePopup();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             float targetDistance = (player.GetVision()) / 2;
             for (int i = 0; i < taskManager.tasks.Count; ++i)
@@ -220,15 +225,11 @@ public class GameController : MonoBehaviour
             //popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            popup.DeactivatePopup();
-        }
-
         connectionMenu.SetActive(connectionState == ConnectionState.None);
         copyCodeButton.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
         startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
+        text.fontSize = 36;
         switch (connectionState)
         {
             case ConnectionState.None:
@@ -247,11 +248,13 @@ public class GameController : MonoBehaviour
                 text.text = "Joining lobby...";
                 break;
             case ConnectionState.Connected:
+                int secondsRemaining = (int)((timer - time + 999999999) / 1000000000);
+                text.fontSize = 72;
                 switch (phase)
                 {
                     case GamePhase.Setup:
                         if (timer != 0)
-                            text.text = "Game starting in " + (timer - time + 999999999) / 1000000000;
+                            text.text = "Game starting in " + secondsRemaining;
                         else
                             text.text = "Setup " + matchmaker.lobby;
                         break;
@@ -259,17 +262,19 @@ public class GameController : MonoBehaviour
                         text.text = "";
                         break;
                     case GamePhase.Discussion:
-                        text.text = "Voting begins in " + (timer - time + 999999999) / 1000000000;
+                        text.text = "Voting begins in " + secondsRemaining;
                         break;
                     case GamePhase.Voting:
-                        text.text = "Voting ends in " + (timer - time + 999999999) / 1000000000;
+                        text.text = "Voting ends in " + secondsRemaining;
+                        if (secondsRemaining <= 10)
+                            text.fontSize = 100 - secondsRemaining;
                         break;
                     case GamePhase.EndOfMeeting:
-                        text.text = "Meeting ends in " + (timer - time + 999999999) / 1000000000;
+                        text.text = "Meeting ends in " + secondsRemaining;
                         break;
                     case GamePhase.Ejection:
                         text.text = "Ejecting";
-                        long dots = 5 - (timer - time + 999999999) / 1000000000;
+                        long dots = 5 - secondsRemaining;
                         for (int i = 0; i < dots; ++i)
                             text.text += ".";
                         break;
