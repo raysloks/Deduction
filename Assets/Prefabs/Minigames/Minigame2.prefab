@@ -266,7 +266,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 32
-  myText: {fileID: 0}
+  myText: {fileID: 3773944643101285371}
 --- !u!222 &3773944642336724821
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3773944643101285373}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 929.9238}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3773944643173082065}
@@ -357,8 +357,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 643.5366, y: 219.31693}
-  m_SizeDelta: {x: 1000, y: 10000}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 172.6354, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3773944643101285368
 CanvasRenderer:
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.09453846, g: 0.7735849, b: 0.0693307, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -466,7 +466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3773944643173082065}
   m_Layer: 0
-  m_Name: FredrikMinigame3
+  m_Name: Minigame2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
