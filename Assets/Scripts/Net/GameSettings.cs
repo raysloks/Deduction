@@ -9,6 +9,7 @@ public struct GameSettings
 	public long emergencyMeetingsPerPlayer;
 	public long emergencyMeetingCooldown;
 	public long killCooldown;
+	public float killRange;
 	public long voteTime;
 	public long discussionTime;
 	public bool killVictoryEnabled;
@@ -28,6 +29,7 @@ public struct GameSettings
 		writer.Write((long)emergencyMeetingsPerPlayer);
 		writer.Write((long)emergencyMeetingCooldown);
 		writer.Write((long)killCooldown);
+		writer.Write((float)killRange);
 		writer.Write((long)voteTime);
 		writer.Write((long)discussionTime);
 		writer.Write((bool)killVictoryEnabled);
@@ -49,6 +51,7 @@ public struct GameSettings
 		_ret.emergencyMeetingsPerPlayer = (long)reader.ReadInt64();
 		_ret.emergencyMeetingCooldown = (long)reader.ReadInt64();
 		_ret.killCooldown = (long)reader.ReadInt64();
+		_ret.killRange = (float)reader.ReadSingle();
 		_ret.voteTime = (long)reader.ReadInt64();
 		_ret.discussionTime = (long)reader.ReadInt64();
 		_ret.killVictoryEnabled = (bool)reader.ReadBoolean();

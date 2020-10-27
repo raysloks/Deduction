@@ -24,6 +24,7 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingInputField<long>("Emergency Meetings Per Player", "emergencyMeetingsPerPlayer", game),
             new GameSettingTime("Emergency Meeting Cooldown", "emergencyMeetingCooldown", game),
             new GameSettingTime("Kill Cooldown", "killCooldown", game),
+            new GameSettingInputField<float>("Kill Range", "killRange", game),
             new GameSettingTime("Vote Time", "voteTime", game),
             new GameSettingTime("Discussion Time", "discussionTime", game),
             new GameSettingToggle("Kill Victory Enabled", "killVictoryEnabled", game),

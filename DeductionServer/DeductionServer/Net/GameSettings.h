@@ -13,6 +13,7 @@ public:
 	int64_t emergencyMeetingsPerPlayer;
 	int64_t emergencyMeetingCooldown;
 	int64_t killCooldown;
+	float killRange;
 	int64_t voteTime;
 	int64_t discussionTime;
 	bool killVictoryEnabled;

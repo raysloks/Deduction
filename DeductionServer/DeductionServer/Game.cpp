@@ -308,6 +308,7 @@ void Game::resetSettings()
 		settings.emergencyMeetingsPerPlayer = 1;
 		settings.emergencyMeetingCooldown = 15'000'000'000;
 		settings.killCooldown = 30'000'000'000;
+		settings.killRange = 2.0f;
 		settings.voteTime = 30'000'000'000;
 		settings.discussionTime = 30'000'000'000;
 		settings.killVictoryEnabled = true;

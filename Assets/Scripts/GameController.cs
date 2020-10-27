@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour
             if (player.role == 1)
             {
                 killTarget = ulong.MaxValue;
-                float targetDistance = 1.75f;
+                float targetDistance = settings.killRange;
                 if (player.killCooldown < time)
                 {
                     foreach (var n in handler.mobs)
@@ -289,13 +289,17 @@ public class GameController : MonoBehaviour
     public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
     {
         popup.DeactivatePopup();
+
+        if (phase == GamePhase.Setup || phase == GamePhase.GameOver)
+            taskManager.tasks.Clear();
+
         if (phase == GamePhase.Main && previous == GamePhase.Setup)
-        {
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
-        }
 
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+
         player.canMove = phase == GamePhase.Setup || phase == GamePhase.Main || phase == GamePhase.GameOver;
+        
         PhaseChangedEvent ee = new PhaseChangedEvent
         {
             phase = phase,
@@ -303,6 +307,7 @@ public class GameController : MonoBehaviour
             previous = previous
         };
         EventSystem.Current.FireEvent(EVENT_TYPE.PHASE_CHANGED, ee);
+        
         this.phase = phase;
         this.timer = timer;
     }

@@ -337,7 +337,7 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 				auto&& target = mobs[message.target];
 				if (target.enabled && target.type == MobType::Player && target.role == Role::Crewmate)
 				{
-					if ((target.position - mob.position).Len() < 2.0f)
+					if ((target.position - mob.position).Len() < game.settings.killRange + game.settings.playerSpeed * 0.1f)
 					{
 						killMob(message.target, false);
 

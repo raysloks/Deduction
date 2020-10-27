@@ -3,6 +3,7 @@ int64 votesPerPlayer
 int64 emergencyMeetingsPerPlayer
 int64 emergencyMeetingCooldown
 int64 killCooldown
+float killRange
 int64 voteTime
 int64 discussionTime
 bool killVictoryEnabled
