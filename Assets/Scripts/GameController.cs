@@ -289,6 +289,7 @@ public class GameController : MonoBehaviour
 
     public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
     {
+        popup.DeactivatePopup();
         if (phase == GamePhase.Main && previous == GamePhase.Setup)
         {
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;

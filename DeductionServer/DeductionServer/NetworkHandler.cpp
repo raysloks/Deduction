@@ -10,7 +10,7 @@ NetworkHandler::NetworkHandler() : game(*this)
 
 	mobs.reserve(1024); // lul
 
-	createMob();
+	//createMob();
 }
 
 void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
@@ -114,6 +114,7 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 
 	link.Send(endpoint, game.settings);
 
+	updateMobState(player.mob);
 	updateMobStatesForPlayer(endpoint);
 
 	std::cout << name << " connected from " << endpoint << std::endl;
@@ -425,7 +426,7 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint,
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
 
-		if (mob.votesCast < game.settings.votesPerPlayer)
+		if (mob.votesCast < game.settings.votesPerPlayer && mob.type == MobType::Player)
 		{
 			mob.votesCast++;
 			game.votes.push_back(std::make_pair(player.mob, message.target));

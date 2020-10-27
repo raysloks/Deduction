@@ -31,7 +31,7 @@ public class NetworkHandler
 
     private void UpdateName(ulong mob)
     {
-        TextMeshProUGUI text = null;
+        TextMeshProUGUI text;
         if (mobs.ContainsKey(mob))
         {
             text = mobs[mob].GetComponentInChildren<TextMeshProUGUI>();

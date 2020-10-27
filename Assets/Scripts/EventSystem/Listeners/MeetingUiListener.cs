@@ -78,27 +78,31 @@ public class MeetingUiListener : MonoBehaviour
         foreach (var n in handler.mobs)
         {
             Mob mob = n.Value;
-            if (mob.IsAlive && mob.gameObject.activeSelf)
+
+            bool alive = mob.IsAlive && mob.gameObject.activeSelf;
+
+            if (!voteButtons.ContainsKey(n.Key))
             {
-                if (!voteButtons.ContainsKey(n.Key))
+                GameObject go = Instantiate(voteButtonPrefab, radialLayout.transform);
+                VoteButton voteButton = go.GetComponent<VoteButton>();
+                voteButton.game = game;
+                voteButton.target = n.Key;
+                voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                voteButton.targetImage.color = mob.sprite.color;
+                if (handler.names.ContainsKey(n.Key))
                 {
-                    GameObject go = Instantiate(voteButtonPrefab, radialLayout.transform);
-                    VoteButton voteButton = go.GetComponent<VoteButton>();
-                    voteButton.game = game;
-                    voteButton.target = n.Key;
-                    voteButton.targetImage.sprite = mob.sprite.sprite;
-                    voteButton.targetImage.color = mob.sprite.color;
-                    if (handler.names.ContainsKey(n.Key))
-                    {
-                        voteButton.nameText.text = handler.names[n.Key];
-                        go.name = handler.names[n.Key];
-                    }
-                    voteButtons.Add(n.Key, voteButton);
+                    voteButton.nameText.text = handler.names[n.Key];
+                    go.name = handler.names[n.Key];
                 }
+                voteButtons.Add(n.Key, voteButton);
             }
 
             if (voteButtons.ContainsKey(n.Key))
-                voteButtons[n.Key].ResetVoteCountAndState();
+            {
+                VoteButton voteButton = voteButtons[n.Key];
+                voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                voteButton.ResetVoteCountAndState();
+            }
         }
 
         //change angle of layout based on number of players;

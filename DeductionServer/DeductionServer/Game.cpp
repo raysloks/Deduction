@@ -120,7 +120,7 @@ void Game::startGameCountdown()
 void Game::startGame()
 {
 	setPhase(GamePhase::Main, 0);
-	teleportPlayersToEllipse(Vec2(1.5f), Vec2(2.0f));
+	teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
 
 	std::vector<size_t> mobs;
 	for (auto player : handler.players)
@@ -168,7 +168,7 @@ void Game::startMeeting(uint64_t caller, uint64_t corpse)
 		removeCorpses();
 		resetVotes();
 		setPhase(GamePhase::Discussion, handler.time + settings.discussionTime);
-		teleportPlayersToEllipse(Vec2(1.5f), Vec2(2.0f));
+		teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
 	}
 }
 
@@ -235,7 +235,7 @@ void Game::restartSetup()
 	if (phase != GamePhase::Setup)
 	{
 		setPhase(GamePhase::Setup, 0);
-		teleportPlayersToEllipse(Vec2(1.5f), Vec2(2.0f));
+		teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
 		for (size_t i = 0; i < handler.mobs.size(); ++i)
 			handler.removeMob(i);
 		for (auto player : handler.players)
@@ -311,7 +311,7 @@ void Game::resetSettings()
 		settings.killCooldown = 30'000'000'000;
 		settings.voteTime = 30'000'000'000;
 		settings.discussionTime = 90'000'000'000;
-		settings.killVictoryEnabled = false;
+		settings.killVictoryEnabled = true;
 		settings.crewmateVision = 5.0f;
 		settings.impostorVision = 10.0f;
 		settings.playerSpeed = 4.0f;
