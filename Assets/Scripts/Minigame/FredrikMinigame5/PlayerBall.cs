@@ -34,7 +34,7 @@ public class PlayerBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !inAir && !isDone)
+        if (Input.GetMouseButtonDown(0) && !inAir && !isDone)
         {
             rd.AddForce(Vector2.up * 350);
             inAir = true;
