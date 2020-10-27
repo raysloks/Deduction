@@ -14,6 +14,14 @@ public class TaskManager : MonoBehaviour
 
     public List<GameObject> indicators = new List<GameObject>();
 
+    public Dictionary<int, MinigameInitiator> minigameInitiators = new Dictionary<int, MinigameInitiator>();
+
+    private void Awake()
+    {
+        foreach (MinigameInitiator minigameInitiator in FindObjectsOfType<MinigameInitiator>())
+            minigameInitiators.Add(minigameInitiator.minigame_index, minigameInitiator);
+    }
+
     private void Update()
     {
         for (int i = 0; i < tasks.Count; ++i)
@@ -28,12 +36,15 @@ public class TaskManager : MonoBehaviour
 
         for (int i = 0; i < tasks.Count; ++i)
         {
-            indicators[i].SetActive(!tasks[i].completed);
-            Transform transform = indicators[i].transform;
-            Transform target = game.MinigameInitiators[tasks[i].index % game.MinigameInitiators.Count].transform;
-            Vector2 diff = target.position - game.player.transform.position;
-            transform.position = Vector2.MoveTowards(game.player.transform.position, target.position, Mathf.Min(diff.magnitude * 0.5f, 5f));
-            transform.up = diff;
+            if (minigameInitiators.ContainsKey(tasks[i].minigame_index))
+            {
+                indicators[i].SetActive(!tasks[i].completed);
+                Transform transform = indicators[i].transform;
+                Transform target = minigameInitiators[tasks[i].minigame_index].transform;
+                Vector2 diff = target.position - game.player.transform.position;
+                transform.position = Vector2.MoveTowards(game.player.transform.position, target.position, Mathf.Min(diff.magnitude * 0.5f, 5f));
+                transform.up = diff;
+            }
         }
 
         for (int i = tasks.Count; i < indicators.Count; ++i)

@@ -1,47 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class MinigameInitiator : MonoBehaviour
+public class MinigameInitiator : Interactable
 {
-    public bool isSolved;
     public GameObject minigame;
-    public MinigamePopupScript popup;
 
-    // very temp
-    private int index;
+    public int minigame_index;
+
+    private MinigamePopupScript popup;
     private GameController game;
-    
-    //GameObject.Find("PopupWindow").GetComponent<MinigamePopupScript>();
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
-        isSolved = false;
+        popup = FindObjectOfType<MinigamePopupScript>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override bool CanInteract(GameController game)
     {
-        
+        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index) != null;
     }
 
-    public void ActivateMinigame()
+    public override void Interact(GameController game)
     {
-        isSolved = false;
-    }
-
-    public void StartMinigame(int index, GameController game)
-    {
-        this.index = index;
         this.game = game;
-        popup.ActivatePopup(minigame, this.gameObject);
+        popup.ActivatePopup(minigame, this);
     }
 
     public void Solved()
     {
-        game.taskManager.tasks[index].completed = true;
-        game.handler.link.Send(new TaskUpdate { task = (ushort)index });
-        isSolved = true;
+        int task_index = game.taskManager.tasks.FindIndex(x => x.minigame_index == minigame_index);
+        game.taskManager.tasks[task_index].completed = true;
+        game.handler.link.Send(new TaskUpdate { task = (ushort)task_index });
     }
 }

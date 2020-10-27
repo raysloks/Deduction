@@ -75,7 +75,9 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="DoorSabotage.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="LightSabotage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MatchmakerHandler.cpp" />
@@ -85,6 +87,7 @@
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="Net\AbilityUsed.cpp" />
+    <ClCompile Include="Net\DoorUpdate.cpp" />
     <ClCompile Include="Net\GameOver.cpp" />
     <ClCompile Include="Net\GamePhaseUpdate.cpp" />
     <ClCompile Include="Net\GameSettings.cpp" />
@@ -94,6 +97,7 @@
     <ClCompile Include="Net\GivenTasks.cpp" />
     <ClCompile Include="Net\Heartbeat.cpp" />
     <ClCompile Include="Net\KillAttempted.cpp" />
+    <ClCompile Include="Net\LightUpdate.cpp" />
     <ClCompile Include="Net\MeetingRequested.cpp" />
     <ClCompile Include="Net\MobRemoved.cpp" />
     <ClCompile Include="Net\MobRoleUpdate.cpp" />
@@ -117,8 +121,10 @@
     <ClCompile Include="Xoroshiro128Plus.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DoorSabotage.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase.h" />
+    <ClInclude Include="LightSabotage.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MatchmakerHandler.h" />
     <ClInclude Include="Matchmaker\LobbyIdentity.h" />
@@ -129,6 +135,7 @@
     <ClInclude Include="MobType.h" />
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="Net\AbilityUsed.h" />
+    <ClInclude Include="Net\DoorUpdate.h" />
     <ClInclude Include="Net\GameOver.h" />
     <ClInclude Include="Net\GamePhaseUpdate.h" />
     <ClInclude Include="Net\GameSettings.h" />
@@ -138,6 +145,7 @@
     <ClInclude Include="Net\GivenTasks.h" />
     <ClInclude Include="Net\Heartbeat.h" />
     <ClInclude Include="Net\KillAttempted.h" />
+    <ClInclude Include="Net\LightUpdate.h" />
     <ClInclude Include="Net\MeetingRequested.h" />
     <ClInclude Include="Net\MobRemoved.h" />
     <ClInclude Include="Net\MobRoleUpdate.h" />

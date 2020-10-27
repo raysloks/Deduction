@@ -197,7 +197,7 @@ public class NetworkHandler
     {
         game.taskManager.tasks.Clear();
         foreach (var task in message.tasks)
-            game.taskManager.tasks.Add(new Task { index = task, completed = false });
+            game.taskManager.tasks.Add(new Task { minigame_index = task, completed = false });
     }
 
     internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)
@@ -224,5 +224,14 @@ public class NetworkHandler
 
     internal void ResetGameSettingsHandler(IPEndPoint endpoint, ResetGameSettings message)
     {
+    }
+
+    internal void DoorUpdateHandler(IPEndPoint endpoint, DoorUpdate message)
+    {
+    }
+
+    internal void LightUpdateHandler(IPEndPoint endpoint, LightUpdate message)
+    {
+        throw new NotImplementedException();
     }
 }

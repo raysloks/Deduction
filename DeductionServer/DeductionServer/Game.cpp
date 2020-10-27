@@ -271,7 +271,7 @@ void Game::createTaskLists()
 		mob.tasks.clear();
 
 		std::vector<uint16_t> tasks;
-		for (size_t i = 0; i < 24; ++i)
+		for (size_t i = 0; i < 10; ++i)
 			tasks.push_back(i);
 
 		for (size_t i = 0; i + 1 < tasks.size(); ++i)
@@ -309,7 +309,7 @@ void Game::resetSettings()
 		settings.emergencyMeetingCooldown = 15'000'000'000;
 		settings.killCooldown = 30'000'000'000;
 		settings.voteTime = 30'000'000'000;
-		settings.discussionTime = 90'000'000'000;
+		settings.discussionTime = 30'000'000'000;
 		settings.killVictoryEnabled = true;
 		settings.crewmateVision = 5.0f;
 		settings.impostorVision = 10.0f;

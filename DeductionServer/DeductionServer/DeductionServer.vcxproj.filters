@@ -7,6 +7,9 @@
     <Filter Include="Matchmaker">
       <UniqueIdentifier>{4ab79756-eb63-44fa-8710-13c62d8659ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sabotages">
+      <UniqueIdentifier>{f4f9db8f-4fed-4c6e-a601-b0e4a11e92e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Net\NetLink.h">
@@ -108,7 +111,21 @@
     </ClInclude>
     <ClInclude Include="Net\GameSettings.h" />
     <ClInclude Include="Net\ResetGameSettings.h" />
-    <ClInclude Include="Sabotage.h" />
+    <ClInclude Include="Net\DoorUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\LightUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorSabotage.h">
+      <Filter>Sabotages</Filter>
+    </ClInclude>
+    <ClInclude Include="Sabotage.h">
+      <Filter>Sabotages</Filter>
+    </ClInclude>
+    <ClInclude Include="LightSabotage.h">
+      <Filter>Sabotages</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -202,7 +219,21 @@
     </ClCompile>
     <ClCompile Include="Net\GameSettings.cpp" />
     <ClCompile Include="Net\ResetGameSettings.cpp" />
-    <ClCompile Include="Sabotage.cpp" />
+    <ClCompile Include="Net\DoorUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\LightUpdate.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorSabotage.cpp">
+      <Filter>Sabotages</Filter>
+    </ClCompile>
+    <ClCompile Include="Sabotage.cpp">
+      <Filter>Sabotages</Filter>
+    </ClCompile>
+    <ClCompile Include="LightSabotage.cpp">
+      <Filter>Sabotages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System;
 using EventCallbacks;
 using System.Xml;
+using System.Linq;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
 {
@@ -12,7 +14,6 @@ public class GameController : MonoBehaviour
     public GameObject prefab;
 
     public MinigamePopupScript popup;
-    public List<MinigameInitiator> MinigameInitiators;
 
     public TaskManager taskManager;
 
@@ -23,6 +24,7 @@ public class GameController : MonoBehaviour
 
     public Text text;
 
+
     public InputField nameInputField;
     public InputField lobbyInputField;
 
@@ -31,12 +33,18 @@ public class GameController : MonoBehaviour
     public GameObject copyCodeButton;
     public Button startGameButton;
 
+
     public Button killButton;
     public Text killCooldownText;
 
+    public GameObject targetMarker;
+
+
     public Button reportButton;
 
-    public GameObject targetMarker;
+
+    public Button useButton;
+
 
     public long time;
     public long timeout;
@@ -71,6 +79,7 @@ public class GameController : MonoBehaviour
 
     private ulong killTarget = ulong.MaxValue;
     private ulong reportTarget = ulong.MaxValue;
+    private Interactable useTarget = null;
 
     void Start()
     {
@@ -84,9 +93,6 @@ public class GameController : MonoBehaviour
         voice.handler = handler;
 
         player.controller = this;
-
-        killButton.onClick.AddListener(Kill);
-        reportButton.onClick.AddListener(Report);
     }
 
     private void Update()
@@ -128,6 +134,7 @@ public class GameController : MonoBehaviour
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.isPlayerAlive());
         reportButton.gameObject.SetActive(phase == GamePhase.Main && player.isPlayerAlive());
+        useButton.gameObject.SetActive(phase == GamePhase.Main);
 
         if (phase == GamePhase.Main && player.isPlayerAlive())
         {
@@ -191,38 +198,25 @@ public class GameController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                     Report();
             }
-
-
-            // Emergency Meeting
-            if (Input.GetKeyDown(KeyCode.Space) && player.canRequestMeeting)
-            {
-                handler.link.Send(new MeetingRequested());
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (phase == GamePhase.Main)
         {
-            popup.DeactivatePopup();
-        }
+            // LINQ should be removed for performance gains
+            useTarget = Physics2D.OverlapCircleAll(player.transform.position, 1.0f, 1 << 0)
+                .Select(x => x.GetComponent<Interactable>())
+                .Where(x => x != null && x.CanInteract(this))
+                .OrderBy(x => Vector2.Distance(x.transform.position, player.transform.position))
+                .FirstOrDefault();
+            useButton.interactable = useTarget != null && !popup.Active;
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            float targetDistance = (player.GetVision()) / 2;
-            for (int i = 0; i < taskManager.tasks.Count; ++i)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                MinigameInitiator minigameInitiator = MinigameInitiators[taskManager.tasks[i].index % MinigameInitiators.Count];
-                if (minigameInitiator.isSolved == false)
-                {
-                    Vector2 diff = minigameInitiator.transform.position - player.transform.position;
-                    float distance = diff.magnitude;
-                    if (distance < targetDistance)
-                    {
-                        minigameInitiator.StartMinigame(i, this);
-                        player.canMove = false;
-                    }
-                }
+                if (popup.Active)
+                    popup.DeactivatePopup();
+                else
+                    Use();
             }
-            //popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
@@ -336,6 +330,14 @@ public class GameController : MonoBehaviour
                 time = time
             };
             handler.link.Send(message);
+        }
+    }
+
+    public void Use()
+    {
+        if (useTarget != null)
+        {
+            useTarget.Interact(this);
         }
     }
 

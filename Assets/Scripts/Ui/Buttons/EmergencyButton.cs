@@ -5,12 +5,10 @@ using UnityEngine.UI;
 using TMPro;
 using EventCallbacks;
 
-public class EmergencyButton : MonoBehaviour
+public class EmergencyButton : Interactable
 {
     public Material outline;
-    private Material m;
     private TextMeshPro text;
-    private Player player = null;
     private bool coolingDown = false;
 
     private GameController game;
@@ -18,29 +16,9 @@ public class EmergencyButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m = GetComponent<SpriteRenderer>().material;
-        text = transform.GetChild(0).transform.gameObject.GetComponent<TextMeshPro>();
+        text = GetComponentInChildren<TextMeshPro>();
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, (EventCallbacks.Event ev) => PhaseChanged((PhaseChangedEvent)ev));
         game = FindObjectOfType<GameController>();
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.CompareTag("Player"))
-        {
-            player = col.GetComponent<Player>();
-            UpdateState();
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.CompareTag("Player"))
-        {
-            player.canRequestMeeting = false;
-            player = null;
-            UpdateState();
-        }
     }
 
     void PhaseChanged(PhaseChangedEvent ev)
@@ -65,15 +43,15 @@ public class EmergencyButton : MonoBehaviour
 
         text.text = "Vote";
         coolingDown = false;
-
-        UpdateState();
     }
 
-    private void UpdateState()
+    public override bool CanInteract(GameController game)
     {
-        bool active = player != null && player.emergencyButtonsLeft > 0 && coolingDown == false;
-        if (player != null)
-            player.canRequestMeeting = active;
-        text.color = active ? Color.green : Color.black;
+        return game.player.emergencyButtonsLeft > 0 && game.player.IsAlive && coolingDown == false;
+    }
+
+    public override void Interact(GameController game)
+    {
+        game.handler.link.Send(new MeetingRequested());
     }
 }

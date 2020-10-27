@@ -2,10 +2,13 @@
 
 #include <cstdint>
 #include <vector>
+#include <map>
+#include <functional>
 
 #include "GamePhase.h"
 #include "Vec2.h"
 #include "Net/GameSettings.h"
+#include "Map.h"
 
 class NetworkHandler;
 
@@ -49,5 +52,9 @@ public:
 	std::vector<std::pair<uint64_t, uint64_t>> votes;
 
 	std::vector<uint64_t> toBeEjected;
+
+	std::multimap<int64_t, std::function<void(void)>> timers;
+
+	std::shared_ptr<Map> map;
 };
 

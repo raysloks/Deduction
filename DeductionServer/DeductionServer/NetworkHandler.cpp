@@ -257,6 +257,10 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 {
 }
 
+void NetworkHandler::DoorUpdateHandler(const asio::ip::udp::endpoint & endpoint, const DoorUpdate & message)
+{
+}
+
 void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint & endpoint, const GameOver & message)
 {
 }
@@ -357,6 +361,10 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 			}
 		}
 	}
+}
+
+void NetworkHandler::LightUpdateHandler(const asio::ip::udp::endpoint & endpoint, const LightUpdate & message)
+{
 }
 
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)

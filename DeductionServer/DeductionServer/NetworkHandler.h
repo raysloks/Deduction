@@ -34,6 +34,7 @@ public:
 
 	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);
 	void AbilityUsedHandler(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
+	void DoorUpdateHandler(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& message);
 	void GameOverHandler(const asio::ip::udp::endpoint& endpoint, const GameOver& message);
 	void GamePhaseUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
 	void GameSettingsHandler(const asio::ip::udp::endpoint& endpoint, const GameSettings& message);
@@ -41,6 +42,7 @@ public:
 	void GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void HeartbeatHandler(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
 	void KillAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
+	void LightUpdateHandler(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void MeetingRequestedHandler(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);
 	void MobRemovedHandler(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message);
 	void MobRoleUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message);

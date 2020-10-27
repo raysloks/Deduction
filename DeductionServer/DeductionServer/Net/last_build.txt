@@ -2,6 +2,9 @@ AbilityUsed
 int64 time
 uint64 ability
 uint64 target
+DoorUpdate
+uint16 door
+bool open
 GameOver
 uint64 winners[]
 GamePhaseUpdate

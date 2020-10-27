@@ -10,31 +10,17 @@ public class MinigamePopupScript : MonoBehaviour
     public GameObject minigamePrefab;
     public RectTransform minigameContainer;
 
+    public bool Active => minigame != null;
+
     private GameObject minigame;
     private MinigameInitiator initiator;
 
-    private void Awake()
-    {
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void ActivatePopup(GameObject prefab, GameObject ini)
+    public void ActivatePopup(GameObject prefab, MinigameInitiator ini)
     {
         if (minigame == null)
         {
             minigame = Instantiate(prefab, minigameContainer);
-            initiator = ini.GetComponent<MinigameInitiator>();
+            initiator = ini;
         }
     }
 

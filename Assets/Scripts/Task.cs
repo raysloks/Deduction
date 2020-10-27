@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 public class Task
 {
-    public ushort index;
+    public int minigame_index;
     public bool completed;
 }
