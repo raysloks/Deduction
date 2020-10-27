@@ -17,6 +17,7 @@ public class LineDraw : MonoBehaviour
     private LineRenderer lineRenderer;
     private EdgeCollider2D edgeCollider;
     private CircleCollider2D circleCollider;
+    public LayerMask mazeLayermask;
 
     [HideInInspector] public List<Vector2> fingerPositions;
 
@@ -47,7 +48,7 @@ public class LineDraw : MonoBehaviour
             Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos = new Vector2(tempFingerPos.x, tempFingerPos.y);
             Debug.Log(mousePos.y);
-            Collider2D overlap = Physics2D.OverlapPoint(mousePos);
+            Collider2D overlap = Physics2D.OverlapPoint(mousePos, mazeLayermask);
             if (overlap == null)
             {
                 CreateLine();
@@ -74,7 +75,6 @@ public class LineDraw : MonoBehaviour
             float distance = Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count - 1]);
             if (distance > minimumVertexDistance)
             {
-                UnityEngine.Debug.Log("UP");
                 UpdateLine(tempFingerPos);
             }
         }

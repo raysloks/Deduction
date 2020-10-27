@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1760507252932765373}
   - component: {fileID: 4504223745949110916}
   - component: {fileID: 4041261505454585707}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CellTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 1396264515536554621}
   - component: {fileID: 2966015616804273946}
   - component: {fileID: 8802184869349479601}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CellWall-R
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 8194160779696046983}
   - component: {fileID: 6630832720687923458}
   - component: {fileID: 8321708201184012636}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CellWall-L
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 6045009988858619426}
   - component: {fileID: 4694768303570338868}
   - component: {fileID: 1178300614645200332}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CellWall-D
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 1472335111138210281}
   - component: {fileID: 5947570929266041725}
   - component: {fileID: 2783813548631820269}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CellWall-U
   m_TagString: Wall
   m_Icon: {fileID: 0}
