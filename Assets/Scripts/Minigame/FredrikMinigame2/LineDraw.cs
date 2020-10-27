@@ -48,23 +48,10 @@ public class LineDraw : MonoBehaviour
             Vector2 mousePos = new Vector2(tempFingerPos.x, tempFingerPos.y);
             Debug.Log(mousePos.y);
             Collider2D overlap = Physics2D.OverlapPoint(mousePos);
-            
             if (overlap == null)
             {
-                Debug.Log("Null Overlap");
                 CreateLine();
                 isLineStarted = true;
-            }
-            else
-            {
-                string str = overlap.gameObject.name.Substring(0, 4);
-                if(str != "Cell")
-                {
-
-                    CreateLine();
-                    isLineStarted = true;
-                }
-                Debug.Log("Overlap " + str);
             }
             
             
@@ -76,6 +63,7 @@ public class LineDraw : MonoBehaviour
             float distance = Vector2.Distance(tempFingerPos, fingerPositions[fingerPositions.Count - 1]);
             if (distance > minimumVertexDistance)
             {
+                UnityEngine.Debug.Log("UP");
                 UpdateLine(tempFingerPos);
             }
         }
