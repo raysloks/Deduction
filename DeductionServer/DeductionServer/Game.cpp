@@ -245,7 +245,6 @@ void Game::restartSetup()
 			mob.type = MobType::Player;
 			mob.role = Role::Crewmate;
 		}
-		handler.createMob();
 		handler.updateMobStates();
 		handler.updateMobRoles();
 	}

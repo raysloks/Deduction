@@ -45793,6 +45793,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 602932447}
+    - target: {fileID: 3239275642737319836, guid: d5325aa490ef73f4faf5a7df9ef9b5a8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartGame
       objectReference: {fileID: 0}
     - target: {fileID: 3239275642737319838, guid: d5325aa490ef73f4faf5a7df9ef9b5a8,
         type: 3}

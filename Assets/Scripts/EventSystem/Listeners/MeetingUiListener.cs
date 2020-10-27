@@ -75,6 +75,10 @@ public class MeetingUiListener : MonoBehaviour
 
         radialLayout.fDistance = circleLayoutDistance;
 
+        foreach (var n in voteButtons)
+            Destroy(n.Value.gameObject);
+        voteButtons.Clear();
+
         foreach (var n in handler.mobs)
         {
             Mob mob = n.Value;
