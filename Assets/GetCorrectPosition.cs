@@ -18,7 +18,7 @@ public class GetCorrectPosition : MonoBehaviour
 
     private void Awake()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        this.transform.position = player.transform.position;
+        
+        
     }
 }

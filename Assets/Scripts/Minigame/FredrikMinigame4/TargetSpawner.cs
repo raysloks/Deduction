@@ -15,6 +15,7 @@ public class TargetSpawner : MonoBehaviour
     public GameObject TargetPrefab;
     public GameObject WrongTargetPrefab;
     public TextMeshProUGUI text;
+    public GameObject bg;
 
     private GameObject currentPrefab;
     private float minimize = 60f;
@@ -29,8 +30,17 @@ public class TargetSpawner : MonoBehaviour
         score = 0;
         isDone = false;
         GivePoints = true;
-        minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
-        maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
+
+        transform.parent.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+        transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+        minScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.min;
+        maxScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.max;
+        Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
+        Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
+        minScreenBounds = minScreenBounds;
+        maxScreenBounds = maxScreenBounds;
+        //   minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
+        //   maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
         target = RandomPointInScreenBounds();
         text.text = score + "/" + targetScore;
         currentPrefab = Instantiate(TargetPrefab, target, Quaternion.identity);
@@ -109,8 +119,8 @@ public class TargetSpawner : MonoBehaviour
     public Vector2 RandomPointInScreenBounds()
     {
         return new Vector2(
-            Random.Range(minScreenBounds.x, maxScreenBounds.x),
-            Random.Range(minScreenBounds.y, maxScreenBounds.y)
+            Random.Range(minScreenBounds.x + 0f, maxScreenBounds.x - 6f),
+            Random.Range(minScreenBounds.y + 10f, maxScreenBounds.y)
         );
     }
 }

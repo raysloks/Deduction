@@ -10,6 +10,7 @@ public class CircleChecker : MonoBehaviour
     public float step = 0.001f;
     public int SecondsToStart;
     public int SecondsToEnd;
+    public GameObject bg;
     public TextMeshPro text;
 
     private bool gameStarted = false;
@@ -21,10 +22,25 @@ public class CircleChecker : MonoBehaviour
     private Vector2 target = Vector2.zero;
     private Vector3 startPos;
     private SpriteRenderer sr;
+    //First get the centerCoord of Circle Collider in real world coords (the script is called in the gameobject that got the circlecollider)
+    private CircleCollider2D circle;
+    private Vector2 centerPos;
+    //find a random point inside the aim circleCollider
+  //  private Vector2 randVector = pointInsideCircle(centerPos);
+
+    //then put the GameObject1 inside the CicleCollider of GameObject2 at random point
+    //must create a Vector because c# interprets the ball.pos as a copy  :/
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        transform.parent.position = player.transform.position;
+        circle = bg.GetComponent<CircleCollider2D>();
+        centerPos = findCircleCenter(transform.position);
         minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         sr = GetComponent<SpriteRenderer>();
@@ -44,7 +60,7 @@ public class CircleChecker : MonoBehaviour
                 sr.color = Color.Lerp(Color.white, Color.red, Vector2.Distance(transform.position, target));
                 if (Vector2.Distance(transform.position, target) < 0.01f)
                 {
-                    target = RandomPointInScreenBounds();
+                    target = pointInsideCircle(centerPos);
                 }
                 // StartCoroutine(StartIn(SecondsToStart));
             }
@@ -72,7 +88,7 @@ public class CircleChecker : MonoBehaviour
         else
         {
             gameStarted = true;
-            target = RandomPointInScreenBounds();
+            target = pointInsideCircle(centerPos);
             StartCoroutine(EndIn(SecondsToEnd));
 
         }
@@ -126,5 +142,31 @@ public class CircleChecker : MonoBehaviour
         {
             PlayerInside = true;
         }
+    }
+
+    
+ 
+    Vector2 findCircleCenter(Vector3 aimTransform)
+    {
+
+        Vector2 aimPos = aimTransform;
+        aimPos.x = aimTransform.x;
+        aimPos.y = aimTransform.y;
+        return (aimPos + circle.offset);
+
+    }
+
+
+
+    //return point inside the Collision circle
+    Vector2 pointInsideCircle(Vector2 circlePos)
+    {
+        Vector2 newPoint;
+        float angle = Random.Range(0.0F, 1.0F) * (Mathf.PI * 2);
+        float radius = Random.Range(0.0F, 1.0F) * circle.radius;
+        newPoint.x = circlePos.x + radius * Mathf.Cos(angle);
+        newPoint.y = circlePos.y + radius * Mathf.Sin(angle);
+
+        return (newPoint);
     }
 }
