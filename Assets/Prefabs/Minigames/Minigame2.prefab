@@ -262,6 +262,9 @@ MonoBehaviour:
     type: 3}
   lineWidth: 0.15
   minimumVertexDistance: 0.1
+  mazeLayermask:
+    serializedVersion: 2
+    m_Bits: 2048
   fingerPositions: []
   layerMask:
     serializedVersion: 2
