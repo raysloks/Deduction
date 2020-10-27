@@ -8,7 +8,6 @@ public class Player : Mob
     public long killCooldown;
 
     [HideInInspector] public bool canMove = true;
-    [HideInInspector] public bool canRequestMeeting = false;
     [HideInInspector] public int emergencyButtonsLeft = 0;
 
     public GameController controller;

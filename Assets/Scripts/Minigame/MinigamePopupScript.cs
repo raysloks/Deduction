@@ -21,6 +21,7 @@ public class MinigamePopupScript : MonoBehaviour
         {
             minigame = Instantiate(prefab, minigameContainer);
             initiator = ini;
+            player.canMove = false;
         }
     }
 

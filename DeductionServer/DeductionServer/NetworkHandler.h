@@ -22,6 +22,8 @@ public:
 	uint64_t createMob(const Mob& mob = Mob());
 	void createPlayer(const asio::ip::udp::endpoint& endpoint, const std::string& name);
 
+	Vec3 generateColor();
+
 	void updateMobState(uint64_t id);
 	void updateMobStatesForPlayer(const asio::ip::udp::endpoint& endpoint);
 	void updateMobStates();

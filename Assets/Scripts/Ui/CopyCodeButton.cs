@@ -15,7 +15,8 @@ public class CopyCodeButton : MonoBehaviour
 
     private void Update()
     {
-        text.text = GUIUtility.systemCopyBuffer == game.matchmaker.lobby ? "Copied!" : "Copy";
+        if (Application.isFocused)
+            text.text = GUIUtility.systemCopyBuffer == game.matchmaker.lobby ? "Copied!" : "Copy";
     }
 
     public void CopyCodeToClipboard()

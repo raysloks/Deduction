@@ -267,7 +267,7 @@ public class GameController : MonoBehaviour
                         text.text = "Meeting ends in " + secondsRemaining;
                         break;
                     case GamePhase.Ejection:
-                        text.text = "Ejecting";
+                        text.text = "";
                         long dots = 5 - secondsRemaining;
                         for (int i = 0; i < dots; ++i)
                             text.text += ".";
