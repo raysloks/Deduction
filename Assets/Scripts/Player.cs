@@ -39,6 +39,7 @@ public class Player : Mob
             sprite.flipX = false;
 
         visionLight.pointLightOuterRadius = GetVision();
+        visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;
 
         if (type == 0)
         {
