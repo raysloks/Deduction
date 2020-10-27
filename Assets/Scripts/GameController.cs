@@ -7,12 +7,11 @@ using System.Xml;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject prefab;
-    public GameObject popup;
-    public GameObject ini;
+    public GameSettings settings;
 
-    public int totalAmountOfVotes = 2;
-    public int totalAmountOfMeetings = 1;
+    public GameObject prefab;
+    public MinigamePopupScript popup;
+    public List<MinigameInitiator> MinigameInitiators;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -26,6 +25,7 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
+    public GameObject copyCodeButton;
     public Button startGameButton;
 
     public Button killButton;
@@ -37,14 +37,15 @@ public class GameController : MonoBehaviour
 
     public long time;
     public long timeout;
-    public bool timerOn = true;
+    public bool TimerOn => timer != 0;
 	
     // public bool nearEmergencyButton = false;
 
     public NetworkHandler handler;
     public MatchmakerHandler matchmaker;
     public VoiceManager voice;
-    public GameSettings settings;
+
+    public GameSettingsManager settingsManager;
 
     public bool listenToSelf = false;
 
@@ -62,14 +63,6 @@ public class GameController : MonoBehaviour
 
     public ConnectionState connectionState;
 
-    public enum GamePhase
-    {
-        Setup,
-        Main,
-        Meeting,
-        None
-    }
-
     public GamePhase phase = GamePhase.None;
     public long timer;
 
@@ -79,7 +72,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         handler = new NetworkHandler();
-        handler.controller = this;
+        handler.game = this;
 
         matchmaker = new MatchmakerHandler();
         matchmaker.controller = this;
@@ -130,11 +123,10 @@ public class GameController : MonoBehaviour
             handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
-        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main);
+        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.isPlayerAlive());
+        reportButton.gameObject.SetActive(phase == GamePhase.Main && player.isPlayerAlive());
 
-        reportButton.gameObject.SetActive(phase == GamePhase.Main);
-
-        if (phase == GamePhase.Main)
+        if (phase == GamePhase.Main && player.isPlayerAlive())
         {
             // Kill
             if (player.role == 1)
@@ -145,7 +137,7 @@ public class GameController : MonoBehaviour
                 {
                     foreach (var n in handler.mobs)
                     {
-                        if (n.Value.IsAlive == true && n.Value.role == 0)
+                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf)
                         {
                             float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                             if (distance < targetDistance)
@@ -171,13 +163,14 @@ public class GameController : MonoBehaviour
                 }
 		    }
 
+
             // Report
             {
                 reportTarget = ulong.MaxValue;
                 float targetDistance = player.GetVision();
                 foreach (var n in handler.mobs)
                 {
-                    if (n.Value.IsAlive == false)
+                    if (n.Value.IsAlive == false && n.Value.gameObject.activeSelf)
                     {
                         Vector2 diff = n.Value.transform.position - player.transform.position;
                         float distance = diff.magnitude;
@@ -196,42 +189,40 @@ public class GameController : MonoBehaviour
                     Report();
             }
 
-            // Emergency Meeting
-            if (Input.GetKeyDown(KeyCode.Space) && player.nearEmergencyButton)
-            {
-                MeetingRequested message = new MeetingRequested
-                {
-                    EmergencyMeetings = (ulong)totalAmountOfMeetings
-                };
-                handler.link.Send(message);
-            }
-        }
 
-        if (Input.GetMouseButtonDown(0) && phase == GamePhase.Meeting && timerOn == true)
-        {
-            if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject != null && UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.CompareTag("VoteButton"))
+            // Emergency Meeting
+            if (Input.GetKeyDown(KeyCode.Space) && player.canRequestMeeting)
             {
-                PlayerVoted message = new PlayerVoted
-                {
-                    timer = timer,
-                    totalVotes = totalAmountOfVotes,
-                    buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name
-                 };
-                handler.link.Send(message);
+                handler.link.Send(new MeetingRequested());
             }
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            popup.GetComponent<MinigamePopupScript>().ActivatePopup("MinigameScene", ini);
+            float targetDistance = (player.GetVision()) / 2;
+            foreach(MinigameInitiator n in MinigameInitiators) 
+            {
+                if (n.isSolved == false)
+                {
+                    Vector2 diff = n.transform.position - player.transform.position;
+                    float distance = diff.magnitude;
+                    if (distance < targetDistance)
+                    {
+                        n.StartMinigame();
+                        player.canMove = false;
+                    }
+                }
+            }
+            //popup.ActivatePopup("FredrikMinigame2", ini);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            popup.GetComponent<MinigamePopupScript>().DeactivatePopup(true);
+            popup.DeactivatePopup();
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
+        copyCodeButton.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
         startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         switch (connectionState)
@@ -263,21 +254,20 @@ public class GameController : MonoBehaviour
                     case GamePhase.Main:
                         text.text = "";
                         break;
-                    case GamePhase.Meeting:
-                        if(timerOn == false)
-                        {
-                            text.text = "Meeting Ending";
-                        }
-                        if (((timer - time + 999999999) / 1000000000) > 0 && timerOn == true)
-                        {
-                            text.text = "Meeting " + (timer - time + 999999999) / 1000000000;
-                        }
-                        else if(timerOn == true)
-                        {
-                            timerOn = false;
-                            MeetingEvent me = new MeetingEvent();
-                            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_ENDED, me);
-                        }
+                    case GamePhase.Discussion:
+                        text.text = "Voting begins in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.Voting:
+                        text.text = "Voting ends in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.EndOfMeeting:
+                        text.text = "Meeting ends in " + (timer - time + 999999999) / 1000000000;
+                        break;
+                    case GamePhase.Ejection:
+                        text.text = "Ejecting";
+                        long dots = 5 - (timer - time + 999999999) / 1000000000;
+                        for (int i = 0; i < dots; ++i)
+                            text.text += ".";
                         break;
                     case GamePhase.None:
                         text.text = "Waiting for server...";
@@ -293,27 +283,24 @@ public class GameController : MonoBehaviour
         timeout = time + 20000000000;
     }
 
-    public void SetGamePhase(GamePhase phase, long timer)
+    public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
     {
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-        player.cantMove = phase == GamePhase.Meeting;
-        if(phase == GamePhase.Main)
+        if (phase == GamePhase.Main && previous == GamePhase.Setup)
         {
-            DebugEvent ee = new DebugEvent();
-            ee.EventDescription = "Reset Emergency Button Timer";
-            EventSystem.Current.FireEvent(EVENT_TYPE.RESET_TIMER, ee);
+            player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
         }
+
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+        player.canMove = phase == GamePhase.Setup || phase == GamePhase.Main || phase == GamePhase.GameOver;
+        PhaseChangedEvent ee = new PhaseChangedEvent
+        {
+            phase = phase,
+            timer = timer,
+            previous = previous
+        };
+        EventSystem.Current.FireEvent(EVENT_TYPE.PHASE_CHANGED, ee);
         this.phase = phase;
         this.timer = timer;
-    }
-
-    public void ApplySettings()
-    {
-        totalAmountOfVotes = (int)settings.GetSetting("Votes Per Player").value;
-        totalAmountOfMeetings = (int)settings.GetSetting("Emergency Meetings Per Player").value;
-        SettingEvent se = new SettingEvent();
-        se.settings = settings;
-        EventSystem.Current.FireEvent(EVENT_TYPE.SETTINGS, se);
     }
 
     public void Kill()
@@ -351,7 +338,7 @@ public class GameController : MonoBehaviour
     public void ResetSettings()
     {
         if (phase == GamePhase.Setup)
-            handler.link.Send(new GameSettingsUpdate { values = new List<long>() });
+            handler.link.Send(new ResetGameSettings());
     }
 
 }

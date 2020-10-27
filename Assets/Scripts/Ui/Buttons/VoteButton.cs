@@ -1,175 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using EventCallbacks;
-
 
 public class VoteButton : MonoBehaviour
 {
+    [HideInInspector] public ulong target;
+    [HideInInspector] public GameController game;
 
+    public Button button;
+    public Image targetImage;
+    public TMP_Text nameText;
+    public TMP_Text votesReceivedCountText;
+    public GameObject finishedVotingIndicator;
+    public Transform votesReceivedLayoutGroup;
 
-    public float speedOfDisaperance = 10f;
-    public AudioClip soundWhenVotedOut;
-    public GameObject particleWhenVotedOut;
-    public Material m;
+    private int votesReceivedCount = 0;
+    private int votesCastCount = 0;
 
-
-    private Button myButton;
-    private Image myImage;
-    private Image mySecondaryImg;
-    private Image myVotedImg;
-    private TMP_Text myName;
-
-
-    private Color colorWhite = Color.white;
-    private Color lerpedColor = Color.white;
-
-    private List<SpriteRenderer> sr = new List<SpriteRenderer>();
-  
-    private bool disapering = false;
-
-    [HideInInspector] public TMP_Text myText;
-    [HideInInspector] public int amountVoted = 0;
-    [HideInInspector] public int amountVotedinternal = 0;
-
-
-
-    private float timer = 0;
-    private bool timerOn = false;
-    [HideInInspector] public bool showAfterEveryoneVoted = false;
-    [HideInInspector] public bool done = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public void ResetVoteCountAndState()
     {
-        myButton = this.GetComponent<Button>();
-      //  myName = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
-        myName = this.gameObject.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
-        myText = this.gameObject.transform.GetChild(1).gameObject.GetComponent<TMP_Text>();
-        mySecondaryImg = this.gameObject.transform.GetChild(2).gameObject.GetComponent<Image>();
-        myVotedImg = this.gameObject.transform.GetChild(3).gameObject.GetComponent<Image>();
-
-        //  myButton.onClick.AddListener(delegate { vote(); });
-        //  EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, vote);
-        m.SetFloat("_ShakeUvSpeed", 0f);
-        m.SetFloat("_ShakeUvX", 0f);
-        m.SetFloat("_ShakeUvY", 0f);
-
-        m.SetFloat("_NegativeAmount", 0f);
-        m.SetFloat("_PinchUvAmount", 0f);
-        m.SetFloat("_HitEffectBlend", 0f);
-
+        votesReceivedCount = 0;
+        votesReceivedCountText.text = votesReceivedCount.ToString();
+        votesReceivedCountText.gameObject.SetActive(game.settings.anonymousVotes);
+        votesCastCount = 0;
+        if (finishedVotingIndicator)
+            finishedVotingIndicator.SetActive(false);
+        if (votesReceivedLayoutGroup != null)
+            foreach (Transform child in votesReceivedLayoutGroup)
+                Destroy(child.gameObject);
+        button.interactable = false;
     }
 
-    void Update()
+    public void Vote()
     {
-        if (timerOn == true && done == true)
+        game.handler.link.Send(new PlayerVoted { target = target });
+    }
+
+    public void VoteReceived(GameObject prefab, SpriteRenderer sprite)
+    {
+        votesReceivedCountText.text = (++votesReceivedCount).ToString();
+        if (votesReceivedLayoutGroup != null)
         {
-            timer += 0.2f * Time.deltaTime;
-            if (timer < 1f)
-            {
-                myImage.material.SetFloat("_ShakeUvSpeed", timer * 20f);
-                myImage.material.SetFloat("_ShakeUvX", timer * 5f);
-                myImage.material.SetFloat("_ShakeUvY", timer * 5f);
-
-             //   myImage.material.SetFloat("_NegativeAmount", timer * 1f);
-                myImage.material.SetFloat("_PinchUvAmount", timer * 0.5f);
-                myImage.material.SetFloat("_HitEffectBlend", timer * 1f);
-            }
-            else
-            {
-                MeetingDieEvent mde = new MeetingDieEvent();
-                mde.UnitGameObjectPos = this.gameObject.transform.position;
-                mde.UnitSound = soundWhenVotedOut;
-                mde.UnitParticle = particleWhenVotedOut;
-                
-
-                EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_DIED, mde);
-
-                myImage.enabled = false;
-                mySecondaryImg.enabled = false;
-                myText.enabled = false;
-                myName.enabled = false;
-
-                timerOn = false;
-
-                Debug.Log("Done");
-            }
-        }
-
-        if (sr.Count > 0 && disapering == false && showAfterEveryoneVoted == false)
-        {
-            amountVotedinternal++;
-            myText.text = amountVotedinternal.ToString();
-
-            mySecondaryImg.sprite = sr[0].sprite;
-
-            colorWhite = sr[0].color;
-            colorWhite.a = 1f;
-            lerpedColor = colorWhite;
-            lerpedColor.a = 0f;
-            mySecondaryImg.color = colorWhite;
-            disapering = true;
-        }
-        else if (disapering == true)
-        {
-            colorWhite = Color.Lerp(colorWhite, lerpedColor, 3f * Time.deltaTime);
-            mySecondaryImg.color = colorWhite;
-
-
-            if (0.01f >= mySecondaryImg.color.a)
-            {
-                colorWhite.a = 0f;
-                mySecondaryImg.color = colorWhite;
-                sr.RemoveAt(0);
-                if(sr.Count == 0)
-                {
-                    done = true;
-                }
-                disapering = false;
-            }
+            GameObject go = Instantiate(prefab, votesReceivedLayoutGroup);
+            Image image = go.GetComponent<Image>();
+            image.sprite = sprite.sprite;
+            image.color = sprite.color;
         }
     }
 
-    public void voteExternal(SpriteRenderer votedSprite, bool showAfterEveryoneVoted2)
+    public void VoteCast()
     {
-        done = false;
-        showAfterEveryoneVoted = showAfterEveryoneVoted2;
-        amountVoted++;
-        if (amountVoted == 1)
-        {
-            amountVotedinternal = 0;
-        }
-        sr.Add(votedSprite);
-    }
-
-
-
-    void vote(EventCallbacks.Event Eventinfo)
-    {
-        VoteEvent votingEvent = (VoteEvent)Eventinfo;
-        if (votingEvent.nameOfButton == this.gameObject.name)
-        {
-            Debug.Log("Vote for: " + votingEvent.nameOfButton);
-            amountVoted++;
-            myText.text = amountVoted.ToString();
-            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_CHECKVOTES, votingEvent);
-
-        }
-
-    }
-    public void setText(string t)
-    {
-        myText.text = t;
-    }
-    public void setMaterial()
-    {
-        myImage = this.GetComponent<Image>();
-        myImage.material = m;
-        myVotedImg.material = m;
-        this.gameObject.GetComponent<AllIn1Shader>().ToggleSetAtlasUvs(true);
-        timerOn = true;
+        if (++votesCastCount == game.settings.votesPerPlayer)
+            if (finishedVotingIndicator)
+                finishedVotingIndicator.SetActive(true);
     }
 }

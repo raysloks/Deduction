@@ -4,5 +4,9 @@ enum class GamePhase
 {
 	Setup,
 	Main,
-	Meeting
+	Discussion,
+	Voting,
+	EndOfMeeting,
+	Ejection,
+	GameOver
 };

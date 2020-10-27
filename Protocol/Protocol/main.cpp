@@ -19,7 +19,8 @@
 
 #include "Config.h"
 
-const std::vector<std::string> basic_types = { "float", "double",
+const std::vector<std::string> basic_types = { "bool",
+	"float", "double",
 	"int8", "int16", "int32", "int64",
 	"uint8", "uint16", "uint32", "uint64",
 	"string",

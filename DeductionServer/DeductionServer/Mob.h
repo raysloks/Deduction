@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 
 #include "Vec3.h"
@@ -9,8 +10,6 @@
 
 #include "Task.h"
 
-#include <cstdint>
-
 class Mob
 {
 public:
@@ -18,14 +17,14 @@ public:
 
 	bool visibleTo(const Mob& mob) const;
 
+	bool enabled;
 	Vec3 position;
 	int64_t time;
 	MobType type;
 	Role role;
-	int timesVoted;
-	int totalVotes;
+
+	int votesCast;
 	int meetingsCalled;
-	bool enabled;
 
 	std::vector<Task> tasks;
 

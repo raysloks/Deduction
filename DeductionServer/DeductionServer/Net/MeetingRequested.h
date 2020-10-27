@@ -9,7 +9,6 @@ class MeetingRequested
 {
 public:
 	uint64_t idOfInitiator;
-	uint64_t EmergencyMeetings;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);
