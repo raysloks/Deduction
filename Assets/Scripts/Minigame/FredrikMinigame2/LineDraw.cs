@@ -53,8 +53,19 @@ public class LineDraw : MonoBehaviour
                 CreateLine();
                 isLineStarted = true;
             }
-            
-            
+            else
+            {
+                string str = overlap.gameObject.name.Substring(0, 4);
+                if (str != "Cell")
+                {
+
+                    CreateLine();
+                    isLineStarted = true;
+                }
+                Debug.Log("Overlap " + str);
+            }
+
+
         }
         if (Input.GetMouseButton(0) && isLineStarted)
         {
