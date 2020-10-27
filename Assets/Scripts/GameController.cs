@@ -10,8 +10,11 @@ public class GameController : MonoBehaviour
     public GameSettings settings;
 
     public GameObject prefab;
+
     public MinigamePopupScript popup;
     public List<MinigameInitiator> MinigameInitiators;
+
+    public TaskManager taskManager;
 
     private float heartbeat = 0f;
     private float snapshot = 0f;
@@ -200,15 +203,16 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             float targetDistance = (player.GetVision()) / 2;
-            foreach(MinigameInitiator n in MinigameInitiators) 
+            for (int i = 0; i < taskManager.tasks.Count; ++i)
             {
-                if (n.isSolved == false)
+                MinigameInitiator minigameInitiator = MinigameInitiators[taskManager.tasks[i].index % MinigameInitiators.Count];
+                if (minigameInitiator.isSolved == false)
                 {
-                    Vector2 diff = n.transform.position - player.transform.position;
+                    Vector2 diff = minigameInitiator.transform.position - player.transform.position;
                     float distance = diff.magnitude;
                     if (distance < targetDistance)
                     {
-                        n.StartMinigame();
+                        minigameInitiator.StartMinigame(i, this);
                         player.canMove = false;
                     }
                 }

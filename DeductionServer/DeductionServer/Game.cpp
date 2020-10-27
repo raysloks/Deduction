@@ -128,7 +128,7 @@ void Game::startGame()
 		mobs.push_back(player.second.mob);
 	}
 
-	for (size_t i = 0; i < mobs.size() - 1; ++i)
+	for (size_t i = 0; i + 1 < mobs.size(); ++i)
 	{
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}
@@ -141,6 +141,8 @@ void Game::startGame()
 	}
 
 	handler.updateMobRoles();
+
+	createTaskLists();
 
 	resetKillCooldowns();
 }
@@ -262,6 +264,33 @@ void Game::resetVotes()
 	}
 }
 
+void Game::createTaskLists()
+{
+	for (auto player : handler.players)
+	{
+		auto&& mob = handler.mobs[player.second.mob];
+		mob.tasks.clear();
+
+		std::vector<uint16_t> tasks;
+		for (size_t i = 0; i < 24; ++i)
+			tasks.push_back(i);
+
+		for (size_t i = 0; i + 1 < tasks.size(); ++i)
+			std::swap(tasks[i], tasks[handler.rng.next(i, tasks.size() - 1)]);
+
+		if (settings.taskCount < tasks.size())
+			tasks.resize(settings.taskCount);
+
+		if (mob.role == Role::Crewmate)
+			for (auto task : tasks)
+				mob.tasks.push_back(Task{ task, false });
+
+		TaskListUpdate message;
+		message.tasks = tasks;
+		handler.link.Send(player.first, message);
+	}
+}
+
 void Game::resetKillCooldowns()
 {
 	KillAttempted message;
@@ -290,6 +319,7 @@ void Game::resetSettings()
 		settings.enableSkipButton = true;
 		settings.showVotesWhenEveryoneHasVoted = true;
 		settings.anonymousVotes = false;
+		settings.taskCount = 5;
 
 		handler.Broadcast(settings);
 	}
@@ -297,6 +327,37 @@ void Game::resetSettings()
 
 void Game::checkForGameOver()
 {
+	{
+		size_t taskCountAll = 0;
+		size_t taskCountComplete = 0;
+		for (auto player : handler.players)
+		{
+			auto&& mob = handler.mobs[player.second.mob];
+			if (mob.role == Role::Crewmate)
+			{
+				for (auto task : mob.tasks)
+				{
+					++taskCountAll;
+					if (task.completed)
+						++taskCountComplete;
+				}
+			}
+		}
+		if (taskCountComplete >= taskCountAll)
+		{
+			// crew victory
+			GameOver message;
+			for (auto player : handler.players)
+			{
+				if (handler.mobs[player.second.mob].role == Role::Crewmate)
+					message.winners.push_back(player.second.mob);
+			}
+			handler.Broadcast(message);
+			restartSetup();
+			return;
+		}
+	}
+
 	if (settings.killVictoryEnabled)
 	{
 		size_t crew = 0;

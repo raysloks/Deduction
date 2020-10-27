@@ -195,6 +195,9 @@ public class NetworkHandler
 
     internal void TaskListUpdateHandler(IPEndPoint endpoint, TaskListUpdate message)
     {
+        game.taskManager.tasks.Clear();
+        foreach (var task in message.tasks)
+            game.taskManager.tasks.Add(new Task { index = task, completed = false });
     }
 
     internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)

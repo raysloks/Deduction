@@ -9,6 +9,7 @@ TagManager:
   - PaperFile
   - Wall
   - Rope
+  - Ball
   layers:
   - Default
   - TransparentFX
@@ -55,10 +56,10 @@ TagManager:
   - name: Camouflage
     uniqueID: 105557097
     locked: 0
-  - name: Ui
+  - name: HUD
     uniqueID: 807542147
     locked: 0
-  - name: MeetingUI
+  - name: UI
     uniqueID: 2970777979
     locked: 0
   - name: Foreground

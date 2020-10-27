@@ -19,6 +19,7 @@ public struct GameSettings
 	public bool enableSkipButton;
 	public bool showVotesWhenEveryoneHasVoted;
 	public bool anonymousVotes;
+	public long taskCount;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -37,6 +38,7 @@ public struct GameSettings
 		writer.Write((bool)enableSkipButton);
 		writer.Write((bool)showVotesWhenEveryoneHasVoted);
 		writer.Write((bool)anonymousVotes);
+		writer.Write((long)taskCount);
 	}
 
 	public static GameSettings Deserialize(BinaryReader reader)
@@ -57,6 +59,7 @@ public struct GameSettings
 		_ret.enableSkipButton = (bool)reader.ReadBoolean();
 		_ret.showVotesWhenEveryoneHasVoted = (bool)reader.ReadBoolean();
 		_ret.anonymousVotes = (bool)reader.ReadBoolean();
+		_ret.taskCount = (long)reader.ReadInt64();
 		return _ret;
 	}
 };

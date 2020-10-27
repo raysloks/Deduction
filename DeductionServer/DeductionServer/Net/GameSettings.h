@@ -23,6 +23,7 @@ public:
 	bool enableSkipButton;
 	bool showVotesWhenEveryoneHasVoted;
 	bool anonymousVotes;
+	int64_t taskCount;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);
