@@ -12,4 +12,9 @@ public class Interactable : MonoBehaviour
     {
 
     }
+
+    public virtual void Highlight(bool highlighted)
+    {
+
+    }
 }

@@ -10,22 +10,19 @@ public class MinigameInitiator : Interactable
 
     public int minigame_index;
 
+    public SpriteRenderer outline;
+
     private MinigamePopupScript popup;
     private GameController game;
-    public Material outline;
-    private Material og;
-    private bool interactable = false;
 
     private void Awake()
     {
         popup = FindObjectOfType<MinigamePopupScript>();
-        og = GetComponent<SpriteRenderer>().material;
     }
 
     public override bool CanInteract(GameController game)
     {
-        interactable = game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null;
-        return interactable;
+        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null;
     }
 
     public override void Interact(GameController game)
@@ -34,71 +31,49 @@ public class MinigameInitiator : Interactable
         popup.ActivatePopup(minigame, this);
     }
 
+    public override void Highlight(bool highlighted)
+    {
+        if (outline != null)
+        {
+            if (highlighted)
+                StartCoroutine(FadeInOutline(0.2f));
+            else
+                StartCoroutine(FadeOutOutline(0.2f));
+        }
+    }
+
     public void Solved()
     {
-        GetComponent<SpriteRenderer>().material = og;
         int task_index = game.taskManager.tasks.FindIndex(x => x.minigame_index == minigame_index);
         game.taskManager.tasks[task_index].completed = true;
         game.handler.link.Send(new TaskUpdate { task = (ushort)task_index });
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if(col.gameObject.tag == "Player")
-        {
-            if(interactable == true)
-            {
-                GetComponent<SpriteRenderer>().material = outline;
-                outline.SetFloat("_FishEyeUvAmount", 0f);
-                outline.SetFloat("_HitEffectBlend", 0f);
-                outline.SetFloat("_ColorChangeLuminosity", 0f);
-                StartCoroutine(FadeInOutline(1));
-                Debug.Log("Player Entered trig");
-            }
-        }
-
-    }
-
-    void OnTriggerExit2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            StartCoroutine(FadeOutOutline(1));
-
-            Debug.Log("Player exited trig");
-        }
-
-    }
-
-    IEnumerator FadeInOutline(float Sec)
+    IEnumerator FadeInOutline(float seconds)
     {
         float counter = 0;
 
-
-        while (counter < Sec)
+        while (counter < seconds)
         {
-
-            outline.SetFloat("_FishEyeUvAmount", 0.235f * (counter / Sec));
-            outline.SetFloat("_HitEffectBlend", 0.1f * (counter / Sec));
-            outline.SetFloat("_ColorChangeLuminosity", 1f * (counter / Sec));
+            Color color = outline.color;
+            color.a = counter / seconds;
+            outline.color = color;
             counter += Time.deltaTime;
             yield return null;
         }
     }
-    IEnumerator FadeOutOutline(float Sec)
+
+    IEnumerator FadeOutOutline(float seconds)
     {
-        float counter = Sec;
+        float counter = seconds;
 
-
-        while (counter > 0)
+        while (counter > 0f)
         {
-            outline.SetFloat("_FishEyeUvAmount", 0.235f * (counter / Sec));
-            outline.SetFloat("_HitEffectBlend", 0.1f * (counter / Sec));
-            outline.SetFloat("_ColorChangeLuminosity", 1f * (counter / Sec));
+            Color color = outline.color;
+            color.a = counter / seconds;
+            outline.color = color;
             counter -= Time.deltaTime;
             yield return null;
         }
-        GetComponent<SpriteRenderer>().material = og;
-
     }
 }

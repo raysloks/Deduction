@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
     public long time;
     public long timeout;
     public bool TimerOn => timer != 0;
-	
+
     // public bool nearEmergencyButton = false;
 
     public NetworkHandler handler;
@@ -83,6 +83,22 @@ public class GameController : MonoBehaviour
     private ulong killTarget = ulong.MaxValue;
     private ulong reportTarget = ulong.MaxValue;
     private Interactable useTarget = null;
+
+    public Interactable UseTarget 
+    {
+        get => useTarget; 
+        set
+        {
+            if (useTarget != value)
+            {
+                if (useTarget != null)
+                    useTarget.Highlight(false);
+                if (value != null)
+                    value.Highlight(true);
+                useTarget = value;
+            }
+        }
+    }
 
     void Start()
     {
@@ -206,12 +222,12 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Main)
         {
             // LINQ should be removed for performance gains
-            useTarget = Physics2D.OverlapCircleAll(player.transform.position, 1.0f, 1 << 0)
+            UseTarget = Physics2D.OverlapCircleAll(player.transform.position, 1.0f, 1 << 0)
                 .Select(x => x.GetComponent<Interactable>())
                 .Where(x => x != null && x.CanInteract(this))
                 .OrderBy(x => Vector2.Distance(x.transform.position, player.transform.position))
                 .FirstOrDefault();
-            useButton.interactable = useTarget != null && !popup.Active;
+            useButton.interactable = UseTarget != null && !popup.Active;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -343,9 +359,9 @@ public class GameController : MonoBehaviour
 
     public void Use()
     {
-        if (useTarget != null)
+        if (UseTarget != null)
         {
-            useTarget.Interact(this);
+            UseTarget.Interact(this);
         }
     }
 
