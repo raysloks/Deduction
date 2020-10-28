@@ -151,11 +151,11 @@ public class GameController : MonoBehaviour
             handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
-        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.isPlayerAlive());
-        reportButton.gameObject.SetActive(phase == GamePhase.Main && player.isPlayerAlive());
+        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.IsAlive);
+        reportButton.gameObject.SetActive(phase == GamePhase.Main && player.IsAlive);
         useButton.gameObject.SetActive(phase == GamePhase.Main);
 
-        if (phase == GamePhase.Main && player.isPlayerAlive())
+        if (phase == GamePhase.Main && player.IsAlive)
         {
             // Kill
             if (player.role == 1)
