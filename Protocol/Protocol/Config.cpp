@@ -36,8 +36,12 @@ void Config::load(const std::filesystem::path& file)
 				generator = std::make_unique<CppGenerator>();
 				std::string options;
 				std::getline(f, options);
-				if (options == "super")
+				if (options.find("super") != std::string::npos)
 					generator->builtins_in_superdirectory = true;
+				if (options.find("up") != std::string::npos)
+					generator->is_up = true;
+				if (options.find("down") != std::string::npos)
+					generator->is_down = true;
 			}
 			if (type == "cs") {
 				generator = std::make_unique<CsGenerator>();

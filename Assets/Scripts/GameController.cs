@@ -30,8 +30,7 @@ public class GameController : MonoBehaviour
 
     public GameObject connectionMenu;
 
-    public GameObject copyCodeButton;
-    public Button startGameButton;
+    public GameObject setupMenu;
 
 
     public Button killButton;
@@ -239,8 +238,7 @@ public class GameController : MonoBehaviour
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);
-        copyCodeButton.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
-        startGameButton.gameObject.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
+        setupMenu.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
         text.fontSize = 36;
         switch (connectionState)
@@ -290,6 +288,10 @@ public class GameController : MonoBehaviour
                         long dots = 5 - secondsRemaining;
                         for (int i = 0; i < dots; ++i)
                             text.text += ".";
+                        break;
+                    case GamePhase.GameOver:
+                        text.fontSize = 36;
+                        text.text = "Setup in " + secondsRemaining;
                         break;
                     case GamePhase.None:
                         text.text = "Waiting for server...";

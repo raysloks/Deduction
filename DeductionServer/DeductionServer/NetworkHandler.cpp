@@ -48,6 +48,12 @@ void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 			players.erase(player.first);
 			removeMob(player.second.mob);
 
+			PlayerUpdate message;
+			message.id = 0;
+			message.mob = player.second.mob;
+			message.name = "";
+			Broadcast(message);
+
 			std::cout << player.second.name << " at " << player.first << " timed out" << std::endl;
 		}
 	}

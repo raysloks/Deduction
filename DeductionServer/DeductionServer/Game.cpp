@@ -35,7 +35,7 @@ void Game::tick(int64_t now)
 			break;
 		case GamePhase::Ejection:
 			setPhase(GamePhase::Main, 0);
-			resetKillCooldowns();
+			resetCooldowns();
 			checkForGameOver();
 			break;
 		case GamePhase::GameOver:
@@ -144,7 +144,7 @@ void Game::startGame()
 
 	createTaskLists();
 
-	resetKillCooldowns();
+	resetCooldowns();
 }
 
 void Game::startMeeting(uint64_t caller, uint64_t corpse)
@@ -272,7 +272,8 @@ void Game::createTaskLists()
 
 		std::vector<uint16_t> tasks;
 		for (size_t i = 0; i < 24; ++i)
-			tasks.push_back(i);
+			if (i != 4 && i != 16)
+				tasks.push_back(i);
 
 		for (size_t i = 0; i + 1 < tasks.size(); ++i)
 			std::swap(tasks[i], tasks[handler.rng.next(i, tasks.size() - 1)]);
@@ -290,13 +291,23 @@ void Game::createTaskLists()
 	}
 }
 
-void Game::resetKillCooldowns()
+void Game::resetCooldowns()
 {
-	KillAttempted message;
-	message.time = handler.time + settings.killCooldown;
-	handler.Broadcast(message);
-	for (auto&& mob : handler.mobs)
-		mob.killCooldown = message.time;
+	{
+		KillAttempted message;
+		message.time = handler.time + settings.killCooldown;
+		handler.Broadcast(message);
+		for (auto&& mob : handler.mobs)
+			mob.killCooldown = message.time;
+	}
+
+	{
+		AbilityUsed message;
+		message.time = handler.time;
+		handler.Broadcast(message);
+		for (auto&& mob : handler.mobs)
+			mob.sabotageCooldown = message.time;
+	}
 }
 
 void Game::resetSettings()
@@ -353,7 +364,7 @@ void Game::checkForGameOver()
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			restartSetup();
+			endGame();
 			return;
 		}
 	}
@@ -384,7 +395,7 @@ void Game::checkForGameOver()
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			restartSetup();
+			endGame();
 			return;
 		}
 
@@ -398,10 +409,15 @@ void Game::checkForGameOver()
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			restartSetup();
+			endGame();
 			return;
 		}
 	}
+}
+
+void Game::endGame()
+{
+	setPhase(GamePhase::GameOver, timer + 5'000'000'000);
 }
 
 void Game::removeCorpses()

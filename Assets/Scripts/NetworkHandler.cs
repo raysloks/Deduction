@@ -73,7 +73,11 @@ public class NetworkHandler
             game.connectionState = GameController.ConnectionState.Connected;
         }
         else
+        {
             names[message.mob] = message.name;
+            if (message.name.Length == 0)
+                names.Remove(message.mob);
+        }
         UpdateName(message.mob);
     }
 
@@ -169,6 +173,7 @@ public class NetworkHandler
         {
             Mob mob = mobs[message.update.id];
             mob.SetType(message.type);
+            mob.SetSprite(message.sprite);
             mob.sprite.color = new Color(message.color.x, message.color.y, message.color.z);
         }
     }
@@ -208,7 +213,6 @@ public class NetworkHandler
     {
         if (message.winners.Contains(playerMobId))
         {
-            Debug.Log("VICTORY");
             SoundEvent se = new SoundEvent();
             se.EventDescription = "GAME WON";
             se.UnitSound = game.gameWinSounds;
@@ -217,13 +221,11 @@ public class NetworkHandler
         }
         else
         {
-            Debug.Log("VICTORY");
             SoundEvent se = new SoundEvent();
             se.EventDescription = "GAME LOST";
             se.UnitSound = game.gameLostSounds;
             se.UnitGameObjectPos = game.player.transform.position;
             EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
-            Debug.Log("DEFEAT");
         }
     }
 

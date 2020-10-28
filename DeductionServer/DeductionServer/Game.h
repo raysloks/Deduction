@@ -33,11 +33,12 @@ public:
 
 	void createTaskLists();
 
-	void resetKillCooldowns();
+	void resetCooldowns();
 
 	void resetSettings();
 
 	void checkForGameOver();
+	void endGame();
 
 	void removeCorpses();
 

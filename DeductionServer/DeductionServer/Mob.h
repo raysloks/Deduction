@@ -29,6 +29,7 @@ public:
 	std::vector<Task> tasks;
 
 	int64_t killCooldown;
+	int64_t sabotageCooldown;
 
 	Vec3 color;
 };

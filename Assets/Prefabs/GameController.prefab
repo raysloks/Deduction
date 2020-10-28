@@ -48,35 +48,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8796570029264027741, guid: 117d78c6b53fd8f4f8bbf5f350c9f0d4, type: 3}
   popup: {fileID: 2324288705218545734}
-  MinigameInitiators:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   taskManager: {fileID: 2324288705218545735}
   player: {fileID: 0}
   text: {fileID: 0}
   nameInputField: {fileID: 0}
   lobbyInputField: {fileID: 0}
   connectionMenu: {fileID: 0}
-  copyCodeButton: {fileID: 0}
-  startGameButton: {fileID: 0}
+  setupMenu: {fileID: 0}
   killButton: {fileID: 0}
   killCooldownText: {fileID: 0}
-  reportButton: {fileID: 0}
   targetMarker: {fileID: 0}
+  reportButton: {fileID: 0}
+  useButton: {fileID: 0}
   time: 0
   timeout: 0
   settingsManager: {fileID: 2324288705218545753}
   listenToSelf: 0
+  gameWinSounds: []
+  gameLostSounds: []
   connectionState: 0
-  phase: 3
+  phase: 7
   timer: 0
 --- !u!114 &2324288705218545753
 MonoBehaviour:
@@ -114,6 +105,7 @@ MonoBehaviour:
   minigamePrefab: {fileID: 2729301043339490301, guid: d91d89893154ebc46bfe0fdd8b622052,
     type: 3}
   minigameContainer: {fileID: 0}
+  victorySounds: []
 --- !u!114 &2324288705218545735
 MonoBehaviour:
   m_ObjectHideFlags: 0

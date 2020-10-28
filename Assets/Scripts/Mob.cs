@@ -27,6 +27,11 @@ public class Mob : MonoBehaviour
             sprite.sprite = sprites[type];
     }
 
+    public void SetSprite(ulong sprite)
+    {
+
+    }
+
     public void SetName(string name)
     {
         GetComponentInChildren<TextMeshProUGUI>().text = name;

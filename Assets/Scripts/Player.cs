@@ -63,6 +63,8 @@ public class Player : Mob
 
     public float GetVision()
     {
+        if (!IsAlive)
+            return 20f;
         return role == 0 ? controller.settings.crewmateVision : controller.settings.impostorVision;
     }
 }

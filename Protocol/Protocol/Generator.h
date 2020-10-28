@@ -16,5 +16,8 @@ public:
 	virtual void generate(const std::map<std::string, Structure>& types, const Protocol& protocol) const = 0;
 
 	bool builtins_in_superdirectory = false;
+
+	bool is_up = false;
+	bool is_down = false;
 };
 

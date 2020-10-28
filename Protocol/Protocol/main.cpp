@@ -86,6 +86,12 @@ int main()
 				type.fields.push_back(field);
 			}
 
+			if (!type.up && !type.down)
+			{
+				type.up = true;
+				type.down = true;
+			}
+
 			types[entry.path().stem().string()] = type;
 
 			f.close();

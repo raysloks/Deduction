@@ -152,6 +152,7 @@ public class MeetingUiListener : MonoBehaviour
                 break;
             case GamePhase.GameOver:
                 MeetingCanvas.gameObject.SetActive(false);
+                blackout.SetActive(true);
                 break;
             case GamePhase.None:
                 MeetingCanvas.gameObject.SetActive(false);
