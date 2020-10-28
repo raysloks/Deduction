@@ -85,8 +85,8 @@ public class DrawLineMouseDrag : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D col)
     {
-             if(col.gameObject.tag == "Wall")
-             {
+          if(col.gameObject.tag == "CellWall")
+          {
             Debug.Log("col");
 
                 Line.positionCount = 0;
