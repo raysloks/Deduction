@@ -25,6 +25,7 @@ public:
 	bool showVotesWhenEveryoneHasVoted;
 	bool anonymousVotes;
 	int64_t taskCount;
+	int64_t taskbarUpdateStyle;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

@@ -15,12 +15,14 @@ public class PlayerBall : MonoBehaviour
     public GameObject jumpRope;
     private BoxCollider2D collider;
     private bool jumpDone = false;
+
     void Awake()
     {
         GameObject Player = GameObject.FindWithTag("Player");
         transform.parent.position = Player.transform.position;
-      //  transform.position = Player.transform.position;
+        //transform.position = Player.transform.position;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,7 @@ public class PlayerBall : MonoBehaviour
         startPos = transform.position;
         text.text = jumps + "/" + TotalJumps;
         collider = jumpRope.GetComponent<BoxCollider2D>();
-        //    jumpRope.GetComponent<JumpRope>()
+        //jumpRope.GetComponent<JumpRope>()
     }
 
     // Update is called once per frame
@@ -49,7 +51,7 @@ public class PlayerBall : MonoBehaviour
                 {
                     jumps++;
 
-                    Debug.Log("stop");
+                    //Debug.Log("stop");
                     if (jumps >= TotalJumps)
                     {
                         text.text = "Done";
@@ -57,7 +59,6 @@ public class PlayerBall : MonoBehaviour
                         FindObjectOfType<MinigamePopupScript>().MinigameWon();
                         jumpRope.GetComponent<JumpRope>().speed = 0f;
                         jumpRope.GetComponent<JumpRope>().enabled = false;
-
                     }
                     else
                     {
@@ -70,29 +71,28 @@ public class PlayerBall : MonoBehaviour
                 rd.velocity = Vector2.zero;
                 inAir = false;
            }
-
-            
         }
     }
+
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Wall" && inAir == true)
+        if (col.CompareTag("Wall") && inAir == true)
         {
-            Debug.Log("hit");
+            //Debug.Log("hit");
             jumpDone = true;
         }
-        if (col.gameObject.tag == "Rope" && isDone == false)
+        if (col.gameObject.CompareTag("Rope") && isDone == false)
         {
-            if(jumps > 0)
+            if (jumps > 0)
             {
                 jumps--;
-                text.text = jumps + "/" +TotalJumps  ;
+                text.text = jumps + "/" + TotalJumps;
             }
 
             jumpDone = false;
             jumpRope.GetComponent<JumpRope>().speed = (jumpRope.GetComponent<JumpRope>().originalSpeed / 5);
             jumpRope.GetComponent<JumpRope>().GotHit();
-            Debug.Log("hi");
+            //Debug.Log("hi");
         }
     }
 

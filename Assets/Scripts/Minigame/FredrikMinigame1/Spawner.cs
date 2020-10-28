@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
     {
         if(thrust == true)
         {
-            newObj.GetComponent<FileMovement>().thrustPaper();
+            newObj.GetComponent<FileMovement>().ThrustPaper();
             thrust = false;
         }
         if (spawnAmount < spawnTotal && taskCompleted == false)

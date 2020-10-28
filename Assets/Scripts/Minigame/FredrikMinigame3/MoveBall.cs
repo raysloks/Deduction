@@ -15,19 +15,21 @@ public class MoveBall : MonoBehaviour
     {
         GetBounds();
     }
+
     void Start()
     {
         Vector2 currentWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = (Vector3)currentWorldPos;
         GetBounds();
     }
+
     // Update is called once per frame
     void Update()
     {
-    //    Vector2 oldWorldPos = Camera.main.ScreenToWorldPoint(oldMousePosition);
+        //Vector2 oldWorldPos = Camera.main.ScreenToWorldPoint(oldMousePosition);
         Vector2 currentWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = (Vector3)currentWorldPos;
-     //   transform.position = ClampedVector3(transform.position);
+        //transform.position = ClampedVector3(transform.position);
         oldMousePosition = Input.mousePosition;
     }
 

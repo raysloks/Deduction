@@ -5,6 +5,7 @@ using UnityEngine;
 public class WrongTarget : MonoBehaviour
 {
     public GameObject deathParticle;
+
     // Start is called before the first frame update
     void Start()
     {

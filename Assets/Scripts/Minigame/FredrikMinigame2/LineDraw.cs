@@ -7,7 +7,6 @@ using TMPro;
 public class LineDraw : MonoBehaviour
 {
 
-
     public GameObject linePrefab;
     private GameObject currentLine;
 
@@ -35,9 +34,8 @@ public class LineDraw : MonoBehaviour
     {
         isLineStarted = false;
         sizeVector = new Vector2(lineWidth, lineWidth);
-      //  myText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //myText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         circleCollider = this.transform.GetChild(1).GetComponent<CircleCollider2D>();
-
     }
 
     // Update is called once per frame
@@ -59,15 +57,13 @@ public class LineDraw : MonoBehaviour
                 string str = overlap.gameObject.name.Substring(0, 4);
                 if (str != "Cell")
                 {
-
                     CreateLine();
                     isLineStarted = true;
                 }
                 Debug.Log("Overlap " + str);
             }
-
-
         }
+
         if (Input.GetMouseButton(0) && isLineStarted)
         {
             Vector2 tempFingerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -112,7 +108,6 @@ public class LineDraw : MonoBehaviour
 
     void UpdateLine(Vector2 newFingerPos)
     {
-
         //Update line after moving mouse/finger a set distance
         if(lineRenderer != null)
         {
@@ -122,7 +117,7 @@ public class LineDraw : MonoBehaviour
             edgeCollider.points = fingerPositions.ToArray();
             if(currentLine.GetComponent<DrawLineMouseDrag>().GetIsDone() == true)
             {
-                this.isDone = true;
+                isDone = true;
                 myText.text = "Done";
             }
         }
@@ -130,7 +125,6 @@ public class LineDraw : MonoBehaviour
         {
             isLineStarted = false;
         }
-
     }
 
 }

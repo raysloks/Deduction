@@ -24,6 +24,7 @@ public class JumpRope : MonoBehaviour
         GameObject Player = GameObject.FindWithTag("Player");
         transform.parent.position = Player.transform.position; 
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,7 @@ public class JumpRope : MonoBehaviour
         target = transform.parent.gameObject;
         axis = new Vector3(0, 0, 1);
         contactFilter.SetLayerMask(layerMask);
-       // transform.RotateAround(point, axis, Time.deltaTime * 10);
+        //transform.RotateAround(point, axis, Time.deltaTime * 10);
     }
 
     // Update is called once per frame
@@ -45,38 +46,35 @@ public class JumpRope : MonoBehaviour
         Line.SetPosition(0, transform.position);
         Line.SetPosition(1, Target);
         transform.RotateAround(Target, axis, speed * Time.deltaTime);
-        if(speed < originalSpeed)
+        if (speed < originalSpeed)
         {
             Debug.Log("less than orignal");
             speed += (speedIncrease + evenMoreSpeedIncrease) * Time.deltaTime;
-            
-        }else if(noMoreThanSpeed > speed)
+
+        }
+        else if (noMoreThanSpeed > speed)
         {
             Debug.Log("less than noMoreThanSpeed");
 
             speed += speedIncrease * Time.deltaTime;
         }
-        // Debug.Log(speed);
+        //Debug.Log(speed);
     }
 
     public void GotHit()
     {
-        
         StartCoroutine(Hit(1));
     }
 
     IEnumerator Hit(int Sec)
     {
-
         float counter = Sec;
 
-
-        while (counter > (Sec/2))
+        while (counter > (Sec / 2))
         {
             sr.color = Color.Lerp(Color.white, Color.red, counter);
             counter -= Time.deltaTime;
             yield return null;
-
         }
 
         while (counter > 0)
@@ -84,9 +82,7 @@ public class JumpRope : MonoBehaviour
             sr.color = Color.Lerp(Color.red, Color.white, counter);
             counter -= Time.deltaTime;
             yield return null;
-
         }
     }
-
 
  }

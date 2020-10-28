@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellScript : MonoBehaviour {
-
+public class CellScript : MonoBehaviour
+{
     public GameObject wallL;
     public GameObject wallR;
     public GameObject wallU;

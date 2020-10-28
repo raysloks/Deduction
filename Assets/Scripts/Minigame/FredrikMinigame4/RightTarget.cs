@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class RightTarget : MonoBehaviour
 {
     public GameObject deathParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +18,7 @@ public class RightTarget : MonoBehaviour
     {
         
     }
+
     void OnMouseDown()
     {
         Instantiate(deathParticle, transform.position, Quaternion.identity);

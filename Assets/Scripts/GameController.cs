@@ -32,6 +32,11 @@ public class GameController : MonoBehaviour
 
     public GameObject setupMenu;
 
+    public GameObject hud;
+
+
+    public Slider taskbar;
+
 
     public Button killButton;
     public Text killCooldownText;
@@ -150,9 +155,9 @@ public class GameController : MonoBehaviour
             handler.link.Send(new RestartRequested());
 
         targetMarker.SetActive(false);
-        killButton.gameObject.SetActive(player.role == 1 && phase == GamePhase.Main && player.IsAlive);
-        reportButton.gameObject.SetActive(phase == GamePhase.Main && player.IsAlive);
-        useButton.gameObject.SetActive(phase == GamePhase.Main);
+        killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
+        reportButton.gameObject.SetActive(player.IsAlive);
+        hud.gameObject.SetActive(phase == GamePhase.Main);
 
         if (phase == GamePhase.Main && player.IsAlive)
         {

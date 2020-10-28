@@ -15,16 +15,13 @@ public class CheckParameter : MonoBehaviour
     {
         
     }
+
     public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Wall")
         {
-            Debug.Log("col");
-
-
+            //Debug.Log("col");
         }
-        Debug.Log("col2 Par");
-
-
+        //Debug.Log("col2 Par");
     }
 }

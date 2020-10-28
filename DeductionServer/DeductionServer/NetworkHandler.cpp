@@ -549,6 +549,8 @@ void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, 
 		if (message.task < mob.tasks.size())
 		{
 			mob.tasks[message.task].completed = true;
+			if (game.settings.taskbarUpdateStyle == 0)
+				game.updateTaskbar();
 			game.checkForGameOver(time);
 		}
 	}

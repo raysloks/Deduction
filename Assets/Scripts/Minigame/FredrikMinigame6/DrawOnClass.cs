@@ -13,6 +13,7 @@ public class DrawOnClass : MonoBehaviour
     private RaycastHit2D hitInfo;
     private bool isDone = false;
     private List<int> indexes = new List<int>();
+
     // Update is called once per frame
     void Update()
     {
@@ -24,11 +25,8 @@ public class DrawOnClass : MonoBehaviour
                 if (hitInfo.collider != null)
                 {
                     UpdateTexture();
-
                 }
             }
-            
-           
         }
         if (Input.GetMouseButtonUp(0) && isDone == false)
         {
@@ -40,13 +38,13 @@ public class DrawOnClass : MonoBehaviour
             {
                 for (int y = 0; y < texture.height; y++)
                 {
-                    if(texture.GetPixel(x, y).a != 0f)
+                    if (texture.GetPixel(x, y).a != 0f)
                     {
                         Done++;
                     }
                 }
             }
-            if(Done < 20)
+            if (Done < 20)
             {
                 text.text = "Done";
                 isDone = true;
@@ -66,7 +64,7 @@ public class DrawOnClass : MonoBehaviour
 
         int m1 = (int)((hitInfo.point.x - hitInfo.collider.bounds.min.x) * (copiedTexture2D.width / hitInfo.collider.bounds.size.x));
         int m2 = (int)((hitInfo.point.y - hitInfo.collider.bounds.min.y) * (copiedTexture2D.height / hitInfo.collider.bounds.size.y));
-        
+
         int index = 0;
         for (int x = 0; x < copiedTexture2D.width; x++)
         {
@@ -78,16 +76,15 @@ public class DrawOnClass : MonoBehaviour
 
                 if (differenceX * differenceX + differenceY * differenceY <= radius * radius)
                 {
-                    if(indexes.Contains(index) == false)
+                    if (indexes.Contains(index) == false)
                     {
                         indexes.Add(index);
                         texture.SetPixel(x, y, InitialColor);
-                    }              
+                    }
                 }
-
             }
         }
-        
+
 
         texture.Apply(false);
         return texture;
@@ -101,7 +98,6 @@ public class DrawOnClass : MonoBehaviour
 
         mySpriteRenderer.sprite = Sprite.Create(newTexture2D, mySpriteRenderer.sprite.rect, new Vector2(0.5f, 0.5f));
         mySpriteRenderer.sprite.name = oldName;
-
     }
 
 }

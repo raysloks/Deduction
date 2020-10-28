@@ -18,16 +18,14 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     {
         collider = GetComponent<BoxCollider2D>();
         cf.SetLayerMask(layerMask);
-
     }
-
 
     public void OnBeginDrag(PointerEventData data)
     {
-      //  Debug.Log("OnBeginDrag: " + data.position);
+        //Debug.Log("OnBeginDrag: " + data.position);
         if (noMoreDragging == false)
         {
-            data.pointerDrag = this.gameObject;
+            data.pointerDrag = gameObject;
         }
         else
         {
@@ -45,7 +43,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
 
     public void OnEndDrag(PointerEventData data)
     {
-         Collider2D[] results;
+        Collider2D[] results;
         // results.
         //new Vector2(5f, 1.5f)
         results = Physics2D.OverlapBoxAll(transform.position, collider.bounds.size , 0,layerMask);
@@ -58,22 +56,21 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         }
         */
         
-        if(results.Length > 0)
+        if (results.Length > 0)
         {
-            foreach(Collider2D col in results)
+            foreach (Collider2D col in results)
             {
-                Debug.Log("HIT: " + col.gameObject.name);
-                if(col.gameObject.GetComponent<DragDrop>().GetStamped() == false)
+                Debug.Log("HIT: " + col.name);
+                if (col.GetComponent<DragDrop>().GetStamped() == false)
                 {
-                    col.gameObject.transform.GetChild(2).gameObject.SetActive(true);
-                    col.gameObject.transform.GetChild(2).position = (Vector2)transform.position;
-                    col.gameObject.GetComponent<DragDrop>().SetStamped(true);
+                    col.transform.GetChild(2).gameObject.SetActive(true);
+                    col.transform.GetChild(2).position = (Vector2)transform.position;
+                    col.GetComponent<DragDrop>().SetStamped(true);
                 }              
             }
         }
         
-        results = null;
-     //   Debug.Log("OnEndDrag: " + data.position );
+        //Debug.Log("OnEndDrag: " + data.position );
         
         data.pointerDrag = null;
     }

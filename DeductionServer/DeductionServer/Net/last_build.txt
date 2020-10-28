@@ -30,6 +30,7 @@ bool enableSkipButton
 bool showVotesWhenEveryoneHasVoted
 bool anonymousVotes
 int64 taskCount
+int64 taskbarUpdateStyle
 GameStartRequested
 GivenTasks
 uint8 taskId[]

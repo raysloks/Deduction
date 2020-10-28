@@ -6,6 +6,7 @@ public class PictureChooser : MonoBehaviour
 {
     GameObject mainPicture;
     GameObject removePicture;
+
     // Start is called before the first frame update
     void Start()
     {

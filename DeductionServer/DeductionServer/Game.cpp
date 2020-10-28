@@ -146,6 +146,8 @@ void Game::startGame()
 	createTaskLists();
 
 	resetCooldowns();
+
+	updateTaskbar();
 }
 
 void Game::startMeeting(uint64_t caller, uint64_t corpse)
@@ -331,6 +333,7 @@ void Game::resetSettings()
 		settings.showVotesWhenEveryoneHasVoted = true;
 		settings.anonymousVotes = false;
 		settings.taskCount = 5;
+		settings.taskbarUpdateStyle = 0;
 
 		handler.Broadcast(settings);
 	}
@@ -431,4 +434,25 @@ void Game::removeCorpses()
 		if (mob.enabled && mob.type == MobType::Corpse)
 			handler.removeMob(i);
 	}
+}
+
+void Game::updateTaskbar()
+{
+	size_t taskCountComplete = 0;
+	for (auto player : handler.players)
+	{
+		auto&& mob = handler.mobs[player.second.mob];
+		if (mob.role == Role::Crewmate)
+		{
+			for (auto task : mob.tasks)
+			{
+				if (task.completed)
+					++taskCountComplete;
+			}
+		}
+	}
+
+	TaskUpdate message;
+	message.task = taskCountComplete;
+	handler.Broadcast(message);
 }

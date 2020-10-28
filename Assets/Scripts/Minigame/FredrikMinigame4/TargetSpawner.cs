@@ -37,39 +37,35 @@ public class TargetSpawner : MonoBehaviour
         maxScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.max;
         Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
         Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
-        //   minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
-        //   maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
+        //minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
+        //maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
         target = RandomPointInScreenBounds();
         text.text = score + "/" + targetScore;
         currentPrefab = Instantiate(TargetPrefab, target, Quaternion.identity);
         currentPrefab.transform.SetParent(transform);
 
         StartCoroutine(SpawnTarget(1));
-
     }
 
     // Update is called once per frame
     void Update()
     {
        
-
     }
 
     IEnumerator SpawnTarget(int Sec)
     {
-
         float counter = Sec;
 
-        
         while (counter > 0)
         {
-            if(currentPrefab == null)
+            if (currentPrefab == null)
             {
                 Debug.Log("null;");
-                if(GivePoints == true)
+                if (GivePoints == true)
                 {
                     score++;
-                    text.text = score +"/" + targetScore;
+                    text.text = score + "/" + targetScore;
                 }
                 else
                 {
@@ -77,7 +73,7 @@ public class TargetSpawner : MonoBehaviour
                     text.text = score + "/" + targetScore;
 
                 }
-                if(score >= targetScore)
+                if (score >= targetScore)
                 {
                     text.text = "Done";
                     isDone = true;
@@ -85,11 +81,12 @@ public class TargetSpawner : MonoBehaviour
                 }
                 break;
             }
-           // text.text = "Get In Circle " + Mathf.Round(counter).ToString();
+            //text.text = "Get In Circle " + Mathf.Round(counter).ToString();
             counter -= Time.deltaTime;
             yield return null;
         }
-        if(isDone == false)
+
+        if (isDone == false)
         {
             if (currentPrefab != null)
             {
@@ -111,7 +108,6 @@ public class TargetSpawner : MonoBehaviour
             target = RandomPointInScreenBounds();
             StartCoroutine(SpawnTarget(1));
         }
-        
     }
 
     public Vector2 RandomPointInScreenBounds()

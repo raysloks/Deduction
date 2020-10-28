@@ -32,17 +32,16 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         childpos = Vector2.zero;
         child = transform.GetChild(2);
         collider = GetComponent<BoxCollider2D>();
-        rd = this.GetComponent<Rigidbody2D>();
-
+        rd = GetComponent<Rigidbody2D>();
     }
 
 
     public void OnBeginDrag(PointerEventData data)
     {
-        Debug.Log("OnBeginDrag: " + data.position);
+        //Debug.Log("OnBeginDrag: " + data.position);
         if(noMoreDragging == false)
         {
-            data.pointerDrag = this.gameObject;
+            data.pointerDrag = gameObject;
 
             child.position = new Vector3(child.position.x, child.position.y, 0f);
         }
@@ -58,7 +57,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             transform.position = data.position;
             child.position = new Vector3(child.position.x, child.position.y, 0f);
-
         }
     }
 
@@ -66,7 +64,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if(Vector2.Distance(transform.position, target.position) < 200f && stamped == true)
         {
-            Debug.Log("hit it");
+            //Debug.Log("hit it");
             float r = Random.Range(-0.5f, 0.5f);
             float r2 = Random.Range(-0.5f, 0.5f);
             transform.position = (Vector2)target.position + new Vector2(r, r2);
@@ -75,15 +73,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             rd.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             transform.parent.gameObject.GetComponent<Spawner>().CheckWinCondition();
             transform.SetParent(transform.parent.GetChild(0));
-
         }
         else
         {
-
-            Debug.Log("OnEndDrag: " + data.position +" target: " + target.position + " distance " + Vector2.Distance(transform.position, target.position));
+            //Debug.Log("OnEndDrag: " + data.position +" target: " + target.position + " distance " + Vector2.Distance(transform.position, target.position));
         }
         data.pointerDrag = null;
     }
+
     public void RightOrLeft(string s)
     {
         if(s == "Right")
@@ -95,12 +92,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             left = true;
         }
     }
+
     public void SetStamped(bool s)
     {
         stamped = true;
     }
+
     public bool GetStamped()
     {
-        return this.stamped;
+        return stamped;
     }
 }

@@ -42,7 +42,9 @@ public class TaskManager : MonoBehaviour
                 Transform transform = indicators[i].transform;
                 Transform target = minigameInitiators[tasks[i].minigame_index].transform;
                 Vector2 diff = target.position - game.player.transform.position;
-                Vector3 position = Vector2.MoveTowards(game.player.transform.position, target.position, Mathf.Min(diff.magnitude * 0.5f, 5f));
+                float distance = diff.magnitude;
+                distance = Mathf.Min(distance, Mathf.Sqrt(distance) * 2f) * 0.5f;
+                Vector3 position = Vector2.MoveTowards(game.player.transform.position, target.position, distance);
                 position.y += 0.125f;
                 position.z = position.y - 0.25f;
                 transform.position = position;

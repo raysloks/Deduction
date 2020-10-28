@@ -20,13 +20,12 @@ public class SliderScript : MonoBehaviour
         mainSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
     }
 
-
     private void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Politican.transform.position = player.transform.position;
-
     }
+
     void ValueChangeCheck()
     {
         if (mainSlider.value == mainSlider.maxValue && beenMax == false)
@@ -38,7 +37,8 @@ public class SliderScript : MonoBehaviour
             Politican.transform.GetChild(1).gameObject.SetActive(true);
             Politican.transform.GetChild(2).gameObject.SetActive(true);
             StartCoroutine(disableSliderFor(WaitForSec));
-        }else if(mainSlider.value == 0 && beenMax == true)
+        }
+        else if (mainSlider.value == 0 && beenMax == true)
         {
             isDone = true;
             text.text = "Done";
@@ -46,6 +46,7 @@ public class SliderScript : MonoBehaviour
             FindObjectOfType<MinigamePopupScript>().MinigameWon();
         }
     }
+
     IEnumerator disableSliderFor(float Sec)
     {
         float counter = Sec;
@@ -59,6 +60,5 @@ public class SliderScript : MonoBehaviour
 
         Politican.transform.GetChild(2).gameObject.SetActive(false);
         mainSlider.interactable = true;
-
     }
 }

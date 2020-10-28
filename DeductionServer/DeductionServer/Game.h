@@ -42,6 +42,8 @@ public:
 
 	void removeCorpses();
 
+	void updateTaskbar();
+
 	GamePhase phase;
 
 	int64_t timer;

@@ -21,6 +21,7 @@ public struct GameSettings
 	public bool showVotesWhenEveryoneHasVoted;
 	public bool anonymousVotes;
 	public long taskCount;
+	public long taskbarUpdateStyle;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -41,6 +42,7 @@ public struct GameSettings
 		writer.Write((bool)showVotesWhenEveryoneHasVoted);
 		writer.Write((bool)anonymousVotes);
 		writer.Write((long)taskCount);
+		writer.Write((long)taskbarUpdateStyle);
 	}
 
 	public static GameSettings Deserialize(BinaryReader reader)
@@ -63,6 +65,7 @@ public struct GameSettings
 		_ret.showVotesWhenEveryoneHasVoted = (bool)reader.ReadBoolean();
 		_ret.anonymousVotes = (bool)reader.ReadBoolean();
 		_ret.taskCount = (long)reader.ReadInt64();
+		_ret.taskbarUpdateStyle = (long)reader.ReadInt64();
 		return _ret;
 	}
 };

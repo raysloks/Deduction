@@ -15,6 +15,7 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public TextMeshProUGUI text;
     private bool isDone = false;
     private bool noMoreDragging = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,7 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData data)
     {
-        Debug.Log("OnBeginDrag: " + data.position);
+        //Debug.Log("OnBeginDrag: " + data.position);
         if (noMoreDragging == false)
         {
             data.pointerDrag = this.gameObject;
@@ -43,7 +44,6 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
 
         // child.position = new Vector3(child.position.x, child.position.y, 0f);
-
     }
 
     public void OnDrag(PointerEventData data)
@@ -51,21 +51,21 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (data.dragging )
         {
             transform.position = data.position;
-
         }
     }
+
     public void OnEndDrag(PointerEventData data)
     {
         bool one = false;
-        if(Vector2.Distance(transform.position, child1.position) < 10f)
+        if (Vector2.Distance(transform.position, child1.position) < 10f)
         {
             one = true;
         }
         bool two = false;
-        if(Vector2.Distance(transform.position, child2.position) < 10f) 
+        if (Vector2.Distance(transform.position, child2.position) < 10f)
         {
             two = true;
-            if(one == true)
+            if (one == true)
             {
                 if (Vector2.Distance(transform.position, child2.position) < Vector2.Distance(transform.position, child1.position))
                 {
@@ -84,12 +84,13 @@ public class Plug : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             endDragStats(child1sprite);
         }
-        else if(two)
+        else if (two)
         {
-            endDragStats(child2sprite);            
+            endDragStats(child2sprite);
         }
         data.pointerDrag = null;
     }
+
     void endDragStats(Sprite s)
     {
         transform.parent.GetChild(0).GetComponent<Image>().sprite = s;
