@@ -28,15 +28,16 @@ void Game::tick(int64_t now)
 			endMeeting(timer);
 			break;
 		case GamePhase::EndOfMeeting:
-			setPhase(GamePhase::Ejection, timer + 5'000'000'000);
+			setPhase(GamePhase::Ejection, timer + 3'000'000'000);
 			for (auto i : toBeEjected)
 				handler.killMob(i, true);
 			toBeEjected.clear();
 			break;
 		case GamePhase::Ejection:
-			setPhase(GamePhase::Main, 0);
 			resetCooldowns();
-			checkForGameOver();
+			checkForGameOver(timer);
+			if (phase == GamePhase::Ejection)
+				setPhase(GamePhase::Main, 0);
 			break;
 		case GamePhase::GameOver:
 			restartSetup();
@@ -335,7 +336,7 @@ void Game::resetSettings()
 	}
 }
 
-void Game::checkForGameOver()
+void Game::checkForGameOver(int64_t now)
 {
 	{
 		size_t taskCountAll = 0;
@@ -357,13 +358,14 @@ void Game::checkForGameOver()
 		{
 			// crew victory
 			GameOver message;
+			message.role = Role::Crewmate;
 			for (auto player : handler.players)
 			{
 				if (handler.mobs[player.second.mob].role == Role::Crewmate)
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			endGame();
+			endGame(now);
 			return;
 		}
 	}
@@ -388,13 +390,14 @@ void Game::checkForGameOver()
 		{
 			// impostor victory
 			GameOver message;
+			message.role = Role::Impostor;
 			for (auto player : handler.players)
 			{
 				if (handler.mobs[player.second.mob].role == Role::Impostor)
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			endGame();
+			endGame(now);
 			return;
 		}
 
@@ -402,21 +405,22 @@ void Game::checkForGameOver()
 		{
 			// crew victory
 			GameOver message;
+			message.role = Role::Crewmate;
 			for (auto player : handler.players)
 			{
 				if (handler.mobs[player.second.mob].role == Role::Crewmate)
 					message.winners.push_back(player.second.mob);
 			}
 			handler.Broadcast(message);
-			endGame();
+			endGame(now);
 			return;
 		}
 	}
 }
 
-void Game::endGame()
+void Game::endGame(int64_t now)
 {
-	setPhase(GamePhase::GameOver, timer + 5'000'000'000);
+	setPhase(GamePhase::GameOver, now + 10'000'000'000);
 }
 
 void Game::removeCorpses()

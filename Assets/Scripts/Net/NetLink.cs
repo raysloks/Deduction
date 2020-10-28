@@ -755,6 +755,6 @@ public class NetLink
 		}
 	}
 
-	public const uint crc = 0x60224b23;
+	public const uint crc = 0xe2bb3aba;
 	private UdpClient client;
 }

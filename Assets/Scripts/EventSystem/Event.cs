@@ -53,4 +53,11 @@ namespace EventCallbacks
         public GamePhase previous;
     }
 
+    public class GameOverEvent : Event
+    {
+        public List<Mob> winners;
+        public bool victory;
+        public ulong role;
+    }
+
 }

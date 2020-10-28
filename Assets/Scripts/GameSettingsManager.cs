@@ -27,7 +27,7 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingInputField<float>("Kill Range", "killRange", game),
             new GameSettingTime("Vote Time", "voteTime", game),
             new GameSettingTime("Discussion Time", "discussionTime", game),
-            new GameSettingToggle("Kill Victory Enabled", "killVictoryEnabled", game),
+            //new GameSettingToggle("Kill Victory Enabled", "killVictoryEnabled", game),
             new GameSettingInputField<float>("Crewmate Vision", "crewmateVision", game),
             new GameSettingInputField<float>("Impostor Vision", "impostorVision", game),
             new GameSettingInputField<float>("Player Speed", "playerSpeed", game),

@@ -166,7 +166,7 @@ public class MeetingUiListener : MonoBehaviour
         VoteEvent voteEvent = (VoteEvent)eventInfo;
         ulong voterId = voteEvent.idOfVoter;
         ulong targetId = voteEvent.idOfTarget;
-        Debug.Log(voterId + " voted for " + targetId);
+        //Debug.Log(voterId + " voted for " + targetId);
 
         var handler = game.handler;
 

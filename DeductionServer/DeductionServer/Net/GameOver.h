@@ -10,6 +10,7 @@ class GameOver
 {
 public:
 	std::vector<uint64_t> winners;
+	uint64_t role;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

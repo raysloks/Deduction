@@ -37,8 +37,8 @@ public:
 
 	void resetSettings();
 
-	void checkForGameOver();
-	void endGame();
+	void checkForGameOver(int64_t now);
+	void endGame(int64_t now);
 
 	void removeCorpses();
 

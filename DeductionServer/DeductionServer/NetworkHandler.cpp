@@ -390,7 +390,7 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 						reply.time = mob.killCooldown;
 						link.Send(endpoint, reply);
 
-						game.checkForGameOver();
+						game.checkForGameOver(time);
 					}
 				}
 			}
@@ -549,7 +549,7 @@ void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, 
 		if (message.task < mob.tasks.size())
 		{
 			mob.tasks[message.task].completed = true;
-			game.checkForGameOver();
+			game.checkForGameOver(time);
 		}
 	}
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public struct GameOver
 {
 	public List<ulong> winners;
+	public ulong role;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -15,6 +16,7 @@ public struct GameOver
 			foreach (var i in this.winners)
 		writer.Write((ulong)i);
 		}
+		writer.Write((ulong)role);
 	}
 
 	public static GameOver Deserialize(BinaryReader reader)
@@ -30,6 +32,7 @@ public struct GameOver
 			_ret.winners.Add(element);
 		}
 	}
+		_ret.role = (ulong)reader.ReadUInt64();
 		return _ret;
 	}
 };

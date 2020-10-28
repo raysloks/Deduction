@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using EventCallbacks;
+using System.Linq;
 
 public class NetworkHandler
 {
@@ -38,7 +39,10 @@ public class NetworkHandler
             if (text)
             {
                 if (names.ContainsKey(mob))
+                {
                     text.text = names[mob];
+                    mobs[mob].name = names[mob];
+                }
                 if (roles.ContainsKey(mob))
                     text.color = roles[mob] == 1 ? Color.red : Color.white;
             }
@@ -211,22 +215,11 @@ public class NetworkHandler
 
     internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
     {
-        if (message.winners.Contains(playerMobId))
-        {
-            SoundEvent se = new SoundEvent();
-            se.EventDescription = "GAME WON";
-            se.UnitSound = game.gameWinSounds;
-            se.UnitGameObjectPos = game.player.transform.position;
-            EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
-        }
-        else
-        {
-            SoundEvent se = new SoundEvent();
-            se.EventDescription = "GAME LOST";
-            se.UnitSound = game.gameLostSounds;
-            se.UnitGameObjectPos = game.player.transform.position;
-            EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
-        }
+        GameOverEvent gameOverEvent = new GameOverEvent();
+        gameOverEvent.winners = message.winners.Select(x => mobs[x]).ToList();
+        gameOverEvent.victory = message.winners.Contains(playerMobId);
+        gameOverEvent.role = message.role;
+        EventSystem.Current.FireEvent(EVENT_TYPE.GAME_OVER, gameOverEvent);
     }
 
     internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)

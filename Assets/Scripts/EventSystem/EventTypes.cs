@@ -10,5 +10,6 @@
         SETTINGS,
         PHASE_CHANGED,
         PLAY_SOUND,
+        GAME_OVER
     }
 }
