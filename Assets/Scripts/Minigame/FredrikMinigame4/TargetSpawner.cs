@@ -37,8 +37,6 @@ public class TargetSpawner : MonoBehaviour
         maxScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.max;
         Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
         Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
-        minScreenBounds = minScreenBounds;
-        maxScreenBounds = maxScreenBounds;
         //   minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
         //   maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
         target = RandomPointInScreenBounds();
