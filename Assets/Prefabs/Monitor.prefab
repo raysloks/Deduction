@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1374346512550523730}
   - component: {fileID: 1374346512550523740}
   - component: {fileID: 1374346512550523741}
-  - component: {fileID: 4723446655553293849}
   - component: {fileID: 3604052726584254773}
   - component: {fileID: 2708417128160404164}
   - component: {fileID: 1575820683968942258}
@@ -54,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,32 +101,6 @@ MonoBehaviour:
     type: 3}
   minigame_index: 0
   outline: {fileID: 2100000, guid: 045367918db864640a6eb5793ecb4f60, type: 2}
---- !u!61 &4723446655553293849
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374346512550523731}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 0.32, y: 0.32}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
-  m_EdgeRadius: 0
 --- !u!58 &3604052726584254773
 CircleCollider2D:
   m_ObjectHideFlags: 0

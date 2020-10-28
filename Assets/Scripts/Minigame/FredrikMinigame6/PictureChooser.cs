@@ -9,6 +9,7 @@ public class PictureChooser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        transform.parent.position = GameObject.FindWithTag("Player").transform.position;
         int r = Random.Range(0, (transform.childCount - 1));
         mainPicture = transform.GetChild(r).gameObject;
         Debug.Log(mainPicture.name);
