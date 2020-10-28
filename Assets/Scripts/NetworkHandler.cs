@@ -207,9 +207,24 @@ public class NetworkHandler
     internal void GameOverHandler(IPEndPoint endpoint, GameOver message)
     {
         if (message.winners.Contains(playerMobId))
+        {
             Debug.Log("VICTORY");
+            SoundEvent se = new SoundEvent();
+            se.EventDescription = "GAME WON";
+            se.UnitSound = game.gameWinSounds;
+            se.UnitGameObjectPos = game.player.transform.position;
+            EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+        }
         else
+        {
+            Debug.Log("VICTORY");
+            SoundEvent se = new SoundEvent();
+            se.EventDescription = "GAME LOST";
+            se.UnitSound = game.gameLostSounds;
+            se.UnitGameObjectPos = game.player.transform.position;
+            EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
             Debug.Log("DEFEAT");
+        }
     }
 
     internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)

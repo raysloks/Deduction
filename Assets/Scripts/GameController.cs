@@ -60,6 +60,9 @@ public class GameController : MonoBehaviour
 
     public bool listenToSelf = false;
 
+    public List<AudioClip> gameWinSounds;
+    public List<AudioClip> gameLostSounds;
+
     public Xoroshiro128Plus rng = new Xoroshiro128Plus();
 
     public enum ConnectionState

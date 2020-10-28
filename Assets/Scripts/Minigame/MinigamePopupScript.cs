@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using EventCallbacks;
 
 public class MinigamePopupScript : MonoBehaviour
 {
     public Player player;
     public GameObject minigamePrefab;
     public RectTransform minigameContainer;
+
+    public List<AudioClip> victorySounds;
 
     public bool Active => minigame != null;
 
@@ -39,6 +42,11 @@ public class MinigamePopupScript : MonoBehaviour
     public void MinigameWon()
     {
         initiator.Solved();
+        SoundEvent se = new SoundEvent();
+        se.EventDescription = "Minigame got completed";
+        se.UnitSound = victorySounds;
+        se.UnitGameObjectPos = player.transform.position;
+        EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
         StartCoroutine(EndIn(2));
     }
 

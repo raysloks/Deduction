@@ -20,11 +20,6 @@ public class SliderScript : MonoBehaviour
         mainSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
 
     private void Awake()
     {
@@ -34,7 +29,7 @@ public class SliderScript : MonoBehaviour
     }
     void ValueChangeCheck()
     {
-        if (mainSlider.value == mainSlider.maxValue)
+        if (mainSlider.value == mainSlider.maxValue && beenMax == false)
         {
             Debug.Log("Max");
             beenMax = true;

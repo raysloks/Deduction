@@ -8,6 +8,7 @@
         MEETING_CHECKVOTES,
         MEETING_DIED,
         SETTINGS,
-        PHASE_CHANGED
+        PHASE_CHANGED,
+        PLAY_SOUND,
     }
 }

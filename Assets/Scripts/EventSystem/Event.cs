@@ -35,6 +35,12 @@ namespace EventCallbacks
 
     }
 
+    public class SoundEvent : Event
+    {
+        public List<AudioClip> UnitSound;
+        public Vector3 UnitGameObjectPos;
+    }
+
     public class SettingEvent : Event
     {
         public GameSettings settings;
