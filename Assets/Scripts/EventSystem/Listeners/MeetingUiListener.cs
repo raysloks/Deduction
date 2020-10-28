@@ -83,29 +83,32 @@ public class MeetingUiListener : MonoBehaviour
         {
             Mob mob = n.Value;
 
-            bool alive = mob.IsAlive && mob.gameObject.activeSelf;
-
-            if (!voteButtons.ContainsKey(n.Key))
+            if (game.handler.names.ContainsKey(n.Key))
             {
-                GameObject go = Instantiate(voteButtonPrefab, radialLayout.transform);
-                VoteButton voteButton = go.GetComponent<VoteButton>();
-                voteButton.game = game;
-                voteButton.target = n.Key;
-                voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
-                voteButton.targetImage.color = mob.sprite.color;
-                if (handler.names.ContainsKey(n.Key))
+                bool alive = mob.IsAlive && mob.gameObject.activeSelf;
+
+                if (!voteButtons.ContainsKey(n.Key))
                 {
-                    voteButton.nameText.text = handler.names[n.Key];
-                    go.name = handler.names[n.Key];
+                    GameObject go = Instantiate(voteButtonPrefab, radialLayout.transform);
+                    VoteButton voteButton = go.GetComponent<VoteButton>();
+                    voteButton.game = game;
+                    voteButton.target = n.Key;
+                    voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                    voteButton.targetImage.color = mob.sprite.color;
+                    if (handler.names.ContainsKey(n.Key))
+                    {
+                        voteButton.nameText.text = handler.names[n.Key];
+                        go.name = handler.names[n.Key];
+                    }
+                    voteButtons.Add(n.Key, voteButton);
                 }
-                voteButtons.Add(n.Key, voteButton);
-            }
 
-            if (voteButtons.ContainsKey(n.Key))
-            {
-                VoteButton voteButton = voteButtons[n.Key];
-                voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
-                voteButton.ResetVoteCountAndState();
+                if (voteButtons.ContainsKey(n.Key))
+                {
+                    VoteButton voteButton = voteButtons[n.Key];
+                    voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                    voteButton.ResetVoteCountAndState();
+                }
             }
         }
 
