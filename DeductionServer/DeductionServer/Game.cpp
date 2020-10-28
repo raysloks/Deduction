@@ -272,8 +272,7 @@ void Game::createTaskLists()
 
 		std::vector<uint16_t> tasks;
 		for (size_t i = 0; i < 24; ++i)
-			if (i != 4 && i != 16)
-				tasks.push_back(i);
+			tasks.push_back(i);
 
 		for (size_t i = 0; i + 1 < tasks.size(); ++i)
 			std::swap(tasks[i], tasks[handler.rng.next(i, tasks.size() - 1)]);
