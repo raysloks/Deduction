@@ -22,6 +22,7 @@ public:
 	int64_t time;
 	MobType type;
 	Role role;
+	uint64_t sprite;
 
 	int votesCast;
 	int meetingsCalled;

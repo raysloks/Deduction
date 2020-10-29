@@ -75,8 +75,11 @@ uint64_t NetworkHandler::createMob(const Mob& mob)
 
 void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, const std::string & name)
 {
+	Mob mob;
+	mob.sprite = getUnusedSprite();
+
 	Player player;
-	player.mob = createMob();
+	player.mob = createMob(mob);
 	player.name = name;
 	player.timeout = time + 10'000'000'000;
 	players.emplace(endpoint, player);
@@ -165,6 +168,7 @@ void NetworkHandler::updateMobState(uint64_t id)
 	message.update.position = mob.position;
 	message.color = mob.color;
 	message.type = (uint64_t)mob.type;
+	message.sprite = mob.sprite;
 
 	for (auto player : players)
 	{
@@ -192,6 +196,7 @@ void NetworkHandler::updateMobStatesForPlayer(const asio::ip::udp::endpoint & en
 				message.update.position = mob.position;
 				message.color = mob.color;
 				message.type = (uint64_t)mob.type;
+				message.sprite = mob.sprite;
 				link.Send(endpoint, message);
 			}
 		}
@@ -266,6 +271,7 @@ void NetworkHandler::killMob(uint64_t id, bool eject)
 		corpse.color = mob.color;
 		corpse.type = MobType::Corpse;
 		corpse.role = mob.role;
+		corpse.sprite = mob.sprite;
 		createMob(corpse);
 	}
 	else
@@ -288,6 +294,21 @@ void NetworkHandler::killMob(uint64_t id, bool eject)
 			link.Send(player.first, message);
 		}
 	}
+}
+
+uint64_t NetworkHandler::getUnusedSprite() const
+{
+	for (size_t i = 0; i < players.size(); ++i)
+	{
+		auto it = std::find_if(players.begin(), players.end(), [i](auto player)
+			{
+				return mobs[player.second.mob] == i;
+			}
+		);
+		if (it == players.end())
+			return i;
+	}
+	return players.size();
 }
 
 void NetworkHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)

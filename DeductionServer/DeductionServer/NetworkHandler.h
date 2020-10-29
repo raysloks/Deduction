@@ -34,6 +34,8 @@ public:
 
 	void killMob(uint64_t id, bool eject);
 
+	uint64_t getUnusedSprite() const;
+
 	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);
 	void AbilityUsedHandler(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
 	void DoorUpdateHandler(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& message);

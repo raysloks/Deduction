@@ -474,3 +474,11 @@ void Game::updateTaskbar()
 	message.task = taskCountComplete;
 	handler.Broadcast(message);
 }
+
+void Game::setLight(float light)
+{
+	LightUpdate message;
+	message.time = handler.time;
+	message.light = light;
+	handler.Broadcast(message);
+}

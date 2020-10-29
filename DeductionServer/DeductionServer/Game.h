@@ -44,6 +44,8 @@ public:
 
 	void updateTaskbar();
 
+	void setLight(float light);
+
 	GamePhase phase;
 
 	int64_t timer;
