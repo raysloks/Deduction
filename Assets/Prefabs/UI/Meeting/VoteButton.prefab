@@ -281,8 +281,6 @@ GameObject:
   - component: {fileID: 9008728179313552694}
   - component: {fileID: 3346434490596549800}
   - component: {fileID: 7466472020985901245}
-  - component: {fileID: 8452644000626887368}
-  - component: {fileID: 3061405888845014882}
   m_Layer: 5
   m_Name: VoteButton
   m_TagString: VoteButton
@@ -424,31 +422,6 @@ MonoBehaviour:
   votesReceivedCountText: {fileID: 2644780538061302733}
   finishedVotingIndicator: {fileID: 1170886298290538310}
   votesReceivedLayoutGroup: {fileID: 6820988726248345737}
---- !u!114 &8452644000626887368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9008728179313552692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee158225ee1e59f4791627785501d950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3061405888845014882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9008728179313552692}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1625263d85e5d554284989eb9052e863, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateEveryFrame: 1
 --- !u!1 &9046034060385346359
 GameObject:
   m_ObjectHideFlags: 0

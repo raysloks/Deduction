@@ -35,6 +35,9 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingToggle("Enable Skip Button", "enableSkipButton", game),
             new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
+            new GameSettingInputField<long>("Task Count", "taskCount", game),
+            new GameSettingDropdown("Taskbar Update Style", "taskbarUpdateStyle", game, new List<string>{ "Instant", "End of Meeting", "Start of Meeting" }),
+            new GameSettingTime("Sabotage Cooldown", "sabotageCooldown", game)
         };
 
         game.settings.crewmateVision = 5.0f;

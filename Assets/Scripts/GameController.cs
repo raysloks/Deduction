@@ -158,6 +158,11 @@ public class GameController : MonoBehaviour
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
         reportButton.gameObject.SetActive(player.IsAlive);
         hud.gameObject.SetActive(phase == GamePhase.Main);
+        taskbar.gameObject.SetActive(
+            phase == GamePhase.Main || 
+            phase == GamePhase.Discussion || 
+            phase == GamePhase.Voting || 
+            phase == GamePhase.EndOfMeeting);
 
         if (phase == GamePhase.Main && player.IsAlive)
         {

@@ -34,6 +34,8 @@ void Game::tick(int64_t now)
 			toBeEjected.clear();
 			break;
 		case GamePhase::Ejection:
+			if (settings.taskbarUpdateStyle == 1)
+				updateTaskbar();
 			resetCooldowns();
 			checkForGameOver(timer);
 			if (phase == GamePhase::Ejection)
@@ -168,6 +170,8 @@ void Game::startMeeting(uint64_t caller, uint64_t corpse)
 			handler.Broadcast(message);
 		}
 
+		if (settings.taskbarUpdateStyle == 2)
+			updateTaskbar();
 		removeCorpses();
 		resetVotes();
 		setPhase(GamePhase::Discussion, handler.time + settings.discussionTime);
@@ -305,7 +309,7 @@ void Game::resetCooldowns()
 
 	{
 		AbilityUsed message;
-		message.time = handler.time;
+		message.time = handler.time + settings.sabotageCooldown;
 		handler.Broadcast(message);
 		for (auto&& mob : handler.mobs)
 			mob.sabotageCooldown = message.time;
@@ -334,6 +338,7 @@ void Game::resetSettings()
 		settings.anonymousVotes = false;
 		settings.taskCount = 5;
 		settings.taskbarUpdateStyle = 0;
+		settings.sabotageCooldown = 30'000'000'000;
 
 		handler.Broadcast(settings);
 	}

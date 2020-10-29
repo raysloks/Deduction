@@ -55,6 +55,8 @@ MonoBehaviour:
   lobbyInputField: {fileID: 0}
   connectionMenu: {fileID: 0}
   setupMenu: {fileID: 0}
+  hud: {fileID: 0}
+  taskbar: {fileID: 0}
   killButton: {fileID: 0}
   killCooldownText: {fileID: 0}
   targetMarker: {fileID: 0}
@@ -87,7 +89,8 @@ MonoBehaviour:
     type: 3}
   togglePrefab: {fileID: 2175291995144974315, guid: 4f470f850dfd8264d8d04eb3aed34eff,
     type: 3}
-  dropdownPrefab: {fileID: 0}
+  dropdownPrefab: {fileID: 7707753019583089417, guid: 319ecb0b1ff29c742910d04fa0e47a86,
+    type: 3}
   game: {fileID: 2324288705218545755}
 --- !u!114 &2324288705218545734
 MonoBehaviour:
