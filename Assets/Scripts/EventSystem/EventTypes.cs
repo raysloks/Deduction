@@ -10,6 +10,7 @@
         SETTINGS,
         PHASE_CHANGED,
         PLAY_SOUND,
-        GAME_OVER
+        GAME_OVER,
+        MOB_EJECTED
     }
 }

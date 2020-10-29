@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using EventCallbacks;
-using TMPro;
 
 public class GameOverScreen : MonoBehaviour
 {

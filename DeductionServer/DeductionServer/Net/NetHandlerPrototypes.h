@@ -10,6 +10,7 @@
 	void KillAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void LightUpdateHandler(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void MeetingRequestedHandler(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);
+	void MobEjectedHandler(const asio::ip::udp::endpoint& endpoint, const MobEjected& message);
 	void MobRemovedHandler(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message);
 	void MobRoleUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message);
 	void MobStateUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);

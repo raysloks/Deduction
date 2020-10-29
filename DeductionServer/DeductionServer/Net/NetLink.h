@@ -17,6 +17,7 @@
 #include "KillAttempted.h"
 #include "LightUpdate.h"
 #include "MeetingRequested.h"
+#include "MobEjected.h"
 #include "MobRemoved.h"
 #include "MobRoleUpdate.h"
 #include "MobStateUpdate.h"
@@ -53,6 +54,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const MobEjected& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);

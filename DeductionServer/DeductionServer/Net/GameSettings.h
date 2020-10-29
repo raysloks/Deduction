@@ -26,6 +26,7 @@ public:
 	bool anonymousVotes;
 	int64_t taskCount;
 	int64_t taskbarUpdateStyle;
+	int64_t sabotageCooldown;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

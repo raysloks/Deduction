@@ -244,6 +244,10 @@ public class NetworkHandler
 
     internal void LightUpdateHandler(IPEndPoint endpoint, LightUpdate message)
     {
-        throw new NotImplementedException();
+    }
+
+    internal void MobEjectedHandler(IPEndPoint endpoint, MobEjected message)
+    {
+        EventSystem.Current.FireEvent(EVENT_TYPE.MOB_EJECTED, new MobEjectedEvent { mob = mobs[message.id] });
     }
 }

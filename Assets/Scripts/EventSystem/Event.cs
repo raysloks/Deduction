@@ -60,4 +60,9 @@ namespace EventCallbacks
         public ulong role;
     }
 
+    public class MobEjectedEvent : Event
+    {
+        public Mob mob;
+    }
+
 }

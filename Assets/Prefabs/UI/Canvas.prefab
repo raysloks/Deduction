@@ -309,13 +309,14 @@ GameObject:
   - component: {fileID: 8218666978263185171}
   - component: {fileID: 8218666978263185197}
   - component: {fileID: 8218666978263185170}
+  - component: {fileID: 5365820563360552263}
   m_Layer: 5
-  m_Name: Blackout
+  m_Name: EjectionScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8218666978263185171
 RectTransform:
   m_ObjectHideFlags: 0
@@ -372,6 +373,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5365820563360552263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8218666978263185168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f063297b26e3d64fa7acb1a439e2af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ejectedPrefab: {fileID: 7150424481542249713, guid: 72876c6366e97734d9f5fb1fc3284cbc,
+    type: 3}
 --- !u!1 &8218666978494884475
 GameObject:
   m_ObjectHideFlags: 0

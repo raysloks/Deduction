@@ -99,6 +99,7 @@
     <ClCompile Include="Net\KillAttempted.cpp" />
     <ClCompile Include="Net\LightUpdate.cpp" />
     <ClCompile Include="Net\MeetingRequested.cpp" />
+    <ClCompile Include="Net\MobEjected.cpp" />
     <ClCompile Include="Net\MobRemoved.cpp" />
     <ClCompile Include="Net\MobRoleUpdate.cpp" />
     <ClCompile Include="Net\MobStateUpdate.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Net\KillAttempted.h" />
     <ClInclude Include="Net\LightUpdate.h" />
     <ClInclude Include="Net\MeetingRequested.h" />
+    <ClInclude Include="Net\MobEjected.h" />
     <ClInclude Include="Net\MobRemoved.h" />
     <ClInclude Include="Net\MobRoleUpdate.h" />
     <ClInclude Include="Net\MobStateUpdate.h" />

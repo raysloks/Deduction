@@ -22,6 +22,7 @@ public struct GameSettings
 	public bool anonymousVotes;
 	public long taskCount;
 	public long taskbarUpdateStyle;
+	public long sabotageCooldown;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -43,6 +44,7 @@ public struct GameSettings
 		writer.Write((bool)anonymousVotes);
 		writer.Write((long)taskCount);
 		writer.Write((long)taskbarUpdateStyle);
+		writer.Write((long)sabotageCooldown);
 	}
 
 	public static GameSettings Deserialize(BinaryReader reader)
@@ -66,6 +68,7 @@ public struct GameSettings
 		_ret.anonymousVotes = (bool)reader.ReadBoolean();
 		_ret.taskCount = (long)reader.ReadInt64();
 		_ret.taskbarUpdateStyle = (long)reader.ReadInt64();
+		_ret.sabotageCooldown = (long)reader.ReadInt64();
 		return _ret;
 	}
 };

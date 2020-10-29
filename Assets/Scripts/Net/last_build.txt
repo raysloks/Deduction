@@ -31,6 +31,7 @@ bool showVotesWhenEveryoneHasVoted
 bool anonymousVotes
 int64 taskCount
 int64 taskbarUpdateStyle
+int64 sabotageCooldown
 GameStartRequested
 GivenTasks
 uint8 taskId[]
@@ -44,6 +45,8 @@ int64 time
 float light
 MeetingRequested
 uint64 idOfInitiator
+MobEjected
+uint64 id
 MobRemoved
 uint64 id
 int64 time

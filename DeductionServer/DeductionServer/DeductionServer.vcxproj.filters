@@ -126,6 +126,9 @@
     <ClInclude Include="LightSabotage.h">
       <Filter>Sabotages</Filter>
     </ClInclude>
+    <ClInclude Include="Net\MobEjected.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -233,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="LightSabotage.cpp">
       <Filter>Sabotages</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\MobEjected.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

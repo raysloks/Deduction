@@ -268,6 +268,12 @@ void NetworkHandler::killMob(uint64_t id, bool eject)
 		corpse.role = mob.role;
 		createMob(corpse);
 	}
+	else
+	{
+		MobEjected message;
+		message.id = id;
+		Broadcast(message);
+	}
 
 	MobRemoved message;
 	message.id = id;
@@ -416,6 +422,10 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 			game.startMeeting(player.mob);
 		}
 	}
+}
+
+void NetworkHandler::MobEjectedHandler(const asio::ip::udp::endpoint & endpoint, const MobEjected & message)
+{
 }
 
 void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)
