@@ -300,9 +300,9 @@ uint64_t NetworkHandler::getUnusedSprite() const
 {
 	for (size_t i = 0; i < players.size(); ++i)
 	{
-		auto it = std::find_if(players.begin(), players.end(), [i](auto player)
+		auto it = std::find_if(players.begin(), players.end(), [this, i](auto player)
 			{
-				return mobs[player.second.mob] == i;
+				return mobs[player.second.mob].sprite == i;
 			}
 		);
 		if (it == players.end())
