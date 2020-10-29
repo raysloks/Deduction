@@ -11,6 +11,7 @@ public class IntroScreen : MonoBehaviour
     public GameObject mobDisplayPrefab;
     public GameController game;
     public GameObject splash;
+    public Image blackout;
 
     private void Awake()
     {
@@ -21,7 +22,14 @@ public class IntroScreen : MonoBehaviour
 
     private IEnumerator Display()
     {
-        yield return new WaitForSeconds(3.0f);
+        float counter = 0f;
+
+        while (counter < 3.0f)
+        {
+            blackout.color = new Color(0f, 0f, 0f, Mathf.Max(1f - counter, counter - 2f));
+            counter += Time.deltaTime;
+            yield return null;
+        }
 
         splash.SetActive(false);
         ulong role = game.player.role;
@@ -41,6 +49,13 @@ public class IntroScreen : MonoBehaviour
                 text.text = mob.name;
                 text.color = role == 1 ? Color.red : Color.white;
             }
+        }
+
+        while (counter < 6.0f)
+        {
+            blackout.color = new Color(0f, 0f, 0f, Mathf.Max(4f - counter, counter - 5f));
+            counter += Time.deltaTime;
+            yield return null;
         }
     }
 
