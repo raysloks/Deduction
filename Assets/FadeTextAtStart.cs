@@ -15,7 +15,7 @@ public class FadeTextAtStart : MonoBehaviour
         myText = GetComponent<TextMeshProUGUI>();
         c = myText.color;
         goal = new Color(0f,0f,0f,0f);
-        StartCoroutine(FadeIn(2));
+        StartCoroutine(FadeIn(3));
     }
 
 

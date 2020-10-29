@@ -14,7 +14,7 @@ public class TargetSpawner : MonoBehaviour
 
     public GameObject TargetPrefab;
     public GameObject WrongTargetPrefab;
-    public TextMeshProUGUI text;
+    public TextMeshPro text;
     public GameObject bg;
 
     private GameObject currentPrefab;
@@ -33,8 +33,9 @@ public class TargetSpawner : MonoBehaviour
 
         transform.parent.position = GameObject.FindGameObjectWithTag("Player").transform.position;
         transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-        minScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.min;
-        maxScreenBounds = bg.GetComponent<SpriteRenderer>().sprite.bounds.max;
+        minScreenBounds = bg.GetComponent<SpriteRenderer>().bounds.min;
+        maxScreenBounds = bg.GetComponent<SpriteRenderer>().bounds.max;
+      //  Renderer.bounds
         Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
         Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
         //minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
@@ -113,8 +114,8 @@ public class TargetSpawner : MonoBehaviour
     public Vector2 RandomPointInScreenBounds()
     {
         return new Vector2(
-            Random.Range(minScreenBounds.x + 0f, maxScreenBounds.x - 6f),
-            Random.Range(minScreenBounds.y + 10f, maxScreenBounds.y)
+            Random.Range(minScreenBounds.x, maxScreenBounds.x),
+            Random.Range(minScreenBounds.y , maxScreenBounds.y)
         );
     }
 }

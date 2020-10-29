@@ -11,7 +11,7 @@ public class PlayerBall : MonoBehaviour
     private int jumps = 0;
     private int TotalJumps = 10;
     private bool isDone = false;
-    public TextMeshProUGUI text;
+    public TextMeshPro text;
     public GameObject jumpRope;
     private BoxCollider2D collider;
     private bool jumpDone = false;
