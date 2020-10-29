@@ -109,13 +109,14 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}
 
+	float offset = handler.rng.next_float() * (float)M_PI * 2.0f;
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{
 		auto&& mob = handler.mobs[mobs[i]];
 
 		MobTeleport message;
 		message.from = mob.position;
-		message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size()), sinf(i * (float)M_PI * 2.0f / mobs.size())) * size;
+		message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size() + offset), sinf(i * (float)M_PI * 2.0f / mobs.size() + offset)) * size;
 		message.time = handler.time;
 		message.id = mobs[i];
 		handler.Broadcast(message);
