@@ -19,6 +19,9 @@ void Game::tick(int64_t now)
 		case GamePhase::Setup:
 			startGame();
 			break;
+		case GamePhase::Intro:
+			setPhase(GamePhase::Main, 0);
+			break;
 		case GamePhase::Main:
 			break;
 		case GamePhase::Discussion:
@@ -52,6 +55,8 @@ void Game::tick(int64_t now)
 	switch (phase)
 	{
 	case GamePhase::Setup:
+		break;
+	case GamePhase::Intro:
 		break;
 	case GamePhase::Main:
 		break;
@@ -122,7 +127,7 @@ void Game::startGameCountdown()
 
 void Game::startGame()
 {
-	setPhase(GamePhase::Main, 0);
+	setPhase(GamePhase::Intro, timer + 6'000'000'000);
 	teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
 
 	std::vector<size_t> mobs;
@@ -337,7 +342,7 @@ void Game::resetSettings()
 		settings.showVotesWhenEveryoneHasVoted = true;
 		settings.anonymousVotes = false;
 		settings.taskCount = 5;
-		settings.taskbarUpdateStyle = 0;
+		settings.taskbarUpdateStyle = 2;
 		settings.sabotageCooldown = 30'000'000'000;
 
 		handler.Broadcast(settings);

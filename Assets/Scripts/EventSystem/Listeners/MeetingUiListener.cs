@@ -126,14 +126,6 @@ public class MeetingUiListener : MonoBehaviour
         PhaseChangedEvent phaseChangedEvent = (PhaseChangedEvent)eventInfo;
         switch (phaseChangedEvent.phase)
         {
-            case GamePhase.Setup:
-                MeetingCanvas.gameObject.SetActive(false);
-                blackout.SetActive(false);
-                break;
-            case GamePhase.Main:
-                MeetingCanvas.gameObject.SetActive(false);
-                blackout.SetActive(false);
-                break;
             case GamePhase.Discussion:
                 break;
             case GamePhase.Voting:
@@ -150,12 +142,9 @@ public class MeetingUiListener : MonoBehaviour
                 MeetingCanvas.gameObject.SetActive(false);
                 blackout.SetActive(true);
                 break;
-            case GamePhase.GameOver:
+            default:
                 MeetingCanvas.gameObject.SetActive(false);
-                blackout.SetActive(true);
-                break;
-            case GamePhase.None:
-                MeetingCanvas.gameObject.SetActive(false);
+                blackout.SetActive(false);
                 break;
         }
     }

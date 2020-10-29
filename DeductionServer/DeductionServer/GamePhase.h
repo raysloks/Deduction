@@ -3,6 +3,7 @@
 enum class GamePhase
 {
 	Setup,
+	Intro,
 	Main,
 	Discussion,
 	Voting,

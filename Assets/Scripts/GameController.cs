@@ -86,11 +86,11 @@ public class GameController : MonoBehaviour
 
     private ulong killTarget = ulong.MaxValue;
     private ulong reportTarget = ulong.MaxValue;
-    private Interactable useTarget = null;
 
-    public Interactable UseTarget 
+    private Interactable useTarget = null;
+    public Interactable UseTarget
     {
-        get => useTarget; 
+        get => useTarget;
         set
         {
             if (useTarget != value)
@@ -103,6 +103,8 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    private bool streamerMode = false;
 
     void Start()
     {
@@ -277,7 +279,21 @@ public class GameController : MonoBehaviour
                         if (timer != 0)
                             text.text = "Game starting in " + secondsRemaining;
                         else
-                            text.text = "Setup " + matchmaker.lobby;
+                        {
+                            if (streamerMode)
+                            {
+                                text.text = "Setup ";
+                                for (int i = 0; i < matchmaker.lobby.Length; ++i)
+                                    text.text += "*";
+                            }
+                            else
+                            {
+                                text.text = "Setup " + matchmaker.lobby;
+                            }
+                        }
+                        break;
+                    case GamePhase.Intro:
+                        text.text = "";
                         break;
                     case GamePhase.Main:
                         text.text = "";
@@ -387,6 +403,15 @@ public class GameController : MonoBehaviour
     {
         if (phase == GamePhase.Setup)
             handler.link.Send(new ResetGameSettings());
+    }
+
+    public void SetStreamerMode(bool value)
+    {
+        if (streamerMode != value)
+        {
+            streamerMode = value;
+            lobbyInputField.contentType = value ? InputField.ContentType.Password : InputField.ContentType.Standard;
+        }
     }
 
 }

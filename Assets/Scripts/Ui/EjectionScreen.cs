@@ -5,7 +5,7 @@ using EventCallbacks;
 
 public class EjectionScreen : MonoBehaviour
 {
-    public GameObject ejectedPrefab;
+    public GameObject mobDisplayPrefab;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class EjectionScreen : MonoBehaviour
     private void Ejected(MobEjectedEvent mobEjectedEvent)
     {
         Mob mob = mobEjectedEvent.mob;
-        var go = Instantiate(ejectedPrefab, transform);
+        var go = Instantiate(mobDisplayPrefab, transform);
         var image = go.GetComponent<Image>();
         image.sprite = mob.sprites[0];
         image.color = mob.sprite.color;
