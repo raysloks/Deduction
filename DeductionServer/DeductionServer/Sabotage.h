@@ -3,8 +3,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "SabotageTask.h"
-
+class SabotageTask;
 class Game;
 
 class Sabotage
@@ -12,7 +11,7 @@ class Sabotage
 public:
 	virtual ~Sabotage() {};
 
-	virtual void call(Game& game, int64_t now) = 0;
+	virtual std::shared_ptr<SabotageTask> call(Game& game, int64_t now) = 0;
 
 	std::weak_ptr<SabotageTask> task;
 };

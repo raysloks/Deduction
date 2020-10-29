@@ -50,6 +50,10 @@ public class GameController : MonoBehaviour
     public Button useButton;
 
 
+    public float lightTarget = 1.0f;
+    public float lightCurrent = 1.0f;
+
+
     public long time;
     public long timeout;
     public bool TimerOn => timer != 0;
@@ -151,10 +155,19 @@ public class GameController : MonoBehaviour
             snapshot += 0.05f;
         }
 
+        lightCurrent = Mathf.MoveTowards(lightCurrent, lightTarget, Time.deltaTime);
+
         //if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
         //    handler.link.Send(new MeetingRequested());
         if (Input.GetKeyDown(KeyCode.F5) && phase != GamePhase.Setup)
             handler.link.Send(new RestartRequested());
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            handler.link.Send(new AbilityUsed { ability = 0 });
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            handler.link.Send(new AbilityUsed { ability = 0 });
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            handler.link.Send(new AbilityUsed { ability = 0 });
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
@@ -338,7 +351,11 @@ public class GameController : MonoBehaviour
         popup.DeactivatePopup();
 
         if (phase == GamePhase.Setup || phase == GamePhase.GameOver)
+        {
             taskManager.tasks.Clear();
+            lightTarget = 1.0f;
+            lightCurrent = 1.0f;
+        }
 
         if (phase == GamePhase.Main && previous == GamePhase.Intro)
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;

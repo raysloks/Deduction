@@ -244,10 +244,24 @@ public class NetworkHandler
 
     internal void LightUpdateHandler(IPEndPoint endpoint, LightUpdate message)
     {
+        game.lightTarget = message.light;
     }
 
     internal void MobEjectedHandler(IPEndPoint endpoint, MobEjected message)
     {
         EventSystem.Current.FireEvent(EVENT_TYPE.MOB_EJECTED, new MobEjectedEvent { mob = mobs[message.id] });
+    }
+
+    internal void SabotageTaskUpdateHandler(IPEndPoint endpoint, SabotageTaskUpdate message)
+    {
+        game.taskManager.sabotageTasks.RemoveAll(x => x.sabotage == message.sabotage);
+        if (!message.completed)
+        {
+            SabotageTask task = new SabotageTask();
+            task.sabotage = message.sabotage;
+            task.minigame_index = message.minigame_index;
+            task.timer = message.timer;
+            game.taskManager.sabotageTasks.Add(task);
+        }
     }
 }

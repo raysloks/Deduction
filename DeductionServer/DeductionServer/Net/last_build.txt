@@ -81,6 +81,11 @@ uint64 idOfInitiator
 uint64 target
 ResetGameSettings
 RestartRequested
+SabotageTaskUpdate
+uint16 sabotage
+uint16 minigame_index
+int64 timer
+bool completed
 TaskListUpdate
 uint16 tasks[]
 TaskUpdate

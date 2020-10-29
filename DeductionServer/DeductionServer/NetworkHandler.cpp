@@ -317,6 +317,19 @@ void NetworkHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)
 
 void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint, const AbilityUsed & message)
 {
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
+		if (game.phase == GamePhase::Main && mob.role == Role::Impostor && mob.sabotageCooldown < time)
+		{
+			if (game.callSabotage(message.ability))
+			{
+				mob.sabotageCooldown = time + game.settings.sabotageCooldown;
+			}
+		}
+	}
 }
 
 void NetworkHandler::DoorUpdateHandler(const asio::ip::udp::endpoint & endpoint, const DoorUpdate & message)
@@ -563,6 +576,19 @@ void NetworkHandler::ResetGameSettingsHandler(const asio::ip::udp::endpoint & en
 void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
 {
 	game.restartSetup();
+}
+
+void NetworkHandler::SabotageTaskUpdateHandler(const asio::ip::udp::endpoint & endpoint, const SabotageTaskUpdate & message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
+
+		if (mob.type == MobType::Player)
+			game.fixSabotage(message.sabotage);
+	}
 }
 
 void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message)

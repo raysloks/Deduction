@@ -264,7 +264,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TaskListUpdate message)
+	public void Send(IPEndPoint endpoint, in SabotageTaskUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -274,7 +274,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TaskUpdate message)
+	public void Send(IPEndPoint endpoint, in TaskListUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -284,11 +284,21 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	public void Send(IPEndPoint endpoint, in TaskUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)25);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)26);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -558,7 +568,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in TaskListUpdate message)
+	public void Send(in SabotageTaskUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -570,7 +580,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in TaskUpdate message)
+	public void Send(in TaskListUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -582,13 +592,25 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in VoiceFrame message)
+	public void Send(in TaskUpdate message)
 	{
 		if (endpoint == null)
 			return;
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)25);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in VoiceFrame message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)26);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -762,17 +784,23 @@ public class NetLink
 		}
 		case 23:
 		{
+			SabotageTaskUpdate message = SabotageTaskUpdate.Deserialize(reader);
+			message_queue.Enqueue(() => handler.SabotageTaskUpdateHandler(endpoint, message));
+			break;
+		}
+		case 24:
+		{
 			TaskListUpdate message = TaskListUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.TaskListUpdateHandler(endpoint, message));
 			break;
 		}
-		case 24:
+		case 25:
 		{
 			TaskUpdate message = TaskUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.TaskUpdateHandler(endpoint, message));
 			break;
 		}
-		case 25:
+		case 26:
 		{
 			VoiceFrame message = VoiceFrame.Deserialize(reader);
 			message_queue.Enqueue(() => handler.VoiceFrameHandler(endpoint, message));
@@ -783,6 +811,6 @@ public class NetLink
 		}
 	}
 
-	public const uint crc = 0xc9566cfb;
+	public const uint crc = 0xfe5f4143;
 	private UdpClient client;
 }

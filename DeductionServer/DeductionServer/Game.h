@@ -31,6 +31,12 @@ public:
 	void endMeeting(int64_t now);
 	void resetVotes();
 
+	bool callSabotage(uint64_t index);
+	void fixSabotage(uint64_t index);
+	void fixAllSabotages();
+
+	void sendSabotageTaskUpdate(std::shared_ptr<SabotageTask> task, bool completed);
+
 	void createTaskLists();
 
 	void resetCooldowns();
@@ -61,5 +67,7 @@ public:
 	std::multimap<int64_t, std::function<void(void)>> timers;
 
 	std::shared_ptr<Map> map;
+
+	std::vector<std::shared_ptr<SabotageTask>> sabotageTasks;
 };
 

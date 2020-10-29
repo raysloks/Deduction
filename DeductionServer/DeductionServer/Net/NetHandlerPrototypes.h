@@ -21,6 +21,7 @@
 	void ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void ResetGameSettingsHandler(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
+	void SabotageTaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);

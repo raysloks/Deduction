@@ -22,7 +22,8 @@ public class MinigameInitiator : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0;
+        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 || 
+            game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
     }
 
     public override void Interact(GameController game)
@@ -45,8 +46,16 @@ public class MinigameInitiator : Interactable
     public void Solved()
     {
         int task_index = game.taskManager.tasks.FindIndex(x => x.minigame_index == minigame_index);
-        game.taskManager.tasks[task_index].completed = true;
-        game.handler.link.Send(new TaskUpdate { task = (ushort)task_index });
+        if (task_index >= 0)
+        {
+            game.taskManager.tasks[task_index].completed = true;
+            game.handler.link.Send(new TaskUpdate { task = (ushort)task_index });
+        }
+        else
+        {
+            int sabotage_index = game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index).sabotage;
+            game.handler.link.Send(new SabotageTaskUpdate { sabotage = (ushort)sabotage_index });
+        }
     }
 
     IEnumerator FadeInOutline(float seconds)

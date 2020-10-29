@@ -129,6 +129,10 @@
     <ClInclude Include="Net\MobEjected.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="SabotageTask.h" />
+    <ClInclude Include="Net\SabotageTaskUpdate.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -238,6 +242,10 @@
       <Filter>Sabotages</Filter>
     </ClCompile>
     <ClCompile Include="Net\MobEjected.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="SabotageTask.cpp" />
+    <ClCompile Include="Net\SabotageTaskUpdate.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

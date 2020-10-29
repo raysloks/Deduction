@@ -28,6 +28,7 @@
 #include "ReportAttempted.h"
 #include "ResetGameSettings.h"
 #include "RestartRequested.h"
+#include "SabotageTaskUpdate.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
 #include "VoiceFrame.h"
@@ -65,6 +66,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);

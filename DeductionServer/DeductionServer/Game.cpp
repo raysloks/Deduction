@@ -2,6 +2,10 @@
 
 #include "NetworkHandler.h"
 
+#include "SabotageTask.h"
+#include "LightSabotage.h"
+#include "DoorSabotage.h"
+
 Game::Game(NetworkHandler& handler) : handler(handler)
 {
 	phase = GamePhase::Setup;
@@ -9,12 +13,31 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 
 	resetSettings();
 
+
 	map = std::make_shared<Map>();
+
 
 	map->spawnSize = Vec2(2.0f);
 
 	map->meetingPos = Vec2(6.5f, -15.0f);
 	map->meetingSize = Vec2(4.0f, 1.5f);
+
+
+	auto lights = new LightSabotage();
+	lights->duration = 0;
+	lights->minigame_index = 5000;
+
+	auto doors1 = new DoorSabotage();
+	doors1->duration = 15'000'000'000;
+	doors1->minigame_index = -1;
+
+	auto doors2 = new DoorSabotage();
+	doors2->duration = 15'000'000'000;
+	doors2->minigame_index = -1;
+
+	map->sabotages.push_back(std::unique_ptr<Sabotage>(lights));
+	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors1));
+	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors2));
 }
 
 void Game::tick(int64_t now)
@@ -79,6 +102,17 @@ void Game::tick(int64_t now)
 		break;
 	default:
 		break;
+	}
+
+	auto sabotageTasksCopy = sabotageTasks;
+	for (auto task : sabotageTasksCopy)
+	{
+		if (task->timer != 0 && task->timer <= handler.time)
+		{
+			task->expire();
+			sendSabotageTaskUpdate(task, true);
+			sabotageTasks.erase(std::find(sabotageTasks.begin(), sabotageTasks.end(), task));
+		}
 	}
 
 	if (phase != GamePhase::Setup && handler.players.empty())
@@ -254,6 +288,7 @@ void Game::restartSetup()
 {
 	if (phase != GamePhase::Setup)
 	{
+		fixAllSabotages();
 		setPhase(GamePhase::Setup, 0);
 		teleportPlayersToEllipse(Vec2(0.0f), Vec2(2.0f));
 		for (size_t i = 0; i < handler.mobs.size(); ++i)
@@ -281,6 +316,60 @@ void Game::resetVotes()
 			mob.votesCast = 0;
 		}
 	}
+}
+
+bool Game::callSabotage(uint64_t index)
+{
+	if (index < map->sabotages.size())
+	{
+		auto&& sabotage = *map->sabotages[index];
+		auto task = sabotage.task.lock();
+		if (!task)
+		{
+			task = sabotage.call(*this, handler.time);
+			if (task)
+			{
+				task->sabotage_index = index;
+				sabotage.task = task;
+				sabotageTasks.push_back(task);
+				sendSabotageTaskUpdate(task, false);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void Game::fixSabotage(uint64_t index)
+{
+	auto it = std::find_if(sabotageTasks.begin(), sabotageTasks.end(), [index](auto task)
+		{
+			return task->sabotage_index == index;
+		}
+	);
+	if (it != sabotageTasks.end())
+	{
+		(*it)->fix();
+		sendSabotageTaskUpdate(*it, true);
+		sabotageTasks.erase(it);
+	}
+}
+
+void Game::fixAllSabotages()
+{
+	for (auto task : sabotageTasks)
+		task->fix();
+	sabotageTasks.clear();
+}
+
+void Game::sendSabotageTaskUpdate(std::shared_ptr<SabotageTask> task, bool completed)
+{
+	SabotageTaskUpdate message;
+	message.sabotage = task->sabotage_index;
+	message.completed = completed;
+	message.minigame_index = task->minigame_index;
+	message.timer = task->timer;
+	handler.Broadcast(message);
 }
 
 void Game::createTaskLists()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : Mob
 {
     public long killCooldown;
+    public long sabotageCooldown;
 
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public int emergencyButtonsLeft = 0;
@@ -65,6 +66,9 @@ public class Player : Mob
     {
         if (!IsAlive)
             return 20f;
-        return role == 0 ? controller.settings.crewmateVision : controller.settings.impostorVision;
+        if (role == 0)
+            return Mathf.Max(1.0f, controller.settings.crewmateVision * controller.lightCurrent);
+        else
+            return controller.settings.impostorVision;
     }
 }
