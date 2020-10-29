@@ -340,7 +340,7 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Setup || phase == GamePhase.GameOver)
             taskManager.tasks.Clear();
 
-        if (phase == GamePhase.Main && previous == GamePhase.Setup)
+        if (phase == GamePhase.Main && previous == GamePhase.Intro)
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
 
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
