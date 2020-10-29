@@ -304,7 +304,7 @@ public class GameController : MonoBehaviour
                     case GamePhase.Voting:
                         text.text = "Voting ends in " + secondsRemaining;
                         if (secondsRemaining <= 10)
-                            text.fontSize = 100 - secondsRemaining;
+                            text.fontSize = 120 - secondsRemaining * 3;
                         break;
                     case GamePhase.EndOfMeeting:
                         text.text = "Meeting ends in " + secondsRemaining;

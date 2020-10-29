@@ -8,6 +8,13 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	timer = 0;
 
 	resetSettings();
+
+	map = std::make_shared<Map>();
+
+	map->spawnSize = Vec2(2.0f);
+
+	map->meetingPos = Vec2(6.5f, -15.0f);
+	map->meetingSize = Vec2(4.0f, 1.5f);
 }
 
 void Game::tick(int64_t now)
@@ -128,7 +135,7 @@ void Game::startGameCountdown()
 void Game::startGame()
 {
 	setPhase(GamePhase::Intro, timer + 6'000'000'000);
-	teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
+	teleportPlayersToEllipse(map->spawnPos, map->spawnSize);
 
 	std::vector<size_t> mobs;
 	for (auto player : handler.players)
@@ -180,7 +187,7 @@ void Game::startMeeting(uint64_t caller, uint64_t corpse)
 		removeCorpses();
 		resetVotes();
 		setPhase(GamePhase::Discussion, handler.time + settings.discussionTime);
-		teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
+		teleportPlayersToEllipse(map->meetingPos, map->meetingSize);
 	}
 }
 
@@ -247,7 +254,7 @@ void Game::restartSetup()
 	if (phase != GamePhase::Setup)
 	{
 		setPhase(GamePhase::Setup, 0);
-		teleportPlayersToEllipse(Vec2(0.0f), Vec2(1.0f));
+		teleportPlayersToEllipse(Vec2(0.0f), Vec2(2.0f));
 		for (size_t i = 0; i < handler.mobs.size(); ++i)
 			handler.removeMob(i);
 		for (auto player : handler.players)
@@ -351,38 +358,6 @@ void Game::resetSettings()
 
 void Game::checkForGameOver(int64_t now)
 {
-	{
-		size_t taskCountAll = 0;
-		size_t taskCountComplete = 0;
-		for (auto player : handler.players)
-		{
-			auto&& mob = handler.mobs[player.second.mob];
-			if (mob.role == Role::Crewmate)
-			{
-				for (auto task : mob.tasks)
-				{
-					++taskCountAll;
-					if (task.completed)
-						++taskCountComplete;
-				}
-			}
-		}
-		if (taskCountComplete >= taskCountAll)
-		{
-			// crew victory
-			GameOver message;
-			message.role = Role::Crewmate;
-			for (auto player : handler.players)
-			{
-				if (handler.mobs[player.second.mob].role == Role::Crewmate)
-					message.winners.push_back(player.second.mob);
-			}
-			handler.Broadcast(message);
-			endGame(now);
-			return;
-		}
-	}
-
 	if (settings.killVictoryEnabled)
 	{
 		size_t crew = 0;
@@ -415,6 +390,38 @@ void Game::checkForGameOver(int64_t now)
 		}
 
 		if (impostors == 0)
+		{
+			// crew victory
+			GameOver message;
+			message.role = Role::Crewmate;
+			for (auto player : handler.players)
+			{
+				if (handler.mobs[player.second.mob].role == Role::Crewmate)
+					message.winners.push_back(player.second.mob);
+			}
+			handler.Broadcast(message);
+			endGame(now);
+			return;
+		}
+	}
+
+	{
+		size_t taskCountAll = 0;
+		size_t taskCountComplete = 0;
+		for (auto player : handler.players)
+		{
+			auto&& mob = handler.mobs[player.second.mob];
+			if (mob.role == Role::Crewmate)
+			{
+				for (auto task : mob.tasks)
+				{
+					++taskCountAll;
+					if (task.completed)
+						++taskCountComplete;
+				}
+			}
+		}
+		if (taskCountComplete >= taskCountAll)
 		{
 			// crew victory
 			GameOver message;
