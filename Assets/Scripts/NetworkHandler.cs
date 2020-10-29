@@ -222,6 +222,18 @@ public class NetworkHandler
         gameOverEvent.victory = message.winners.Contains(playerMobId);
         gameOverEvent.role = message.role;
         EventSystem.Current.FireEvent(EVENT_TYPE.GAME_OVER, gameOverEvent);
+
+        SoundEvent se = new SoundEvent();
+        se.UnitGameObjectPos = game.player.transform.position;
+        if (gameOverEvent.victory == true)
+        {
+            se.UnitSound = game.gameWinSounds;                     
+        }
+        else
+        {        
+            se.UnitSound = game.gameLostSounds;
+        }
+        EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
     }
 
     internal void GivenTasksHandler(IPEndPoint endpoint, GivenTasks message)

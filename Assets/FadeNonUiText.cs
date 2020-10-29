@@ -17,7 +17,7 @@ public class FadeNonUiText : MonoBehaviour
         myText = GetComponent<TextMeshPro>();
         c = myText.color;
         goal = new Color(0f, 0f, 0f, 0f);
-        StartCoroutine(FadeIn(2));
+        StartCoroutine(FadeIn(3));
     }
 
     IEnumerator FadeIn(float Sec)
