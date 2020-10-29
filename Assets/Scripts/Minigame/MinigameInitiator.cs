@@ -22,7 +22,7 @@ public class MinigameInitiator : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null;
+        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0;
     }
 
     public override void Interact(GameController game)
