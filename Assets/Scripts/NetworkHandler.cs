@@ -62,9 +62,14 @@ public class NetworkHandler
                 mobs.Add(message.id, UnityEngine.Object.Instantiate(game.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
                 UpdateName(message.id);
             }
-            mobs[message.id].gameObject.SetActive(true);
-            if (mobs[message.id] is NetworkMob mob)
-                mob.AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
+            Mob mob = mobs[message.id];
+            if (!mob.gameObject.activeSelf)
+            {
+                mob.gameObject.SetActive(true);
+                mob.transform.position = message.position;
+            }
+            if (mob is NetworkMob networkMob)
+                networkMob.AddSnapshot(new NetworkMob.Snapshot { time = message.time, position = message.position });
         }
     }
 
