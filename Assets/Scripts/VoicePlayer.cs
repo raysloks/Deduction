@@ -17,6 +17,8 @@ public class VoicePlayer : MonoBehaviour
 
     private int offset;
 
+    private GameController game;
+
     private void Awake()
     {
         decoder = OpusDecoder.Create(48000, 1);
@@ -24,16 +26,13 @@ public class VoicePlayer : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioClip = AudioClip.Create("Voice", 9600, 1, 48000, false);
         audioSource.clip = audioClip;
+
+        game = FindObjectOfType<GameController>();
     }
 
-    private void ReadData(float[] data)
+    private void Update()
     {
-        int length = Math.Min(data.Length, buffer.Count);
-        for (int i = 0; i < length; ++i)
-            data[i] = buffer[i];
-        for (int i = length; i < data.Length; ++i)
-            data[i] = 0f;
-        buffer.RemoveRange(0, length);
+        audioSource.spatialBlend = game.phase == GamePhase.Setup || game.phase == GamePhase.Main ? 1f : 0f;
     }
 
     public void ProcessFrame(List<byte> frame)
