@@ -21,15 +21,19 @@ public class VoiceManager
         encoder = OpusEncoder.Create(48000, 1, OpusApplication.OPUS_APPLICATION_AUDIO);
         encoder.Bitrate = 12000;
 
-        recording = Microphone.Start("", true, 1, 48000);
-        float[] data = new float[recording.samples];
-        for (int i = 0; i < data.Length; ++i)
-            data[i] = (((i + offset) % 2) == 0) ? 0.9f : -0.9f;
-        recording.SetData(data, 0);
+        if (Microphone.devices.Length > 0)
+        {
+            recording = Microphone.Start("", true, 1, 48000);
+            float[] data = new float[recording.samples];
+            for (int i = 0; i < data.Length; ++i)
+                data[i] = (((i + offset) % 2) == 0) ? 0.9f : -0.9f;
+            recording.SetData(data, 0);
+        }
     }
 
     public void Stream()
     {
+        if (recording != null)
         {
             int frameSize = 960;
             short[] inputAudioSamples = new short[frameSize];
