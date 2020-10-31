@@ -39,7 +39,7 @@ public class IntroScreen : MonoBehaviour
         foreach (var n in game.handler.mobs)
         {
             Mob mob = n.Value;
-            if (mob.role == role)
+            if (mob.role == role && game.handler.names.ContainsKey(n.Key))
             {
                 var go = Instantiate(mobDisplayPrefab, mobDisplayContainer);
                 var image = go.GetComponent<Image>();
