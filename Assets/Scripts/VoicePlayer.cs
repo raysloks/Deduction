@@ -33,6 +33,9 @@ public class VoicePlayer : MonoBehaviour
     private void Update()
     {
         audioSource.spatialBlend = game.phase == GamePhase.Setup || game.phase == GamePhase.Main ? 1f : 0f;
+
+        if (mod(audioSource.timeSamples - offset, audioClip.samples) > audioClip.samples - 960)
+            audioSource.Stop();
     }
 
     public void ProcessFrame(List<byte> frame)

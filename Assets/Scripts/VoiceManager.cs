@@ -16,6 +16,8 @@ public class VoiceManager
 
     private int offset = 0;
 
+    private int closing = 0;
+
     public VoiceManager()
     {
         encoder = OpusEncoder.Create(48000, 1, OpusApplication.OPUS_APPLICATION_AUDIO);
@@ -43,12 +45,22 @@ public class VoiceManager
                 byte[] outputBuffer = new byte[1000];
 
                 if (!Input.GetKey(KeyCode.V))
-                    inputAudioSamples = new short[frameSize];
-
-                //for (int i = 0; i < inputAudioSamples.Length - 1; ++i)
-                //{
-                //    Debug.DrawLine(new Vector3(i / 100f, inputAudioSamples[i] / 10000f), new Vector3((i + 1) / 100f, inputAudioSamples[i + 1] / 10000f), Color.white);
-                //}
+                {
+                    if (closing > 4)
+                        return;
+                    for (int i = 0; i < frameSize; ++i)
+                        inputAudioSamples[i] = (short)(inputAudioSamples[i] * Mathf.Cos(Mathf.Min(Mathf.PI * 0.5f, (i + closing * frameSize) / 2400f)));
+                    //for (int i = 0; i < inputAudioSamples.Length - 1; ++i)
+                    //    Debug.DrawLine(
+                    //        new Vector3((i + closing * frameSize) / 100f, inputAudioSamples[i] / 10000f), 
+                    //        new Vector3((i + 1 + closing * frameSize) / 100f, inputAudioSamples[i + 1] / 10000f), 
+                    //        Color.white, 1f);
+                    ++closing;
+                }
+                else
+                {
+                    closing = 0;
+                }
 
                 int thisPacketSize = encoder.Encode(inputAudioSamples, 0, frameSize, outputBuffer, 0, outputBuffer.Length);
 
