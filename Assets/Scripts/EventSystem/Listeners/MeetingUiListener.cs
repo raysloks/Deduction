@@ -91,6 +91,7 @@ public class MeetingUiListener : MonoBehaviour
                 {
                     GameObject go = Instantiate(voteButtonPrefab, radialLayout.transform);
                     VoteButton voteButton = go.GetComponent<VoteButton>();
+                    voteButton.GetComponentInChildren<VoiceIndicatorImage>().voicePlayer = mob.GetComponentInChildren<VoicePlayer>();
                     voteButton.game = game;
                     voteButton.target = n.Key;
                     voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
@@ -166,10 +167,16 @@ public class MeetingUiListener : MonoBehaviour
         {
             skipButton.VoteReceived(voterPrefab, handler.mobs[voterId].sprite);
         }
-        else
+        else if(voteButtons.ContainsKey(targetId))
         {
-            if (voteButtons.ContainsKey(targetId))
+            if (voterId == ulong.MaxValue - 2)
+            {
+                voteButtons[targetId].confirmedIndicator.SetActive(true);
+            }
+            else
+            {
                 voteButtons[targetId].VoteReceived(voterPrefab, handler.mobs[voterId].sprite);
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ public class VoteButton : MonoBehaviour
     public TMP_Text votesReceivedCountText;
     public GameObject finishedVotingIndicator;
     public Transform votesReceivedLayoutGroup;
+    public GameObject confirmedIndicator;
 
     private int votesReceivedCount = 0;
     private int votesCastCount = 0;
@@ -29,6 +30,8 @@ public class VoteButton : MonoBehaviour
             foreach (Transform child in votesReceivedLayoutGroup)
                 Destroy(child.gameObject);
         button.interactable = false;
+        if (confirmedIndicator != null)
+            confirmedIndicator.SetActive(false);
     }
 
     public void Vote()

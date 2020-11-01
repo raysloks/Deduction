@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
-public class VoiceIndicator : MonoBehaviour
+public class VoiceIndicatorImage : MonoBehaviour
 {
     public VoicePlayer voicePlayer;
 
     public Sprite[] sprites;
     public float[] limits;
 
-    private SpriteRenderer spriteRenderer;
+    private Image image;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        image = GetComponent<Image>();
     }
 
     private void Update()
@@ -22,11 +23,11 @@ public class VoiceIndicator : MonoBehaviour
         {
             float loudness = voicePlayer.GetLoudness();
             SetStage(loudness);
-            spriteRenderer.enabled = loudness != float.NegativeInfinity;
+            image.enabled = loudness != float.NegativeInfinity;
         }
         else
         {
-            spriteRenderer.enabled = false;
+            image.enabled = false;
         }
     }
 
@@ -37,11 +38,11 @@ public class VoiceIndicator : MonoBehaviour
             if (limits[i] > loudness)
             {
                 if (i < sprites.Length)
-                    spriteRenderer.sprite = sprites[i];
+                    image.sprite = sprites[i];
                 return;
             }
         }
         if (sprites.Length > 0)
-            spriteRenderer.sprite = sprites[sprites.Length - 1];
+            image.sprite = sprites[sprites.Length - 1];
     }
 }

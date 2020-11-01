@@ -281,6 +281,14 @@ void Game::endMeeting(int64_t now)
 			toBeEjected.push_back(hasMostVotes - 1);
 	}
 
+	for (auto i : toBeEjected)
+	{
+		PlayerVoted message;
+		message.voter = -3ul;
+		message.target = i;
+		handler.Broadcast(message);
+	}
+
 	resetVotes();
 	setPhase(GamePhase::EndOfMeeting, now + 5'000'000'000);
 }
