@@ -257,14 +257,20 @@ void NetworkHandler::removeMob(uint64_t id)
 	}
 }
 
-void NetworkHandler::killMob(uint64_t id, bool eject)
+void NetworkHandler::killMob(uint64_t id, uint64_t killer)
 {
 	auto&& mob = mobs[id];
 	mob.type = MobType::Ghost;
 
 	updateMobState(id);
 
-	if (!eject)
+	if (killer == -1ul)
+	{
+		MobEjected message;
+		message.id = id;
+		Broadcast(message);
+	}
+	else
 	{
 		Mob corpse;
 		corpse.position = mob.position;
@@ -273,12 +279,17 @@ void NetworkHandler::killMob(uint64_t id, bool eject)
 		corpse.role = mob.role;
 		corpse.sprite = mob.sprite;
 		createMob(corpse);
-	}
-	else
-	{
-		MobEjected message;
-		message.id = id;
-		Broadcast(message);
+
+		KillAttempted message;
+		message.time = time + game.settings.killCooldown;
+		message.target = id;
+		message.killer = killer;
+
+		for (auto player : players)
+		{
+			if (player.second.mob == id || player.second.mob == killer)
+				link.Send(player.first, message);
+		}
 	}
 
 	MobRemoved message;
@@ -414,21 +425,17 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 				{
 					if ((target.position - mob.position).Len() < game.settings.killRange + game.settings.playerSpeed * 0.1f)
 					{
-						killMob(message.target, false);
+						killMob(message.target, player.mob);
 
-						MobTeleport message;
-						message.from = mob.position;
-						message.to = target.position;
-						message.time = time;
-						message.id = player.mob;
-						Broadcast(message);
+						MobTeleport reply;
+						reply.from = mob.position;
+						reply.to = target.position;
+						reply.time = time;
+						reply.id = player.mob;
+						Broadcast(reply);
 
-						mob.position = message.to;
+						mob.position = reply.to;
 						mob.killCooldown = time + game.settings.killCooldown;
-
-						KillAttempted reply;
-						reply.time = mob.killCooldown;
-						link.Send(endpoint, reply);
 
 						game.checkForGameOver(time);
 					}

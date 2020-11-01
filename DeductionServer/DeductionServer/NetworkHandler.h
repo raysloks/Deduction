@@ -32,7 +32,7 @@ public:
 
 	void removeMob(uint64_t id);
 
-	void killMob(uint64_t id, bool eject);
+	void killMob(uint64_t id, uint64_t killer);
 
 	uint64_t getUnusedSprite() const;
 

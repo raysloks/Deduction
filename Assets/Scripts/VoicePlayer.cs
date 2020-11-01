@@ -8,6 +8,8 @@ using System.Threading;
 
 public class VoicePlayer : MonoBehaviour
 {
+    public GameObject indicator;
+
     private AudioSource audioSource;
     private AudioClip audioClip;
 
@@ -35,7 +37,11 @@ public class VoicePlayer : MonoBehaviour
         audioSource.spatialBlend = game.phase == GamePhase.Setup || game.phase == GamePhase.Main ? 1f : 0f;
 
         if (mod(audioSource.timeSamples - offset, audioClip.samples) > audioClip.samples - 960)
+        {
             audioSource.Stop();
+            if (indicator != null)
+                indicator.SetActive(false);
+        }
     }
 
     public void ProcessFrame(List<byte> frame)
@@ -67,5 +73,7 @@ public class VoicePlayer : MonoBehaviour
 
         if (!audioSource.isPlaying)
             audioSource.Play();
+        if (indicator != null)
+            indicator.SetActive(true);
     }
 }

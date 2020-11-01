@@ -10,6 +10,7 @@ class KillAttempted
 public:
 	int64_t time;
 	uint64_t target;
+	uint64_t killer;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

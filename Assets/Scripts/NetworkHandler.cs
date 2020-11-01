@@ -132,7 +132,7 @@ public class NetworkHandler
         uvei.idOfVoter = message.voter;
         uvei.idOfTarget = message.target;
         uvei.EventDescription = "Player Voted";
-        EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_VOTED, uvei);
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_VOTED, uvei);
     }
 
     internal void GameStartRequestedHandler(IPEndPoint endpoint, GameStartRequested message)
@@ -152,7 +152,10 @@ public class NetworkHandler
 
     internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
     {
-        game.player.killCooldown = message.time;
+        if (message.target == playerMobId)
+            game.deathAnimation.Play(mobs[message.target], mobs[message.killer]);
+        if (message.killer == playerMobId || message.killer == ulong.MaxValue)
+            game.player.killCooldown = message.time;
     }
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
@@ -167,6 +170,7 @@ public class NetworkHandler
 
     internal void AbilityUsedHandler(IPEndPoint endpoint, AbilityUsed message)
     {
+        game.player.sabotageCooldown = message.time;
     }
 
     internal void MobRoleUpdateHandler(IPEndPoint endpoint, MobRoleUpdate message)
@@ -257,6 +261,7 @@ public class NetworkHandler
 
     internal void DoorUpdateHandler(IPEndPoint endpoint, DoorUpdate message)
     {
+        game.doorManager.SetDoorState(message.door, message.open);
     }
 
     internal void LightUpdateHandler(IPEndPoint endpoint, LightUpdate message)

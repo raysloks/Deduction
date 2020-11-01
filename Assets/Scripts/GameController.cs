@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
     public TaskManager taskManager;
 
+    public DoorManager doorManager;
+
     private float heartbeat = 0f;
     private float snapshot = 0f;
 
@@ -33,6 +35,10 @@ public class GameController : MonoBehaviour
     public GameObject setupMenu;
 
     public GameObject hud;
+
+    public GameObject sabotageMenu;
+
+    public DeathAnimation deathAnimation;
 
 
     public Slider taskbar;
@@ -163,14 +169,15 @@ public class GameController : MonoBehaviour
             handler.link.Send(new RestartRequested());
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
-            handler.link.Send(new AbilityUsed { ability = 0 });
+            Sabotage(0);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            handler.link.Send(new AbilityUsed { ability = 0 });
+            Sabotage(1);
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            handler.link.Send(new AbilityUsed { ability = 0 });
+            Sabotage(2);
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
+        sabotageMenu.SetActive(player.role == 1);
         reportButton.gameObject.SetActive(player.IsAlive);
         hud.gameObject.SetActive(phase == GamePhase.Main);
         taskbar.gameObject.SetActive(
@@ -408,6 +415,11 @@ public class GameController : MonoBehaviour
         {
             UseTarget.Interact(this);
         }
+    }
+
+    public void Sabotage(int index)
+    {
+        handler.link.Send(new AbilityUsed { ability = (ulong)index });
     }
 
     public void StartGame()

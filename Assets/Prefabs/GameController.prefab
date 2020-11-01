@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2324288705218545753}
   - component: {fileID: 2324288705218545734}
   - component: {fileID: 2324288705218545735}
+  - component: {fileID: 6031572885414928724}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   prefab: {fileID: 8796570029264027741, guid: 117d78c6b53fd8f4f8bbf5f350c9f0d4, type: 3}
   popup: {fileID: 2324288705218545734}
   taskManager: {fileID: 2324288705218545735}
+  doorManager: {fileID: 6031572885414928724}
   player: {fileID: 0}
   text: {fileID: 0}
   nameInputField: {fileID: 0}
@@ -62,6 +64,8 @@ MonoBehaviour:
   targetMarker: {fileID: 0}
   reportButton: {fileID: 0}
   useButton: {fileID: 0}
+  lightTarget: 1
+  lightCurrent: 1
   time: 0
   timeout: 0
   settingsManager: {fileID: 2324288705218545753}
@@ -126,3 +130,16 @@ MonoBehaviour:
     type: 3}
   taskWindow: {fileID: 0}
   indicators: []
+  sabotageIndicators: []
+--- !u!114 &6031572885414928724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324288705218545754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d846df2e7839d0144b04adbb90d112a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

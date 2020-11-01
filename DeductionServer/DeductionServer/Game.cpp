@@ -28,10 +28,12 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	lights->minigame_index = 5000;
 
 	auto doors1 = new DoorSabotage();
+	doors1->doors = { 0, 1 };
 	doors1->duration = 15'000'000'000;
 	doors1->minigame_index = -1;
 
 	auto doors2 = new DoorSabotage();
+	doors2->doors = { 2, 3, 4 };
 	doors2->duration = 15'000'000'000;
 	doors2->minigame_index = -1;
 
@@ -50,6 +52,7 @@ void Game::tick(int64_t now)
 			startGame();
 			break;
 		case GamePhase::Intro:
+			resetCooldowns();
 			setPhase(GamePhase::Main, 0);
 			break;
 		case GamePhase::Main:
@@ -63,7 +66,7 @@ void Game::tick(int64_t now)
 		case GamePhase::EndOfMeeting:
 			setPhase(GamePhase::Ejection, timer + 3'000'000'000);
 			for (auto i : toBeEjected)
-				handler.killMob(i, true);
+				handler.killMob(i, -1ul);
 			toBeEjected.clear();
 			break;
 		case GamePhase::Ejection:
@@ -193,8 +196,6 @@ void Game::startGame()
 	handler.updateMobRoles();
 
 	createTaskLists();
-
-	resetCooldowns();
 
 	updateTaskbar();
 }
@@ -403,6 +404,8 @@ void Game::resetCooldowns()
 {
 	{
 		KillAttempted message;
+		message.target = -1ul;
+		message.killer = -1ul;
 		message.time = handler.time + settings.killCooldown;
 		handler.Broadcast(message);
 		for (auto&& mob : handler.mobs)
@@ -440,7 +443,7 @@ void Game::resetSettings()
 		settings.anonymousVotes = false;
 		settings.taskCount = 5;
 		settings.taskbarUpdateStyle = 2;
-		settings.sabotageCooldown = 30'000'000'000;
+		settings.sabotageCooldown = 45'000'000'000;
 
 		handler.Broadcast(settings);
 	}

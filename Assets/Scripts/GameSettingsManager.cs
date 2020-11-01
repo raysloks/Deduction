@@ -20,7 +20,7 @@ public class GameSettingsManager : MonoBehaviour
         settings = new List<GameSetting>
         {
             new GameSettingInputField<long>("Impostor Count", "impostorCount", game),
-            new GameSettingInputField<long>("Votes Per Player", "votesPerPlayer", game),
+            //new GameSettingInputField<long>("Votes Per Player", "votesPerPlayer", game),
             new GameSettingInputField<long>("Emergency Meetings Per Player", "emergencyMeetingsPerPlayer", game),
             new GameSettingTime("Emergency Meeting Cooldown", "emergencyMeetingCooldown", game),
             new GameSettingTime("Kill Cooldown", "killCooldown", game),
@@ -31,8 +31,8 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingInputField<float>("Crewmate Vision", "crewmateVision", game),
             new GameSettingInputField<float>("Impostor Vision", "impostorVision", game),
             new GameSettingInputField<float>("Player Speed", "playerSpeed", game),
-            new GameSettingToggle("Kill On Ties", "killOnTies", game),
-            new GameSettingToggle("Enable Skip Button", "enableSkipButton", game),
+            //new GameSettingToggle("Kill On Ties", "killOnTies", game),
+            //new GameSettingToggle("Enable Skip Button", "enableSkipButton", game),
             new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
             new GameSettingInputField<long>("Task Count", "taskCount", game),
