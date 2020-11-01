@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6947715649005239745}
   - component: {fileID: 8534556069289300800}
+  - component: {fileID: 229963399000846856}
   m_Layer: 0
   m_Name: VoiceIndicator
   m_TagString: Untagged
@@ -106,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216470099996662539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5808189148432683503}
@@ -162,6 +163,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &229963399000846856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216470099996662539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fc21452baaa93f48952de17926126cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: e25872162f9deb94d82d1b688804d91b, type: 3}
+  - {fileID: 21300000, guid: 5b63a6e0ab58a454b8f53729a8744d3b, type: 3}
+  - {fileID: 21300000, guid: 336cb2c1b4f3bed4b93bb7a08c6c9610, type: 3}
+  - {fileID: 21300000, guid: 6e367e217758a9449b46705166f4829c, type: 3}
 --- !u!1 &3328790177157356527
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5fe6fc20cfab14780269f1137c9924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  indicator: {fileID: 2216470099996662539}
+  indicator: {fileID: 229963399000846856}
 --- !u!114 &4664533791362606826
 MonoBehaviour:
   m_ObjectHideFlags: 0

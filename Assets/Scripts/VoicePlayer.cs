@@ -5,10 +5,11 @@ using Concentus.Structs;
 using System.Text;
 using System;
 using System.Threading;
+using System.Linq;
 
 public class VoicePlayer : MonoBehaviour
 {
-    public GameObject indicator;
+    public VoiceIndicator indicator;
 
     private AudioSource audioSource;
     private AudioClip audioClip;
@@ -20,6 +21,8 @@ public class VoicePlayer : MonoBehaviour
     private int offset;
 
     private GameController game;
+
+    private List<long> sums = new List<long>();
 
     private void Awake()
     {
@@ -40,7 +43,8 @@ public class VoicePlayer : MonoBehaviour
         {
             audioSource.Stop();
             if (indicator != null)
-                indicator.SetActive(false);
+                indicator.gameObject.SetActive(false);
+            sums.Clear();
         }
     }
 
@@ -61,8 +65,18 @@ public class VoicePlayer : MonoBehaviour
     public void ProcessFrame(short[] frame, int size)
     {
         float[] data = new float[size];
+        long sum = 0;
         for (int i = 0; i < size; ++i)
+        {
             data[i] = frame[i] / 32767f;
+            sum += frame[i] * frame[i];
+        }
+        sums.Add(sum);
+        sums.RemoveRange(0, Math.Max(0, sums.Count - 4));
+
+        sum = 0;
+        for (int i = 0; i < sums.Count; ++i)
+            sum += sums[i];
 
         if (mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -1200)
             audioSource.timeSamples = mod(offset - 2400, audioClip.samples);
@@ -74,6 +88,10 @@ public class VoicePlayer : MonoBehaviour
         if (!audioSource.isPlaying)
             audioSource.Play();
         if (indicator != null)
-            indicator.SetActive(true);
+        {
+            indicator.gameObject.SetActive(true);
+            float db = 10f * Mathf.Log10(Mathf.Sqrt(sum / (size * sums.Count)) / 32767f);
+            indicator.SetStage(db);
+        }
     }
 }
