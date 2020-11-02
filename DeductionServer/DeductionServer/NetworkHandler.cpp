@@ -76,6 +76,8 @@ uint64_t NetworkHandler::createMob(const Mob& mob)
 void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, const std::string & name)
 {
 	Mob mob;
+	if (game.phase != GamePhase::Setup)
+		mob.type = MobType::Ghost;
 	mob.sprite = getUnusedSprite();
 
 	Player player;
