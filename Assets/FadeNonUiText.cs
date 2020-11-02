@@ -6,7 +6,7 @@ using TMPro;
 
 public class FadeNonUiText : MonoBehaviour
 {
-
+    public float sec = 3;
     TextMeshPro myText;
     Color c;
     Color goal;
@@ -17,7 +17,7 @@ public class FadeNonUiText : MonoBehaviour
         myText = GetComponent<TextMeshPro>();
         c = myText.color;
         goal = new Color(0f, 0f, 0f, 0f);
-        StartCoroutine(FadeIn(3));
+        StartCoroutine(FadeIn(sec));
     }
 
     IEnumerator FadeIn(float Sec)

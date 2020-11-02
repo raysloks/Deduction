@@ -59,6 +59,7 @@ public class MazeGenerator : MonoBehaviour {
     private GameObject mazeParent;
     #endregion
     private GameObject player;
+    public GameObject arrowPrefab;
 
     private void Awake()
     {
@@ -162,23 +163,39 @@ public class MazeGenerator : MonoBehaviour {
 
         // Get edge cell randomly from list.
         Cell newCell = edgeCells[Random.Range(0, edgeCells.Count)];
+
+        GameObject newObj;
+        Debug.Log(newCell.gridPos);
         // Remove appropriate wall for chosen edge cell.
         if (newCell.gridPos.x == 0)
         {
             RemoveWall(newCell.cScript, 1);
+            newObj = Instantiate(arrowPrefab, newCell.cellObject.transform.position + new Vector3(-1, 0,0), Quaternion.identity);
+            newObj.transform.Rotate(0f, 0.0f, -90.0f, Space.Self);
+            Debug.Log("1");
         }
         else if (newCell.gridPos.x == mazeColumns)
         {
             RemoveWall(newCell.cScript, 2);
+            newObj = Instantiate(arrowPrefab, newCell.cellObject.transform.position + new Vector3(1, 0,0), Quaternion.identity);
+            newObj.transform.Rotate(0f, 0.0f, 90.0f, Space.Self);
+            Debug.Log("2");
         }
         else if (newCell.gridPos.y == mazeRows)
         {
             RemoveWall(newCell.cScript, 3);
+            newObj = Instantiate(arrowPrefab, newCell.cellObject.transform.position + new Vector3(0, 1,0), Quaternion.identity);
+            newObj.transform.Rotate(0f, 0.0f, 180.0f, Space.Self);
+            Debug.Log("3");
         }
         else
         {
+            newObj = Instantiate(arrowPrefab, newCell.cellObject.transform.position + new Vector3(0, -1,0), Quaternion.identity);
             RemoveWall(newCell.cScript, 4);
+            Debug.Log("4");
         }
+
+        newObj.transform.SetParent(newCell.cellObject.transform);
 
         newCell.cellObject.GetComponent<SpriteRenderer>().color = Color.red;
         newCell.cellObject.tag = "Wall";

@@ -7,6 +7,7 @@ public class StickyNote : MonoBehaviour
 {
     public GameObject bg;
     private SpriteRenderer sr;
+    private SpriteRenderer sr2;
     TextMeshPro myText;
     Color goal;
     Color goal2;
@@ -17,6 +18,7 @@ public class StickyNote : MonoBehaviour
     void Start()
     {
         sr = bg.GetComponent<SpriteRenderer>();
+        sr2 = GetComponent<SpriteRenderer>();
         sr.enabled = false;
         myText = transform.GetChild(1).GetComponent<TextMeshPro>();
 
@@ -37,23 +39,44 @@ public class StickyNote : MonoBehaviour
 
             sr.enabled = true;
             myText.color = goal;
+            string slowText = myText.text;
+            myText.text = "";
             doneFading = false;
-            StartCoroutine(fadeText(3));
+            StartCoroutine(fadeText(0.2f, slowText));
+           
         }
     }
-    IEnumerator fadeText(float sec)
+    IEnumerator fadeText(float sec, string slow)
     {
-        float counter = sec;
-
-        while (counter > 0)
+        for (int i = 0; i < slow.Length; i++)
         {
-            counter -= Time.deltaTime;
-            lerpedColor = Color.Lerp(goal2, goal, counter);
-            myText.color = lerpedColor;
-            yield return null;
+            if(slow[i] != null)
+            {
+                myText.text = string.Concat(myText.text, slow[i]);
+            }
+            //Wait a certain amount of time, then continue with the for loop
+            yield return new WaitForSeconds(sec);
         }
+        float wait = 5f;
+        yield return new WaitForSeconds(wait);
         sr.enabled = false;
-
+        myText.color = goal2;
         doneFading = true;
+    }
+
+    void OnMouseEnter()
+    {
+        sr2.material.SetFloat("_WaveAmount", 10f);
+        sr2.material.SetFloat("_WaveSpeed", 10f);
+        sr2.material.SetFloat("_WaveStrenght", 10f);
+        sr2.material.SetFloat("_HitEffectBlend", 0.5f);
+    }
+
+    void OnMouseExit()
+    {
+        sr2.material.SetFloat("_WaveAmount", 0f);
+        sr2.material.SetFloat("_WaveSpeed", 0f);
+        sr2.material.SetFloat("_WaveStrenght", 0f);
+        sr2.material.SetFloat("_HitEffectBlend", 0f);
     }
 }

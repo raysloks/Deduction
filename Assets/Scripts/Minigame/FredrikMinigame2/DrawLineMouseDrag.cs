@@ -56,7 +56,7 @@ public class DrawLineMouseDrag : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (parametersPassed.Count > 0)
+            if (parametersPassed.Count > 0 && passed < winAmount)
             {
                 foreach (GameObject go in parametersPassed)
                 {
