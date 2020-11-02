@@ -21,7 +21,7 @@ public class TargetSpawner : MonoBehaviour
     private float minimize = 60f;
     private int score = 0;
     private int targetScore = 10;
-    private int hitBabyPenalty = 5;
+    private int hitBabyPenalty = 1;
     private bool GivePoints = true;
 
     // Start is called before the first frame update
@@ -48,12 +48,6 @@ public class TargetSpawner : MonoBehaviour
         StartCoroutine(SpawnTarget(1));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     IEnumerator SpawnTarget(int Sec)
     {
         float counter = Sec;
@@ -70,7 +64,7 @@ public class TargetSpawner : MonoBehaviour
                 }
                 else
                 {
-                    targetScore += hitBabyPenalty;
+                    score -= hitBabyPenalty;
                     text.text = score + "/" + targetScore;
 
                 }

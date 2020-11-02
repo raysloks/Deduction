@@ -16,11 +16,17 @@ public class PasswordChecker : MonoBehaviour
     void Start()
     {
         myText = GetComponent<TextMeshProUGUI>();
+        
         if (ShortTask == true)
         {           
-            password.text = readTextFile("Passwords.txt");
-            finalPass = password.text;
-            pretextText.text = "Password is:";
+            finalPass = readTextFile("Passwords.txt");
+            pretextText.text = "Password is: ";
+            for(int i = 0; i < 4; i++)
+            {
+                int r = Random.Range(0, 9);
+                finalPass += r.ToString();
+            }
+            password.text = finalPass;
         }
         else
         {
@@ -48,6 +54,7 @@ public class PasswordChecker : MonoBehaviour
             }
             else
             {
+                doneText.text = "Wrong Password";
                 int count = finalPass.Split(' ').Length;
                 int count2 = myText.text.Split(' ').Length;
                 Debug.Log("Nope " + count + " " + finalPass.Split(' ')[finalPass.Split(' ').Length - 1] + " vs " + myText.text + " " + count2);
@@ -56,7 +63,7 @@ public class PasswordChecker : MonoBehaviour
     }
     public static bool StringComparison(string s1, string s2)
     {
-        if (s1.Length - 1  != (s2.Length - 1)) {
+        if (s1.Length  != (s2.Length - 1)) {
             Debug.Log("Different Lenght " + s1.Length + " vs " + s2.Length);
             return false;
         }
@@ -82,7 +89,12 @@ public class PasswordChecker : MonoBehaviour
         string[] lines = result.Split("\n"[0]);
 
         int r = Random.Range(0, lines.Length - 1);
-        return lines[r];
+        string str = lines[r];
+        if (str != null && str.Length > 0)
+        {
+            str = str.Substring(0, str.Length - 1);
+        }
+        return str;
 
 
     }

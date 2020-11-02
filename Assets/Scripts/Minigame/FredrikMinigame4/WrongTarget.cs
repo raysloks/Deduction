@@ -6,6 +6,7 @@ public class WrongTarget : MonoBehaviour
 {
     public GameObject deathParticle;
 
+    public GameObject textObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,9 @@ public class WrongTarget : MonoBehaviour
     void OnMouseDown()
     {
         Instantiate(deathParticle, transform.position, Quaternion.identity);
+
+        Instantiate(textObject, transform.position, Quaternion.identity);
+        
         DestroyImmediate(gameObject, true);
 
         // Destroy the gameObject after clicking on it
