@@ -33,6 +33,8 @@ int64 taskCount
 int64 taskbarUpdateStyle
 int64 sabotageCooldown
 GameStartRequested
+string password
+uint64 passwordLocation
 GivenTasks
 uint8 taskId[]
 Heartbeat
@@ -89,6 +91,8 @@ int64 timer
 bool completed
 TaskListUpdate
 uint16 tasks[]
+string password
+uint64 passwordLocation
 TaskUpdate
 uint16 task
 VoiceFrame

@@ -404,6 +404,8 @@ void Game::createTaskLists()
 
 		TaskListUpdate message;
 		message.tasks = tasks;
+		message.password = password;
+		message.passwordLocation = passwordLocation;
 		handler.link.Send(player.first, message);
 	}
 }
@@ -582,3 +584,4 @@ void Game::setLight(float light)
 	message.light = light;
 	handler.Broadcast(message);
 }
+

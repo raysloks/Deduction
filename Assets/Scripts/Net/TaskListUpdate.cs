@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public struct TaskListUpdate
 {
 	public List<ushort> tasks;
+	public string password;
+	public ulong passwordLocation;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -15,6 +17,13 @@ public struct TaskListUpdate
 			foreach (var i in this.tasks)
 		writer.Write((ushort)i);
 		}
+		{
+			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(password);
+			ushort size = (ushort)bytes.Length;
+			writer.Write(size);
+			writer.Write(bytes);
+		}
+		writer.Write((ulong)passwordLocation);
 	}
 
 	public static TaskListUpdate Deserialize(BinaryReader reader)
@@ -30,6 +39,12 @@ public struct TaskListUpdate
 			_ret.tasks.Add(element);
 		}
 	}
+		{
+			ushort size = reader.ReadUInt16();
+			byte[] bytes = reader.ReadBytes(size);
+			_ret.password = System.Text.Encoding.UTF8.GetString(bytes);
+		}
+		_ret.passwordLocation = (ulong)reader.ReadUInt64();
 		return _ret;
 	}
 };

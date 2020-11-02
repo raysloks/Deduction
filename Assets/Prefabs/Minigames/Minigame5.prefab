@@ -116,8 +116,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.018035889, y: -0.6319885}
-  m_SizeDelta: {x: 0.33039206, y: 0.3797958}
+  m_AnchoredPosition: {x: 0, y: -0.6853}
+  m_SizeDelta: {x: 0.33039206, y: 0.27320826}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6550827376095257537
 MeshRenderer:
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3.4
+  m_fontSize: 2.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -292,8 +292,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.045, y: 0.968}
-  m_SizeDelta: {x: 1.4462423, y: 0.27318048}
+  m_AnchoredPosition: {x: 0.042, y: -0.241}
+  m_SizeDelta: {x: 1.2370365, y: 0.27318048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8495402322309241408
 MeshRenderer:
@@ -333,7 +333,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
 --- !u!222 &570692008717365237
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -361,9 +361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Jump Rope Training
-
-    Jump with Mouseclick'
+  m_text: Jump With Mouseclick
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -433,7 +431,7 @@ MonoBehaviour:
   m_renderer: {fileID: 8495402322309241408}
   m_maskType: 0
   _SortingLayerID: 0
-  _SortingOrder: 0
+  _SortingOrder: 4
 --- !u!114 &3022295419751062654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,7 +648,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0, b: 0, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}

@@ -11,6 +11,12 @@ void TaskListUpdate::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->tasks.data(), sizeof(uint16_t) * size);
 	}
+	{
+		uint16_t size = this->password.size();
+		os.write((char*)&size, sizeof(size));
+		os.write((char*)this->password.data(), size);
+	}
+	os.write((char*)&passwordLocation, (sizeof(passwordLocation) + 3) / 4 * 4);
 }
 
 void TaskListUpdate::deserialize(std::istream& is)
@@ -21,5 +27,12 @@ void TaskListUpdate::deserialize(std::istream& is)
 		this->tasks.resize(size);
 		is.read((char*)this->tasks.data(), sizeof(uint16_t) * size);
 	}
+	{
+		uint16_t size;
+		is.read((char*)&size, sizeof(size));
+		this->password.resize(size);
+		is.read((char*)this->password.data(), size);
+	}
+	is.read((char*)&passwordLocation, (sizeof(passwordLocation) + 3) / 4 * 4);
 }
 

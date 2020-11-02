@@ -5,6 +5,11 @@
 #include <map>
 #include <functional>
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
 #include "GamePhase.h"
 #include "Vec2.h"
 #include "Net/GameSettings.h"
@@ -15,6 +20,8 @@ class NetworkHandler;
 class Game
 {
 public:
+
+
 	Game(NetworkHandler& handler);
 
 	void tick(int64_t now);
@@ -62,6 +69,10 @@ public:
 
 	std::vector<std::pair<uint64_t, uint64_t>> votes;
 
+    std::string password;
+	int passwordLocation;
+
+
 	std::vector<uint64_t> toBeEjected;
 
 	std::multimap<int64_t, std::function<void(void)>> timers;
@@ -69,5 +80,8 @@ public:
 	std::shared_ptr<Map> map;
 
 	std::vector<std::shared_ptr<SabotageTask>> sabotageTasks;
+
 };
+
+
 

@@ -380,8 +380,10 @@ void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoin
 }
 
 void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const GameStartRequested & message)
-{
-	auto it = players.find(endpoint);
+{	
+    game.password = message.password;
+	game.passwordLocation = message.passwordLocation;
+	auto it = players.find(endpoint);	
 	if (it != players.end())
 	{
 		game.startGameCountdown();

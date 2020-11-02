@@ -213,6 +213,15 @@ public class NetworkHandler
 
     internal void TaskListUpdateHandler(IPEndPoint endpoint, TaskListUpdate message)
     {
+        game.noteLocation.GetComponent<PasswordSpawner>().SetPassword((int)message.passwordLocation, message.password);
+        Debug.Log(message.password + message.passwordLocation);
+        for(int i = 0; i < game.noteLocation.transform.childCount; i++)
+        {
+            if(game.noteLocation.transform.GetChild(i).gameObject.activeSelf == true)
+            {
+                Debug.Log("Found Active " + game.noteLocation.transform.GetChild(i).gameObject.name);
+            }
+        }
         game.taskManager.tasks.Clear();
         foreach (var task in message.tasks)
             game.taskManager.tasks.Add(new Task { minigame_index = task, completed = false });

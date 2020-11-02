@@ -6,11 +6,16 @@
 
 #include "NetworkHandler.h"
 #include "MatchmakerHandler.h"
+#include "Game.h"
+
+#include <iostream>
+#include <fstream>
+#include <string>
 
 int main()
 {
 	std::cout << "starting..." << std::endl;
-
+	
 	NetworkHandler handler;
 
 	uint64_t seed[2];
@@ -35,6 +40,8 @@ int main()
 		handler.tick(now);
 
 		++tick;
+	
+	
 	}
 
 	return 0;

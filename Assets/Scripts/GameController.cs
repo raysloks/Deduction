@@ -5,6 +5,7 @@ using System;
 using EventCallbacks;
 using System.Xml;
 using System.Linq;
+using System.IO;
 using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
@@ -48,6 +49,8 @@ public class GameController : MonoBehaviour
     public Text killCooldownText;
 
     public GameObject targetMarker;
+
+    public GameObject noteLocation;
 
 
     public Button reportButton;
@@ -425,7 +428,29 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         if (phase == GamePhase.Setup)
-            handler.link.Send(new GameStartRequested());
+        {
+            int count = noteLocation.transform.childCount;
+            GameStartRequested message = new GameStartRequested
+            {
+                password = readTextFile("Passwords.txt"),
+                passwordLocation = (ulong)UnityEngine.Random.Range(0, (count - 1))
+            };
+            handler.link.Send(message);
+        }
+    }
+
+    private string readTextFile(string fileName)
+    {
+        string result;
+        StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+        string fileContents = sr.ReadToEnd();
+        sr.Close();
+        result = fileContents;
+
+        string[] lines = result.Split("\n"[0]);
+
+        int r = UnityEngine.Random.Range(0, lines.Length - 1);
+        return lines[r];
     }
 
     public void ResetSettings()
