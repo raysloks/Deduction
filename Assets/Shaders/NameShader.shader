@@ -239,7 +239,7 @@ SubShader{
 			clip(c.a - 0.001);
 			#endif
 
-			half4 light = tex2D(_ShapeLightTexture0, input.lightingUV + float2(0.0, -1.5 / 6.0));
+			half4 light = tex2D(_ShapeLightTexture0, input.lightingUV + float2(0.0, -1.5 / 6.0 / 2.0));
 			light = max(light, tex2D(_ShapeLightTexture0, input.lightingUV));
 			light.a = (light.r + light.g + light.b) / 3.0;
 			light.rgb += 0.2;
