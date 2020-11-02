@@ -105,7 +105,7 @@
                     half4 light = CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV);
                     //light.a = (light.r + light.g + light.b) / 3.0 * 1.5;
                     light += _AmbientLight;
-                    light = 0.5 - cos(min(1, light) * 3.14159265) * 0.5;
+                    light = max(0.0, min(1.0, 0.5 - cos(min(1, light) * 3.14159265) * (0.5 + 0.5 / 256.0)));
                     main *= light;
                     return main;
                 }
