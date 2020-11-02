@@ -65,6 +65,10 @@ public class TabNavigation : MonoBehaviour
                         if (target is Button button)
                             button.OnSubmit(new BaseEventData(EventSystem.current));
                     }
+                    else
+                    {
+                        EventSystem.current.SetSelectedGameObject(null);
+                    }
                 }
             }
         }

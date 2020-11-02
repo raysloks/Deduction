@@ -78,8 +78,11 @@ public:
 	int64_t time;
 
 	std::map<asio::ip::udp::endpoint, Player> players;
-	std::vector<Mob> mobs;
+	std::vector<Mob> mobs;;
 
 	Game game;
+
+	uint64_t leader;
+	uint64_t lifetimePlayerCount;
 };
 

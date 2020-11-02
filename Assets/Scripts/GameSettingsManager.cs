@@ -59,7 +59,7 @@ public class GameSettingsManager : MonoBehaviour
 
     private void Update()
     {
-        window.gameObject.SetActive(game.phase == GamePhase.Setup && game.timer == 0);
+        //window.gameObject.SetActive(game.phase == GamePhase.Setup && game.timer == 0);
     }
 
     public void UpdateInputDisplay()
@@ -71,5 +71,11 @@ public class GameSettingsManager : MonoBehaviour
     public void SendSettings()
     {
         game.handler.link.Send(game.settings);
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        foreach (var setting in settings)
+            setting.GetSelectable().interactable = interactable;
     }
 }

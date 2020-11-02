@@ -10,6 +10,9 @@ NetworkHandler::NetworkHandler() : game(*this)
 
 	mobs.reserve(1024); // lul
 
+	leader = 0;
+	lifetimePlayerCount = 0;
+
 	//createMob();
 }
 
@@ -49,12 +52,33 @@ void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 			removeMob(player.second.mob);
 
 			PlayerUpdate message;
-			message.id = 0;
+			message.id = player.second.index;
 			message.mob = player.second.mob;
 			message.name = "";
 			Broadcast(message);
 
 			std::cout << player.second.name << " at " << player.first << " timed out" << std::endl;
+
+			if (player.second.index == leader)
+			{
+				leader = lifetimePlayerCount;
+				for (auto player : players)
+				{
+					if (player.second.index < leader)
+						leader = player.second.index;
+				}
+
+				for (auto player : players)
+				{
+					if (player.second.index == leader)
+					{
+						PlayerUpdate message;
+						message.id = -1ul;
+						message.mob = player.second.mob;
+						link.Send(player.first, message);
+					}
+				}
+			}
 		}
 	}
 }
@@ -81,16 +105,19 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 	mob.sprite = getUnusedSprite();
 
 	Player player;
+	player.index = lifetimePlayerCount;
 	player.mob = createMob(mob);
 	player.name = name;
 	player.timeout = time + 10'000'000'000;
 	players.emplace(endpoint, player);
 
+	++lifetimePlayerCount;
+
 	mobs[player.mob].color = generateColor();
 
 	{
 		PlayerUpdate message;
-		message.id = 0;
+		message.id = player.index;
 		message.mob = player.mob;
 		message.name = player.name;
 		Broadcast(message);
@@ -99,7 +126,7 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 	for (auto player : players)
 	{
 		PlayerUpdate message;
-		message.id = 0;
+		message.id = player.second.index;
 		message.mob = player.second.mob;
 		message.name = player.second.name;
 		link.Send(endpoint, message);
@@ -114,7 +141,7 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 
 	{
 		PlayerUpdate message;
-		message.id = -1;
+		message.id = player.index == leader ? -1ul : -2ul;
 		message.mob = players[endpoint].mob;
 		link.Send(endpoint, message);
 	}
@@ -373,7 +400,8 @@ void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoin
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
-		if (game.phase == GamePhase::Setup)
+		auto&& player = it->second;
+		if (game.phase == GamePhase::Setup && player.index == leader)
 		{
 			game.settings = message;
 			Broadcast(game.settings);
@@ -388,7 +416,11 @@ void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & e
 	auto it = players.find(endpoint);	
 	if (it != players.end())
 	{
-		game.startGameCountdown();
+		auto&& player = it->second;
+		if (player.index == leader)
+		{
+			game.startGameCountdown();
+		}
 	}
 }
 
@@ -507,7 +539,22 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
 {
 	auto it = players.find(endpoint);
-	if (it == players.end())
+	if (it != players.end())
+	{
+		if (game.phase == GamePhase::Setup)
+		{
+			auto&& player = it->second;
+
+			player.name = message.name;
+
+			PlayerUpdate message;
+			message.id = 0;
+			message.mob = player.mob;
+			message.name = player.name;
+			Broadcast(message);
+		}
+	}
+	else
 	{
 		createPlayer(endpoint, message.name);
 	}
@@ -581,12 +628,28 @@ void NetworkHandler::ReportAttemptedHandler(const asio::ip::udp::endpoint& endpo
 
 void NetworkHandler::ResetGameSettingsHandler(const asio::ip::udp::endpoint & endpoint, const ResetGameSettings & message)
 {
-	game.resetSettings();
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		if (player.index == leader)
+		{
+			game.resetSettings();
+		}
+	}
 }
 
 void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & endpoint, const RestartRequested & message)
 {
-	game.restartSetup();
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		if (player.index == leader)
+		{
+			game.restartSetup();
+		}
+	}
 }
 
 void NetworkHandler::SabotageTaskUpdateHandler(const asio::ip::udp::endpoint & endpoint, const SabotageTaskUpdate & message)

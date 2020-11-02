@@ -34,6 +34,7 @@ public class GameController : MonoBehaviour
     public GameObject connectionMenu;
 
     public GameObject setupMenu;
+    public GameObject setupLeaderMenu;
 
     public GameObject hud;
 
@@ -113,6 +114,21 @@ public class GameController : MonoBehaviour
                 if (value != null)
                     value.Highlight(true);
                 useTarget = value;
+            }
+        }
+    }
+
+    private bool isLeader = false;
+    public bool IsLeader
+    {
+        get => isLeader;
+        set
+        {
+            if (isLeader != value)
+            {
+                isLeader = value;
+                settingsManager.SetInteractable(isLeader);
+                setupLeaderMenu.SetActive(isLeader);
             }
         }
     }
@@ -451,6 +467,15 @@ public class GameController : MonoBehaviour
 
         int r = UnityEngine.Random.Range(0, lines.Length - 1);
         return lines[r];
+    }
+
+    public void UpdateName()
+    {
+        string name = nameInputField.text;
+        name = name.Trim();
+        if (name.Length == 0)
+            name = "Agent " + rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
+        handler.link.Send(new PlayerUpdate { name = name });
     }
 
     public void ResetSettings()

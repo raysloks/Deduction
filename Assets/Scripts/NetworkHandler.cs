@@ -75,8 +75,9 @@ public class NetworkHandler
 
     internal void PlayerUpdateHandler(IPEndPoint endpoint, PlayerUpdate message)
     {
-        if (message.id == ulong.MaxValue)
+        if (message.id >= ulong.MaxValue - 1)
         {
+            game.IsLeader = message.id == ulong.MaxValue;
             playerMobId = message.mob;
             mobs[playerMobId] = game.player;
             game.connectionState = GameController.ConnectionState.Connected;
@@ -203,12 +204,7 @@ public class NetworkHandler
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
         game.connectionState = GameController.ConnectionState.JoiningLobby;
-
-        string name = game.nameInputField.text;
-        name = name.Trim();
-        if (name.Length == 0)
-            name = "Agent " + game.rng.RangeInt(1, 1000).ToString().PadLeft(3, '0');
-        link.Send(new PlayerUpdate { name = name });
+        game.UpdateName();
     }
 
     internal void TaskListUpdateHandler(IPEndPoint endpoint, TaskListUpdate message)
