@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(InputField))]
-public class InputFieldUpperCase : MonoBehaviour
+public class IgnoreTab : MonoBehaviour
 {
     private void Awake()
     {
@@ -12,8 +12,8 @@ public class InputFieldUpperCase : MonoBehaviour
 
     private char Validate(string input, int charIndex, char addedChar)
     {
-        if (addedChar == 0)
+        if (addedChar == 9)
             return (char)0;
-        return char.ToUpper(addedChar);
+        return addedChar;
     }
 }

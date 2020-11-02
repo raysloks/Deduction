@@ -290,10 +290,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    m_SelectedColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -414,7 +414,8 @@ GameObject:
   - component: {fileID: 1462836642207225126}
   - component: {fileID: 1462836642207225125}
   - component: {fileID: 1462836642207225124}
-  - component: {fileID: 1462836642207225127}
+  - component: {fileID: 1018221628063821902}
+  - component: {fileID: 4665397860511732165}
   m_Layer: 5
   m_Name: LobbyInputField
   m_TagString: Untagged
@@ -535,18 +536,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1462836642207225127}
-        m_MethodName: MakeUpperCase
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1462836642207225124}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.InputField, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
@@ -554,7 +544,19 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 2
   m_ReadOnly: 0
---- !u!114 &1462836642207225127
+--- !u!114 &1018221628063821902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462836642207225122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29b350c43755fe48a5a80f0ca308925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4665397860511732165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -656,6 +658,7 @@ GameObject:
   - component: {fileID: 1462836642241634558}
   - component: {fileID: 1462836642241634557}
   - component: {fileID: 1462836642241634556}
+  - component: {fileID: 3322798445844126526}
   m_Layer: 5
   m_Name: NameInputField
   m_TagString: Untagged
@@ -795,6 +798,18 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 2
   m_ReadOnly: 0
+--- !u!114 &3322798445844126526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462836642241634553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29b350c43755fe48a5a80f0ca308925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5939154981226786186
 GameObject:
   m_ObjectHideFlags: 0
