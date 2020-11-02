@@ -27,4 +27,9 @@ public class GameSettingToggle : GameSetting
     {
         toggle.SetIsOnWithoutNotify((bool)field.GetValue(game.settings));
     }
+
+    public override Selectable GetSelectable()
+    {
+        return toggle;
+    }
 }

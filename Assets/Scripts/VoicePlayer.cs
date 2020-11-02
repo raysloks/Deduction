@@ -36,7 +36,7 @@ public class VoicePlayer : MonoBehaviour
     {
         audioSource.spatialBlend = game.phase == GamePhase.Setup || game.phase == GamePhase.Main ? 1f : 0f;
 
-        if (mod(audioSource.timeSamples - offset, audioClip.samples) > audioClip.samples - 960)
+        if (Utility.Mod(audioSource.timeSamples - offset, audioClip.samples) > audioClip.samples - 960)
         {
             audioSource.Stop();
             sums.Clear();
@@ -50,11 +50,6 @@ public class VoicePlayer : MonoBehaviour
 
         int thisFrameSize = decoder.Decode(frame.ToArray(), 0, frame.Count, outputBuffer, 0, frameSize, false);
         ProcessFrame(outputBuffer, thisFrameSize);
-    }
-
-    int mod(int x, int m)
-    {
-        return (x % m + m) % m;
     }
 
     public float GetLoudness()
@@ -85,8 +80,8 @@ public class VoicePlayer : MonoBehaviour
         square_sums.Add(square_sum);
         square_sums.RemoveRange(0, Math.Max(0, sums.Count - 5));
 
-        if (mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -1200)
-            audioSource.timeSamples = mod(offset - 2400, audioClip.samples);
+        if (Utility.Mod(audioSource.timeSamples - offset + 4800, audioClip.samples) - 4800 > -1200)
+            audioSource.timeSamples = Utility.Mod(offset - 2400, audioClip.samples);
 
         audioClip.SetData(data, offset);
         offset += size;

@@ -45,6 +45,16 @@ public class GameSettingsManager : MonoBehaviour
 
         foreach (var setting in settings)
             setting.CreateInput(this);
+
+        for (int i = 0; i < settings.Count; ++i)
+        {
+            settings[i].GetSelectable().navigation = new Navigation
+            {
+                mode = Navigation.Mode.Explicit,
+                selectOnUp = settings[Utility.Mod(i - 1, settings.Count)].GetSelectable(),
+                selectOnDown = settings[Utility.Mod(i + 1, settings.Count)].GetSelectable()
+            };
+        }
     }
 
     private void Update()

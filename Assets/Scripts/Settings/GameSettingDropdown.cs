@@ -32,4 +32,9 @@ public class GameSettingDropdown : GameSetting
     {
         dropdown.SetValueWithoutNotify((int)Convert.ChangeType(field.GetValue(game.settings), typeof(int)));
     }
+
+    public override Selectable GetSelectable()
+    {
+        return dropdown;
+    }
 }

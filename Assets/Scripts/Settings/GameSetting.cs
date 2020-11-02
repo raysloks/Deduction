@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using UnityEngine.UI;
 
 public abstract class GameSetting
 {
@@ -16,4 +17,6 @@ public abstract class GameSetting
     public abstract void CreateInput(GameSettingsManager manager);
 
     public abstract void UpdateInputDisplay();
+
+    public abstract Selectable GetSelectable();
 }

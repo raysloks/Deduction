@@ -32,6 +32,11 @@ public class GameSettingInputField<T> : GameSetting where T : IEquatable<T>
         inputField.SetTextWithoutNotify(Get());
     }
 
+    public override Selectable GetSelectable()
+    {
+        return inputField;
+    }
+
     protected virtual string Get()
     {
         return field.GetValue(game.settings).ToString();
