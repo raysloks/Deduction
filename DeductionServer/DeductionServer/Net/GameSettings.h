@@ -27,6 +27,7 @@ public:
 	int64_t taskCount;
 	int64_t taskbarUpdateStyle;
 	int64_t sabotageCooldown;
+	bool gameOverEnabled;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

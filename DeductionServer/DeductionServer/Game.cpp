@@ -454,6 +454,7 @@ void Game::resetSettings()
 		settings.taskCount = 5;
 		settings.taskbarUpdateStyle = 2;
 		settings.sabotageCooldown = 45'000'000'000;
+		settings.gameOverEnabled = true;
 
 		handler.Broadcast(settings);
 	}

@@ -23,6 +23,7 @@ public struct GameSettings
 	public long taskCount;
 	public long taskbarUpdateStyle;
 	public long sabotageCooldown;
+	public bool gameOverEnabled;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -45,6 +46,7 @@ public struct GameSettings
 		writer.Write((long)taskCount);
 		writer.Write((long)taskbarUpdateStyle);
 		writer.Write((long)sabotageCooldown);
+		writer.Write((bool)gameOverEnabled);
 	}
 
 	public static GameSettings Deserialize(BinaryReader reader)
@@ -69,6 +71,7 @@ public struct GameSettings
 		_ret.taskCount = (long)reader.ReadInt64();
 		_ret.taskbarUpdateStyle = (long)reader.ReadInt64();
 		_ret.sabotageCooldown = (long)reader.ReadInt64();
+		_ret.gameOverEnabled = (bool)reader.ReadBoolean();
 		return _ret;
 	}
 };

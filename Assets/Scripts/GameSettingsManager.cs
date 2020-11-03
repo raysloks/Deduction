@@ -37,7 +37,8 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
             new GameSettingInputField<long>("Task Count", "taskCount", game),
             new GameSettingDropdown("Taskbar Update Style", "taskbarUpdateStyle", game, new List<string>{ "Instant", "End of Meeting", "Start of Meeting" }),
-            new GameSettingTime("Sabotage Cooldown", "sabotageCooldown", game)
+            new GameSettingTime("Sabotage Cooldown", "sabotageCooldown", game),
+            new GameSettingToggle("Game Over Enabled", "gameOverEnabled", game)
         };
 
         game.settings.crewmateVision = 5.0f;
