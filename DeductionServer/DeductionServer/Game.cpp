@@ -462,6 +462,9 @@ void Game::resetSettings()
 
 void Game::checkForGameOver(int64_t now)
 {
+	if (!settings.gameOverEnabled)
+		return;
+
 	if (settings.killVictoryEnabled)
 	{
 		size_t crew = 0;
