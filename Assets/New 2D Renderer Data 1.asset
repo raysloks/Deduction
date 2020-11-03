@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11145981673336645838492a2d98e247, type: 3}
-  m_Name: New 2D Renderer Data
+  m_Name: New 2D Renderer Data 1
   m_EditorClassIdentifier: 
   m_RendererFeatures: []
   m_RendererFeatureMap: 
@@ -22,10 +22,10 @@ MonoBehaviour:
     name: Default
     maskTextureChannel: 0
     renderTextureScale: 1
-    blendMode: 1
+    blendMode: 99
     customBlendFactors:
       multiplicative: 0
-      additive: 0
+      additive: 5
   - enabled: 0
     name: Blend Style 1
     maskTextureChannel: 0

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7330650275718540925}
   - component: {fileID: 5302547240655836380}
   - component: {fileID: 245249411989485713}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DeathAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 7243922713676922732}
   - component: {fileID: 4260001745915676101}
   - component: {fileID: 6532401858795563815}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Killer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 1003762730574632304}
   - component: {fileID: 6075898156395344051}
   - component: {fileID: 1142434393739554936}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Victim
   m_TagString: Untagged
   m_Icon: {fileID: 0}

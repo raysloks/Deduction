@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f0f093c5af9e8e4aabb6d12a97d63d0, type: 2}
+  - {fileID: 2100000, guid: 71271918c01cba94aa03189233968cce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   - {x: 0.5, y: 0.1, z: 0}
   m_ShapePathHash: -407362747
   m_Mesh: {fileID: 0}
-  m_InstanceId: 23910
+  m_InstanceId: 158662
 --- !u!1 &2638985777451582614
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f0f093c5af9e8e4aabb6d12a97d63d0, type: 2}
+  - {fileID: 2100000, guid: 71271918c01cba94aa03189233968cce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -373,7 +373,7 @@ MonoBehaviour:
   - {x: 0.5, y: 1.3, z: 0}
   m_ShapePathHash: -2015901651
   m_Mesh: {fileID: 0}
-  m_InstanceId: 23926
+  m_InstanceId: 158678
 --- !u!1 &2638985777563980258
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,7 +424,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f0f093c5af9e8e4aabb6d12a97d63d0, type: 2}
+  - {fileID: 2100000, guid: 71271918c01cba94aa03189233968cce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   - {x: -0.5, y: 1.1, z: 0}
   m_ShapePathHash: -77262883
   m_Mesh: {fileID: 0}
-  m_InstanceId: 23936
+  m_InstanceId: 158688
 --- !u!1 &2638985778546659099
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +532,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f0f093c5af9e8e4aabb6d12a97d63d0, type: 2}
+  - {fileID: 2100000, guid: 71271918c01cba94aa03189233968cce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -589,7 +589,7 @@ MonoBehaviour:
   - {x: 0.5, y: 0.1, z: 0}
   m_ShapePathHash: -407362747
   m_Mesh: {fileID: 0}
-  m_InstanceId: 23946
+  m_InstanceId: 158698
 --- !u!1 &2638985778672776113
 GameObject:
   m_ObjectHideFlags: 0

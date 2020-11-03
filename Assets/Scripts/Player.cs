@@ -18,7 +18,7 @@ public class Player : Mob
     private new void Awake()
     {
         base.Awake();
-        visionLight = GetComponent<Light2D>();
+        visionLight = GetComponentInChildren<Light2D>();
     }
 
     private void Update()

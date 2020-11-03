@@ -12,6 +12,8 @@ public class MinigameInitiator : Interactable
 
     public SpriteRenderer outline;
 
+    public bool alwaysActive = false;
+
     private MinigamePopupScript popup;
     private GameController game;
 
@@ -22,7 +24,7 @@ public class MinigameInitiator : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 || 
+        return alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 || 
             game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
     }
 

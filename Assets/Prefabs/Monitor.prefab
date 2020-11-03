@@ -100,6 +100,7 @@ MonoBehaviour:
     type: 3}
   minigame_index: 0
   outline: {fileID: 1368123981062287680}
+  alwaysActive: 0
 --- !u!58 &3604052726584254773
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.75
 --- !u!1 &7335392111455978158
 GameObject:
   m_ObjectHideFlags: 0

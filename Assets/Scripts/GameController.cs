@@ -329,7 +329,7 @@ public class GameController : MonoBehaviour
                         text.text = "";
                         break;
                     case GamePhase.Main:
-                        text.text = "";
+                        text.text = (Time.deltaTime * 1000f).ToString("F1");
                         break;
                     case GamePhase.Discussion:
                         text.text = "Voting begins in " + secondsRemaining;
