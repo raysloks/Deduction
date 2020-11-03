@@ -195,7 +195,7 @@ public class NetworkHandler
     internal void VoiceFrameHandler(IPEndPoint endpoint, VoiceFrame message)
     {
         VoicePlayer voicePlayer = null;
-        if (mobs.ContainsKey(message.id) && (message.id != playerMobId || game.listenToSelf))
+        if (mobs.ContainsKey(message.id))
             voicePlayer = mobs[message.id].GetComponentInChildren<VoicePlayer>();
         if (voicePlayer)
             voicePlayer.ProcessFrame(message.data);

@@ -58,6 +58,8 @@ public:
 	void updateTaskbar();
 
 	void setLight(float light);
+	void setVoice(bool enabled);
+
 
 	GamePhase phase;
 
@@ -80,6 +82,8 @@ public:
 	std::shared_ptr<Map> map;
 
 	std::vector<std::shared_ptr<SabotageTask>> sabotageTasks;
+
+	bool voiceEnabled;
 
 };
 

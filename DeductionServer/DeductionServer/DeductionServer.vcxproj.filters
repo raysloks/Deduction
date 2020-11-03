@@ -133,6 +133,7 @@
     <ClInclude Include="Net\SabotageTaskUpdate.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="VoiceSabotage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -248,6 +249,7 @@
     <ClCompile Include="Net\SabotageTaskUpdate.cpp">
       <Filter>Net</Filter>
     </ClCompile>
+    <ClCompile Include="VoiceSabotage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

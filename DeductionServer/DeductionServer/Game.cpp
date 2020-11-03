@@ -5,6 +5,7 @@
 #include "SabotageTask.h"
 #include "LightSabotage.h"
 #include "DoorSabotage.h"
+#include "VoiceSabotage.h"
 
 Game::Game(NetworkHandler& handler) : handler(handler)
 {
@@ -12,6 +13,8 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	timer = 0;
 
 	resetSettings();
+
+	voiceEnabled = true;
 
 
 	map = std::make_shared<Map>();
@@ -37,9 +40,20 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	doors2->duration = 15'000'000'000;
 	doors2->minigame_index = -1;
 
+	auto doors3 = new DoorSabotage();
+	doors3->doors = { 5, 6, 7 };
+	doors3->duration = 15'000'000'000;
+	doors3->minigame_index = -1;
+
+	auto voice = new VoiceSabotage();
+	voice->duration = 15'000'000'000;
+	voice->minigame_index = -1;
+
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(lights));
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors1));
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors2));
+	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors3));
+	map->sabotages.push_back(std::unique_ptr<Sabotage>(voice));
 }
 
 void Game::tick(int64_t now)
@@ -438,11 +452,11 @@ void Game::resetSettings()
 		settings.impostorCount = 1;
 		settings.votesPerPlayer = 1;
 		settings.emergencyMeetingsPerPlayer = 1;
-		settings.emergencyMeetingCooldown = 15'000'000'000;
-		settings.killCooldown = 30'000'000'000;
+		settings.emergencyMeetingCooldown = 10'000'000'000;
+		settings.killCooldown = 15'000'000'000;
 		settings.killRange = 2.0f;
-		settings.voteTime = 30'000'000'000;
-		settings.discussionTime = 30'000'000'000;
+		settings.voteTime = 5'000'000'000 * (handler.players.size() + 1);
+		settings.discussionTime = 5'000'000'000 * (handler.players.size() + 1);
 		settings.killVictoryEnabled = true;
 		settings.crewmateVision = 5.0f;
 		settings.impostorVision = 10.0f;
@@ -453,8 +467,16 @@ void Game::resetSettings()
 		settings.anonymousVotes = false;
 		settings.taskCount = 5;
 		settings.taskbarUpdateStyle = 2;
-		settings.sabotageCooldown = 45'000'000'000;
+		settings.sabotageCooldown = 30'000'000'000;
 		settings.gameOverEnabled = true;
+
+		if (handler.players.size() > 8) // 6
+		{
+			settings.impostorCount = (handler.players.size() - 1) / 4; // 3
+			settings.killCooldown = 15'000'000'000 * settings.impostorCount;
+			settings.emergencyMeetingCooldown = settings.killCooldown - 5'000'000'000;
+			settings.sabotageCooldown = 15'000'000'000 * (settings.impostorCount + 1);
+		}
 
 		handler.Broadcast(settings);
 	}
@@ -587,5 +609,10 @@ void Game::setLight(float light)
 	message.time = handler.time;
 	message.light = light;
 	handler.Broadcast(message);
+}
+
+void Game::setVoice(bool enabled)
+{
+	voiceEnabled = enabled;
 }
 

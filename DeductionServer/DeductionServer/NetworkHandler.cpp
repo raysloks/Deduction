@@ -695,7 +695,19 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 		auto&& player = it->second;
 		VoiceFrame frame = message;
 		frame.id = player.mob;
-		Broadcast(frame);
+		if (game.voiceEnabled)
+		{
+			Broadcast(frame);
+		}
+		else
+		{
+			for (auto [endpoint, player] : players)
+			{
+				auto&& mob = mobs[player.mob];
+				if (mob.role == Role::Impostor)
+					Send(endpoint, frame);
+			}
+		}
 	}
 }
 

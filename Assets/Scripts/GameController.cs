@@ -76,8 +76,6 @@ public class GameController : MonoBehaviour
 
     public GameSettingsManager settingsManager;
 
-    public bool listenToSelf = false;
-
     public List<AudioClip> gameWinSounds;
     public List<AudioClip> gameLostSounds;
 
@@ -187,12 +185,11 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F5) && phase != GamePhase.Setup)
             handler.link.Send(new RestartRequested());
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            Sabotage(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            Sabotage(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            Sabotage(2);
+        for (int i = 0; i < 10; ++i)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha0 + (i + 1) % 10))
+                Sabotage(i);
+        }
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);

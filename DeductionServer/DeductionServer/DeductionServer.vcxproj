@@ -121,6 +121,7 @@
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Vec2.cpp" />
     <ClCompile Include="Vec3.cpp" />
+    <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Xoroshiro128Plus.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vec3.h" />
+    <ClInclude Include="VoiceSabotage.h" />
     <ClInclude Include="Xoroshiro128Plus.h" />
   </ItemGroup>
   <ItemGroup>

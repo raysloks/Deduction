@@ -71,6 +71,12 @@ public:
 			link.Send(player.first, message);
 	}
 
+	template <class message_type>
+	void Send(const asio::ip::udp::endpoint& endpoint, const message_type& message)
+	{
+		link.Send(endpoint, message);
+	}
+
 	NetLink link;
 
 	Xoroshiro128Plus rng;
