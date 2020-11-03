@@ -455,8 +455,8 @@ void Game::resetSettings()
 		settings.emergencyMeetingCooldown = 10'000'000'000;
 		settings.killCooldown = 15'000'000'000;
 		settings.killRange = 2.0f;
-		settings.voteTime = 5'000'000'000 * (handler.players.size() + 1);
-		settings.discussionTime = 5'000'000'000 * (handler.players.size() + 1);
+		settings.voteTime = 30'000'000'000;
+		settings.discussionTime = 30'000'000'000;
 		settings.killVictoryEnabled = true;
 		settings.crewmateVision = 5.0f;
 		settings.impostorVision = 10.0f;
@@ -476,6 +476,8 @@ void Game::resetSettings()
 			settings.killCooldown = 15'000'000'000 * settings.impostorCount;
 			settings.emergencyMeetingCooldown = settings.killCooldown - 5'000'000'000;
 			settings.sabotageCooldown = 15'000'000'000 * (settings.impostorCount + 1);
+			settings.voteTime = 30'000'000'000 * settings.impostorCount;
+			settings.discussionTime = 30'000'000'000 * settings.impostorCount;
 		}
 
 		handler.Broadcast(settings);
