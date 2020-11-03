@@ -24,7 +24,7 @@ public class Player : Mob
     private void Update()
     {
         Vector3 move = new Vector2();
-        if (canMove && (!EventSystem.current.currentSelectedGameObject || !EventSystem.current.currentSelectedGameObject.GetComponent<InputField>()))
+        if (canMove && (!EventSystem.current.currentSelectedGameObject || controller.phase == GamePhase.Main))
         {
             move.x += Input.GetAxis("Horizontal");
             move.y += Input.GetAxis("Vertical");

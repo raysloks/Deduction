@@ -122,12 +122,9 @@ public class GameController : MonoBehaviour
         get => isLeader;
         set
         {
-            if (isLeader != value)
-            {
-                isLeader = value;
-                settingsManager.SetInteractable(isLeader);
-                setupLeaderMenu.SetActive(isLeader);
-            }
+            isLeader = value;
+            settingsManager.SetInteractable(value);
+            setupLeaderMenu.SetActive(value);
         }
     }
 
