@@ -14,7 +14,7 @@ public class StayCloseToTarget : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        smallbar = transform.GetChild(0).gameObject.transform.GetChild(0);
+        smallbar = transform.GetChild(0).gameObject.transform.GetChild(1);
         orignialScale = smallbar.localScale;
         player = transform.parent.gameObject.GetComponent<Player>();
     }
