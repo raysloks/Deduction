@@ -367,6 +367,9 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 			if (game.callSabotage(message.ability))
 			{
 				mob.sabotageCooldown = time + game.settings.sabotageCooldown;
+				AbilityUsed reply;
+				reply.time = mob.sabotageCooldown;
+				Send(endpoint, reply);
 			}
 		}
 	}

@@ -509,6 +509,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8218666978227591814, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8218666978253204745, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: game
@@ -674,6 +679,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8218666979166545187, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8218666979782418518, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -682,6 +692,11 @@ PrefabInstance:
     - target: {fileID: 8218666979782418518, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8218666979782418518, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8218666979795545508, guid: 8db377f126743714e8afac96f6b7b0c6,
@@ -876,6 +891,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2312360570533433492}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4849770175460028179 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7159315931600519047, guid: 8db377f126743714e8afac96f6b7b0c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2312360570533433492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8583142822892678763 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6271919181507460863, guid: 8db377f126743714e8afac96f6b7b0c6,
@@ -1123,6 +1150,16 @@ PrefabInstance:
       propertyPath: setupLeaderMenu
       value: 
       objectReference: {fileID: 5915959410189309133}
+    - target: {fileID: 8435468723113369569, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: sabotageButtonContainer
+      value: 
+      objectReference: {fileID: 8583142822892678763}
+    - target: {fileID: 8435468723113369569, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: cooldownText
+      value: 
+      objectReference: {fileID: 4849770175460028179}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74dd5670b978d2546a1923bad28c71ff, type: 3}
 --- !u!4 &5915959410371776247 stripped

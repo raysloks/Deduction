@@ -38,8 +38,6 @@ public class GameController : MonoBehaviour
 
     public GameObject hud;
 
-    public GameObject sabotageMenu;
-
     public DeathAnimation deathAnimation;
 
 
@@ -190,7 +188,6 @@ public class GameController : MonoBehaviour
 
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
-        sabotageMenu.SetActive(player.role == 1);
         reportButton.gameObject.SetActive(player.IsAlive);
         hud.gameObject.SetActive(phase == GamePhase.Main);
         taskbar.gameObject.SetActive(
