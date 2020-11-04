@@ -134,6 +134,7 @@
       <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="VoiceSabotage.h" />
+    <ClInclude Include="Coal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -250,6 +251,7 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="VoiceSabotage.cpp" />
+    <ClCompile Include="Coal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">
@@ -258,5 +260,6 @@
     <Text Include="Matchmaker\last_build.txt">
       <Filter>Matchmaker</Filter>
     </Text>
+    <Text Include="maps.txt" />
   </ItemGroup>
 </Project>

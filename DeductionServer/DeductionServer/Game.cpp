@@ -7,6 +7,8 @@
 #include "DoorSabotage.h"
 #include "VoiceSabotage.h"
 
+#include "Coal.h"
+
 Game::Game(NetworkHandler& handler) : handler(handler)
 {
 	phase = GamePhase::Setup;
@@ -14,50 +16,18 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 
 	voiceEnabled = true;
 
+	std::ifstream f("../../../maps.txt");
+	auto coal = Coal::parse(f);
+	for (auto element : coal->elements)
+		maps.push_back(std::make_shared<Map>(element));
 
-	map = std::make_shared<Map>();
+	if (maps.empty())
+	{
+		maps.push_back(std::make_shared<Map>());
+		std::cout << "unable to load map data." << std::endl;
+	}
 
-
-	map->spawnSize = Vec2(2.0f);
-
-	map->meetingPos = Vec2(6.5f, -15.0f);
-	map->meetingSize = Vec2(4.0f, 1.5f);
-
-
-	auto lights = new LightSabotage();
-	lights->duration = 0;
-	lights->minigame_index = 5000;
-
-	auto doors1 = new DoorSabotage();
-	doors1->doors = { 0, 1 };
-	doors1->duration = 15'000'000'000;
-	doors1->minigame_index = -1;
-
-	auto doors2 = new DoorSabotage();
-	doors2->doors = { 2, 3, 4 };
-	doors2->duration = 15'000'000'000;
-	doors2->minigame_index = -1;
-
-	auto doors3 = new DoorSabotage();
-	doors3->doors = { 5, 6, 7 };
-	doors3->duration = 15'000'000'000;
-	doors3->minigame_index = -1;
-
-	auto voice = new VoiceSabotage();
-	voice->duration = 15'000'000'000;
-	voice->minigame_index = -1;
-
-	map->sabotages.push_back(std::unique_ptr<Sabotage>(lights));
-	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors1));
-	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors2));
-	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors3));
-	map->sabotages.push_back(std::unique_ptr<Sabotage>(voice));
-
-
-	maps.push_back(map);
-	maps.push_back(std::make_shared<Map>());
-
-
+	map = maps[0];
 	settings.map = 0;
 	resetSettings();
 }

@@ -75,6 +75,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Coal.cpp" />
     <ClCompile Include="DoorSabotage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LightSabotage.cpp" />
@@ -125,6 +126,7 @@
     <ClCompile Include="Xoroshiro128Plus.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Coal.h" />
     <ClInclude Include="DoorSabotage.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GamePhase.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="Xoroshiro128Plus.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="maps.txt" />
     <Text Include="Matchmaker\last_build.txt" />
     <Text Include="Net\last_build.txt" />
   </ItemGroup>
