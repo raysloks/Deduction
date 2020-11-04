@@ -31,7 +31,7 @@ public class Knob : MonoBehaviour, IDragHandler
         if (checkDone && !isDone)
         {
             Counter += Time.deltaTime;
-            if(Counter > 1.4f)
+            if(Counter > 1f)
             {
                 isDone = true;
                 Debug.Log("DONE");
@@ -75,8 +75,8 @@ public class Knob : MonoBehaviour, IDragHandler
         }
         else
         {
-            audio2.volume = Mathf.Abs(mySlider.value - targetValue) * 0.005f;
-            audio1.volume = (175 - Mathf.Abs(mySlider.value - targetValue)) * 0.0001f;
+            audio2.volume = (Mathf.Abs(mySlider.value - targetValue) / 180 )/ 1.5f;
+            audio1.volume = ((180 - Mathf.Abs(mySlider.value - targetValue)) / 180) / 10f;
 
             Counter = 0f;
             checkDone = false;
