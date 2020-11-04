@@ -9,7 +9,6 @@ namespace EventCallbacks
         private int NoOfcurrentlyPlayingSounds = 0;
         [SerializeField] private int maxNoOfSimultaneousSounds;
 
-        // Start is called before the first frame update
         void Start()
         {
             EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_DIED, OnDiePlaySound);
@@ -26,8 +25,6 @@ namespace EventCallbacks
                 NoOfcurrentlyPlayingSounds++;
                 AudioSource.PlayClipAtPoint(dieSound, dieEventInfo.UnitGameObjectPos);
                 Invoke("SubtractCurrentlyPlayingSounds", dieSound.length);
-
-
             }
         }
 

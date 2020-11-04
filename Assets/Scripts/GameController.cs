@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
 
     public DoorManager doorManager;
 
+    public MapManager mapManager;
+
     private float heartbeat = 0f;
     private float snapshot = 0f;
 

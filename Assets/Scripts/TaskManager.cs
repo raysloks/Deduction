@@ -23,12 +23,6 @@ public class TaskManager : MonoBehaviour
     private float accumulator = 0.0f;
     private bool blink = false;
 
-    private void Awake()
-    {
-        foreach (MinigameInitiator minigameInitiator in FindObjectsOfType<MinigameInitiator>())
-            minigameInitiators.Add(minigameInitiator.minigame_index, minigameInitiator);
-    }
-
     private void Update()
     {
         for (int i = 0; i < tasks.Count; ++i)

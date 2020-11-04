@@ -27,7 +27,7 @@ public class MeetingUiListener : MonoBehaviour
 
     private GameController game;
 
-    private void Awake()
+    private void Start()
     {
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);

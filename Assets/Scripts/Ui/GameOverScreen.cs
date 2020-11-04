@@ -10,7 +10,7 @@ public class GameOverScreen : MonoBehaviour
     public Transform winnerContainer;
     public GameObject winnerPrefab;
 
-    private void Awake()
+    private void Start()
     {
         EventSystem.Current.RegisterListener(EVENT_TYPE.GAME_OVER, x => Activate((GameOverEvent)x));
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, x => PhaseChanged((PhaseChangedEvent)x));

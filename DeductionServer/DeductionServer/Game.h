@@ -4,11 +4,11 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <memory>
 
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 
 #include "GamePhase.h"
 #include "Vec2.h"
@@ -60,6 +60,8 @@ public:
 	void setLight(float light);
 	void setVoice(bool enabled);
 
+	void checkForMapChange();
+
 
 	GamePhase phase;
 
@@ -80,6 +82,7 @@ public:
 	std::multimap<int64_t, std::function<void(void)>> timers;
 
 	std::shared_ptr<Map> map;
+	std::vector<std::shared_ptr<Map>> maps;
 
 	std::vector<std::shared_ptr<SabotageTask>> sabotageTasks;
 

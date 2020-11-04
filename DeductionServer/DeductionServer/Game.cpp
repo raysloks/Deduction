@@ -12,8 +12,6 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	phase = GamePhase::Setup;
 	timer = 0;
 
-	resetSettings();
-
 	voiceEnabled = true;
 
 
@@ -54,6 +52,14 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors2));
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(doors3));
 	map->sabotages.push_back(std::unique_ptr<Sabotage>(voice));
+
+
+	maps.push_back(map);
+	maps.push_back(std::make_shared<Map>());
+
+
+	settings.map = 0;
+	resetSettings();
 }
 
 void Game::tick(int64_t now)
@@ -309,23 +315,20 @@ void Game::endMeeting(int64_t now)
 
 void Game::restartSetup()
 {
-	if (phase != GamePhase::Setup)
+	fixAllSabotages();
+	setPhase(GamePhase::Setup, 0);
+	teleportPlayersToEllipse(map->spawnPos, map->spawnSize);
+	for (size_t i = 0; i < handler.mobs.size(); ++i)
+		handler.removeMob(i);
+	for (auto player : handler.players)
 	{
-		fixAllSabotages();
-		setPhase(GamePhase::Setup, 0);
-		teleportPlayersToEllipse(Vec2(0.0f), Vec2(2.0f));
-		for (size_t i = 0; i < handler.mobs.size(); ++i)
-			handler.removeMob(i);
-		for (auto player : handler.players)
-		{
-			auto&& mob = handler.mobs[player.second.mob];
-			mob.enabled = true;
-			mob.type = MobType::Player;
-			mob.role = Role::Crewmate;
-		}
-		handler.updateMobStates();
-		handler.updateMobRoles();
+		auto&& mob = handler.mobs[player.second.mob];
+		mob.enabled = true;
+		mob.type = MobType::Player;
+		mob.role = Role::Crewmate;
 	}
+	handler.updateMobStates();
+	handler.updateMobRoles();
 }
 
 void Game::resetVotes()
@@ -616,5 +619,17 @@ void Game::setLight(float light)
 void Game::setVoice(bool enabled)
 {
 	voiceEnabled = enabled;
+}
+
+void Game::checkForMapChange()
+{
+	if (settings.map < maps.size())
+	{
+		if (map != maps[settings.map])
+		{
+			map = maps[settings.map];
+			restartSetup();
+		}
+	}
 }
 

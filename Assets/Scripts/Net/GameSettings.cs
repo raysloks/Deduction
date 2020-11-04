@@ -4,6 +4,7 @@ using System.IO;
 
 public struct GameSettings
 {
+	public int map;
 	public long impostorCount;
 	public long votesPerPlayer;
 	public long emergencyMeetingsPerPlayer;
@@ -27,6 +28,7 @@ public struct GameSettings
 
 	public void Serialize(BinaryWriter writer)
 	{
+		writer.Write((int)map);
 		writer.Write((long)impostorCount);
 		writer.Write((long)votesPerPlayer);
 		writer.Write((long)emergencyMeetingsPerPlayer);
@@ -52,6 +54,7 @@ public struct GameSettings
 	public static GameSettings Deserialize(BinaryReader reader)
 	{
 		GameSettings _ret = new GameSettings();
+		_ret.map = (int)reader.ReadInt32();
 		_ret.impostorCount = (long)reader.ReadInt64();
 		_ret.votesPerPlayer = (long)reader.ReadInt64();
 		_ret.emergencyMeetingsPerPlayer = (long)reader.ReadInt64();

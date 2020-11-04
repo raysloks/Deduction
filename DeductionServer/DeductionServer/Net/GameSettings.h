@@ -8,6 +8,7 @@
 class GameSettings
 {
 public:
+	int32_t map;
 	int64_t impostorCount;
 	int64_t votesPerPlayer;
 	int64_t emergencyMeetingsPerPlayer;

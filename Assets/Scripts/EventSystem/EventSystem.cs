@@ -6,12 +6,6 @@ namespace EventCallbacks
 {
     public class EventSystem : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
         static private EventSystem __Current;
         static public EventSystem Current
         {
@@ -19,7 +13,7 @@ namespace EventCallbacks
             {
                 if (__Current == null)
                 {
-                    __Current = GameObject.FindObjectOfType<EventSystem>();
+                    __Current = FindObjectOfType<EventSystem>();
                 }
 
                 return __Current;
@@ -49,7 +43,6 @@ namespace EventCallbacks
             if (eventListeners.ContainsKey(eventType) == true && eventListeners[eventType].Contains(listener))
             {
                 eventListeners[eventType].Remove(listener);
-                Debug.Log("listener removed");
             }
         }
 

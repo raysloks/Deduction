@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2324288705218545735}
   - component: {fileID: 6031572885414928724}
   - component: {fileID: 8435468723113369569}
+  - component: {fileID: 4080215491979641625}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   popup: {fileID: 2324288705218545734}
   taskManager: {fileID: 2324288705218545735}
   doorManager: {fileID: 6031572885414928724}
+  mapManager: {fileID: 4080215491979641625}
   player: {fileID: 0}
   text: {fileID: 0}
   nameInputField: {fileID: 0}
@@ -161,3 +163,16 @@ MonoBehaviour:
   sabotageButtonContainer: {fileID: 0}
   buttons: []
   cooldownText: {fileID: 0}
+--- !u!114 &4080215491979641625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324288705218545754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501337c674d2e2439c7f5c4b2df390a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  game: {fileID: 2324288705218545755}

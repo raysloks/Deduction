@@ -13,6 +13,7 @@ uint64 phase
 int64 timer
 uint64 previous
 GameSettings
+int32 map
 int64 impostorCount
 int64 votesPerPlayer
 int64 emergencyMeetingsPerPlayer

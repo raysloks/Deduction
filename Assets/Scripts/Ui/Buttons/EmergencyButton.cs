@@ -13,22 +13,27 @@ public class EmergencyButton : Interactable
 
     private GameController game;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         text = GetComponentInChildren<TextMeshPro>();
-        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, (EventCallbacks.Event ev) => PhaseChanged((PhaseChangedEvent)ev));
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
         game = FindObjectOfType<GameController>();
     }
 
-    void PhaseChanged(PhaseChangedEvent ev)
+    private void OnDestroy()
     {
+        EventSystem.Current.UnregisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+    }
+
+    private void PhaseChanged(EventCallbacks.Event ev)
+    {
+        PhaseChangedEvent phaseChangedEvent = (PhaseChangedEvent)ev;
         // start cooldown process
-        if (ev.phase == GamePhase.Main)
+        if (phaseChangedEvent.phase == GamePhase.Main)
             StartCoroutine(WaitFunction());
     }
 
-    IEnumerator WaitFunction()
+    private IEnumerator WaitFunction()
     {
         float counter = game.settings.emergencyMeetingCooldown / 1000000000f;
 

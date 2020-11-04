@@ -5,15 +5,16 @@ using UnityEngine.UI;
 [RequireComponent(typeof(InputField))]
 public class InputFieldUpperCase : MonoBehaviour
 {
+    private InputField inputField;
+
     private void Awake()
     {
-        GetComponent<InputField>().onValidateInput += Validate;
+        inputField = GetComponent<InputField>();
+        inputField.onValueChanged.AddListener(OnValueChanged);
     }
 
-    private char Validate(string input, int charIndex, char addedChar)
+    private void OnValueChanged(string value)
     {
-        if (addedChar == 0)
-            return (char)0;
-        return char.ToUpper(addedChar);
+        inputField.text = value.ToUpper();
     }
 }

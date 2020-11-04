@@ -407,6 +407,7 @@ void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoin
 		if (game.phase == GamePhase::Setup && player.index == leader)
 		{
 			game.settings = message;
+			game.checkForMapChange();
 			Broadcast(game.settings);
 		}
 	}
@@ -648,7 +649,7 @@ void NetworkHandler::RestartRequestedHandler(const asio::ip::udp::endpoint & end
 	if (it != players.end())
 	{
 		auto&& player = it->second;
-		if (player.index == leader)
+		if (player.index == leader && game.phase != GamePhase::Setup)
 		{
 			game.restartSetup();
 		}

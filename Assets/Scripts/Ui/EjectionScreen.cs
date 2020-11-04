@@ -7,7 +7,7 @@ public class EjectionScreen : MonoBehaviour
 {
     public GameObject mobDisplayPrefab;
 
-    private void Awake()
+    private void Start()
     {
         EventSystem.Current.RegisterListener(EVENT_TYPE.MOB_EJECTED, x => Ejected((MobEjectedEvent)x));
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, x => PhaseChanged((PhaseChangedEvent)x));

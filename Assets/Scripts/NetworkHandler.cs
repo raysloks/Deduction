@@ -241,7 +241,7 @@ public class NetworkHandler
         se.UnitGameObjectPos = game.player.transform.position;
         if (gameOverEvent.victory == true)
         {
-            se.UnitSound = game.gameWinSounds;                     
+            se.UnitSound = game.gameWinSounds;
         }
         else
         {        
@@ -257,6 +257,7 @@ public class NetworkHandler
     internal void GameSettingsHandler(IPEndPoint endpoint, GameSettings message)
     {
         game.settings = message;
+        game.mapManager.CheckForMapChange();
         game.settingsManager.UpdateInputDisplay();
     }
 

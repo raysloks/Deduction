@@ -13,7 +13,7 @@ public class IntroScreen : MonoBehaviour
     public GameObject splash;
     public Image blackout;
 
-    private void Awake()
+    private void Start()
     {
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, x => PhaseChanged((PhaseChangedEvent)x));
 
