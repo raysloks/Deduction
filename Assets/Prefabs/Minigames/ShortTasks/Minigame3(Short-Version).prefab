@@ -211,9 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8904be222b1644592c56959ae27a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 1.5
+  step: 2
   SecondsToStart: 2
-  SecondsToEnd: 8
+  SecondsToEnd: 3
   bg: {fileID: 1737769224}
   text: {fileID: 538868669958237147}
 --- !u!50 &538868669296472552
@@ -784,3 +784,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8493df139ff5ff94a9ff2ac32b270b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sec: 3
