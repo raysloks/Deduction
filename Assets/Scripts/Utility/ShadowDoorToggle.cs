@@ -9,7 +9,7 @@ public class ShadowDoorToggle : MonoBehaviour
     public GameObject[] above;
     public GameObject[] below;
 
-    private void Awake()
+    private void Start()
     {
         player = FindObjectOfType<Player>();
     }
