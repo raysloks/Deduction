@@ -695,19 +695,41 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 	if (it != players.end())
 	{
 		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
 		VoiceFrame frame = message;
 		frame.id = player.mob;
-		if (game.voiceEnabled)
-		{
-			Broadcast(frame);
-		}
-		else
+		if (mob.type == MobType::Ghost)
 		{
 			for (auto [endpoint, player] : players)
 			{
 				auto&& mob = mobs[player.mob];
-				if (mob.role == Role::Impostor)
+				if (mob.type == MobType::Ghost)
 					Send(endpoint, frame);
+			}
+		}
+		else
+		{
+			if (game.voiceEnabled)
+			{
+				Broadcast(frame);
+			}
+			else
+			{
+				if (mob.role == Role::Impostor)
+				{
+					for (auto [endpoint, player] : players)
+					{
+						auto&& mob = mobs[player.mob];
+						if (mob.role == Role::Impostor ||
+							mob.type == MobType::Ghost ||
+							player.mob == frame.id)
+							Send(endpoint, frame);
+					}
+				}
+				else
+				{
+					Send(endpoint, frame);
+				}
 			}
 		}
 	}
