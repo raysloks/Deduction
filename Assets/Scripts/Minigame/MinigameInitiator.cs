@@ -20,7 +20,7 @@ public class MinigameInitiator : Interactable
     private void Awake()
     {
         popup = FindObjectOfType<MinigamePopupScript>();
-        FindObjectOfType<TaskManager>().minigameInitiators.Add(minigame_index, this);
+        FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
     }
 
     public override bool CanInteract(GameController game)
