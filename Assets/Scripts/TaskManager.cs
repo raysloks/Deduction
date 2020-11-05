@@ -32,7 +32,9 @@ public class TaskManager : MonoBehaviour
 
         for (int i = indicators.Count; i < tasks.Count; ++i)
         {
-            indicators.Add(Instantiate(indicatorPrefab));
+            var indicator = Instantiate(indicatorPrefab);
+            DontDestroyOnLoad(indicator);
+            indicators.Add(indicator);
         }
 
         for (int i = 0; i < tasks.Count; ++i)
@@ -69,7 +71,9 @@ public class TaskManager : MonoBehaviour
 
         for (int i = sabotageIndicators.Count; i < sabotageTasks.Count; ++i)
         {
-            sabotageIndicators.Add(Instantiate(indicatorPrefab));
+            var indicator = Instantiate(indicatorPrefab);
+            DontDestroyOnLoad(indicator);
+            sabotageIndicators.Add(indicator);
         }
 
         for (int i = 0; i < sabotageTasks.Count; ++i)

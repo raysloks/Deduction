@@ -371,6 +371,7 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Setup || phase == GamePhase.GameOver)
         {
             taskManager.tasks.Clear();
+            taskManager.sabotageTasks.Clear();
             lightTarget = 1.0f;
             lightCurrent = 1.0f;
         }
