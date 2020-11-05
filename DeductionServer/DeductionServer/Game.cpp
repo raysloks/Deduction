@@ -262,6 +262,8 @@ void Game::endMeeting(int64_t now)
 		size_t mostVotes = tally[0];
 		for (size_t i = 1; i < tally.size(); ++i)
 		{
+			if (tally[i] == mostVotes)
+				hasMostVotes = 0;
 			if (tally[i] > mostVotes)
 			{
 				hasMostVotes = i;
