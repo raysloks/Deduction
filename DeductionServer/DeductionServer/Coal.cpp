@@ -44,7 +44,7 @@ Coal parseNumber(std::istream& is)
 	do
 	{
 		c = is.get();
-		if (isdigit(c))
+		if (isdigit(c) || c == '-')
 		{
 			string += c;
 			continue;

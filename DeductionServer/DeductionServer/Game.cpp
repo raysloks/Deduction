@@ -17,7 +17,9 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	voiceEnabled = true;
 
 	std::ifstream f("../../../maps.txt");
+
 	auto coal = Coal::parse(f);
+	coal->print(std::cout);
 	for (auto element : coal->elements)
 		maps.push_back(std::make_shared<Map>(element));
 
