@@ -87,7 +87,8 @@ public class VoicePlayer : MonoBehaviour
         offset += size;
         offset %= audioClip.samples;
 
-        if (!audioSource.isPlaying)
-            audioSource.Play();
+        if (audioSource.isActiveAndEnabled)
+            if (!audioSource.isPlaying)
+                audioSource.Play();
     }
 }

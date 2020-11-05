@@ -60,6 +60,7 @@ public class NetworkHandler
             if (!mobs.ContainsKey(message.id))
             {
                 mobs.Add(message.id, UnityEngine.Object.Instantiate(game.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
+                UnityEngine.Object.DontDestroyOnLoad(mobs[message.id].gameObject);
                 UpdateName(message.id);
             }
             Mob mob = mobs[message.id];
