@@ -726,10 +726,6 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 							Send(endpoint, frame);
 					}
 				}
-				else
-				{
-					Send(endpoint, frame);
-				}
 			}
 		}
 	}
