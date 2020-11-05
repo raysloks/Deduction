@@ -18,6 +18,7 @@ public class JumpRope : MonoBehaviour
     private CircleCollider2D col2d;
     public LayerMask layerMask;
     Vector3 axis;
+    private bool currentlyHit = false;
 
     void Awake()
     {
@@ -29,8 +30,6 @@ public class JumpRope : MonoBehaviour
     void Start()
     {
         originalSpeed = speed;
-        Line = GetComponent<LineRenderer>();
-        Line.positionCount = 2;
         col2d = GetComponent<CircleCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         target = transform.parent.gameObject;
@@ -43,8 +42,6 @@ public class JumpRope : MonoBehaviour
     public void Update()
     {
         Vector3 Target = target.transform.position;
-        Line.SetPosition(0, transform.position);
-        Line.SetPosition(1, Target);
         transform.RotateAround(Target, axis, speed * Time.deltaTime);
         if (speed < originalSpeed)
         {
@@ -63,7 +60,12 @@ public class JumpRope : MonoBehaviour
 
     public void GotHit()
     {
-        StartCoroutine(Hit(1));
+        if (!currentlyHit)
+        {
+            currentlyHit = true;
+            StartCoroutine(Hit(1));
+        }
+
     }
 
     IEnumerator Hit(int Sec)
@@ -83,6 +85,7 @@ public class JumpRope : MonoBehaviour
             counter -= Time.deltaTime;
             yield return null;
         }
+        currentlyHit = false;
     }
 
  }

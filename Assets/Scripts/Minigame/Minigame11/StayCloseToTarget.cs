@@ -11,6 +11,7 @@ public class StayCloseToTarget : MonoBehaviour
     private bool isDone = false;
     private Transform smallbar;
     private Player player;
+    private int numberOfActive = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,5 +61,20 @@ public class StayCloseToTarget : MonoBehaviour
     public bool getIsDone()
     {
         return isDone;
+    }
+
+    public int getNumberOfActive()
+    {
+        return numberOfActive;
+    }
+
+    public void SetNumberOfActives(int set)
+    {
+        this.numberOfActive += set;
+    }
+    public void resetSlider()
+    {
+        smallbar.localScale = orignialScale;
+        isDone = false;
     }
 }

@@ -23,6 +23,7 @@ public class Spawner : MonoBehaviour
     private string weapon1;
     private string weapon2;
     private TextMeshProUGUI text;
+    private Transform[] ts;
 
 
 
@@ -46,9 +47,8 @@ public class Spawner : MonoBehaviour
         if (spawnAmount < spawnTotal && taskCompleted == false)
         {
             timer += Time.deltaTime;
-            Debug.Log(timer);
         }
-        if (timer > spawnRate && taskCompleted == false)
+        if (timer > spawnRate && taskCompleted == false && transform.childCount < 7f)
         {
             spawnAmount++;
             newObj = Instantiate(prefab, transform);
@@ -75,6 +75,29 @@ public class Spawner : MonoBehaviour
             newObj.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = name;
             timer = 0;
             thrust = true;
+        }else if(timer > spawnRate && taskCompleted == false)
+        {
+           
+            ts = GetComponentsInChildren<Transform>();
+            float longestDistance = 0f;
+            foreach (Transform t in ts)
+            {
+                if(Vector2.Distance(t.position, transform.position) > 900f)
+                {
+                    Debug.Log("Removed" + Vector2.Distance(t.position, transform.position));
+                    Destroy(t.gameObject);
+                }
+                else
+                {
+                    if(longestDistance < Vector2.Distance(t.position, transform.position))
+                    {
+                        longestDistance = Vector2.Distance(t.position, transform.position);
+                    }
+                }
+            }
+            Debug.Log(longestDistance);
+            timer = 1f;
+
         }
     }
 

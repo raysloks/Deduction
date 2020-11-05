@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     Transform target;
+    Transform target2;
     private bool noMoreDragging = false;
     private BoxCollider2D collider;
     private bool left = false;
@@ -23,11 +24,12 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         if (left == true)
         {
             target = transform.parent.transform.parent.GetChild(1);
+            target2 = transform.parent.transform.parent.GetChild(0);
         }
         else if (right == true)
         {
             target = transform.parent.transform.parent.GetChild(0);
-
+            target2 = transform.parent.transform.parent.GetChild(1);
         }
         childpos = Vector2.zero;
         child = transform.GetChild(2);
@@ -44,6 +46,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             data.pointerDrag = gameObject;
 
             child.position = new Vector3(child.position.x, child.position.y, 0f);
+            transform.SetParent(transform.parent.parent.GetChild(4));
+            GetComponent<FileMovement>().SetToZero();
+            gameObject.layer = 8;
         }
         else
         {
@@ -62,7 +67,9 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData data)
     {
-        if(Vector2.Distance(transform.position, target.position) < 200f && stamped == true)
+        transform.SetParent(transform.parent.parent.GetChild(2));
+        gameObject.layer = 10;
+        if (Vector2.Distance(transform.position, target.position) < 200f && stamped == true)
         {
             //Debug.Log("hit it");
             float r = Random.Range(-0.5f, 0.5f);

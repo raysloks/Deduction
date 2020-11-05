@@ -188,4 +188,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8493df139ff5ff94a9ff2ac32b270b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sec: 0.8
+  Faidsec: 1
+  WaitBeforeFaidsec: 1.5

@@ -15,7 +15,7 @@ public class PlayerBall : MonoBehaviour
     public GameObject jumpRope;
     private BoxCollider2D collider;
     private bool jumpDone = false;
-
+    public float speed = 350f;
     void Awake()
     {
         GameObject Player = GameObject.FindWithTag("Player");
@@ -38,11 +38,18 @@ public class PlayerBall : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !inAir && !isDone)
         {
-            rd.AddForce(Vector2.up * 350);
+            rd.AddForce(Vector2.up * speed);
+           // transform.position = Vector2.MoveTowards(transform.position, target, step);
             inAir = true;
         }
         if (inAir && !isDone)
         {
+          //  transform.position = Vector2.MoveTowards(transform.position, target, step);
+            Debug.Log(Vector2.Distance(transform.parent.position, transform.position));
+            if(Vector2.Distance(transform.parent.position, transform.position) < 0.01f)
+            {
+                rd.velocity = Vector2.zero;
+            }
            // rd.AddForce(-Vector2.up * 10);
            rd.velocity = (rd.velocity - Vector2.up * (17 *Time.deltaTime));
            if (transform.position.y < startPos.y)

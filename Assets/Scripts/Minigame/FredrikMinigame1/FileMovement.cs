@@ -44,4 +44,11 @@ public class FileMovement : MonoBehaviour
             rd.AddForce(Vector2.zero);
         }
     }
+
+    public void SetToZero()
+    {
+        rd.velocity = Vector2.zero;
+        //Debug.Log("Enter");
+        rd.AddForce(Vector2.zero);
+    }
 }

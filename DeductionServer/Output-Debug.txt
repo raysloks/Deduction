@@ -1,0 +1,58 @@
+﻿shellexec 1.0
+Copyright (C) 2016 Microsoft Corporation. All rights reserved.
+Linux localhost 4.19.0-9-amd64 #1 SMP Debian 4.19.118-2 (2020-04-29) x86_64
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Nov  5 10:27:58 2020 from 77.53.44.163
+fredrik@localhost:~$ =thread-group-added,id="i1"
+GNU gdb (Debian 8.2.1-2+b3) 8.2.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+(gdb) 1002-enable-pretty-printing
+=cmd-param-changed,param="pagination",value="off"
+(gdb) 1010-break-insert -f main
+Stopped due to shared library event (no libraries added or removed)
+Loaded '/lib64/ld-linux-x86-64.so.2'. Symbols loaded.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Stopped due to shared library event:
+  Inferior loaded /lib/x86_64-linux-gnu/libpthread.so.0
+    /lib/x86_64-linux-gnu/libstdc++.so.6
+    /lib/x86_64-linux-gnu/libm.so.6
+    /lib/x86_64-linux-gnu/libgcc_s.so.1
+    /lib/x86_64-linux-gnu/libc.so.6
+Loaded '/lib/x86_64-linux-gnu/libpthread.so.0'. Symbols loaded.
+Loaded '/lib/x86_64-linux-gnu/libstdc++.so.6'. Symbols loaded.
+Loaded '/lib/x86_64-linux-gnu/libm.so.6'. Symbols loaded.
+Loaded '/lib/x86_64-linux-gnu/libgcc_s.so.1'. Symbols loaded.
+Loaded '/lib/x86_64-linux-gnu/libc.so.6'. Symbols loaded.
+
+Breakpoint 1, main () at /home/fredrik/projects/DeductionServer/main.cpp:17
+17		std::cout << "starting..." << std::endl;
+(gdb) 1017-break-delete 1
+[New Thread 0x7ffff7abf700 (LWP 1456)]
+[New Thread 0x7ffff72be700 (LWP 1457)]
+
+Thread 1 "DeductionServer" received signal SIGINT, Interrupt.
+0x00007ffff7fb8bf0 in __GI___nanosleep (requested_time=0x7fffffffe700, remaining=0x7fffffffe700) at ../sysdeps/unix/sysv/linux/nanosleep.c:28
+1020kill
+The thread 'DeductionServer' (0x5ac) has exited with code 0 (0x0).
+The thread 'DeductionServer' (0x5b0) has exited with code 0 (0x0).
+The thread 'DeductionServer' (0x5b1) has exited with code 0 (0x0).
+[Inferior 1 (process 1452) killed]
+The program '' has exited with code 0 (0x0).

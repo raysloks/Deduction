@@ -7,26 +7,34 @@ public class ActivateFollow : MonoBehaviour
     private GameObject container;
     public GameObject image1;
     public GameObject image2;
+    public GameObject image3;
     // Start is called before the first frame update
     void Start()
     {
         container = transform.parent.gameObject;
-        if (container.GetComponent<MinigameHolder>().stayCloseToTarget.GetComponent<StayCloseToTarget>().getIsDone() == true)
+        StayCloseToTarget st = container.GetComponent<MinigameHolder>().stayCloseToTarget.GetComponent<StayCloseToTarget>();
+        if (st.getIsDone() == true)
         {
-            container.GetComponent<MinigameHolder>().stayCloseToTarget.SetActive(false);
-            image2.SetActive(true);
-            FindObjectOfType<MinigamePopupScript>().MinigameWon();
+            st.SetNumberOfActives(-1);
+            if(st.getNumberOfActive() > 0)
+            {
+                st.resetSlider();
+                image3.SetActive(true);
+                FindObjectOfType<MinigamePopupScript>().MinigameWon();
+            }
+            else
+            {
+                container.GetComponent<MinigameHolder>().stayCloseToTarget.SetActive(false);
+                image2.SetActive(true);
+                FindObjectOfType<MinigamePopupScript>().MinigameWon();
+            }
         }
         else
         {
+            st.SetNumberOfActives(1);
             image1.SetActive(true);
             container.GetComponent<MinigameHolder>().stayCloseToTarget.SetActive(true);
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
