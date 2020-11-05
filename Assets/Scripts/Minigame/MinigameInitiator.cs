@@ -14,12 +14,10 @@ public class MinigameInitiator : Interactable
 
     public bool alwaysActive = false;
 
-    private MinigamePopupScript popup;
     private GameController game;
 
-    private void Awake()
+    private void Start()
     {
-        popup = FindObjectOfType<MinigamePopupScript>();
         FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
     }
 
@@ -32,7 +30,7 @@ public class MinigameInitiator : Interactable
     public override void Interact(GameController game)
     {
         this.game = game;
-        popup.ActivatePopup(minigame, this);
+        game.popup.ActivatePopup(minigame, this);
     }
 
     public override void Highlight(bool highlighted)
