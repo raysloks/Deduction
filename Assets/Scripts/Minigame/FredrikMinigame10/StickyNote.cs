@@ -14,7 +14,7 @@ public class StickyNote : MonoBehaviour
     Color c;
     Color lerpedColor;
     private bool doneFading = true;
-    // Start is called before the first frame update
+
     void Start()
     {
         sr = bg.GetComponent<SpriteRenderer>();
@@ -27,33 +27,29 @@ public class StickyNote : MonoBehaviour
         goal2 = new Color(myText.color.r, myText.color.g, myText.color.b, 0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
     void OnMouseDown()
     {
         if (doneFading)
         {
-
             sr.enabled = true;
             myText.color = goal;
             string slowText = myText.text;
             myText.text = "";
             doneFading = false;
             StartCoroutine(fadeText(0.2f, slowText));
-           
         }
     }
+
     IEnumerator fadeText(float sec, string slow)
     {
         for (int i = 0; i < slow.Length; i++)
         {
-            if(slow[i] != null)
-            {
-                myText.text = string.Concat(myText.text, slow[i]);
-            }
+            myText.text = string.Concat(myText.text, slow[i]);
             //Wait a certain amount of time, then continue with the for loop
             yield return new WaitForSeconds(sec);
         }

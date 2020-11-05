@@ -2,43 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.IO;
 
 public class PasswordSpawner : MonoBehaviour
 {
-
-    GameObject passwordGameObject;
-    int myChildCount;
     [HideInInspector] public string pass;
     [HideInInspector] public string where;
-    // Start is called before the first frame update
-    void Start()
+
+    public void SetPassword(ulong password, ulong suffix, ulong location)
     {
-        
-        myChildCount = transform.childCount;
-        /*
-        int r = Random.Range(0, (transform.childCount - 1));
-        passwordGameObject = transform.GetChild(r).gameObject;
-        Debug.Log(passwordGameObject.name + (transform.childCount - 1));
-        passwordGameObject.SetActive(true);
-        */
+        foreach (Transform child in transform)
+            child.gameObject.SetActive(false);
+
+        if (transform.childCount > 0)
+        {
+            location %= (ulong)transform.childCount;
+            var child = transform.GetChild((int)location);
+            child.gameObject.SetActive(true);
+            pass = GetPassword("Passwords.txt", password, suffix);
+            where = child.name;
+            child.GetComponentsInChildren<TextMeshPro>()[1].text = "Password is: " + pass;
+        }
     }
 
-    public void SetPassword(int set, string password)
+    public static string GetPassword(string fileName, ulong password, ulong suffix)
     {
-        for(int i = 0; i < myChildCount; i++)
-        {
-            transform.GetChild(i).gameObject.SetActive(false);
-        }
-        if( set <= myChildCount - 1)
-        {
-            passwordGameObject = transform.GetChild(set).gameObject;
-            passwordGameObject.SetActive(true);
-            pass = password;
-            where = passwordGameObject.name;
-            passwordGameObject.transform.GetChild(1).GetComponent<TextMeshPro>().text = "Password is: " + pass;
-            // passwordGameObject.name = password;
-        }
-        
+        string result;
+        StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
+        string fileContents = sr.ReadToEnd();
+        sr.Close();
+        result = fileContents;
+
+        string[] lines = result.Split('\n');
+
+        int r = (int)(password % (ulong)lines.Length);
+        string str = lines[r].Trim();
+        str += (suffix % 10000).ToString().PadLeft(4, '0');
+        return str;
     }
 
 }

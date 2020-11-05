@@ -73,10 +73,6 @@ public:
 
 	std::vector<std::pair<uint64_t, uint64_t>> votes;
 
-    std::string password;
-	int passwordLocation;
-
-
 	std::vector<uint64_t> toBeEjected;
 
 	std::multimap<int64_t, std::function<void(void)>> timers;

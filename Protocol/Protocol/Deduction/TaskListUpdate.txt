@@ -1,3 +1,4 @@
 uint16 tasks[]
-string password
+uint64 password
+uint64 passwordSuffix
 uint64 passwordLocation

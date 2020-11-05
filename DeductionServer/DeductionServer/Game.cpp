@@ -391,8 +391,9 @@ void Game::createTaskLists()
 
 		TaskListUpdate message;
 		message.tasks = tasks;
-		message.password = password;
-		message.passwordLocation = passwordLocation;
+		message.password = handler.rng.next();
+		message.passwordSuffix = handler.rng.next();
+		message.passwordLocation = handler.rng.next();
 		handler.link.Send(player.first, message);
 	}
 }

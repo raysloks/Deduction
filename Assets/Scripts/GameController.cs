@@ -5,8 +5,6 @@ using System;
 using EventCallbacks;
 using System.Xml;
 using System.Linq;
-using System.IO;
-using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
 {
@@ -439,41 +437,8 @@ public class GameController : MonoBehaviour
     {
         if (phase == GamePhase.Setup)
         {
-            int count = noteLocation.transform.childCount;
-            string pass = readTextFile("Passwords.txt");
-            for (int i = 0; i < 4; i++)
-            {
-                int r = UnityEngine.Random.Range(0, 9);
-                pass += r.ToString();
-            }
-
-
-            GameStartRequested message = new GameStartRequested
-            {
-                password = pass,
-                passwordLocation = (ulong)UnityEngine.Random.Range(0, (count - 1))
-            };
-            handler.link.Send(message);
+            handler.link.Send(new GameStartRequested());
         }
-    } 
-
-    private string readTextFile(string fileName)
-    {
-        string result;
-        StreamReader sr = new StreamReader(Application.streamingAssetsPath + "/" + fileName);
-        string fileContents = sr.ReadToEnd();
-        sr.Close();
-        result = fileContents;
-
-        string[] lines = result.Split("\n"[0]);
-
-        int r = UnityEngine.Random.Range(0, lines.Length - 1);
-        string str = lines[r];
-        if (str != null && str.Length > 0)
-        {
-            str = str.Substring(0, str.Length - 1);
-        }
-        return str;
     }
 
     public void UpdateName()
