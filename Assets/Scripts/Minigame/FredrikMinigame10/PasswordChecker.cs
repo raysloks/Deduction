@@ -39,7 +39,7 @@ public class PasswordChecker : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             //string actualPassword = password.text.Split(' ');
-            if (finalPass.Replace(" ", string.Empty) == myText.text.Replace(" ", string.Empty))
+            if (finalPass == myText.text.Trim())
             {
                 doneText.text = "Done";
                 Debug.Log("Done");
@@ -48,9 +48,7 @@ public class PasswordChecker : MonoBehaviour
             else
             {
                 doneText.text = "Wrong Password";
-                int count = finalPass.Split(' ').Length;
-                int count2 = myText.text.Split(' ').Length;
-                Debug.Log("Nope " + count + " " + finalPass.Split(' ')[finalPass.Split(' ').Length - 1] + " vs " + myText.text + " " + count2);
+                Debug.Log(finalPass + " " + myText.text.Trim());
             }
         }
     }

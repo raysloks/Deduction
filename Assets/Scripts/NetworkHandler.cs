@@ -210,10 +210,12 @@ public class NetworkHandler
 
     internal void TaskListUpdateHandler(IPEndPoint endpoint, TaskListUpdate message)
     {
-        UnityEngine.Object.FindObjectOfType<PasswordSpawner>().SetPassword(message.password, message.passwordSuffix, message.passwordLocation);
         game.taskManager.tasks.Clear();
         foreach (var task in message.tasks)
             game.taskManager.tasks.Add(new Task { minigame_index = task, completed = false });
+        PasswordSpawner passwordSpawner = UnityEngine.Object.FindObjectOfType<PasswordSpawner>();
+        if (passwordSpawner != null)
+            passwordSpawner.SetPassword(message.password, message.passwordSuffix, message.passwordLocation);
     }
 
     internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)
