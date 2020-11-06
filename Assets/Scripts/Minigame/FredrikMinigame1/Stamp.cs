@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using EventCallbacks;
 
 public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -13,6 +14,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
     private bool right = true;
     public LayerMask layerMask;
     private ContactFilter2D cf;
+    public List<AudioClip> stampSounds;
 
     void Start()
     {
@@ -58,6 +60,11 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHan
         
         if (results.Length > 0)
         {
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = stampSounds;
+            se.UnitGameObjectPos = worldPosition;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
             foreach (Collider2D col in results)
             {
                 Debug.Log("HIT: " + col.name);
