@@ -22,7 +22,7 @@ public class Knob : MonoBehaviour, IDragHandler
     void Start()
     {
         mySlider.value = 90f;
-        targetValue = Random.Range(0, 180);
+        targetValue = Random.Range(5, 175);
         audio2.volume = Mathf.Abs(mySlider.value - targetValue) * 0.005f;
         audio1.volume = (175 - Mathf.Abs(mySlider.value - targetValue)) * 0.0002f;
     }
@@ -67,11 +67,11 @@ public class Knob : MonoBehaviour, IDragHandler
         {
             mySlider.value = Mathf.Abs((transform.localRotation.eulerAngles.z - 360f)) + 90f;
         }
-        if(Mathf.Abs(mySlider.value - targetValue) < 3f) 
+        if(Mathf.Abs(mySlider.value - targetValue) < 4f) 
         {
             checkDone = true;
             audio2.volume = 0f;
-            audio1.volume = 0.1f;
+            audio1.volume = 0.2f;
         }
         else
         {

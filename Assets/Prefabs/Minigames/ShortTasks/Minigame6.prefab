@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5914170811096616431}
   - component: {fileID: 8387741041575784313}
   - component: {fileID: 4267771497095240450}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 6808128789403862632}
   - component: {fileID: 6808128789403862638}
   - component: {fileID: 6808128789403862633}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cut thingy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,8 +215,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 8285c007c7234324c9acffc70b155f00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 6808128789426634539}
   - component: {fileID: 6808128789426634538}
   - component: {fileID: 6808128789426634533}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Boom mic'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,8 +339,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: b851d08f48b82a249bc6cc2d9e737be1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -404,7 +404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6808128789665082789}
   - component: {fileID: 6808128789665082788}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Moonlanding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,8 +465,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ec199523ce83bb74c9d052893a41b733, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 6808128789777300062}
   - component: {fileID: 6808128789777300060}
   - component: {fileID: 6808128789777300063}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,8 +548,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: d252abddd03eee14badc215c0494800d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 6808128790040303477}
   - component: {fileID: 6808128790040303483}
   - component: {fileID: 6808128790040303482}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -672,8 +672,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 330aedef609e5f840954293bccb0494e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -738,7 +738,7 @@ GameObject:
   - component: {fileID: 6808128790511683391}
   - component: {fileID: 6808128790511683389}
   - component: {fileID: 6808128790511683388}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -871,7 +871,7 @@ GameObject:
   - component: {fileID: 5538461529512534}
   - component: {fileID: 6808128790562649336}
   - component: {fileID: 485495925987980425}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MainPictures
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -923,7 +923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6871236158027287474}
   - component: {fileID: 8369335180689106181}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Minigame6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

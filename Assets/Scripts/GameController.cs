@@ -270,7 +270,7 @@ public class GameController : MonoBehaviour
                 .FirstOrDefault();
             useButton.interactable = UseTarget != null && !popup.Active;
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (popup.Active)
                     popup.DeactivatePopup();

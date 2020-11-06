@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using EventCallbacks;
 
 public class PlayerBall : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class PlayerBall : MonoBehaviour
     private BoxCollider2D collider;
     private bool jumpDone = false;
     public float speed = 350f;
+    public List<AudioClip> wrongSounds;
+
+    public List<AudioClip> correctSounds;
+
     void Awake()
     {
         GameObject Player = GameObject.FindWithTag("Player");
@@ -58,6 +63,11 @@ public class PlayerBall : MonoBehaviour
                 {
                     jumps++;
 
+                    SoundEvent se = new SoundEvent();
+                    se.UnitSound = correctSounds;
+                    se.UnitGameObjectPos = transform.position;
+                    EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+
                     //Debug.Log("stop");
                     if (jumps >= TotalJumps)
                     {
@@ -95,6 +105,11 @@ public class PlayerBall : MonoBehaviour
                 jumps--;
                 text.text = jumps + "/" + TotalJumps;
             }
+
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = transform.position;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
 
             jumpDone = false;
             jumpRope.GetComponent<JumpRope>().speed = (jumpRope.GetComponent<JumpRope>().originalSpeed / 5);

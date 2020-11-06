@@ -27,7 +27,7 @@ public class FadeNonUiText : MonoBehaviour
         float counter = Sec;
         float counter2 = 0f;
 
-        while (counter < sec2)
+        while (counter2 < sec2)
         {
             counter2 += Time.deltaTime;
             yield return null;

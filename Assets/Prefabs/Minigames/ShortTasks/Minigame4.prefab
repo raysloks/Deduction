@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7778921028128459115}
   - component: {fileID: 2812917541344415839}
   - component: {fileID: 2667761412874428936}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b8526b37b3a68b849b3c67bb824e602e, type: 3}
   m_Color: {r: 0.049172312, g: 0.57976204, b: 0.6132076, a: 1}
@@ -102,7 +102,7 @@ SpriteMask:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4207805215264112187}
   - component: {fileID: 7232282166836088465}
   - component: {fileID: 7951792234314199230}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,8 +210,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
 --- !u!222 &7232282166836088465
 CanvasRenderer:
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 4207805215264112187}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: -326871397
   _SortingOrder: 3
 --- !u!1 &8215197754847208029
 GameObject:
@@ -320,7 +320,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8215197754847208028}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Minigame4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 8215197755217277316}
   - component: {fileID: 8215197755217277318}
   - component: {fileID: 8215197755217277319}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8215197756540570619}
   - component: {fileID: 8215197756540570618}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TargetSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 8215197756968656108}
   - component: {fileID: 8215197756968656109}
   - component: {fileID: 8215197756968656111}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,8 +592,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: e6513f7b8078f0948b41768850dc24ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -631,7 +631,7 @@ GameObject:
   - component: {fileID: 8519506007823266646}
   - component: {fileID: 3857039325425298826}
   - component: {fileID: 5037382231242187164}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -693,8 +693,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
 --- !u!222 &8519506007823266646
 CanvasRenderer:
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 341006723699320769}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: -326871397
   _SortingOrder: 3
 --- !u!114 &5037382231242187164
 MonoBehaviour:

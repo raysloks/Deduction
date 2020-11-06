@@ -840,6 +840,16 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5209948964090424784, guid: 2d85ac81c19104548b2308e25adbce3c,
+        type: 3}
+      propertyPath: correctSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5209948964090424784, guid: 2d85ac81c19104548b2308e25adbce3c,
+        type: 3}
+      propertyPath: correctSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 408d4ef8cc0e8bb49aec229c9a9f0867, type: 3}
     - target: {fileID: 5209948964090424786, guid: 2d85ac81c19104548b2308e25adbce3c,
         type: 3}
       propertyPath: m_LocalPosition.x

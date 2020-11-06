@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using EventCallbacks;
 
 public class CircleChecker : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class CircleChecker : MonoBehaviour
     //First get the centerCoord of Circle Collider in real world coords (the script is called in the gameobject that got the circlecollider)
     private CircleCollider2D circle;
     private Vector2 centerPos;
+    public List<AudioClip> wrongSounds;
     //find a random point inside the aim circleCollider
     //private Vector2 randVector = pointInsideCircle(centerPos);
 
@@ -126,6 +128,10 @@ public class CircleChecker : MonoBehaviour
             transform.position = startPos;
             gameStarted = false;
             sr.color = Color.white;
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = transform.position;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
             StartCoroutine(StartIn(SecondsToStart));
         }
     }

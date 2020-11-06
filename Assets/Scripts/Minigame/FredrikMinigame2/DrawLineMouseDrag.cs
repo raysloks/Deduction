@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EventCallbacks;
 
 
 public class DrawLineMouseDrag : MonoBehaviour
@@ -16,6 +17,8 @@ public class DrawLineMouseDrag : MonoBehaviour
     private bool isDone = false;
 
     private List<GameObject> parametersPassed = new List<GameObject>();
+    public List<AudioClip> correctSounds;
+    public List<AudioClip> wrongSounds;
 
     void Start()
     {
@@ -86,7 +89,10 @@ public class DrawLineMouseDrag : MonoBehaviour
     {
         if (col.gameObject.CompareTag("CellWall"))
         {
-            //Debug.Log("col");
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = transform.position;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
 
             Line.positionCount = 0;
             isLineStarted = false;
@@ -107,6 +113,11 @@ public class DrawLineMouseDrag : MonoBehaviour
     {
         if (col.CompareTag("Wall"))
         {
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = correctSounds;
+            se.UnitGameObjectPos = transform.position;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+
             passed++;
             col.GetComponent<SpriteRenderer>().color = Color.green;
             parametersPassed.Add(col.gameObject);

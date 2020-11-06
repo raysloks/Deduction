@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5559678492389832244}
   - component: {fileID: 2093277752629602135}
   - component: {fileID: 4168656487466824785}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 3929936551556750739}
   - component: {fileID: 5168911248463520705}
   - component: {fileID: 4029077107522818774}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 'Password:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6871038155385868758}
   - component: {fileID: 2006331307437222315}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,8 +348,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5927061528005089388}
-  m_Layer: 0
-  m_Name: Minigame10LongTask
+  m_Layer: 11
+  m_Name: Minigame10LongTask(Max-1-per-level-prefarably)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 8727045098939388553}
   - component: {fileID: 6720556716530446105}
   - component: {fileID: 3425795269885416818}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PretextText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ GameObject:
   - component: {fileID: 2555020787891037580}
   - component: {fileID: 3405488173271286175}
   - component: {fileID: 7600580714543294640}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StickyNote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 654121880480078593}
   - component: {fileID: 4890410519293359700}
   - component: {fileID: 5818560575650116659}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DoneText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -731,7 +731,7 @@ GameObject:
   - component: {fileID: 4267647407339958092}
   - component: {fileID: 8281861653606063282}
   - component: {fileID: 3903998659262479595}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,6 +869,8 @@ MonoBehaviour:
   password: {fileID: 7686858452773823916}
   pretextText: {fileID: 3425795269885416818}
   ShortTask: 0
+  wrongSounds:
+  - {fileID: 8300000, guid: 1257e716e6d50074badca82b3abafbf3, type: 3}
 --- !u!1 &8296004262884548991
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +882,7 @@ GameObject:
   - component: {fileID: 5987323528132122382}
   - component: {fileID: 2182466957626538808}
   - component: {fileID: 2591815115199188543}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -955,7 +957,7 @@ GameObject:
   - component: {fileID: 1065404750691173680}
   - component: {fileID: 4224140666321919782}
   - component: {fileID: 5287151124523425796}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: InputField (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1129,7 +1131,7 @@ GameObject:
   - component: {fileID: 3730567838685051029}
   - component: {fileID: 2645671596710314226}
   - component: {fileID: 7686858452773823916}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: actualPasswordText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

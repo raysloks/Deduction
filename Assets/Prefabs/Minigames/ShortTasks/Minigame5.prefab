@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9014849501755916072}
   - component: {fileID: 7915104831873399176}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 946df7578a2c64348b08c596e106d157, type: 3}
   m_Color: {r: 0.3051798, g: 0.509434, b: 0.49010053, a: 1}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6550827376095257537}
   - component: {fileID: 2662279622940177863}
   - component: {fileID: 2400429769097212968}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,8 +155,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 5
 --- !u!222 &2662279622940177863
 CanvasRenderer:
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6550827376095257537}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: -326871397
   _SortingOrder: 5
 --- !u!1 &5400234497862504445
 GameObject:
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 570692008717365237}
   - component: {fileID: 8009103145824603166}
   - component: {fileID: 3022295419751062654}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,8 +331,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 5
 --- !u!222 &570692008717365237
 CanvasRenderer:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 8495402322309241408}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: -326871397
   _SortingOrder: 5
 --- !u!114 &3022295419751062654
 MonoBehaviour:
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 5919190920955462689}
   - component: {fileID: 5919190920955462691}
   - component: {fileID: 5919190920955462690}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rope
   m_TagString: Rope
   m_Icon: {fileID: 0}
@@ -517,8 +517,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -595,7 +595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5919190921877258552}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Minigame5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 5919190921931934755}
   - component: {fileID: 5919190921931934754}
   - component: {fileID: 4565176218866488330}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: jumpCollider
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0020180494, y: -0.2464534}
+  m_Offset: {x: 0.14037228, y: -1.9920702}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -679,7 +679,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15646425, y: 0.5070932}
+  m_Size: {x: 18.641344, y: 8.204826}
   m_EdgeRadius: 0
 --- !u!212 &4565176218866488330
 SpriteRenderer:
@@ -717,8 +717,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: b8526b37b3a68b849b3c67bb824e602e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -744,7 +744,7 @@ GameObject:
   - component: {fileID: 5919190922301512065}
   - component: {fileID: 5919190922301512078}
   - component: {fileID: 5919190922301512064}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -801,8 +801,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -867,6 +867,10 @@ MonoBehaviour:
   text: {fileID: 2400429769097212968}
   jumpRope: {fileID: 5919190920955462703}
   speed: 350
+  wrongSounds:
+  - {fileID: 8300000, guid: 1257e716e6d50074badca82b3abafbf3, type: 3}
+  correctSounds:
+  - {fileID: 8300000, guid: 408d4ef8cc0e8bb49aec229c9a9f0867, type: 3}
 --- !u!1 &5919190922559853127
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,7 +882,7 @@ GameObject:
   - component: {fileID: 5919190922559853126}
   - component: {fileID: 5919190922559853144}
   - component: {fileID: 5919190922559853145}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1015,7 @@ GameObject:
   - component: {fileID: 5919190922847026461}
   - component: {fileID: 5919190922847026458}
   - component: {fileID: 5919190922847026459}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WholeRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1073,8 +1077,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -326871397
+  m_SortingLayer: 5
   m_SortingOrder: 4
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

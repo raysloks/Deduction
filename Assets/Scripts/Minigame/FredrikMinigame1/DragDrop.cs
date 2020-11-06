@@ -4,6 +4,7 @@ using UnityEngine;
 using EventCallbacks;
 using TMPro;
 using UnityEngine.EventSystems;
+using EventCallbacks;
 
 public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -18,6 +19,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private bool childWith = false;
     private Rigidbody2D rd;
     private bool stamped = false;
+    public List<AudioClip> correctSounds;
+    public List<AudioClip> wrongSounds;
 
     void Start()
     {
@@ -71,7 +74,13 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         gameObject.layer = 10;
         if (Vector2.Distance(transform.position, target.position) < 200f && stamped == true)
         {
-            //Debug.Log("hit it");
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = correctSounds;
+            se.UnitGameObjectPos = worldPosition;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+
             float r = Random.Range(-0.5f, 0.5f);
             float r2 = Random.Range(-0.5f, 0.5f);
             transform.position = (Vector2)target.position + new Vector2(r, r2);
@@ -81,9 +90,14 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             transform.parent.gameObject.GetComponent<Spawner>().CheckWinCondition();
             transform.SetParent(transform.parent.GetChild(0));
         }
-        else
+        else if (Vector2.Distance(transform.position, target2.position) < 200f)
         {
-            //Debug.Log("OnEndDrag: " + data.position +" target: " + target.position + " distance " + Vector2.Distance(transform.position, target.position));
+
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = worldPosition;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
         }
         data.pointerDrag = null;
     }

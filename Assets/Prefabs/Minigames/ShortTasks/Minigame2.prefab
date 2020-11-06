@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7397584656698324827}
   - component: {fileID: 8918519186577708771}
   - component: {fileID: 935345511700375010}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 3773944641740436482}
   - component: {fileID: 3773944641740436480}
   - component: {fileID: 3773944641740436483}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 3773944642088815994}
   - component: {fileID: 3773944642088815993}
   - component: {fileID: 3773944642088815992}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 3773944642336724822}
   - component: {fileID: 3773944642336724825}
   - component: {fileID: 3773944642336724821}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: LineGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3773944642528601268}
   - component: {fileID: 3773944642528601271}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MazeGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 3773944643101285370}
   - component: {fileID: 3773944643101285368}
   - component: {fileID: 3773944643101285371}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +616,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3773944643173082065}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Minigame2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
