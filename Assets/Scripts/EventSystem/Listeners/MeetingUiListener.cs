@@ -12,6 +12,7 @@ public class MeetingUiListener : MonoBehaviour
     public GameObject voterPrefab;
     public NoticeBoard noticeBoard;
     public GameObject blackout;
+    public GameObject evidenceScreen;
 
     public CanvasGroup canvasGroup;
     public RadialLayout radialLayout;
@@ -57,7 +58,13 @@ public class MeetingUiListener : MonoBehaviour
         if (MeetingCanvas == null)
             return;
 
+        
+
         MeetingCanvas.gameObject.SetActive(true);
+
+        //When Meeting start Add all the evidence too the evidence screen
+        evidenceScreen.GetComponent<EvidenceHandler>().AddAllEvidence();
+
         MeetingEvent me = (MeetingEvent)eventInfo;
         game = me.game;
         var handler = game.handler;
