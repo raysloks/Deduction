@@ -189,7 +189,7 @@ public class NetworkHandler
             Mob mob = mobs[message.update.id];
             mob.SetType(message.type);
             mob.SetSprite(message.sprite);
-            mob.sprite.color = new Color(message.color.x, message.color.y, message.color.z);
+            //mob.sprite.color = new Color(message.color.x, message.color.y, message.color.z);
         }
     }
 

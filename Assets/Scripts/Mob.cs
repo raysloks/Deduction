@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class Mob : MonoBehaviour
 {
-    [HideInInspector]
     public SpriteRenderer sprite;
+    public SpriteResolver spriteResolver;
+    public Transform characterTransform;
+    public Animator animator;
 
     public bool IsAlive => type == 0;
 
@@ -17,19 +20,16 @@ public class Mob : MonoBehaviour
 
     protected void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
     }
 
     public void SetType(ulong type)
     {
         this.type = type;
-        if (type < (ulong)sprites.Length)
-            sprite.sprite = sprites[type];
     }
 
     public void SetSprite(ulong sprite)
     {
-
+        spriteResolver.SetCategoryAndLabel("Head", "Head " + (sprite + 1));
     }
 
     public void SetName(string name)

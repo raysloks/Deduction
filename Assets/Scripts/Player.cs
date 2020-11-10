@@ -43,9 +43,11 @@ public class Player : Mob
         }
 
         if (move.x > 0f)
-            sprite.flipX = true;
+            characterTransform.localScale = new Vector3(-1f, 1f, 1f);
         if (move.x < 0f)
-            sprite.flipX = false;
+            characterTransform.localScale = new Vector3(1f, 1f, 1f);
+
+        animator.SetFloat("Speed", move.magnitude);
 
         if(!cameraFlashing)
         {

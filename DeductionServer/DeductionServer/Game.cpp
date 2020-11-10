@@ -17,7 +17,6 @@ Game::Game(NetworkHandler& handler) : handler(handler)
 	voiceEnabled = true;
 
 	std::ifstream f("../../../maps.txt");
-
 	auto coal = Coal::parse(f);
 	coal->print(std::cout);
 	for (auto element : coal->elements)
@@ -486,30 +485,14 @@ void Game::checkForGameOver(int64_t now)
 		if (impostors >= crew)
 		{
 			// impostor victory
-			GameOver message;
-			message.role = Role::Impostor;
-			for (auto player : handler.players)
-			{
-				if (handler.mobs[player.second.mob].role == Role::Impostor)
-					message.winners.push_back(player.second.mob);
-			}
-			handler.Broadcast(message);
-			endGame(now);
+			endGame(now, Role::Impostor);
 			return;
 		}
 
 		if (impostors == 0)
 		{
 			// crew victory
-			GameOver message;
-			message.role = Role::Crewmate;
-			for (auto player : handler.players)
-			{
-				if (handler.mobs[player.second.mob].role == Role::Crewmate)
-					message.winners.push_back(player.second.mob);
-			}
-			handler.Broadcast(message);
-			endGame(now);
+			endGame(now, Role::Crewmate);
 			return;
 		}
 	}
@@ -533,22 +516,22 @@ void Game::checkForGameOver(int64_t now)
 		if (taskCountComplete >= taskCountAll)
 		{
 			// crew victory
-			GameOver message;
-			message.role = Role::Crewmate;
-			for (auto player : handler.players)
-			{
-				if (handler.mobs[player.second.mob].role == Role::Crewmate)
-					message.winners.push_back(player.second.mob);
-			}
-			handler.Broadcast(message);
-			endGame(now);
+			endGame(now, Role::Crewmate);
 			return;
 		}
 	}
 }
 
-void Game::endGame(int64_t now)
+void Game::endGame(int64_t now, Role winner)
 {
+	GameOver message;
+	message.role = winner;
+	for (auto player : handler.players)
+	{
+		if (handler.mobs[player.second.mob].role == winner)
+			message.winners.push_back(player.second.mob);
+	}
+	handler.Broadcast(message);
 	setPhase(GamePhase::GameOver, now + 10'000'000'000);
 }
 
