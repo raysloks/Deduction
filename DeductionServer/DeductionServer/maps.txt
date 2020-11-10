@@ -57,10 +57,58 @@
 			}
 			{
 				type "VoiceSabotage"
-				duration 15
+				minigame_index 5100
+			}
+			{
+				type "NukeSabotage"
+				minigame_index 6000
+				duration 30
 			}
 		]
 	}
 	{
+		spawnPos
+		{
+			x 0
+			y 0
+		}
+		spawnSize
+		{
+			x 2
+			y 2
+		}
+		meetingPos
+		{
+			x -1.5
+			y -12.5
+		}
+		meetingSize
+		{
+			x 4
+			y 2
+		}
+		sabotages
+		[
+			{
+				type "LightSabotage"
+				duration 17
+			}
+			{
+				type "LightSabotage"
+				duration 17
+			}
+			{
+				type "LightSabotage"
+				duration 17
+			}
+			{
+				type "LightSabotage"
+				duration 17
+			}
+			{
+				type "VoiceSabotage"
+				duration 17
+			}
+		]
 	}
 ]
