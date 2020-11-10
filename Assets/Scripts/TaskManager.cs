@@ -7,6 +7,7 @@ public class TaskManager : MonoBehaviour
     public GameController game;
 
     public GameObject indicatorPrefab;
+    public GameObject indicatorParent;
 
     public RectTransform taskWindow;
 
@@ -33,6 +34,7 @@ public class TaskManager : MonoBehaviour
         for (int i = indicators.Count; i < tasks.Count; ++i)
         {
             var indicator = Instantiate(indicatorPrefab);
+            indicator.transform.SetParent(indicatorParent.transform);
             DontDestroyOnLoad(indicator);
             indicators.Add(indicator);
         }

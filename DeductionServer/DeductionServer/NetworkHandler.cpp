@@ -489,6 +489,8 @@ void NetworkHandler::LightUpdateHandler(const asio::ip::udp::endpoint & endpoint
 
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)
 {
+	std::cout << "Meeting Started" << std::endl;;
+
 	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
@@ -730,6 +732,14 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 		}
 	}
 }
+
+void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
+{
+	std::cout << "Enter Evidence Handler!" << std::endl;;
+	SendEvidence reply;
+	Broadcast(reply);
+}
+
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{

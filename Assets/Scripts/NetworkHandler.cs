@@ -287,4 +287,9 @@ public class NetworkHandler
             game.taskManager.sabotageTasks.Add(task);
         }
     }
+    internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
+    {
+        Debug.Log("Enter Evidence Handler");
+        Debug.Log("Did It Work " + message.picture.Count);
+    }
 }

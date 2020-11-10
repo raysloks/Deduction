@@ -7,6 +7,7 @@ public class ScreenshotHandler : MonoBehaviour
     private static ScreenshotHandler instance;
 
     private Camera myCamera;
+    private Player player;
     private bool takeScreenshotOnNextFrame = false;
     private List<byte[]> byteList = new List<byte[]>();
 
@@ -14,14 +15,15 @@ public class ScreenshotHandler : MonoBehaviour
     void Awake()
     {
         instance = this;
-        myCamera = gameObject.GetComponent<Camera>();       
+        myCamera = gameObject.GetComponent<Camera>();
+        player = transform.parent.GetComponent<Player>();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(TakeScreenshot(Screen.width, Screen.height));
+            StartCoroutine(player.CameraFlash(0.25f));
         }
     }
 
@@ -45,9 +47,7 @@ public class ScreenshotHandler : MonoBehaviour
         byteList.Add(byteArray);
         Debug.Log("This Many Pictures in List: " + byteList.Count);
         RenderTexture.ReleaseTemporary(renderTexture);
-        myCamera.targetTexture = null;
-
-        
+        myCamera.targetTexture = null;        
 
     }
 
