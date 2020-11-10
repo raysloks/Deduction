@@ -379,7 +379,7 @@ void Game::createTaskLists()
 		mob.tasks.clear();
 
 		std::vector<uint16_t> tasks;
-		for (size_t i = 0; i < 24; ++i)
+		for (size_t i = 1; i < 24; ++i)
 			tasks.push_back(i);
 
 		for (size_t i = 0; i + 1 < tasks.size(); ++i)
