@@ -34,9 +34,9 @@ public class Player : Mob
         }
 
         if (move.x > 0f)
-            sprite.flipX = true;
+            characterTransform.localScale = new Vector3(-1f, 1f, 1f);
         if (move.x < 0f)
-            sprite.flipX = false;
+            characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
         visionLight.pointLightOuterRadius = GetVision();
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);

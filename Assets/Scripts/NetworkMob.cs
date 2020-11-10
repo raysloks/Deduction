@@ -27,9 +27,9 @@ public class NetworkMob : Mob
 
         Vector3 diff = upper.position - lower.position;
         if (diff.x > 0f)
-            sprite.flipX = true;
+            characterTransform.localScale = new Vector3(-1f, 1f, 1f);
         if (diff.x < 0f)
-            sprite.flipX = false;
+            characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
         transform.position = Vector3.Lerp(lower.position, upper.position, (float)(time - lower.time) / (upper.time - lower.time));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
