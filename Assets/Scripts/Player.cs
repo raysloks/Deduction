@@ -38,6 +38,8 @@ public class Player : Mob
         if (move.x < 0f)
             characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
+        animator.SetFloat("Speed", move.magnitude);
+
         visionLight.pointLightOuterRadius = GetVision();
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);
         visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;

@@ -8,6 +8,7 @@ public class Mob : MonoBehaviour
     public SpriteRenderer sprite;
     public SpriteResolver spriteResolver;
     public Transform characterTransform;
+    public Animator animator;
 
     public bool IsAlive => type == 0;
 
