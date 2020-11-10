@@ -14,6 +14,7 @@
 #include "Vec2.h"
 #include "Net/GameSettings.h"
 #include "Map.h"
+#include "Role.h"
 
 class NetworkHandler;
 
@@ -51,7 +52,7 @@ public:
 	void resetSettings();
 
 	void checkForGameOver(int64_t now);
-	void endGame(int64_t now);
+	void endGame(int64_t now, Role winner);
 
 	void removeCorpses();
 

@@ -135,6 +135,7 @@
     </ClInclude>
     <ClInclude Include="VoiceSabotage.h" />
     <ClInclude Include="Coal.h" />
+    <ClInclude Include="NukeSabotage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -252,6 +253,7 @@
     </ClCompile>
     <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Coal.cpp" />
+    <ClCompile Include="NukeSabotage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

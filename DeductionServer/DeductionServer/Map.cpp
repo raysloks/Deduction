@@ -5,6 +5,7 @@
 #include "LightSabotage.h"
 #include "DoorSabotage.h"
 #include "VoiceSabotage.h"
+#include "NukeSabotage.h"
 
 Map::Map()
 {
@@ -42,6 +43,13 @@ Map::Map(const Coal& coal)
 			voice->duration = element["duration"].real * 1'000'000'000;
 			voice->minigame_index = element["minigame_index"].integer;
 			sabotages.push_back(std::unique_ptr<Sabotage>(voice));
+		}
+		if (type == "NukeSabotage")
+		{
+			auto nuke = new NukeSabotage();
+			nuke->duration = element["duration"].real * 1'000'000'000;
+			nuke->minigame_index = element["minigame_index"].integer;
+			sabotages.push_back(std::unique_ptr<Sabotage>(nuke));
 		}
 	}
 }
