@@ -31,6 +31,8 @@ public class NetworkMob : Mob
         if (diff.x < 0f)
             characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
+        animator.SetFloat("Speed", diff.magnitude / ((upper.time - lower.time) / 1000000000f));
+
         transform.position = Vector3.Lerp(lower.position, upper.position, (float)(time - lower.time) / (upper.time - lower.time));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
