@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : Mob
 {
@@ -14,6 +17,12 @@ public class Player : Mob
     public GameController controller;
 
     private Light2D visionLight;
+
+    [Header("Camera Flash Stuff")]
+    public GameObject canvasButtons;
+    public GameObject targetMarker;
+    public TextMeshProUGUI text;
+    private bool cameraFlashing = false;
 
     private new void Awake()
     {
@@ -40,7 +49,10 @@ public class Player : Mob
 
         animator.SetFloat("Speed", move.magnitude);
 
-        visionLight.pointLightOuterRadius = GetVision();
+        if(!cameraFlashing)
+        {
+            visionLight.pointLightOuterRadius = GetVision();
+        }
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);
         visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;
 
@@ -74,4 +86,39 @@ public class Player : Mob
         else
             return controller.settings.impostorVision;
     }
+
+    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+
+    public IEnumerator CameraFlash(float Sec)
+    {
+        cameraFlashing = true;
+        canvasButtons.SetActive(false);
+        targetMarker.GetComponent<SpriteRenderer>().enabled = false;
+        visionLight.pointLightOuterRadius = controller.settings.impostorVision;
+        text.color = Color.white;
+        float counter = Sec;
+
+        while (counter > 0)
+        {
+            counter -= Time.deltaTime;
+            yield return null;
+        }
+
+        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height);
+
+        yield return frameEnd;
+
+        if (role == 0)
+        {
+            text.color = Color.white;
+        }
+        else
+        {
+            text.color = Color.red;
+        }
+        targetMarker.GetComponent<SpriteRenderer>().enabled = true;
+        canvasButtons.SetActive(true);
+        visionLight.pointLightOuterRadius = GetVision();
+    }
+
 }

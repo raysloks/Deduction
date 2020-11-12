@@ -9,10 +9,6 @@ public class EvidenceHandler : MonoBehaviour
     public GameObject Content;
     public GameObject PicturePrefab;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
 
     public void AddAllEvidence()
     {
@@ -20,7 +16,6 @@ public class EvidenceHandler : MonoBehaviour
         List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
         foreach(byte[] picture in b)
         {           
-            // Texture size does not matter 
             Texture2D sampleTexture = new Texture2D(2, 2);
             // the size of the texture will be replaced by image size
             bool isLoaded = sampleTexture.LoadImage(picture);

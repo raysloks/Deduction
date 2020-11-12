@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using EventCallbacks;
 
-public class VoteButton : MonoBehaviour
+using UnityEngine.EventSystems;
+
+public class VoteButton : MonoBehaviour, IPointerEnterHandler
 {
     [HideInInspector] public ulong target;
     [HideInInspector] public GameController game;
@@ -14,9 +17,11 @@ public class VoteButton : MonoBehaviour
     public GameObject finishedVotingIndicator;
     public Transform votesReceivedLayoutGroup;
     public GameObject confirmedIndicator;
+    public GameObject Evidence;
 
     private int votesReceivedCount = 0;
     private int votesCastCount = 0;
+    
 
     public void ResetVoteCountAndState()
     {
@@ -56,5 +61,19 @@ public class VoteButton : MonoBehaviour
         if (++votesCastCount == game.settings.votesPerPlayer)
             if (finishedVotingIndicator)
                 finishedVotingIndicator.SetActive(true);
+    }
+    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
+        if (e == 1)
+        {
+            byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
+            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+            sendEvidenceEvent.byteArray = ba;
+            sendEvidenceEvent.Evidence = e;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
+        }
+        Debug.Log("The cursor entered the selectable UI element.");
     }
 }

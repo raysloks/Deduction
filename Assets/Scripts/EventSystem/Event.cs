@@ -60,6 +60,17 @@ namespace EventCallbacks
         public ulong role;
     }
 
+    public class SendEvidenceEvent : Event
+    {
+        public byte[] byteArray;
+        public int Evidence;
+
+        public GameObject final;
+        public ulong idOfTarget;
+
+
+    }
+
     public class MobEjectedEvent : Event
     {
         public Mob mob;

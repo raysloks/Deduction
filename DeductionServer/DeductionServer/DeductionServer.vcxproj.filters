@@ -135,7 +135,9 @@
     </ClInclude>
     <ClInclude Include="VoiceSabotage.h" />
     <ClInclude Include="Coal.h" />
-    <ClInclude Include="NukeSabotage.h" />
+    <ClInclude Include="Net\SendEvidence.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -253,7 +255,9 @@
     </ClCompile>
     <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Coal.cpp" />
-    <ClCompile Include="NukeSabotage.cpp" />
+    <ClCompile Include="Net\SendEvidence.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

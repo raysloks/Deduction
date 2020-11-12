@@ -442,6 +442,18 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void SendEvidence(byte[] b)
+    {
+        if (phase == GamePhase.Voting || phase == GamePhase.Discussion)
+        {
+            Debug.Log("Send The List");
+            byte[] test = new byte[10];
+            SendEvidence message = new SendEvidence();
+            message.picture = b.ToList();       
+            handler.link.Send(message);
+        }
+    }
+
     public void UpdateName()
     {
         string name = nameInputField.text;

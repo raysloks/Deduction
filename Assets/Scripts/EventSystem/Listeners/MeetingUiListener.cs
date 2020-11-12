@@ -33,6 +33,7 @@ public class MeetingUiListener : MonoBehaviour
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_STARTED, MeetingStarted);
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
         //EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_CHECKVOTES, checkVotes);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.SEND_EVIDENCE, SendEvidence);
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.MEETING_VOTED, Vote);
     }
@@ -185,5 +186,11 @@ public class MeetingUiListener : MonoBehaviour
                 voteButtons[targetId].VoteReceived(voterPrefab, handler.mobs[voterId].sprite);
             }
         }
+    }
+
+    private void SendEvidence(EventCallbacks.Event eventInfo)
+    {
+        SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
+        voteButtons[see.idOfTarget].Evidence.GetComponent<VoterEvidence>().SetEvidence(eventInfo);
     }
 }

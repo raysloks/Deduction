@@ -113,6 +113,7 @@
     <ClCompile Include="Net\ResetGameSettings.cpp" />
     <ClCompile Include="Net\RestartRequested.cpp" />
     <ClCompile Include="Net\SabotageTaskUpdate.cpp" />
+    <ClCompile Include="Net\SendEvidence.cpp" />
     <ClCompile Include="Net\TaskListUpdate.cpp" />
     <ClCompile Include="Net\TaskUpdate.cpp" />
     <ClCompile Include="Net\VoiceFrame.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Net\ResetGameSettings.h" />
     <ClInclude Include="Net\RestartRequested.h" />
     <ClInclude Include="Net\SabotageTaskUpdate.h" />
+    <ClInclude Include="Net\SendEvidence.h" />
     <ClInclude Include="Net\TaskListUpdate.h" />
     <ClInclude Include="Net\TaskUpdate.h" />
     <ClInclude Include="Net\VoiceFrame.h" />

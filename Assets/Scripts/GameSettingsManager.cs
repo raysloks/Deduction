@@ -43,7 +43,7 @@ public class GameSettingsManager : MonoBehaviour
         };
 
         game.settings.crewmateVision = 5.0f;
-        game.settings.playerSpeed = 4.0f;
+        game.settings.playerSpeed = 5.0f;
 
         foreach (var setting in settings)
             setting.CreateInput(this);
