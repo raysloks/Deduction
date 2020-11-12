@@ -30,7 +30,8 @@ bool killOnTies
 bool enableSkipButton
 bool showVotesWhenEveryoneHasVoted
 bool anonymousVotes
-int64 taskCount
+int64 shortTaskCount
+int64 longTaskCount
 int64 taskbarUpdateStyle
 int64 sabotageCooldown
 bool gameOverEnabled

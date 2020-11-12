@@ -21,7 +21,8 @@ public struct GameSettings
 	public bool enableSkipButton;
 	public bool showVotesWhenEveryoneHasVoted;
 	public bool anonymousVotes;
-	public long taskCount;
+	public long shortTaskCount;
+	public long longTaskCount;
 	public long taskbarUpdateStyle;
 	public long sabotageCooldown;
 	public bool gameOverEnabled;
@@ -45,7 +46,8 @@ public struct GameSettings
 		writer.Write((bool)enableSkipButton);
 		writer.Write((bool)showVotesWhenEveryoneHasVoted);
 		writer.Write((bool)anonymousVotes);
-		writer.Write((long)taskCount);
+		writer.Write((long)shortTaskCount);
+		writer.Write((long)longTaskCount);
 		writer.Write((long)taskbarUpdateStyle);
 		writer.Write((long)sabotageCooldown);
 		writer.Write((bool)gameOverEnabled);
@@ -71,7 +73,8 @@ public struct GameSettings
 		_ret.enableSkipButton = (bool)reader.ReadBoolean();
 		_ret.showVotesWhenEveryoneHasVoted = (bool)reader.ReadBoolean();
 		_ret.anonymousVotes = (bool)reader.ReadBoolean();
-		_ret.taskCount = (long)reader.ReadInt64();
+		_ret.shortTaskCount = (long)reader.ReadInt64();
+		_ret.longTaskCount = (long)reader.ReadInt64();
 		_ret.taskbarUpdateStyle = (long)reader.ReadInt64();
 		_ret.sabotageCooldown = (long)reader.ReadInt64();
 		_ret.gameOverEnabled = (bool)reader.ReadBoolean();

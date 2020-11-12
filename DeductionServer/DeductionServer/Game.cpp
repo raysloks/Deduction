@@ -379,14 +379,36 @@ void Game::createTaskLists()
 		mob.tasks.clear();
 
 		std::vector<uint16_t> tasks;
-		for (size_t i = 1; i < 24; ++i)
-			tasks.push_back(i);
 
-		for (size_t i = 0; i + 1 < tasks.size(); ++i)
-			std::swap(tasks[i], tasks[handler.rng.next(i, tasks.size() - 1)]);
+		{
+			std::vector<uint16_t> short_tasks;
+			for (size_t i = 1; i <= map->shortTaskCount; ++i)
+				short_tasks.push_back(i);
 
-		if (settings.taskCount < tasks.size())
-			tasks.resize(settings.taskCount);
+			for (size_t i = 0; i + 1 < short_tasks.size(); ++i)
+				std::swap(short_tasks[i], short_tasks[handler.rng.next(i, short_tasks.size() - 1)]);
+
+			if (settings.shortTaskCount < short_tasks.size() && settings.shortTaskCount >= 0)
+				short_tasks.resize(settings.shortTaskCount);
+
+			for (auto task : short_tasks)
+				tasks.push_back(task);
+		}
+
+		{
+			std::vector<uint16_t> long_tasks;
+			for (size_t i = 0; i < map->longTaskCount; ++i)
+				long_tasks.push_back(i + 1000);
+
+			for (size_t i = 0; i + 1 < long_tasks.size(); ++i)
+				std::swap(long_tasks[i], long_tasks[handler.rng.next(i, long_tasks.size() - 1)]);
+
+			if (settings.longTaskCount < long_tasks.size() && settings.longTaskCount >= 0)
+				long_tasks.resize(settings.longTaskCount);
+
+			for (auto task : long_tasks)
+				tasks.push_back(task);
+		}
 
 		if (mob.role == Role::Crewmate)
 			for (auto task : tasks)
@@ -442,7 +464,8 @@ void Game::resetSettings()
 		settings.enableSkipButton = true;
 		settings.showVotesWhenEveryoneHasVoted = true;
 		settings.anonymousVotes = false;
-		settings.taskCount = 5;
+		settings.shortTaskCount = 3;
+		settings.longTaskCount = 2;
 		settings.taskbarUpdateStyle = 2;
 		settings.sabotageCooldown = 30'000'000'000;
 		settings.gameOverEnabled = true;

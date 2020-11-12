@@ -36,7 +36,8 @@ public class GameSettingsManager : MonoBehaviour
             //new GameSettingToggle("Enable Skip Button", "enableSkipButton", game),
             new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
-            new GameSettingInputField<long>("Task Count", "taskCount", game),
+            new GameSettingInputField<long>("Short Tasks", "shortTaskCount", game),
+            new GameSettingInputField<long>("Long Tasks", "longTaskCount", game),
             new GameSettingDropdown("Taskbar Update Style", "taskbarUpdateStyle", game, new List<string>{ "Instant", "End of Meeting", "Start of Meeting" }),
             new GameSettingTime("Sabotage Cooldown", "sabotageCooldown", game),
             new GameSettingToggle("[DEV]Game Over Enabled", "gameOverEnabled", game)
