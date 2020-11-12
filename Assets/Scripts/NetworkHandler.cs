@@ -5,6 +5,11 @@ using System;
 using TMPro;
 using EventCallbacks;
 using System.Linq;
+using System.IO;
+using System.IO.Compression;
+using System;
+
+using System.Text;
 
 public class NetworkHandler
 {
@@ -143,6 +148,7 @@ public class NetworkHandler
 
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
+        Debug.Log("Enter Evidence Handler");
     }
 
     internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
@@ -289,7 +295,49 @@ public class NetworkHandler
     }
     internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
     {
-        Debug.Log("Enter Evidence Handler");
-        Debug.Log("Did It Work " + message.picture.Count);
+        //Debug.Log("Enter Evidence Handler " + StringToByteArray(message.picture).Length);
+        SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+        if(message.picture != null)
+        {
+            Debug.Log("This is the player " + message.id);
+          //  string f = DecompressString(message.picture);
+            sendEvidenceEvent.byteArray = message.picture.ToArray();
+            sendEvidenceEvent.Evidence = 1;
+            sendEvidenceEvent.idOfTarget = message.id;
+        }
+        EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
     }
+
+   
+    public static byte[] Decompress(byte[] data)
+    {
+        MemoryStream input = new MemoryStream(data);
+        MemoryStream output = new MemoryStream();
+        using (DeflateStream dstream = new DeflateStream(input, CompressionMode.Decompress))
+        {
+            dstream.CopyTo(output);
+        }
+        return output.ToArray();
+    }
+
+    public static string DecompressString(string compressedText)
+    {
+        byte[] gZipBuffer = Convert.FromBase64String(compressedText);
+        using (var memoryStream = new MemoryStream())
+        {
+            int dataLength = BitConverter.ToInt32(gZipBuffer, 0);
+            memoryStream.Write(gZipBuffer, 4, gZipBuffer.Length - 4);
+
+            var buffer = new byte[dataLength];
+
+            memoryStream.Position = 0;
+            using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+            {
+                gZipStream.Read(buffer, 0, buffer.Length);
+            }
+
+            return Encoding.UTF8.GetString(buffer);
+        }
+    }
+
 }

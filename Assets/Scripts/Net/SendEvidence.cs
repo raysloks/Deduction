@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public struct SendEvidence
 {
 	public List<byte> picture;
+	public ulong id;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -15,6 +16,7 @@ public struct SendEvidence
 			foreach (var i in this.picture)
 		writer.Write((byte)i);
 		}
+		writer.Write((ulong)id);
 	}
 
 	public static SendEvidence Deserialize(BinaryReader reader)
@@ -30,6 +32,7 @@ public struct SendEvidence
 			_ret.picture.Add(element);
 		}
 	}
+		_ret.id = (ulong)reader.ReadUInt64();
 		return _ret;
 	}
 };

@@ -91,6 +91,7 @@ int64 timer
 bool completed
 SendEvidence
 uint8 picture[]
+uint64 id
 TaskListUpdate
 uint16 tasks[]
 uint64 password

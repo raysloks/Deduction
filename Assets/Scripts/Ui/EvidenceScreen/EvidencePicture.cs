@@ -27,6 +27,6 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
     {
         //Output to console the GameObject's name and the following message
         Debug.Log("Cursor Clicked " + name + " GameObject");
-        med.LockEvidencePicture();
+        med.LockEvidencePicture(GetComponent<RawImage>().texture);
     }
 }

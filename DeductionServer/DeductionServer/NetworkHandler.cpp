@@ -735,9 +735,19 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 
 void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
 {
-	std::cout << "Enter Evidence Handler!" << std::endl;;
-	SendEvidence reply;
-	Broadcast(reply);
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+
+		SendEvidence ev = message;
+
+		ev.id = player.mob;
+		ev.picture = message.picture;
+
+		std::cout << "Enter Evidence Handler!" << std::endl;;
+		Broadcast(ev);
+	}
 }
 
 

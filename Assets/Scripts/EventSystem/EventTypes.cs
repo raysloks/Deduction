@@ -11,6 +11,8 @@
         PHASE_CHANGED,
         PLAY_SOUND,
         GAME_OVER,
-        MOB_EJECTED
+        MOB_EJECTED,
+        SEND_EVIDENCE,
+        SHOW_EVIDENCE
     }
 }
