@@ -23,6 +23,7 @@ public class Player : Mob
     public GameObject targetMarker;
     public TextMeshProUGUI text;
     public GameObject MeetingCanvas;
+    public GameObject arrowParent;
     private bool cameraFlashing = false;
 
     private new void Awake()
@@ -108,8 +109,10 @@ public class Player : Mob
         cameraFlashing = true;
         bool cB = canvasButtons.activeSelf;
         bool mC = MeetingCanvas.activeSelf;
+        bool aP = arrowParent.activeSelf;
         canvasButtons.SetActive(false);
         MeetingCanvas.SetActive(false);
+        arrowParent.SetActive(false);
         targetMarker.GetComponent<SpriteRenderer>().enabled = false;
         visionLight.pointLightOuterRadius = controller.settings.impostorVision;
         text.color = Color.white;
@@ -136,6 +139,7 @@ public class Player : Mob
         targetMarker.GetComponent<SpriteRenderer>().enabled = true;
         canvasButtons.SetActive(cB);
         MeetingCanvas.SetActive(mC);
+        arrowParent.SetActive(aP);
 
         visionLight.pointLightOuterRadius = GetVision();
     }
