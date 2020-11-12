@@ -17,5 +17,7 @@ public:
 	std::vector<std::unique_ptr<Sabotage>> sabotages;
 
 	Vec2 spawnPos, spawnSize, meetingPos, meetingSize;
+
+	uint64_t shortTaskCount, longTaskCount;
 };
 

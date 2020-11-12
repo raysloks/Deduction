@@ -32,7 +32,9 @@ void Config::load(const std::filesystem::path& file)
 				break;
 
 			std::unique_ptr<Generator> generator;
-			if (type == "cpp") {
+
+			if (type == "cpp")
+			{
 				generator = std::make_unique<CppGenerator>();
 				std::string options;
 				std::getline(f, options);
@@ -42,8 +44,12 @@ void Config::load(const std::filesystem::path& file)
 					generator->is_up = true;
 				if (options.find("down") != std::string::npos)
 					generator->is_down = true;
+				if (options.find("mutex") != std::string::npos)
+					generator->mutex = true;
 			}
-			if (type == "cs") {
+
+			if (type == "cs")
+			{
 				generator = std::make_unique<CsGenerator>();
 				std::string options;
 				std::getline(f, options);

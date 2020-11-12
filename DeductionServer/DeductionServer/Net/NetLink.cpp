@@ -5,7 +5,7 @@
 // Application should implement this class using the prototypes in HandlerPrototypes.h
 #include "../NetworkHandler.h"
 
-const uint32_t NetLink::crc = 0x32d0faff;
+const uint32_t NetLink::crc = 0xe095270c;
 NetLink::NetLink() : io_context(), socket(io_context)
 {
 }
@@ -74,6 +74,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 				}
 				case 1:
 				{
+					std::lock_guard lock(mutex);
 					handler->ConnectionHandler(endpoint);
 					break;
 				}
@@ -97,6 +98,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		AbilityUsed message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->AbilityUsedHandler(endpoint, message);
 		break;
 	}
@@ -104,6 +106,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		DoorUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->DoorUpdateHandler(endpoint, message);
 		break;
 	}
@@ -111,6 +114,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		GameOver message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->GameOverHandler(endpoint, message);
 		break;
 	}
@@ -118,6 +122,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		GamePhaseUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->GamePhaseUpdateHandler(endpoint, message);
 		break;
 	}
@@ -125,6 +130,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		GameSettings message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->GameSettingsHandler(endpoint, message);
 		break;
 	}
@@ -132,6 +138,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		GameStartRequested message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->GameStartRequestedHandler(endpoint, message);
 		break;
 	}
@@ -139,6 +146,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		GivenTasks message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->GivenTasksHandler(endpoint, message);
 		break;
 	}
@@ -146,6 +154,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		Heartbeat message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->HeartbeatHandler(endpoint, message);
 		break;
 	}
@@ -153,6 +162,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		KillAttempted message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->KillAttemptedHandler(endpoint, message);
 		break;
 	}
@@ -160,6 +170,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		LightUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->LightUpdateHandler(endpoint, message);
 		break;
 	}
@@ -167,6 +178,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MeetingRequested message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MeetingRequestedHandler(endpoint, message);
 		break;
 	}
@@ -174,6 +186,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobEjected message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobEjectedHandler(endpoint, message);
 		break;
 	}
@@ -181,6 +194,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobRemoved message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobRemovedHandler(endpoint, message);
 		break;
 	}
@@ -188,6 +202,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobRoleUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobRoleUpdateHandler(endpoint, message);
 		break;
 	}
@@ -195,6 +210,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobStateUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobStateUpdateHandler(endpoint, message);
 		break;
 	}
@@ -202,6 +218,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobTeleport message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobTeleportHandler(endpoint, message);
 		break;
 	}
@@ -209,6 +226,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		MobUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->MobUpdateHandler(endpoint, message);
 		break;
 	}
@@ -216,6 +234,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		PlayerUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->PlayerUpdateHandler(endpoint, message);
 		break;
 	}
@@ -223,6 +242,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		PlayerVoted message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->PlayerVotedHandler(endpoint, message);
 		break;
 	}
@@ -230,6 +250,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		ReportAttempted message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->ReportAttemptedHandler(endpoint, message);
 		break;
 	}
@@ -237,6 +258,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		ResetGameSettings message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->ResetGameSettingsHandler(endpoint, message);
 		break;
 	}
@@ -244,6 +266,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		RestartRequested message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->RestartRequestedHandler(endpoint, message);
 		break;
 	}
@@ -251,6 +274,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		SabotageTaskUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->SabotageTaskUpdateHandler(endpoint, message);
 		break;
 	}
@@ -258,6 +282,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		SendEvidence message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->SendEvidenceHandler(endpoint, message);
 		break;
 	}
@@ -265,6 +290,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		TaskListUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->TaskListUpdateHandler(endpoint, message);
 		break;
 	}
@@ -272,6 +298,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		TaskUpdate message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->TaskUpdateHandler(endpoint, message);
 		break;
 	}
@@ -279,6 +306,7 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 	{
 		VoiceFrame message;
 		message.deserialize(is);
+		std::lock_guard lock(mutex);
 		handler->VoiceFrameHandler(endpoint, message);
 		break;
 	}

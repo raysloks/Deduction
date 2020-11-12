@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.IO;
+
 public class ScreenshotHandler : MonoBehaviour
 {
     private static ScreenshotHandler instance;
@@ -32,18 +34,19 @@ public class ScreenshotHandler : MonoBehaviour
     public IEnumerator TakeScreenshot(int width, int height)
     {
         Debug.Log("StartScreenshot");
-        myCamera.targetTexture = RenderTexture.GetTemporary(width, height);
+        myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
 
         yield return frameEnd;
 
         RenderTexture renderTexture = myCamera.targetTexture;
 
-        Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
+        Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
         Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
         renderResult.ReadPixels(rect, 0, 0);
 
         byte[] byteArray = renderResult.EncodeToPNG();
-           
+
+        // File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", byteArray);
         byteList.Add(byteArray);
         Debug.Log("This Many Pictures in List: " + byteList.Count);
         RenderTexture.ReleaseTemporary(renderTexture);
@@ -54,6 +57,11 @@ public class ScreenshotHandler : MonoBehaviour
     public static void TakeScreenshot_Static(int width, int height)
     {
         instance.StartCoroutine(instance.TakeScreenshot(width, height));
+    }
+
+    public static void StartCameraFlash(float time)
+    {
+        instance.StartCoroutine(instance.player.CameraFlash(0.25f));
     }
 
     public static List<byte[]> GetListOfPicturesTaken()

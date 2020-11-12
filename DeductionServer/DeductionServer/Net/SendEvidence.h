@@ -10,6 +10,7 @@ class SendEvidence
 {
 public:
 	std::vector<uint8_t> picture;
+	uint64_t id;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

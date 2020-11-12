@@ -25,7 +25,8 @@ public:
 	bool enableSkipButton;
 	bool showVotesWhenEveryoneHasVoted;
 	bool anonymousVotes;
-	int64_t taskCount;
+	int64_t shortTaskCount;
+	int64_t longTaskCount;
 	int64_t taskbarUpdateStyle;
 	int64_t sabotageCooldown;
 	bool gameOverEnabled;

@@ -19,5 +19,7 @@ public:
 
 	bool is_up = false;
 	bool is_down = false;
+
+	bool mutex = false;
 };
 

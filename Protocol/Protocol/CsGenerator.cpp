@@ -49,23 +49,29 @@ void serializeFieldCs(std::ofstream& f, Field field)
 		}
 		if (field.type_name == "vec2")
 		{
-			f << "		writer.Write(" << field.name << ".x);" << std::endl;
-			f << "		writer.Write(" << field.name << ".y);" << std::endl;
+			f << "		{" << std::endl;
+			f << "			writer.Write(" << field.name << ".x);" << std::endl;
+			f << "			writer.Write(" << field.name << ".y);" << std::endl;
+			f << "		}" << std::endl;
 			break;
 		}
 		if (field.type_name == "vec3")
 		{
-			f << "		writer.Write(" << field.name << ".x);" << std::endl;
-			f << "		writer.Write(" << field.name << ".y);" << std::endl;
-			f << "		writer.Write(" << field.name << ".z);" << std::endl;
+			f << "		{" << std::endl;
+			f << "			writer.Write(" << field.name << ".x);" << std::endl;
+			f << "			writer.Write(" << field.name << ".y);" << std::endl;
+			f << "			writer.Write(" << field.name << ".z);" << std::endl;
+			f << "		}" << std::endl;
 			break;
 		}
 		if (field.type_name == "vec4")
 		{
-			f << "		writer.Write(" << field.name << ".x);" << std::endl;
-			f << "		writer.Write(" << field.name << ".y);" << std::endl;
-			f << "		writer.Write(" << field.name << ".z);" << std::endl;
-			f << "		writer.Write(" << field.name << ".w);" << std::endl;
+			f << "		{" << std::endl;
+			f << "			writer.Write(" << field.name << ".x);" << std::endl;
+			f << "			writer.Write(" << field.name << ".y);" << std::endl;
+			f << "			writer.Write(" << field.name << ".z);" << std::endl;
+			f << "			writer.Write(" << field.name << ".w);" << std::endl;
+			f << "		}" << std::endl;
 			break;
 		}
 		f << "		writer.Write((" << writer_translations.at(field.type_name) << ")" << field.name << ");" << std::endl;

@@ -18,6 +18,9 @@ Map::Map(const Coal& coal)
 	meetingPos = coal["meetingPos"];
 	meetingSize = coal["meetingSize"];
 
+	shortTaskCount = coal["shortTaskCount"].integer;
+	longTaskCount = coal["longTaskCount"].integer;
+
 	for (auto element : coal["sabotages"].elements)
 	{
 		std::string type = element["type"].string;
