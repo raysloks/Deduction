@@ -16,6 +16,7 @@
 	void MobStateUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);
 	void MobTeleportHandler(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message);
 	void MobUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message);
+	void PickupCooldownHandler(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message);
 	void PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);

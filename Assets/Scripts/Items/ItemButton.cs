@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemButton : MonoBehaviour
 {
     private static ItemButton instance;
 
 
-    enum Item { None, Camera };
-    Item myItem;
+    [HideInInspector]public enum Item { None, Camera };
+    [HideInInspector]public Item myItem;
 
     public GameObject itemContainer;
     public GameObject player;
+    public GameController gc;
 
     [Header("Camera")]
     public GameObject buttonItemImage;
 
     public Sprite CameraSprite;
+    public TextMeshProUGUI text;
     private Image myItemImage;
 
     private int maxPhotos = 3;
@@ -46,26 +49,33 @@ public class ItemButton : MonoBehaviour
     private void NoneClick()
     {
         float closestDistance = 2f;
-        GameObject childGo; 
+        GameObject childGo = null;
+        int index = 0;
         foreach (Transform child in itemContainer.transform)
         {
-            if(Vector2.Distance(child.position, player.transform.position) < closestDistance)
+            if (Vector2.Distance(child.position, player.transform.position) < closestDistance)
             {
                 childGo = child.gameObject;
                 closestDistance = Vector2.Distance(child.position, player.transform.position);
                 Debug.Log("Close " + Vector2.Distance(child.position, player.transform.position));
             }
+            index++;
+
         }
-        if(closestDistance < 2f)
+        if (childGo != null)
         {
-            /*
+            
             int item = (int)childGo.GetComponent<ItemContainer>().item;
             if (item != 0)
             {
                SetItem(item);
+
                childGo.GetComponent<ItemContainer>().ItemTaken();
+               PickupCooldown message = new PickupCooldown();
+               message.child = index;
+               gc.handler.link.Send(message);
             }
-            */
+            
         }
     }
     private void CameraClick()
@@ -90,11 +100,13 @@ public class ItemButton : MonoBehaviour
         {
             case Item.None:
                 myItemImage.enabled = false;
+                text.text = "Pickup";
                 break;
             case Item.Camera:
                 myItemImage.enabled = true;
                 myItemImage.sprite = CameraSprite;
                 photosTaken = 0;
+                text.text = "";
                 break;
         }
     }

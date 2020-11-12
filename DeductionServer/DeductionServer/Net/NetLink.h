@@ -23,6 +23,7 @@
 #include "MobStateUpdate.h"
 #include "MobTeleport.h"
 #include "MobUpdate.h"
+#include "PickupCooldown.h"
 #include "PlayerUpdate.h"
 #include "PlayerVoted.h"
 #include "ReportAttempted.h"
@@ -62,6 +63,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);

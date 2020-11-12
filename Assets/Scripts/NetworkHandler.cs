@@ -299,12 +299,6 @@ public class NetworkHandler
         {
             Debug.Log("This is the player " + message.id + " count vec3 vs mobs "+ message.picturePos.Count+ " VS " + mobs.Count);
             sendEvidenceEvent.vec3List = message.picturePos;
-            int index = 0;
-            foreach(Mob m in mobs.Values)
-            {
-               // m.transform.position = message.picturePos[index];
-                index++;
-            }
             sendEvidenceEvent.Evidence = 1;
             sendEvidenceEvent.idOfTarget = message.id;
             sendEvidenceEvent.positionOfTarget = message.IntiatorPos;
@@ -315,6 +309,12 @@ public class NetworkHandler
             Debug.Log("No Pos");
         }
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
+    }
+    internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)
+    {
+        CooldownEvent cdEvent = new CooldownEvent();
+        cdEvent.child = (int)message.child;
+        EventSystem.Current.FireEvent(EVENT_TYPE.PICKUP_WAIT, cdEvent);
     }
 
 }

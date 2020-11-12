@@ -40,14 +40,14 @@ public class ScreenshotHandler : MonoBehaviour
     {
         Vector3 orgPos = myCamera.transform.position;
         Vector3 orgPos2 = lights.transform.position;
-        if (pos != Vector3.zero)
+        if (meeting)
         {
 
-            Debug.Log("SetPositionForSetEvidence2");
+           
             myCamera.transform.position = pos;
             lights.transform.position = pos + new Vector3(0f, 2f, 0f);
+            Debug.Log("StartScreenshot " + lights.transform.position + " " + myCamera.transform.position);
         }
-        Debug.Log("StartScreenshot");
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
 
         yield return frameEnd;
@@ -80,8 +80,8 @@ public class ScreenshotHandler : MonoBehaviour
         lights.transform.position = orgPos2;
         LastPictureTaken = byteArray;
         if (meeting) {
+            Debug.Log("EndScreenshot " + lights.transform.position + " " + myCamera.transform.position);
 
-            Debug.Log("SendSetEvidence2");
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.byteArray = LastPictureTaken;
             EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE2, sendEvidenceEvent);

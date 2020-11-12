@@ -138,6 +138,10 @@
     <ClInclude Include="Net\SendEvidence.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="NukeSabotage.h" />
+    <ClInclude Include="Net\PickupCooldown.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -256,6 +260,10 @@
     <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Coal.cpp" />
     <ClCompile Include="Net\SendEvidence.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="NukeSabotage.cpp" />
+    <ClCompile Include="Net\PickupCooldown.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

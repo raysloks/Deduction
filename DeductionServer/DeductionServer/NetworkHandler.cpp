@@ -755,7 +755,9 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 		Broadcast(ev);
 	}
 }
-
+void NetworkHandler::PickupCooldownHandler(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message) {
+	Broadcast(message);
+}
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{

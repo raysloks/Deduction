@@ -107,6 +107,7 @@
     <ClCompile Include="Net\MobTeleport.cpp" />
     <ClCompile Include="Net\MobUpdate.cpp" />
     <ClCompile Include="Net\NetLink.cpp" />
+    <ClCompile Include="Net\PickupCooldown.cpp" />
     <ClCompile Include="Net\PlayerUpdate.cpp" />
     <ClCompile Include="Net\PlayerVoted.cpp" />
     <ClCompile Include="Net\ReportAttempted.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Net\MobUpdate.h" />
     <ClInclude Include="Net\NetHandlerPrototypes.h" />
     <ClInclude Include="Net\NetLink.h" />
+    <ClInclude Include="Net\PickupCooldown.h" />
     <ClInclude Include="Net\PlayerUpdate.h" />
     <ClInclude Include="Net\PlayerVoted.h" />
     <ClInclude Include="Net\ReportAttempted.h" />

@@ -72,6 +72,8 @@ MobUpdate
 uint64 id
 int64 time
 vec3 position
+PickupCooldown
+int64 child
 PlayerUpdate
 uint64 id
 uint64 mob

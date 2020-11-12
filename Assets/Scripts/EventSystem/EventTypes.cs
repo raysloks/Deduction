@@ -14,6 +14,7 @@
         MOB_EJECTED,
         SEND_EVIDENCE,
         SHOW_EVIDENCE,
-        SEND_EVIDENCE2
+        SEND_EVIDENCE2,
+        PICKUP_WAIT
     }
 }

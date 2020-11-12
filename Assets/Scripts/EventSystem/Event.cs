@@ -73,7 +73,10 @@ namespace EventCallbacks
 
 
     }
-
+    public class CooldownEvent : Event
+    {
+        public int child;
+    }
     public class MobEjectedEvent : Event
     {
         public Mob mob;
