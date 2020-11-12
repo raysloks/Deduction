@@ -18,6 +18,8 @@ NetworkHandler::NetworkHandler() : game(*this)
 
 void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 {
+	std::lock_guard lock(link.mutex);
+
 	time = now.time_since_epoch().count();
 
 	game.tick(time);

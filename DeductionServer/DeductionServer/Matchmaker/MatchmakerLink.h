@@ -3,7 +3,6 @@
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
 #include <asio.hpp>
-
 #include <map>
 
 #include "LobbyIdentity.h"
