@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour
 
     public Text text;
 
+    public GameObject infoPopupPrefab;
+
 
     public InputField nameInputField;
     public InputField lobbyInputField;
@@ -134,12 +136,14 @@ public class GameController : MonoBehaviour
         handler.game = this;
 
         matchmaker = new MatchmakerHandler();
-        matchmaker.controller = this;
+        matchmaker.game = this;
 
         voice = new VoiceManager();
         voice.handler = handler;
 
         player.controller = this;
+
+        SetStreamerMode(true);
     }
 
     private void Update()
@@ -153,9 +157,22 @@ public class GameController : MonoBehaviour
 
         if (time > timeout && timeout != 0)
         {
-            connectionState = ConnectionState.None;
-            phase = GamePhase.None;
-            timeout = 0;
+            switch (connectionState)
+            {
+                case ConnectionState.ConnectingToLobby:
+                    if (matchmaker.lobby.Length == 0)
+                    {
+                        matchmaker.ConnectToLobby(matchmaker.lobby);
+                        break;
+                    }
+                    goto default;
+                default:
+                    connectionState = ConnectionState.None;
+                    phase = GamePhase.None;
+                    timeout = 0;
+                    CreateInfoPopup("Connection timed out.");
+                    break;
+            }
         }
 
         heartbeat -= Time.deltaTime;
@@ -292,13 +309,16 @@ public class GameController : MonoBehaviour
                 text.text = "Connecting to matchmaker...";
                 break;
             case ConnectionState.RequestingLobby:
-                text.text = "Requesting lobby...";
+                if (matchmaker.lobby.Length == 0)
+                    text.text = "Requesting vacant lobby...";
+                else
+                    text.text = "Requesting lobby " + GetCensoredLobby() + "...";
                 break;
             case ConnectionState.ConnectingToLobby:
-                text.text = "Connecting to lobby...";
+                text.text = "Connecting to lobby " + GetCensoredLobby() + "...";
                 break;
             case ConnectionState.JoiningLobby:
-                text.text = "Joining lobby...";
+                text.text = "Joining lobby " + GetCensoredLobby() + "...";
                 break;
             case ConnectionState.Connected:
                 int secondsRemaining = (int)((timer - time + 999999999) / 1000000000);
@@ -309,18 +329,7 @@ public class GameController : MonoBehaviour
                         if (timer != 0)
                             text.text = "Game starting in " + secondsRemaining;
                         else
-                        {
-                            if (streamerMode)
-                            {
-                                text.text = "Setup ";
-                                for (int i = 0; i < matchmaker.lobby.Length; ++i)
-                                    text.text += "*";
-                            }
-                            else
-                            {
-                                text.text = "Setup " + matchmaker.lobby;
-                            }
-                        }
+                            text.text = "Setup " + GetCensoredLobby();
                         break;
                     case GamePhase.Intro:
                         text.text = "";
@@ -361,7 +370,6 @@ public class GameController : MonoBehaviour
     public void Connect()
     {
         matchmaker.ConnectToLobby(lobbyInputField.text);
-        timeout = time + 20000000000;
     }
 
     public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
@@ -476,6 +484,17 @@ public class GameController : MonoBehaviour
             streamerMode = value;
             lobbyInputField.contentType = value ? InputField.ContentType.Password : InputField.ContentType.Standard;
         }
+    }
+
+    public string GetCensoredLobby()
+    {
+        return streamerMode ? "*".PadRight(matchmaker.lobby.Length, '*') : matchmaker.lobby;
+    }
+
+    public void CreateInfoPopup(string info)
+    {
+        var go = Instantiate(infoPopupPrefab, transform.parent);
+        go.GetComponentInChildren<Text>().text = info;
     }
 
     public void UpdateHidden()

@@ -24,7 +24,8 @@ int main()
 
 	MatchmakerHandler matchmaker;
 	matchmaker.handler = &handler;
-	matchmaker.UpdateLobby();
+
+	handler.matchmaker = &matchmaker;
 
 	std::cout << "started." << std::endl;
 

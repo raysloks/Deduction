@@ -12,6 +12,8 @@
 
 #include "Xoroshiro128Plus.h"
 
+class MatchmakerHandler;
+
 class NetworkHandler
 {
 public:
@@ -93,5 +95,8 @@ public:
 
 	uint64_t leader;
 	uint64_t lifetimePlayerCount;
+
+	MatchmakerHandler * matchmaker;
+	bool vacant;
 };
 

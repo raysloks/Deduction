@@ -3,7 +3,7 @@ using System.Net;
 
 public class MatchmakerHandler
 {
-    public GameController controller;
+    public GameController game;
 
     public MatchmakerLink link;
 
@@ -23,13 +23,29 @@ public class MatchmakerHandler
     {
         this.lobby = lobby;
         link.Connect(new IPEndPoint(IPAddress.Parse(address), port));
-        controller.connectionState = GameController.ConnectionState.ConnectingToMatchmaker;
+        game.connectionState = GameController.ConnectionState.ConnectingToMatchmaker;
+        game.timeout = game.time + 2000000000;
     }
 
     internal void LobbyIdentityHandler(IPEndPoint endpoint, LobbyIdentity message)
     {
-        controller.handler.link.Connect(new IPEndPoint(IPAddress.Parse(message.address), message.port));
-        controller.connectionState = GameController.ConnectionState.ConnectingToLobby;
+        if (message.address.Length == 0)
+        {
+            game.connectionState = GameController.ConnectionState.None;
+            game.timeout = 0;
+            if (message.lobby.Length == 0)
+                game.CreateInfoPopup("No vacant lobbies.");
+            else
+                game.CreateInfoPopup("Lobby not found.");
+        }
+        else
+        {
+            if (lobby != message.lobby)
+                game.CreateInfoPopup("Lobby mismatch.");
+            game.handler.link.Connect(new IPEndPoint(IPAddress.Parse(message.address), message.port));
+            game.connectionState = GameController.ConnectionState.ConnectingToLobby;
+            game.timeout = game.time + 2000000000;
+        }
     }
 
     internal void LobbyRequestHandler(IPEndPoint endpoint, LobbyRequest message)
@@ -39,6 +55,7 @@ public class MatchmakerHandler
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
         link.Send(endpoint, new LobbyRequest { lobby = lobby });
-        controller.connectionState = GameController.ConnectionState.RequestingLobby;
+        game.connectionState = GameController.ConnectionState.RequestingLobby;
+        game.timeout = game.time + 2000000000;
     }
 }

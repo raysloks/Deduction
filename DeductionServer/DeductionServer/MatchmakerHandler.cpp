@@ -11,6 +11,7 @@ MatchmakerHandler::MatchmakerHandler()
 
 void MatchmakerHandler::UpdateLobby()
 {
+	lobby = "";
 	link.Connect(asio::ip::udp::endpoint(asio::ip::address::from_string("172.105.79.194"), 58712));
 }
 
@@ -23,7 +24,8 @@ void MatchmakerHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoi
 
 void MatchmakerHandler::LobbyIdentityHandler(const asio::ip::udp::endpoint & endpoint, const LobbyIdentity & message)
 {
-	std::cout << message.lobby << std::endl;
+	lobby = message.lobby;
+	std::cout << lobby << std::endl;
 }
 
 void MatchmakerHandler::LobbyRequestHandler(const asio::ip::udp::endpoint & endpoint, const LobbyRequest & message)
