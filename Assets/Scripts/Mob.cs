@@ -56,8 +56,6 @@ public class Mob : MonoBehaviour
         EnterCamo();
     }
 
-
-
     private void OnTriggerExit2D()
     {
             ExitCamo();
