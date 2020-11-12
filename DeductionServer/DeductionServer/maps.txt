@@ -80,7 +80,7 @@
 		meetingPos
 		{
 			x -1.5
-			y -12.5
+			y -12
 		}
 		meetingSize
 		{
@@ -91,23 +91,44 @@
 		[
 			{
 				type "LightSabotage"
-				duration 17
+				minigame_index 5000
 			}
 			{
-				type "LightSabotage"
-				duration 17
+				type "DoorSabotage"
+				doors
+				[
+					0
+					1
+				]
+				duration 15
 			}
 			{
-				type "LightSabotage"
-				duration 17
+				type "DoorSabotage"
+				doors
+				[
+					2
+					3
+				]
+				duration 15
 			}
 			{
-				type "LightSabotage"
-				duration 17
+				type "DoorSabotage"
+				doors
+				[
+					4
+					5
+					6
+				]
+				duration 15
 			}
 			{
 				type "VoiceSabotage"
-				duration 17
+				minigame_index 5100
+			}
+			{
+				type "NukeSabotage"
+				minigame_index 3
+				duration 30
 			}
 		]
 	}
