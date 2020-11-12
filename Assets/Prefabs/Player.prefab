@@ -422,7 +422,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &1351519161533191170
 MonoBehaviour:
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 7b44111035d6881d0000000069ac4a06831d22307b7912b14bf43964
+  m_ApplyToSortingLayers: 7b44111035d6881d0000000069ac4a06831d22307b7912b14bf43964318acd2f15ea09bbf92b02e0
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
@@ -865,6 +865,9 @@ MonoBehaviour:
   canMove: 1
   emergencyButtonsLeft: 0
   controller: {fileID: 0}
+  canvasButtons: {fileID: 0}
+  targetMarker: {fileID: 0}
+  text: {fileID: 0}
 --- !u!1 &1351519162292819108
 GameObject:
   m_ObjectHideFlags: 0
