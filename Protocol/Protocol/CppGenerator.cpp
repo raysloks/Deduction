@@ -267,12 +267,19 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 		f << "// WARNING : Auto-generated file, changes made will disappear when re-generated." << std::endl << std::endl;
 
-		f << "#include <asio.hpp>" << std::endl << std::endl;
+		f << "#include <asio.hpp>" << std::endl;
 
 		if (can_accept)
 		{
-			f << "#include <map>" << std::endl << std::endl;
+			f << "#include <map>" << std::endl;
 		}
+
+		if (mutex)
+		{
+			f << "#include <mutex>" << std::endl;
+		}
+
+		f << std::endl;
 
 		for (auto type : types)
 		{
@@ -317,6 +324,11 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 		if (can_accept)
 		{
 			f << "	std::map<asio::ip::udp::endpoint, int64_t> connections;" << std::endl;
+		}
+
+		if (mutex)
+		{
+			f << "	std::mutex mutex;" << std::endl;
 		}
 
 		f << "};" << std::endl;
@@ -415,6 +427,10 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 				f << "				{" << std::endl;
 				if (can_connect)
 				{
+					if (mutex)
+					{
+						f << "					std::lock_guard lock(mutex);" << std::endl;
+					}
 					f << "					handler->ConnectionHandler(endpoint);" << std::endl;
 				}
 				f << "					break;" << std::endl;
@@ -450,6 +466,10 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 					f << "	{" << std::endl;
 					f << "		" << type.first << " message;" << std::endl;
 					f << "		message.deserialize(is);" << std::endl;
+					if (mutex)
+					{
+						f << "		std::lock_guard lock(mutex);" << std::endl;
+					}
 					f << "		handler->" << type.first << "Handler(endpoint, message);" << std::endl;
 					f << "		break;" << std::endl;
 					f << "	}" << std::endl;

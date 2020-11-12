@@ -3,8 +3,8 @@
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
 #include <asio.hpp>
-
 #include <map>
+#include <mutex>
 
 #include "AbilityUsed.h"
 #include "DoorUpdate.h"
@@ -76,4 +76,5 @@ public:
 	asio::io_context io_context;
 	asio::ip::udp::socket socket;
 	std::map<asio::ip::udp::endpoint, int64_t> connections;
+	std::mutex mutex;
 };

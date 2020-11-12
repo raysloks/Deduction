@@ -40,8 +40,6 @@ int main()
 		handler.tick(now);
 
 		++tick;
-	
-	
 	}
 
 	return 0;
