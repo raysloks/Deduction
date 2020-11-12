@@ -14,12 +14,16 @@ public struct MobTeleport
 	{
 		writer.Write((ulong)id);
 		writer.Write((long)time);
-		writer.Write(from.x);
-		writer.Write(from.y);
-		writer.Write(from.z);
-		writer.Write(to.x);
-		writer.Write(to.y);
-		writer.Write(to.z);
+		{
+			writer.Write(from.x);
+			writer.Write(from.y);
+			writer.Write(from.z);
+		}
+		{
+			writer.Write(to.x);
+			writer.Write(to.y);
+			writer.Write(to.z);
+		}
 	}
 
 	public static MobTeleport Deserialize(BinaryReader reader)

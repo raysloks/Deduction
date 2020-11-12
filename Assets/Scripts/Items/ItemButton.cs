@@ -72,7 +72,7 @@ public class ItemButton : MonoBehaviour
     {
         if (photosTaken < maxPhotos)
         {
-            ScreenshotHandler.StartCameraFlash(0.25f);
+            ScreenshotHandler.StartCameraFlash(0.25f, false, Vector3.zero);
         }
         photosTaken++;
         if(photosTaken >= maxPhotos)

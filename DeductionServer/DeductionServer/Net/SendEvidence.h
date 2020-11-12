@@ -5,11 +5,13 @@
 #include <vector>
 #include <iostream>
 
+#include "../Vec3.h"
+
 #pragma pack(push, 1)
 class SendEvidence
 {
 public:
-	std::vector<uint8_t> picture;
+	std::vector<Vec3> picturePos;
 	uint64_t id;
 
 	void serialize(std::ostream& os) const;

@@ -91,7 +91,7 @@ uint16 minigame_index
 int64 timer
 bool completed
 SendEvidence
-uint8 picture[]
+vec3 picturePos[]
 uint64 id
 TaskListUpdate
 uint16 tasks[]

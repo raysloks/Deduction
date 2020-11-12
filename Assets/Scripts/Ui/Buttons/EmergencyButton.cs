@@ -52,7 +52,7 @@ public class EmergencyButton : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return game.player.emergencyButtonsLeft > 0 && game.player.IsAlive && coolingDown == false;
+        return game.player.emergencyButtonsLeft > 0 && game.player.IsAlive && coolingDown == false && game.phase == GamePhase.Main;
     }
 
     public override void Interact(GameController game)

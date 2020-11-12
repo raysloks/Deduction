@@ -13,6 +13,7 @@
         GAME_OVER,
         MOB_EJECTED,
         SEND_EVIDENCE,
-        SHOW_EVIDENCE
+        SHOW_EVIDENCE,
+        SEND_EVIDENCE2
     }
 }

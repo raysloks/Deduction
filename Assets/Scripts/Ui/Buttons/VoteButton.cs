@@ -65,15 +65,18 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("The cursor entered the selectable UI element.");
+
         int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
         if (e == 1)
         {
+            Debug.Log("EVIDENCE 1 cursor.");
+
             byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.byteArray = ba;
             sendEvidenceEvent.Evidence = e;
             EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
         }
-        Debug.Log("The cursor entered the selectable UI element.");
     }
 }

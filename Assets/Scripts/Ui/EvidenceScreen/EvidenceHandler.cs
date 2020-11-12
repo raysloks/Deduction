@@ -14,13 +14,19 @@ public class EvidenceHandler : MonoBehaviour
     {
         Debug.Log("Add");
         List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
+        List<List<Vector3>> vec3List = ScreenshotHandler.GetListOfPicturesPositions();
+
+        int index = 0;
         foreach(byte[] picture in b)
-        {           
+        {        
+            
             Texture2D sampleTexture = new Texture2D(2, 2);
             // the size of the texture will be replaced by image size
             bool isLoaded = sampleTexture.LoadImage(picture);
             // apply this texure as per requirement on image or material
             GameObject image = Instantiate(PicturePrefab, Content.transform);
+            image.GetComponent<EvidencePicture>().picturePos = vec3List[index];
+            index++;
             if (isLoaded)
             {
                 image.GetComponent<RawImage>().texture = sampleTexture;

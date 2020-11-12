@@ -22,6 +22,7 @@ public class Player : Mob
     public GameObject canvasButtons;
     public GameObject targetMarker;
     public TextMeshProUGUI text;
+    public GameObject MeetingCanvas;
     private bool cameraFlashing = false;
 
     private new void Awake()
@@ -89,10 +90,13 @@ public class Player : Mob
 
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
 
-    public IEnumerator CameraFlash(float Sec)
+    public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
     {
         cameraFlashing = true;
+        bool cB = canvasButtons.activeSelf;
+        bool mC = MeetingCanvas.activeSelf;
         canvasButtons.SetActive(false);
+        MeetingCanvas.SetActive(false);
         targetMarker.GetComponent<SpriteRenderer>().enabled = false;
         visionLight.pointLightOuterRadius = controller.settings.impostorVision;
         text.color = Color.white;
@@ -104,7 +108,7 @@ public class Player : Mob
             yield return null;
         }
 
-        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height);
+        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, meeting, pos);
 
         yield return frameEnd;
 
@@ -117,7 +121,9 @@ public class Player : Mob
             text.color = Color.red;
         }
         targetMarker.GetComponent<SpriteRenderer>().enabled = true;
-        canvasButtons.SetActive(true);
+        canvasButtons.SetActive(cB);
+        MeetingCanvas.SetActive(mC);
+
         visionLight.pointLightOuterRadius = GetVision();
     }
 

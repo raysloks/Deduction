@@ -62,8 +62,10 @@ namespace EventCallbacks
 
     public class SendEvidenceEvent : Event
     {
+        public List<Vector3> vec3List;
         public byte[] byteArray;
         public int Evidence;
+        public GameController gc;
 
         public GameObject final;
         public ulong idOfTarget;

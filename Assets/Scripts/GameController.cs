@@ -442,14 +442,14 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void SendEvidence(byte[] b)
+    public void SendEvidence(List<Vector3> pos)
     {
         if (phase == GamePhase.Voting || phase == GamePhase.Discussion)
         {
             Debug.Log("Send The List");
             byte[] test = new byte[10];
             SendEvidence message = new SendEvidence();
-            message.picture = b.ToList();       
+            message.picturePos = pos;       
             handler.link.Send(message);
         }
     }

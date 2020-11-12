@@ -152,6 +152,33 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 		mob.position = message.to;
 	}
 }
+void Game::teleportPlayersForPhoto(std::vector<Vec3> go)
+{
+	std::vector<size_t> mobs;
+	for (auto player : handler.players)
+	{
+		mobs.push_back(player.second.mob);
+	}
+	for (size_t i = 0; i + 1 < mobs.size(); ++i)
+	{
+		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
+	}
+	for (size_t i = 0; i < mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[mobs[i]];
+
+		MobTeleport message;
+		message.from = mob.position;
+		message.to = go[i];
+		message.time = handler.time;
+		message.id = mobs[i];
+		handler.Broadcast(message);
+
+		mob.position = message.to;
+
+	}
+
+}
 
 void Game::startGameCountdown()
 {

@@ -56,6 +56,7 @@ public class MeetingUiListener : MonoBehaviour
     //Start the meeting. Add all vote buttons for each alive player
     private void MeetingStarted(EventCallbacks.Event eventInfo)
     {
+        Debug.Log("Start Meeting");
         if (MeetingCanvas == null)
             return;
 
