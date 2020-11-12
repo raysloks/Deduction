@@ -69,6 +69,7 @@ namespace EventCallbacks
 
         public GameObject final;
         public ulong idOfTarget;
+        public Vector3 positionOfTarget;
 
 
     }

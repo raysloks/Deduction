@@ -13,6 +13,7 @@ class SendEvidence
 public:
 	std::vector<Vec3> picturePos;
 	uint64_t id;
+	Vec3 IntiatorPos;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

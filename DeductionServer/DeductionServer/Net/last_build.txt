@@ -93,6 +93,7 @@ bool completed
 SendEvidence
 vec3 picturePos[]
 uint64 id
+vec3 IntiatorPos
 TaskListUpdate
 uint16 tasks[]
 uint64 password

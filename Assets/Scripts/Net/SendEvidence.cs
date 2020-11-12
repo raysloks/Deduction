@@ -8,6 +8,7 @@ public struct SendEvidence
 {
 	public List<Vector3> picturePos;
 	public ulong id;
+	public Vector3 IntiatorPos;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -22,6 +23,11 @@ public struct SendEvidence
 		}
 		}
 		writer.Write((ulong)id);
+		{
+			writer.Write(IntiatorPos.x);
+			writer.Write(IntiatorPos.y);
+			writer.Write(IntiatorPos.z);
+		}
 	}
 
 	public static SendEvidence Deserialize(BinaryReader reader)
@@ -38,6 +44,7 @@ public struct SendEvidence
 		}
 	}
 		_ret.id = (ulong)reader.ReadUInt64();
+		_ret.IntiatorPos = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 		return _ret;
 	}
 };

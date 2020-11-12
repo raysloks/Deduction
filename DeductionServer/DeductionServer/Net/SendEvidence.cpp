@@ -12,6 +12,7 @@ void SendEvidence::serialize(std::ostream& os) const
 		os.write((char*)this->picturePos.data(), sizeof(Vec3) * size);
 	}
 	os.write((char*)&id, (sizeof(id) + 3) / 4 * 4);
+	os.write((char*)&IntiatorPos, (sizeof(IntiatorPos) + 3) / 4 * 4);
 }
 
 void SendEvidence::deserialize(std::istream& is)
@@ -23,5 +24,6 @@ void SendEvidence::deserialize(std::istream& is)
 		is.read((char*)this->picturePos.data(), sizeof(Vec3) * size);
 	}
 	is.read((char*)&id, (sizeof(id) + 3) / 4 * 4);
+	is.read((char*)&IntiatorPos, (sizeof(IntiatorPos) + 3) / 4 * 4);
 }
 

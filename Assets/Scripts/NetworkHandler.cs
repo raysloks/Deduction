@@ -307,6 +307,7 @@ public class NetworkHandler
             }
             sendEvidenceEvent.Evidence = 1;
             sendEvidenceEvent.idOfTarget = message.id;
+            sendEvidenceEvent.positionOfTarget = message.IntiatorPos;
             sendEvidenceEvent.gc = game;
         }
         else

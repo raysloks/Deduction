@@ -31,20 +31,7 @@ public class VoterEvidence : MonoBehaviour
         myEvidence = (Evidence)see.Evidence;
         if (myEvidence == Evidence.Picture)
         {
-            Vector3 playerPos = Vector3.zero;
-            ulong index = 0;
-            gc = see.gc;
-            foreach (Vector3 v in see.vec3List)
-            {
-                if(index == see.idOfTarget)
-                {
-                    Debug.Log("Player is " + index + see.idOfTarget);
-                    playerPos = v;
-                }
-                orignialPos.Add(see.gc.handler.mobs[index].transform.position);
-               // see.gc.handler.mobs[index].transform.position = v;
-                index++;
-            }
+            Vector3 playerPos = see.positionOfTarget;           
             ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
            
         }
@@ -53,18 +40,7 @@ public class VoterEvidence : MonoBehaviour
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
         Debug.Log("SetEvidence2 " +  see.byteArray.Length);
-        /*
-        int index = 0;
-        foreach (KeyValuePair<ulong, Mob> m in gc.handler.mobs)
-        {
-            m.Value.transform.position = orignialPos[index];
-            index++;
-        }
-        */
         ba = see.byteArray;
-        Texture2D sampleTexture = new Texture2D(2, 2);
-        bool isLoaded = sampleTexture.LoadImage(see.byteArray);
-        ri.texture = sampleTexture;
         
     }
 }

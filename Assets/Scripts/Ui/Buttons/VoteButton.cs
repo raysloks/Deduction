@@ -65,7 +65,6 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("The cursor entered the selectable UI element.");
 
         int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
         if (e == 1)

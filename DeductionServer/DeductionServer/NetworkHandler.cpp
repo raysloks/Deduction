@@ -742,11 +742,14 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 	if (it != players.end())
 	{
 		auto&& player = it->second;
+
+		auto&& mob = mobs[player.mob];
 		game.teleportPlayersForPhoto(message.picturePos);
 		SendEvidence ev = message;
 
 		ev.id = player.mob;
 		ev.picturePos = message.picturePos;
+		ev.IntiatorPos = mob.position;
 
 		std::cout << "Enter Evidence Handler!" << std::endl;;
 		Broadcast(ev);
