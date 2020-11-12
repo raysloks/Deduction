@@ -226,7 +226,7 @@ public class NetworkHandler
 
     internal void TaskUpdateHandler(IPEndPoint endpoint, TaskUpdate message)
     {
-        game.taskbar.maxValue = (names.Count - game.settings.impostorCount) * game.settings.taskCount;
+        game.taskbar.maxValue = (names.Count - game.settings.impostorCount) * (game.settings.shortTaskCount + game.settings.longTaskCount);
         game.taskbar.value = message.task;
     }
 
