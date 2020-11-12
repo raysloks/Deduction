@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "MatchmakerHandler.h"
+
 NetworkHandler::NetworkHandler() : game(*this)
 {
 	link.handler = this;
@@ -12,6 +14,8 @@ NetworkHandler::NetworkHandler() : game(*this)
 
 	leader = 0;
 	lifetimePlayerCount = 0;
+
+	vacant = false; // immediately acquire new lobby
 
 	//createMob();
 }
@@ -83,6 +87,12 @@ void NetworkHandler::tick(const std::chrono::steady_clock::time_point & now)
 			}
 		}
 	}
+
+	if (players.empty() && !vacant)
+	{
+		matchmaker->UpdateLobby();
+		vacant = true;
+	}
 }
 
 uint64_t NetworkHandler::createMob(const Mob& mob)
@@ -101,6 +111,8 @@ uint64_t NetworkHandler::createMob(const Mob& mob)
 
 void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, const std::string & name)
 {
+	vacant = false;
+
 	Mob mob;
 	if (game.phase != GamePhase::Setup)
 		mob.type = MobType::Ghost;

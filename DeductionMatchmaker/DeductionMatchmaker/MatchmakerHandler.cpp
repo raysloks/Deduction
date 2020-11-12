@@ -50,6 +50,25 @@ void MatchmakerHandler::LobbyIdentityHandler(const asio::ip::udp::endpoint & end
 
 void MatchmakerHandler::LobbyRequestHandler(const asio::ip::udp::endpoint & endpoint, const LobbyRequest & message)
 {
+	if (message.lobby.empty())
+	{
+		while (vacant_lobbies.size() > 0)
+		{
+			auto lobby = vacant_lobbies.front();
+			vacant_lobbies.pop();
+			auto it = servers.find(lobby);
+			if (it != servers.end())
+			{
+				LobbyIdentity reply;
+				reply.lobby = lobby;
+				reply.address = it->second.address().to_string();
+				reply.port = it->second.port();
+				link.Send(endpoint, reply);
+				return;
+			}
+		}
+	}
+
 	auto it = servers.find(message.lobby);
 	if (it != servers.end())
 	{
@@ -57,6 +76,14 @@ void MatchmakerHandler::LobbyRequestHandler(const asio::ip::udp::endpoint & endp
 		reply.lobby = message.lobby;
 		reply.address = it->second.address().to_string();
 		reply.port = it->second.port();
+		link.Send(endpoint, reply);
+	}
+	else
+	{
+		LobbyIdentity reply;
+		reply.lobby = message.lobby;
+		reply.address = "";
+		reply.port = 0;
 		link.Send(endpoint, reply);
 	}
 }

@@ -133,10 +133,15 @@
     <ClInclude Include="Net\SabotageTaskUpdate.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="VoiceSabotage.h" />
     <ClInclude Include="Coal.h" />
     <ClInclude Include="Net\SendEvidence.h">
       <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NukeSabotage.h">
+      <Filter>Sabotages</Filter>
+    </ClInclude>
+    <ClInclude Include="VoiceSabotage.h">
+      <Filter>Sabotages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -253,10 +258,15 @@
     <ClCompile Include="Net\SabotageTaskUpdate.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Coal.cpp" />
     <ClCompile Include="Net\SendEvidence.cpp">
       <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="NukeSabotage.cpp">
+      <Filter>Sabotages</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceSabotage.cpp">
+      <Filter>Sabotages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

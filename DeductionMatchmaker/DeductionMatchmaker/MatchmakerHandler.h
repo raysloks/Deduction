@@ -2,6 +2,7 @@
 
 #include <asio.hpp>
 
+#include <queue>
 #include <map>
 
 #include "Matchmaker/MatchmakerLink.h"
@@ -26,6 +27,7 @@ public:
 
 	Xoroshiro128Plus rng;
 
+	std::queue<std::string> vacant_lobbies;
 	std::map<std::string, asio::ip::udp::endpoint> servers;
 	std::map<asio::ip::udp::endpoint, std::string> lobbies;
 };

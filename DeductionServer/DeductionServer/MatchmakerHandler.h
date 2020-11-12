@@ -1,6 +1,7 @@
 #pragma once
 
 #include <asio.hpp>
+#include <string>
 
 #include "Matchmaker/MatchmakerLink.h"
 
@@ -20,5 +21,7 @@ public:
 	MatchmakerLink link;
 
 	NetworkHandler * handler;
+
+	std::string lobby;
 };
 

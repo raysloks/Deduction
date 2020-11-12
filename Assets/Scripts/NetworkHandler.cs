@@ -86,6 +86,7 @@ public class NetworkHandler
             playerMobId = message.mob;
             mobs[playerMobId] = game.player;
             game.connectionState = GameController.ConnectionState.Connected;
+            game.timeout = game.time + 5000000000;
         }
         else
         {
@@ -210,6 +211,7 @@ public class NetworkHandler
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
         game.connectionState = GameController.ConnectionState.JoiningLobby;
+        game.timeout = game.time + 2000000000;
         game.UpdateName();
     }
 
