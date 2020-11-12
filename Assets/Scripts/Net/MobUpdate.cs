@@ -13,9 +13,11 @@ public struct MobUpdate
 	{
 		writer.Write((ulong)id);
 		writer.Write((long)time);
-		writer.Write(position.x);
-		writer.Write(position.y);
-		writer.Write(position.z);
+		{
+			writer.Write(position.x);
+			writer.Write(position.y);
+			writer.Write(position.z);
+		}
 	}
 
 	public static MobUpdate Deserialize(BinaryReader reader)

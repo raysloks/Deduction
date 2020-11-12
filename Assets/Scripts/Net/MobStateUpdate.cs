@@ -17,9 +17,11 @@ public struct MobStateUpdate
 		writer.Write((ulong)type);
 		writer.Write((ulong)state);
 		writer.Write((ulong)sprite);
-		writer.Write(color.x);
-		writer.Write(color.y);
-		writer.Write(color.z);
+		{
+			writer.Write(color.x);
+			writer.Write(color.y);
+			writer.Write(color.z);
+		}
 	}
 
 	public static MobStateUpdate Deserialize(BinaryReader reader)

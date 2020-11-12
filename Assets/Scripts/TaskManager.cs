@@ -7,7 +7,7 @@ public class TaskManager : MonoBehaviour
     public GameController game;
 
     public GameObject indicatorPrefab;
-    public GameObject indicatorParent;
+    public Transform indicatorParent;
 
     public RectTransform taskWindow;
 
@@ -33,9 +33,7 @@ public class TaskManager : MonoBehaviour
 
         for (int i = indicators.Count; i < tasks.Count; ++i)
         {
-            var indicator = Instantiate(indicatorPrefab);
-            indicator.transform.SetParent(indicatorParent.transform);
-            DontDestroyOnLoad(indicator);
+            var indicator = Instantiate(indicatorPrefab, indicatorParent);
             indicators.Add(indicator);
         }
 
@@ -73,8 +71,7 @@ public class TaskManager : MonoBehaviour
 
         for (int i = sabotageIndicators.Count; i < sabotageTasks.Count; ++i)
         {
-            var indicator = Instantiate(indicatorPrefab);
-            DontDestroyOnLoad(indicator);
+            var indicator = Instantiate(indicatorPrefab, indicatorParent);
             sabotageIndicators.Add(indicator);
         }
 
