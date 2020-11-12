@@ -11,19 +11,24 @@ public class ItemButton : MonoBehaviour
     enum Item { None, Camera };
     Item myItem;
 
+    public GameObject itemContainer;
+    public GameObject player;
+
+    [Header("Camera")]
     public GameObject buttonItemImage;
+
+    public Sprite CameraSprite;
     private Image myItemImage;
 
     private int maxPhotos = 3;
     private int photosTaken = 0;
 
-    public Sprite CameraSprite;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
-        SetItem(1);
+        SetItem(0);
     }
 
     public void Click()
@@ -31,13 +36,38 @@ public class ItemButton : MonoBehaviour
         switch (myItem)
         {
             case Item.None:
+                NoneClick();
                 break;
             case Item.Camera:
                 CameraClick();               
                 break;
         }
     }
-
+    private void NoneClick()
+    {
+        float closestDistance = 2f;
+        GameObject childGo; 
+        foreach (Transform child in itemContainer.transform)
+        {
+            if(Vector2.Distance(child.position, player.transform.position) < closestDistance)
+            {
+                childGo = child.gameObject;
+                closestDistance = Vector2.Distance(child.position, player.transform.position);
+                Debug.Log("Close " + Vector2.Distance(child.position, player.transform.position));
+            }
+        }
+        if(closestDistance < 2f)
+        {
+            /*
+            int item = (int)childGo.GetComponent<ItemContainer>().item;
+            if (item != 0)
+            {
+               SetItem(item);
+               childGo.GetComponent<ItemContainer>().ItemTaken();
+            }
+            */
+        }
+    }
     private void CameraClick()
     {
         if (photosTaken < maxPhotos)
