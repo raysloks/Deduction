@@ -99,7 +99,7 @@
                 half4 main = i.color * SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
                 half4 mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, i.uv);
 
-                half4 light = CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV + float2(0.0, (0.125 - i.uv.y) / 6.0) * (256 / 160));
+                half4 light = CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV);
                 light = max(light, CombinedShapeLightShared(half4(1, 1, 1, 1), mask, i.lightingUV));
                 light.a = (light.r + light.g + light.b) / 3.0;
                 light.a -= 0.2;
