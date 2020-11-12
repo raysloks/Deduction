@@ -479,4 +479,21 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void UpdateHidden()
+    {
+        if (player.inCamo)
+        {
+            foreach (KeyValuePair<ulong, Mob> entry in handler.mobs)
+            {
+                if (player.inCamo)
+                {
+                    entry.Value.Reveal();
+                }
+                if (!player.inCamo && entry.Value.inCamo)
+                {
+                    entry.Value.Hide();
+                }
+            }
+        }
+    }
 }

@@ -51,7 +51,11 @@ public class Player : Mob
 
         if(!cameraFlashing)
         {
-            visionLight.pointLightOuterRadius = GetVision();
+            if(inCamo)
+                visionLight.pointLightOuterRadius = GetVision() * 0.8f;
+            else
+                visionLight.pointLightOuterRadius = GetVision();
+            
         }
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);
         visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;
@@ -75,6 +79,15 @@ public class Player : Mob
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            EnterCamo();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ExitCamo();
+        }
     }
 
     public float GetVision()
@@ -119,6 +132,18 @@ public class Player : Mob
         targetMarker.GetComponent<SpriteRenderer>().enabled = true;
         canvasButtons.SetActive(true);
         visionLight.pointLightOuterRadius = GetVision();
+    }
+
+    public override void EnterCamo()
+    {
+        inCamo = true;
+        controller.UpdateHidden();
+    }
+
+    public override void ExitCamo()
+    {
+        inCamo = false;
+        controller.UpdateHidden();
     }
 
 }

@@ -9,6 +9,7 @@ public class Mob : MonoBehaviour
     public SpriteResolver spriteResolver;
     public Transform characterTransform;
     public Animator animator;
+    public bool inCamo;
 
     public bool IsAlive => type == 0;
 
@@ -37,4 +38,50 @@ public class Mob : MonoBehaviour
         GetComponentInChildren<TextMeshProUGUI>().text = name;
     }
 
+    public virtual void EnterCamo()
+    {
+        inCamo = true;
+        Hide();
+    }
+
+    public virtual void ExitCamo()
+    {
+        inCamo = false;
+        Reveal();
+    }
+    private void OnTriggerEnter2D()
+    {
+        Physics2D.IgnoreLayerCollision(0, 10, true);
+        
+        EnterCamo();
+    }
+
+
+
+    private void OnTriggerExit2D()
+    {
+            ExitCamo();
+    }
+
+    public void Hide()
+    {
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            spr[i].enabled = false;
+        }
+        GetComponentInChildren<TextMeshPro>().enabled = false;
+    }
+
+    public void Reveal()
+    {
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            spr[i].enabled = true;
+        }
+        GetComponentInChildren<TextMeshPro>().enabled = true;
+    }
 }
