@@ -390,9 +390,11 @@ void Game::fixSabotage(uint64_t index)
 
 void Game::fixAllSabotages()
 {
+	std::vector<int64_t> sabotageIndexes;
 	for (auto task : sabotageTasks)
-		task->fix();
-	sabotageTasks.clear();
+		sabotageIndexes.push_back(task->sabotage_index);
+	for (auto index : sabotageIndexes)
+		fixSabotage(index);
 }
 
 void Game::sendSabotageTaskUpdate(std::shared_ptr<SabotageTask> task, bool completed)
