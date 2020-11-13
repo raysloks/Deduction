@@ -40,6 +40,8 @@ public class MatchmakerHandler
         }
         else
         {
+            if (lobby.Length == 0)
+                lobby = message.lobby;
             if (lobby != message.lobby)
                 game.CreateInfoPopup("Lobby mismatch.");
             game.handler.link.Connect(new IPEndPoint(IPAddress.Parse(message.address), message.port));

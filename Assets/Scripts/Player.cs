@@ -50,7 +50,7 @@ public class Player : Mob
         if (move.x < 0f)
             characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
-        animator.SetFloat("Speed", move.magnitude);
+        animator.SetFloat("Speed", move.magnitude * controller.settings.playerSpeed);
 
         if(!cameraFlashing)
         {
