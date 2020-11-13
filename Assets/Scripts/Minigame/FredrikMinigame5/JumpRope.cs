@@ -7,10 +7,10 @@ public class JumpRope : MonoBehaviour
     private LineRenderer Line;
     private GameObject target;
     private SpriteRenderer sr;
-    [HideInInspector]public float speed = 140f;
     [HideInInspector] public float originalSpeed;
     [HideInInspector] public bool isDone = false;
-    private float noMoreThanSpeed = 300f;
+    public float speed = 140f;
+    public float noMoreThanSpeed = 300f;
     private float speedIncrease = 20f;
     private float evenMoreSpeedIncrease = 2f;
    

@@ -16,6 +16,7 @@ public class TargetSpawner : MonoBehaviour
     public GameObject WrongTargetPrefab;
     public TextMeshPro text;
     public GameObject bg;
+    public int spawnSeconds;
 
     private GameObject currentPrefab;
     private float minimize = 60f;
@@ -45,7 +46,7 @@ public class TargetSpawner : MonoBehaviour
         currentPrefab = Instantiate(TargetPrefab, target, Quaternion.identity);
         currentPrefab.transform.SetParent(transform);
 
-        StartCoroutine(SpawnTarget(1));
+        StartCoroutine(SpawnTarget(spawnSeconds));
     }
 
     IEnumerator SpawnTarget(int Sec)
@@ -101,7 +102,7 @@ public class TargetSpawner : MonoBehaviour
             }
             currentPrefab.transform.SetParent(transform);
             target = RandomPointInScreenBounds();
-            StartCoroutine(SpawnTarget(1));
+            StartCoroutine(SpawnTarget(spawnSeconds));
         }
     }
 
