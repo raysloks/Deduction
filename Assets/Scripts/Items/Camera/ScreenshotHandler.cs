@@ -24,6 +24,7 @@ public class ScreenshotHandler : MonoBehaviour
         instance = this;
         myCamera = gameObject.GetComponent<Camera>();
         player = transform.parent.GetComponent<Player>();
+        myCamera.enabled = false;
     }
 
     void Update()
@@ -38,15 +39,16 @@ public class ScreenshotHandler : MonoBehaviour
 
     public IEnumerator TakeScreenshot(int width, int height, bool meeting, Vector3 pos)
     {
-        Vector3 orgPos = myCamera.transform.position;
+        myCamera.enabled = true;
+        Vector3 orgPos = transform.position;
         Vector3 orgPos2 = lights.transform.position;
         if (meeting)
         {
 
            
-            myCamera.transform.position = pos;
+            transform.position = pos;
             lights.transform.position = pos + new Vector3(0f, 2f, 0f);
-            Debug.Log("StartScreenshot " + lights.transform.position + " " + myCamera.transform.position);
+            Debug.Log("StartScreenshot current Light/Camera Pos" + lights.transform.position + " " + transform.position + "VS original" + orgPos2 + " " + orgPos);
         }
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
 
@@ -76,7 +78,7 @@ public class ScreenshotHandler : MonoBehaviour
         Debug.Log("This Many Pictures in List: " + byteList.Count);
         RenderTexture.ReleaseTemporary(renderTexture);
         myCamera.targetTexture = null;
-        myCamera.transform.position = orgPos;
+        transform.position = orgPos;
         lights.transform.position = orgPos2;
         LastPictureTaken = byteArray;
         if (meeting) {
@@ -84,8 +86,11 @@ public class ScreenshotHandler : MonoBehaviour
 
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.byteArray = LastPictureTaken;
-            EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE2, sendEvidenceEvent);
+            EventSystem.Current.FireEvent(EVENT_TYPE.SNAPSHOT_EVIDENCE, sendEvidenceEvent);
+            game.handler.link.Send(new TeleportToMeeting());
+
         }
+        myCamera.enabled = false;
 
     }
 

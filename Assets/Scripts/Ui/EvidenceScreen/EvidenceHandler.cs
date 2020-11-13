@@ -9,7 +9,11 @@ public class EvidenceHandler : MonoBehaviour
     public GameObject Content;
     public GameObject PicturePrefab;
 
+    void Start()
+    {
 
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+    }
     public void AddAllEvidence()
     {
         Debug.Log("Add");
@@ -33,5 +37,20 @@ public class EvidenceHandler : MonoBehaviour
             }
         }
         gameObject.SetActive(false);
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Main)
+        {
+            this.gameObject.SetActive(true);
+            foreach (Transform child in Content.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+        }
     }
 }

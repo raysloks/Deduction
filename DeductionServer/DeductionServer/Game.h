@@ -31,6 +31,7 @@ public:
 
 	void teleportPlayersToEllipse(const Vec2& position, const Vec2& size);
 	void teleportPlayersForPhoto(std::vector<Vec3> go);
+	void teleportToMeeting();
 	void startGameCountdown();
 	void startGame();
 	void restartSetup();

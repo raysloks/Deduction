@@ -771,6 +771,10 @@ void NetworkHandler::PickupCooldownHandler(const asio::ip::udp::endpoint& endpoi
 	Broadcast(message);
 }
 
+void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message) {
+	game.teleportToMeeting();
+}
+
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{
 //	auto it = players.find(endpoint);

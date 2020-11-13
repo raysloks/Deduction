@@ -18,7 +18,7 @@ public class VoterEvidence : MonoBehaviour
     {
         myEvidence = Evidence.None;
         ri = GetComponent<RawImage>();
-        EventSystem.Current.RegisterListener(EVENT_TYPE.SEND_EVIDENCE2, SetEvidence2);
+        EventSystem.Current.RegisterListener(EVENT_TYPE.SNAPSHOT_EVIDENCE, SetEvidence2);
 
     }
 

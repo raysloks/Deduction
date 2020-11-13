@@ -24,6 +24,7 @@ public class Player : Mob
     public TextMeshProUGUI text;
     public GameObject MeetingCanvas;
     public GameObject arrowParent;
+    public GameObject stayClose;
     private bool cameraFlashing = false;
 
     private new void Awake()
@@ -107,12 +108,16 @@ public class Player : Mob
     public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
     {
         cameraFlashing = true;
+        
         bool cB = canvasButtons.activeSelf;
         bool mC = MeetingCanvas.activeSelf;
         bool aP = arrowParent.activeSelf;
-        canvasButtons.SetActive(false);
-        MeetingCanvas.SetActive(false);
+        bool sC = stayClose.activeSelf;
+        canvasButtons.GetComponent<Canvas>().enabled = false;
+        MeetingCanvas.GetComponent<Canvas>().enabled = false;
         arrowParent.SetActive(false);
+        stayClose.SetActive(false);
+
         targetMarker.GetComponent<SpriteRenderer>().enabled = false;
         visionLight.pointLightOuterRadius = controller.settings.impostorVision;
         text.color = Color.white;
@@ -137,9 +142,12 @@ public class Player : Mob
             text.color = Color.red;
         }
         targetMarker.GetComponent<SpriteRenderer>().enabled = true;
-        canvasButtons.SetActive(cB);
-        MeetingCanvas.SetActive(mC);
+       
+        canvasButtons.GetComponent<Canvas>().enabled = true;
+        MeetingCanvas.GetComponent<Canvas>().enabled = true;
         arrowParent.SetActive(aP);
+        stayClose.SetActive(sC);
+        
 
         visionLight.pointLightOuterRadius = GetVision();
     }

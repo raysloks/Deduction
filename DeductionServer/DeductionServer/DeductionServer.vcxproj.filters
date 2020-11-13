@@ -141,6 +141,10 @@
     <ClInclude Include="Net\PickupCooldown.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="VoiceSabotage.h" />
+    <ClInclude Include="Net\TeleportToMeeting.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -262,6 +266,10 @@
     </ClCompile>
     <ClCompile Include="NukeSabotage.cpp" />
     <ClCompile Include="Net\PickupCooldown.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="VoiceSabotage.cpp" />
+    <ClCompile Include="Net\TeleportToMeeting.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

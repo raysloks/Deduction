@@ -33,6 +33,7 @@
 #include "SendEvidence.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
+#include "TeleportToMeeting.h"
 #include "VoiceFrame.h"
 
 class NetworkHandler;
@@ -73,6 +74,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);
 	static const uint32_t crc;
 	asio::io_context io_context;

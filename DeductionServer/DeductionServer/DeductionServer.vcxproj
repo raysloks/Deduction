@@ -117,6 +117,7 @@
     <ClCompile Include="Net\SendEvidence.cpp" />
     <ClCompile Include="Net\TaskListUpdate.cpp" />
     <ClCompile Include="Net\TaskUpdate.cpp" />
+    <ClCompile Include="Net\TeleportToMeeting.cpp" />
     <ClCompile Include="Net\VoiceFrame.cpp" />
     <ClCompile Include="NukeSabotage.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Net\SendEvidence.h" />
     <ClInclude Include="Net\TaskListUpdate.h" />
     <ClInclude Include="Net\TaskUpdate.h" />
+    <ClInclude Include="Net\TeleportToMeeting.h" />
     <ClInclude Include="Net\VoiceFrame.h" />
     <ClInclude Include="NukeSabotage.h" />
     <ClInclude Include="Player.h" />

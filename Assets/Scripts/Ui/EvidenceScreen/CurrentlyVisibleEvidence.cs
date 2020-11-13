@@ -13,6 +13,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     {
         ri = GetComponent<RawImage>();
         EventSystem.Current.RegisterListener(EVENT_TYPE.SHOW_EVIDENCE, ShowEvidence);
+
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
     public void ShowEvidence(EventCallbacks.Event eventInfo)
@@ -31,6 +33,15 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             
         }
 
+    }
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Main)
+        {
+            ri.texture = null;
+        }
     }
 
 

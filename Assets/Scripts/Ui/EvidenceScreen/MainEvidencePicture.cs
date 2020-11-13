@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Drawing;
 using System.Text;
 using System;
+using EventCallbacks;
 
 public class MainEvidencePicture : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class MainEvidencePicture : MonoBehaviour
     void Start()
     {
         ri = MainPicture.GetComponent<RawImage>();
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+
     }
 
     public void SetMainPicture(Texture tex)
@@ -31,6 +34,17 @@ public class MainEvidencePicture : MonoBehaviour
         {
             sentEvidence = true;
             gc.SendEvidence(pos);
+        }
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Main)
+        {
+
+            ri.texture = null;
         }
     }
 

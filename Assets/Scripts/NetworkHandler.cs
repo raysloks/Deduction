@@ -122,15 +122,19 @@ public class NetworkHandler
 
     internal void MeetingRequestedHandler(IPEndPoint endpoint, MeetingRequested message)
     {
-        MeetingEvent umei = new MeetingEvent();
-        umei.game = game;
-        umei.idOfInitiator = message.idOfInitiator;
+             Debug.Log("Meeting Requested");
+ 
+            MeetingEvent umei = new MeetingEvent();
+            umei.game = game;
+            umei.idOfInitiator = message.idOfInitiator;
 
-        if (message.idOfInitiator == playerMobId)
-            game.player.emergencyButtonsLeft -= 1;
+            if (message.idOfInitiator == playerMobId)
+                game.player.emergencyButtonsLeft -= 1;
 
-        umei.EventDescription = "Meeting Got Started";
-        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
+            umei.EventDescription = "Meeting Got Started";
+            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
+        
+        
     }
 
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
@@ -148,7 +152,6 @@ public class NetworkHandler
 
     internal void RestartRequestedHandler(IPEndPoint endpoint, RestartRequested message)
     {
-        Debug.Log("Enter Evidence Handler");
     }
 
     internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
@@ -168,12 +171,15 @@ public class NetworkHandler
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
     {
-        MeetingEvent umei = new MeetingEvent();
-        umei.game = game;
-        umei.idOfInitiator = message.idOfInitiator;
-        umei.idOfBody = message.target;
-        umei.EventDescription = "BodyReported";
-        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
+        Debug.Log("Report");
+            MeetingEvent umei = new MeetingEvent();
+            umei.game = game;
+            umei.idOfInitiator = message.idOfInitiator;
+            umei.idOfBody = message.target;
+            umei.EventDescription = "BodyReported";
+            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
+        
+       
     }
 
     internal void AbilityUsedHandler(IPEndPoint endpoint, AbilityUsed message)
@@ -318,5 +324,8 @@ public class NetworkHandler
         cdEvent.child = (int)message.child;
         EventSystem.Current.FireEvent(EVENT_TYPE.PICKUP_WAIT, cdEvent);
     }
+    internal void TeleportToMeetingHandler(IPEndPoint endpoint, TeleportToMeeting message)
+    {
+    }
 
-}
+ }

@@ -103,6 +103,7 @@ uint64 passwordSuffix
 uint64 passwordLocation
 TaskUpdate
 uint16 task
+TeleportToMeeting
 VoiceFrame
 uint64 id
 uint8 data[]
