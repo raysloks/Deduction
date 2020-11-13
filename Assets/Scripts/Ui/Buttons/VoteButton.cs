@@ -16,6 +16,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     public TMP_Text votesReceivedCountText;
     public GameObject finishedVotingIndicator;
     public Transform votesReceivedLayoutGroup;
+    public GameObject deadIndicator;
     public GameObject confirmedIndicator;
     public GameObject Evidence;
 

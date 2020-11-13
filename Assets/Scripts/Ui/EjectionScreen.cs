@@ -29,8 +29,7 @@ public class EjectionScreen : MonoBehaviour
         Mob mob = mobEjectedEvent.mob;
         var go = Instantiate(mobDisplayPrefab, transform);
         var image = go.GetComponent<Image>();
-        image.sprite = mob.sprites[0];
-        image.color = mob.sprite.color;
+        image.sprite = mob.sprite.sprite;
         var text = go.GetComponentInChildren<Text>();
         text.text = mob.name;
     }

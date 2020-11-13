@@ -763,15 +763,18 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 		ev.picturePos = message.picturePos;
 		ev.IntiatorPos = mob.position;
 
-		std::cout << "Enter Evidence Handler!" << std::endl;;
+		std::cout << "Enter Evidence Handler!" << std::endl;
 		Broadcast(ev);
 	}
 }
-void NetworkHandler::PickupCooldownHandler(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message) {
+
+void NetworkHandler::PickupCooldownHandler(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message)
+{
 	Broadcast(message);
 }
 
-void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message) {
+void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message)
+{
 	game.teleportToMeeting();
 }
 

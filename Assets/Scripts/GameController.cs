@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
     public GameObject setupMenu;
     public GameObject setupLeaderMenu;
 
+    public Canvas canvas;
+
     public GameObject hud;
 
     public DeathAnimation deathAnimation;
@@ -142,8 +144,6 @@ public class GameController : MonoBehaviour
         voice.handler = handler;
 
         player.controller = this;
-
-        SetStreamerMode(true);
     }
 
     private void Update()
@@ -493,7 +493,7 @@ public class GameController : MonoBehaviour
 
     public void CreateInfoPopup(string info)
     {
-        var go = Instantiate(infoPopupPrefab, transform.parent);
+        var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
     }
 

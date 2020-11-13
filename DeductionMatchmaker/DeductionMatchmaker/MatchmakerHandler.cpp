@@ -33,6 +33,8 @@ void MatchmakerHandler::addServer(const std::string & lobby, const asio::ip::udp
 
 	lobbies[server] = lobby;
 	servers[lobby] = server;
+
+	vacant_lobbies.push(lobby);
 }
 
 void MatchmakerHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)

@@ -43,7 +43,7 @@ public class IntroScreen : MonoBehaviour
             {
                 var go = Instantiate(mobDisplayPrefab, mobDisplayContainer);
                 var image = go.GetComponent<Image>();
-                image.sprite = mob.sprites[0];
+                image.sprite = mob.sprite.sprite;
                 image.color = mob.sprite.color;
                 var text = go.GetComponentInChildren<Text>();
                 text.text = mob.name;

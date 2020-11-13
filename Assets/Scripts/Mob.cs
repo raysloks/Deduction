@@ -17,8 +17,6 @@ public class Mob : MonoBehaviour
 
     public ulong role = 0;
 
-    public Sprite[] sprites;
-
     protected void Awake()
     {
         inCamo = false;
@@ -50,6 +48,7 @@ public class Mob : MonoBehaviour
         inCamo = false;
         Reveal();
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Physics2D.IgnoreLayerCollision(0, 10, true);

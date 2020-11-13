@@ -28,7 +28,7 @@ public class GameOverScreen : MonoBehaviour
         {
             var go = Instantiate(winnerPrefab, winnerContainer);
             var image = go.GetComponent<Image>();
-            image.sprite = mob.sprites[mob.IsAlive ? 0 : 2];
+            image.sprite = mob.sprite.sprite;
             image.color = mob.sprite.color;
             var text = go.GetComponentInChildren<Text>();
             text.text = mob.name;

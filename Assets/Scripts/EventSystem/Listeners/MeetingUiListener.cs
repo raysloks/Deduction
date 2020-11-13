@@ -103,7 +103,7 @@ public class MeetingUiListener : MonoBehaviour
                     voteButton.GetComponentInChildren<VoiceIndicatorImage>().voicePlayer = mob.GetComponentInChildren<VoicePlayer>();
                     voteButton.game = game;
                     voteButton.target = n.Key;
-                    voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                    voteButton.targetImage.sprite = mob.sprite.sprite;
                     voteButton.targetImage.color = mob.sprite.color;
                     if (handler.names.ContainsKey(n.Key))
                     {
@@ -116,7 +116,9 @@ public class MeetingUiListener : MonoBehaviour
                 if (voteButtons.ContainsKey(n.Key))
                 {
                     VoteButton voteButton = voteButtons[n.Key];
-                    voteButton.targetImage.sprite = mob.sprites[alive ? 0 : 1];
+                    voteButton.deadIndicator.SetActive(!alive);
+                    voteButton.targetImage.sprite = mob.sprite.sprite;
+                    voteButton.targetImage.color = mob.sprite.color;
                     voteButton.ResetVoteCountAndState();
                 }
             }
