@@ -52,16 +52,19 @@ public class Mob : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Physics2D.IgnoreLayerCollision(0, 10, true);
-        if (other.tag == "Camoflauge")
+        if (other.CompareTag("Camoflauge"))
         {
             EnterCamo();
         }
 
     }
 
-    private void OnTriggerExit2D()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        ExitCamo();
+        if (other.CompareTag("Camoflauge"))
+        {
+            ExitCamo();
+        }
     }
 
     public void Hide()
@@ -72,7 +75,9 @@ public class Mob : MonoBehaviour
         {
             spr[i].enabled = false;
         }
-        GetComponentInChildren<TextMeshPro>().enabled = false;
+        var tmp = GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+            tmp.enabled = false;
     }
 
     public void Reveal()
@@ -83,6 +88,8 @@ public class Mob : MonoBehaviour
         {
             spr[i].enabled = true;
         }
-        GetComponentInChildren<TextMeshPro>().enabled = true;
+        var tmp = GetComponentInChildren<TextMeshProUGUI>();
+        if (tmp != null)
+            tmp.enabled = true;
     }
 }
