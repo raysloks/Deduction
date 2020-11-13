@@ -7,14 +7,13 @@ using TMPro;
 
 public class MeetingUiListener : MonoBehaviour
 {
-    public Canvas MeetingCanvas;
+    public RectTransform meetingPanel;
     public GameObject voteButtonPrefab;
     public GameObject voterPrefab;
     public NoticeBoard noticeBoard;
     public GameObject blackout;
     public GameObject evidenceScreen;
 
-    public CanvasGroup canvasGroup;
     public RadialLayout radialLayout;
     public VoteButton skipButton;
 
@@ -40,10 +39,6 @@ public class MeetingUiListener : MonoBehaviour
 
     private void Update()
     {
-        canvasGroup.alpha += Time.deltaTime / fadeTime;
-        if (canvasGroup.alpha > 1f)
-            canvasGroup.alpha = 1f;
-
         //Circle effect done at the beginning of meetings
         if (radialLayout.MaxAngle != maxAngle)
         {
@@ -57,12 +52,10 @@ public class MeetingUiListener : MonoBehaviour
     private void MeetingStarted(EventCallbacks.Event eventInfo)
     {
         Debug.Log("Start Meeting");
-        if (MeetingCanvas == null)
+        if (meetingPanel == null)
             return;
 
-        
-
-        MeetingCanvas.gameObject.SetActive(true);
+        meetingPanel.gameObject.SetActive(true);
 
         //When Meeting start Add all the evidence too the evidence screen
         evidenceScreen.GetComponent<EvidenceHandler>().AddAllEvidence();
@@ -74,8 +67,6 @@ public class MeetingUiListener : MonoBehaviour
             noticeBoard.MoveTheBoard("Found a Body", handler.mobs[me.idOfInitiator].sprite, handler.mobs[me.idOfBody].sprite);
         else
             noticeBoard.MoveTheBoard("Meeting Called by", null , handler.mobs[me.idOfInitiator].sprite);
-
-        canvasGroup.alpha = 0f;
 
         skipButton.gameObject.SetActive(game.settings.enableSkipButton);
         skipButton.game = game;
@@ -151,11 +142,11 @@ public class MeetingUiListener : MonoBehaviour
                     n.Value.button.interactable = false;
                 break;
             case GamePhase.Ejection:
-                MeetingCanvas.gameObject.SetActive(false);
+                meetingPanel.gameObject.SetActive(false);
                 blackout.SetActive(true);
                 break;
             default:
-                MeetingCanvas.gameObject.SetActive(false);
+                meetingPanel.gameObject.SetActive(false);
                 blackout.SetActive(false);
                 break;
         }
