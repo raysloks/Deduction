@@ -123,10 +123,11 @@ void Game::setPhase(GamePhase phase, int64_t timer)
 	this->phase = phase;
 	this->timer = timer;
 }
-void Game::teleportToMeeting() {
+
+void Game::teleportToMeeting()
+{
 	teleportPlayersToEllipse(map->meetingPos, map->meetingSize);
 }
-
 
 void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 {
@@ -240,6 +241,7 @@ void Game::startMeeting(uint64_t caller, uint64_t corpse)
 			handler.Broadcast(message);
 		}
 
+		fixAllSabotages();
 		if (settings.taskbarUpdateStyle == 2)
 			updateTaskbar();
 		removeCorpses();

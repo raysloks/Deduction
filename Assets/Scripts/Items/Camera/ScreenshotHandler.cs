@@ -29,10 +29,12 @@ public class ScreenshotHandler : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            StartCoroutine(player.CameraFlash(0.25f, false, Vector3.zero));
-        }
+        // disabled for now, only enable when fixed (no longer giving light sabotage immunity)
+
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    StartCoroutine(player.CameraFlash(0.25f, false, Vector3.zero));
+        //}
     }
 
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();

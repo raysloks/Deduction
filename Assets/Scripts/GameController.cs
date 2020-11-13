@@ -194,7 +194,7 @@ public class GameController : MonoBehaviour
 
         //if (Input.GetKeyDown(KeyCode.Alpha2) && phase == GamePhase.Main)
         //    handler.link.Send(new MeetingRequested());
-        if (Input.GetKeyDown(KeyCode.F5) && phase != GamePhase.Setup)
+        if (Input.GetKeyDown(KeyCode.F5))
             handler.link.Send(new RestartRequested());
 
         for (int i = 0; i < 10; ++i)
@@ -240,6 +240,8 @@ public class GameController : MonoBehaviour
                 {
                     killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
                 }
+                if (!player.canMove)
+                    killTarget = ulong.MaxValue;
                 killButton.interactable = killTarget != ulong.MaxValue;
                 if (killTarget != ulong.MaxValue)
                 {
@@ -271,6 +273,8 @@ public class GameController : MonoBehaviour
                         }
                     }
                 }
+                if (!player.canMove)
+                    reportTarget = ulong.MaxValue;
                 reportButton.interactable = reportTarget != ulong.MaxValue;
                 if (Input.GetKeyDown(KeyCode.R))
                     Report();
