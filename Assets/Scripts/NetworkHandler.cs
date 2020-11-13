@@ -34,6 +34,18 @@ public class NetworkHandler
         link.Receive();
     }
 
+    public void Reset()
+    {
+        foreach (var n in mobs)
+            if (!(n.Value is Player))
+                UnityEngine.Object.Destroy(n.Value.gameObject);
+        mobs.Clear();
+        names.Clear();
+        roles.Clear();
+        removalTimes.Clear();
+        playerMobId = ulong.MaxValue;
+    }
+
     private void UpdateName(ulong mob)
     {
         TextMeshProUGUI text;
@@ -122,19 +134,17 @@ public class NetworkHandler
 
     internal void MeetingRequestedHandler(IPEndPoint endpoint, MeetingRequested message)
     {
-             Debug.Log("Meeting Requested");
- 
-            MeetingEvent umei = new MeetingEvent();
-            umei.game = game;
-            umei.idOfInitiator = message.idOfInitiator;
+        Debug.Log("Meeting Requested");
 
-            if (message.idOfInitiator == playerMobId)
-                game.player.emergencyButtonsLeft -= 1;
+        MeetingEvent umei = new MeetingEvent();
+        umei.game = game;
+        umei.idOfInitiator = message.idOfInitiator;
 
-            umei.EventDescription = "Meeting Got Started";
-            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
-        
-        
+        if (message.idOfInitiator == playerMobId)
+            game.player.emergencyButtonsLeft -= 1;
+
+        umei.EventDescription = "Meeting Got Started";
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     internal void PlayerVotedHandler(IPEndPoint endpoint, PlayerVoted message)
@@ -172,14 +182,12 @@ public class NetworkHandler
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
     {
         Debug.Log("Report");
-            MeetingEvent umei = new MeetingEvent();
-            umei.game = game;
-            umei.idOfInitiator = message.idOfInitiator;
-            umei.idOfBody = message.target;
-            umei.EventDescription = "BodyReported";
-            EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
-        
-       
+        MeetingEvent umei = new MeetingEvent();
+        umei.game = game;
+        umei.idOfInitiator = message.idOfInitiator;
+        umei.idOfBody = message.target;
+        umei.EventDescription = "BodyReported";
+        EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
 
     internal void AbilityUsedHandler(IPEndPoint endpoint, AbilityUsed message)
@@ -216,6 +224,7 @@ public class NetworkHandler
 
     internal void ConnectionHandler(IPEndPoint endpoint)
     {
+        Reset();
         game.connectionState = GameController.ConnectionState.JoiningLobby;
         game.timeout = game.time + 2000000000;
         game.UpdateName();
@@ -300,6 +309,7 @@ public class NetworkHandler
             game.taskManager.sabotageTasks.Add(task);
         }
     }
+
     internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
     {
         SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
@@ -318,12 +328,14 @@ public class NetworkHandler
         }
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
     }
+
     internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)
     {
         CooldownEvent cdEvent = new CooldownEvent();
         cdEvent.child = (int)message.child;
         EventSystem.Current.FireEvent(EVENT_TYPE.PICKUP_WAIT, cdEvent);
     }
+
     internal void TeleportToMeetingHandler(IPEndPoint endpoint, TeleportToMeeting message)
     {
     }

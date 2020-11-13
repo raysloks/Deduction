@@ -31,9 +31,19 @@ public class SabotageButtonManager : MonoBehaviour
 
     private void Update()
     {
+        if (game.phase != GamePhase.Main || game.player.role != 1)
+            sabotageButtonContainer.SetActive(false);
         sabotageButton.gameObject.SetActive(game.phase == GamePhase.Main && game.player.role == 1);
         cooldownText.gameObject.SetActive(game.time < game.player.sabotageCooldown && game.phase == GamePhase.Main && game.player.role == 1);
         cooldownText.text = ((game.player.sabotageCooldown - game.time + 999999999) / 1000000000).ToString();
+
+        if (game.phase == GamePhase.Main && game.player.role == 1)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+                sabotageButtonContainer.SetActive(true);
+            if (Input.GetKeyUp(KeyCode.Tab))
+                sabotageButtonContainer.SetActive(false);
+        }
 
         for (int i = 0; i < buttons.Count; ++i)
         {
