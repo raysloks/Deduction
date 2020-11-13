@@ -52,13 +52,12 @@ public class Player : Mob
 
         animator.SetFloat("Speed", move.magnitude * controller.settings.playerSpeed);
 
-        if(!cameraFlashing)
+        if (!cameraFlashing)
         {
-            if(inCamo)
+            if (inCamo)
                 visionLight.pointLightOuterRadius = GetVision() * 0.8f;
             else
                 visionLight.pointLightOuterRadius = GetVision();
-            
         }
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);
         visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;
