@@ -21,6 +21,7 @@ public class Mob : MonoBehaviour
 
     protected void Awake()
     {
+        inCamo = false;
     }
 
     public void SetType(ulong type)
@@ -49,16 +50,19 @@ public class Mob : MonoBehaviour
         inCamo = false;
         Reveal();
     }
-    private void OnTriggerEnter2D()
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Physics2D.IgnoreLayerCollision(0, 10, true);
-        
-        EnterCamo();
+        if (other.tag == "Camoflauge")
+        {
+            EnterCamo();
+        }
+
     }
 
     private void OnTriggerExit2D()
     {
-            ExitCamo();
+        ExitCamo();
     }
 
     public void Hide()

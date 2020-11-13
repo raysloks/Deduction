@@ -321,7 +321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8215197754847208028}
   m_Layer: 11
-  m_Name: Minigame4
+  m_Name: Minigame4v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
     type: 3}
   text: {fileID: 7951792234314199230}
   bg: {fileID: 1273636453831199006}
-  spawnSeconds: 1
+  spawnSeconds: 3
 --- !u!1 &8215197756968656098
 GameObject:
   m_ObjectHideFlags: 0
