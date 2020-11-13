@@ -83,14 +83,6 @@ public class Player : Mob
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            EnterCamo();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            ExitCamo();
-        }
     }
 
     public float GetVision()
