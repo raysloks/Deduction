@@ -16,16 +16,15 @@ public class Player : Mob
 
     public GameController controller;
 
-    private Light2D visionLight;
+    [HideInInspector]public Light2D visionLight;
 
     [Header("Camera Flash Stuff")]
     public GameObject canvasButtons;
     public GameObject targetMarker;
     public TextMeshProUGUI text;
-    public GameObject MeetingCanvas;
     public GameObject arrowParent;
     public GameObject stayClose;
-    private bool cameraFlashing = false;
+    [HideInInspector] public bool cameraFlashing = false;
 
     private new void Awake()
     {
@@ -92,56 +91,7 @@ public class Player : Mob
             return Mathf.Max(1.0f, controller.settings.crewmateVision * controller.lightCurrent);
         else
             return controller.settings.impostorVision;
-    }
-
-    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
-
-    public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
-    {
-        cameraFlashing = true;
-        
-        bool cB = canvasButtons.activeSelf;
-        bool mC = MeetingCanvas.activeSelf;
-        bool aP = arrowParent.activeSelf;
-        bool sC = stayClose.activeSelf;
-        canvasButtons.GetComponent<Canvas>().enabled = false;
-        MeetingCanvas.GetComponent<Canvas>().enabled = false;
-        arrowParent.SetActive(false);
-        stayClose.SetActive(false);
-
-        targetMarker.GetComponent<SpriteRenderer>().enabled = false;
-        visionLight.pointLightOuterRadius = controller.settings.impostorVision;
-        text.color = Color.white;
-        float counter = Sec;
-
-        while (counter > 0)
-        {
-            counter -= Time.deltaTime;
-            yield return null;
-        }
-
-        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, meeting, pos);
-
-        yield return frameEnd;
-
-        if (role == 0)
-        {
-            text.color = Color.white;
-        }
-        else
-        {
-            text.color = Color.red;
-        }
-        targetMarker.GetComponent<SpriteRenderer>().enabled = true;
-       
-        canvasButtons.GetComponent<Canvas>().enabled = true;
-        MeetingCanvas.GetComponent<Canvas>().enabled = true;
-        arrowParent.SetActive(aP);
-        stayClose.SetActive(sC);
-        
-
-        visionLight.pointLightOuterRadius = GetVision();
-    }
+    }   
 
     public override void EnterCamo()
     {

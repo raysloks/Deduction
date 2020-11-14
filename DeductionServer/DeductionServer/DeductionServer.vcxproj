@@ -95,8 +95,10 @@
     <ClCompile Include="Net\GameSettingSet.cpp" />
     <ClCompile Include="Net\GameSettingsUpdate.cpp" />
     <ClCompile Include="Net\GameStartRequested.cpp" />
+    <ClCompile Include="Net\GetAllPlayerPositions.cpp" />
     <ClCompile Include="Net\GivenTasks.cpp" />
     <ClCompile Include="Net\Heartbeat.cpp" />
+    <ClCompile Include="Net\HideAttempted.cpp" />
     <ClCompile Include="Net\KillAttempted.cpp" />
     <ClCompile Include="Net\LightUpdate.cpp" />
     <ClCompile Include="Net\MeetingRequested.cpp" />
@@ -152,8 +154,10 @@
     <ClInclude Include="Net\GameSettingSet.h" />
     <ClInclude Include="Net\GameSettingsUpdate.h" />
     <ClInclude Include="Net\GameStartRequested.h" />
+    <ClInclude Include="Net\GetAllPlayerPositions.h" />
     <ClInclude Include="Net\GivenTasks.h" />
     <ClInclude Include="Net\Heartbeat.h" />
+    <ClInclude Include="Net\HideAttempted.h" />
     <ClInclude Include="Net\KillAttempted.h" />
     <ClInclude Include="Net\LightUpdate.h" />
     <ClInclude Include="Net\MeetingRequested.h" />

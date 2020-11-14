@@ -340,4 +340,18 @@ public class NetworkHandler
     {
     }
 
- }
+    internal void HideAttemptedHandler(IPEndPoint endpoint, HideAttempted message)
+    {
+    }
+
+    internal void GetAllPlayerPositionsHandler(IPEndPoint endpoint, GetAllPlayerPositions message)
+    {
+        if (message.id == playerMobId)
+        {
+            Debug.Log("You sent this pp");
+            game.screenshotHandler.AddPos(message.playerPos, message.player);
+
+        }
+    }
+
+}

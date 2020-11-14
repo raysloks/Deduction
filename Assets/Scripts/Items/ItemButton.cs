@@ -31,7 +31,7 @@ public class ItemButton : MonoBehaviour
     {
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
-        SetItem(0);
+        SetItem(1);
     }
 
     public void Click()

@@ -28,12 +28,12 @@ public class MainEvidencePicture : MonoBehaviour
         ri.texture = tex;
     }
 
-    public void LockEvidencePicture(List<Vector3> pos)
+    public void LockEvidencePicture(List<Vector3> pos, Vector3 player)
     {
         if (sentEvidence == false)
         {
             sentEvidence = true;
-            gc.SendEvidence(pos);
+            gc.SendEvidence(pos, player);
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacks;
 using UnityEngine.UI;
+using System.Linq;
 
 public class EvidenceHandler : MonoBehaviour
 {
@@ -18,10 +19,11 @@ public class EvidenceHandler : MonoBehaviour
     {
         Debug.Log("Add");
         List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
-        List<List<Vector3>> vec3List = ScreenshotHandler.GetListOfPicturesPositions();
+        Dictionary<Vector3, List<Vector3>> vec3dict = ScreenshotHandler.GetListOfPicturesPositions();
 
         int index = 0;
-        foreach(byte[] picture in b)
+        //cipher.ElementAt(index);
+        foreach (byte[] picture in b)
         {        
             
             Texture2D sampleTexture = new Texture2D(2, 2);
@@ -29,7 +31,8 @@ public class EvidenceHandler : MonoBehaviour
             bool isLoaded = sampleTexture.LoadImage(picture);
             // apply this texure as per requirement on image or material
             GameObject image = Instantiate(PicturePrefab, Content.transform);
-            image.GetComponent<EvidencePicture>().picturePos = vec3List[index];
+            image.GetComponent<EvidencePicture>().picturePos = vec3dict.ElementAt(index).Value;
+            image.GetComponent<EvidencePicture>().playerPos = vec3dict.ElementAt(index).Key;
             index++;
             if (isLoaded)
             {

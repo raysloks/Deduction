@@ -25,8 +25,6 @@ public class VoterEvidence : MonoBehaviour
 
     public void SetEvidence(EventCallbacks.Event eventInfo)
     {
-
-        Debug.Log("SetEvidence1");
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
         myEvidence = (Evidence)see.Evidence;
         if (myEvidence == Evidence.Picture)
@@ -39,7 +37,6 @@ public class VoterEvidence : MonoBehaviour
     public void SetEvidence2(EventCallbacks.Event eventInfo)
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
-        Debug.Log("SetEvidence2 " +  see.byteArray.Length);
         ba = see.byteArray;
         
     }

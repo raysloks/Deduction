@@ -137,10 +137,6 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 		mobs.push_back(player.second.mob);
 	}
 
-	for (size_t i = 0; i + 1 < mobs.size(); ++i)
-	{
-		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
-	}
 
 	float offset = handler.rng.next_float() * (float)M_PI * 2.0f;
 	for (size_t i = 0; i < mobs.size(); ++i)
@@ -166,10 +162,6 @@ void Game::teleportPlayersForPhoto(std::vector<Vec3> go)
 		mobs.push_back(player.second.mob);
 	}
 
-	for (size_t i = 0; i + 1 < mobs.size(); ++i)
-	{
-		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
-	}
 
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{
@@ -184,6 +176,22 @@ void Game::teleportPlayersForPhoto(std::vector<Vec3> go)
 
 		mob.position = message.to;
 	}
+}
+std::vector<Vec3> Game::GetPlayersPos() {
+
+	std::vector<size_t> mobs;
+	for (auto player : handler.players)
+	{
+		mobs.push_back(player.second.mob);
+	}
+	std::vector<Vec3> playerPos;
+
+	for (size_t i = 0; i < mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[mobs[i]];
+		playerPos.push_back(mob.position);
+	}
+	return playerPos;
 }
 
 void Game::startGameCountdown()
@@ -205,10 +213,12 @@ void Game::startGame()
 		mobs.push_back(player.second.mob);
 	}
 
+	/*
 	for (size_t i = 0; i + 1 < mobs.size(); ++i)
 	{
 		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
 	}
+	*/
 
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{

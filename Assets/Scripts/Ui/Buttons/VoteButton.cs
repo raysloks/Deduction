@@ -66,17 +66,19 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-
-        int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
-        if (e == 1)
+        if(Evidence != null)
         {
-            Debug.Log("EVIDENCE 1 cursor.");
+            int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
+            if (e == 1)
+            {
+                Debug.Log("EVIDENCE 1 cursor.");
 
-            byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
-            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-            sendEvidenceEvent.byteArray = ba;
-            sendEvidenceEvent.Evidence = e;
-            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
-        }
+                byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
+                SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+                sendEvidenceEvent.byteArray = ba;
+                sendEvidenceEvent.Evidence = e;
+                EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
+            }
+        }       
     }
 }

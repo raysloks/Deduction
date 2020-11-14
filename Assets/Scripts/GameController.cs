@@ -20,6 +20,8 @@ public class GameController : MonoBehaviour
 
     public MapManager mapManager;
 
+    public ScreenshotHandler screenshotHandler;
+
     private float heartbeat = 0f;
     private float snapshot = 0f;
 
@@ -454,14 +456,15 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void SendEvidence(List<Vector3> pos)
+    public void SendEvidence(List<Vector3> pos, Vector3 player)
     {
         if (phase == GamePhase.Voting || phase == GamePhase.Discussion)
         {
             Debug.Log("Send The List");
             byte[] test = new byte[10];
             SendEvidence message = new SendEvidence();
-            message.picturePos = pos;       
+            message.picturePos = pos;
+            message.IntiatorPos = player;
             handler.link.Send(message);
         }
     }

@@ -12,8 +12,10 @@
 #include "GamePhaseUpdate.h"
 #include "GameSettings.h"
 #include "GameStartRequested.h"
+#include "GetAllPlayerPositions.h"
 #include "GivenTasks.h"
 #include "Heartbeat.h"
+#include "HideAttempted.h"
 #include "KillAttempted.h"
 #include "LightUpdate.h"
 #include "MeetingRequested.h"
@@ -53,8 +55,10 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);
