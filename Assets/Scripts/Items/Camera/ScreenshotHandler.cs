@@ -21,6 +21,7 @@ public class ScreenshotHandler : MonoBehaviour
     public GameObject lights;
     public GameObject mainCamera;
     private byte[] LastPictureTaken;
+    public List<AudioClip> cameraSound;
 
     // Start is called before the first frame update
     void Awake()
@@ -112,6 +113,28 @@ public class ScreenshotHandler : MonoBehaviour
 
         }
         myCamera.enabled = false;
+        if (!meeting)
+        {
+            StartCoroutine(EndCameraFlash(5f, aP, sC));
+
+        }
+
+
+
+    }
+
+    public IEnumerator EndCameraFlash(float Sec, bool aP, bool sC)
+    {
+        if(player.role == 0)
+        {
+
+            while (player.visionLight.pointLightOuterRadius > player.GetVision())
+            {               
+                player.visionLight.pointLightOuterRadius -= Sec * Time.deltaTime;
+                yield return null;
+            }
+            
+        }
 
         if (player.role == 0)
         {
@@ -128,13 +151,19 @@ public class ScreenshotHandler : MonoBehaviour
         player.arrowParent.SetActive(aP);
         player.stayClose.SetActive(sC);
 
-
         player.visionLight.pointLightOuterRadius = player.GetVision();
-
+        player.cameraFlashing = false;
     }
 
     public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
     {
+
+
+        SoundEvent se = new SoundEvent();
+        se.UnitGameObjectPos = player.transform.position;
+        se.UnitSound = cameraSound;
+        EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+
         player.cameraFlashing = true;
 
         bool aP = player.arrowParent.activeSelf;
@@ -142,6 +171,7 @@ public class ScreenshotHandler : MonoBehaviour
         player.canvasButtons.GetComponent<Canvas>().enabled = false;
         player.arrowParent.SetActive(false);
         player.stayClose.SetActive(false);
+        player.visionLight.intensity = 10f;
 
         player.targetMarker.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -151,6 +181,7 @@ public class ScreenshotHandler : MonoBehaviour
 
         while (counter > 0)
         {
+            
             counter -= Time.deltaTime;
             yield return null;
         }
