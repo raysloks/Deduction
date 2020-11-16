@@ -761,7 +761,7 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 
 		ev.id = player.mob;
 		ev.picturePos = message.picturePos;
-		ev.IntiatorPos = mob.position;
+		ev.IntiatorPos = message.IntiatorPos;
 
 		std::cout << "Enter Evidence Handler!" << std::endl;
 		Broadcast(ev);
@@ -777,6 +777,30 @@ void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& end
 {
 	game.teleportToMeeting();
 }
+
+void NetworkHandler::HideAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message) {
+
+}
+
+
+void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message) {
+	
+	auto it = players.find(endpoint);
+
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		std::vector<Vec3> playerPos = game.GetPlayersPos();
+		GetAllPlayerPositions Pp;
+		Pp.playerPos = playerPos;
+		Pp.id = player.mob;
+		Pp.player = mobs[player.mob].position;
+		Send(endpoint, Pp);
+
+	}
+}
+
+
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{

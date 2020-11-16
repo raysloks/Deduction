@@ -45,8 +45,10 @@ public:
 	void GamePhaseUpdateHandler(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);
 	void GameSettingsHandler(const asio::ip::udp::endpoint& endpoint, const GameSettings& message);
 	void GameStartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const GameStartRequested& message);
+	void GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message);
 	void GivenTasksHandler(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message);
 	void HeartbeatHandler(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message);
+	void HideAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message);
 	void KillAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message);
 	void LightUpdateHandler(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message);
 	void MeetingRequestedHandler(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message);

@@ -9,6 +9,7 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
     private MainEvidencePicture med;
     private Texture tex;
     [HideInInspector] public List<Vector3> picturePos;
+    [HideInInspector] public Vector3 playerPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,6 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
     {
         //Output to console the GameObject's name and the following message
         Debug.Log("Cursor Clicked " + name + " GameObject");
-        med.LockEvidencePicture(picturePos);
+        med.LockEvidencePicture(picturePos, playerPos);
     }
 }

@@ -145,6 +145,12 @@
     <ClInclude Include="Net\TeleportToMeeting.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\GetAllPlayerPositions.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\HideAttempted.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -270,6 +276,12 @@
     </ClCompile>
     <ClCompile Include="VoiceSabotage.cpp" />
     <ClCompile Include="Net\TeleportToMeeting.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\GetAllPlayerPositions.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\HideAttempted.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

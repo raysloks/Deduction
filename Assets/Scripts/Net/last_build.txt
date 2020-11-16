@@ -36,10 +36,15 @@ int64 taskbarUpdateStyle
 int64 sabotageCooldown
 bool gameOverEnabled
 GameStartRequested
+GetAllPlayerPositions
+vec3 playerPos[]
+uint64 id
+vec3 player
 GivenTasks
 uint8 taskId[]
 Heartbeat
 int64 time
+HideAttempted
 KillAttempted
 int64 time
 uint64 target
