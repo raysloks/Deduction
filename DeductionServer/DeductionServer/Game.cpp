@@ -137,7 +137,7 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 		mobs.push_back(player.second.mob);
 	}
 
-
+	
 	float offset = handler.rng.next_float() * (float)M_PI * 2.0f;
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{
@@ -211,14 +211,8 @@ void Game::startGame()
 	for (auto player : handler.players)
 	{
 		mobs.push_back(player.second.mob);
-	}
-
-	/*
-	for (size_t i = 0; i + 1 < mobs.size(); ++i)
-	{
-		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
-	}
-	*/
+	}	
+	
 
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{

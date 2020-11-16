@@ -76,9 +76,7 @@ public class ScreenshotHandler : MonoBehaviour
 
         byte[] byteArray = renderResult.EncodeToPNG();
         if (!meeting)
-        {
-           
-            // Dictionary<ulong, Mob> mobs = new Dictionary<ulong, Mob>();
+        {          
             List<Vector3> vec3 = new List<Vector3>();
             foreach (KeyValuePair<ulong, Mob> m in game.handler.mobs)
             {
@@ -118,6 +116,28 @@ public class ScreenshotHandler : MonoBehaviour
             StartCoroutine(EndCameraFlash(5f, aP, sC));
 
         }
+        else
+        {
+
+            if (player.role == 0)
+            {
+                player.text.color = Color.white;
+            }
+            else
+            {
+                player.text.color = Color.red;
+            }
+            player.visionLight.intensity = 1f;
+
+            player.targetMarker.GetComponent<SpriteRenderer>().enabled = true;
+
+            player.canvasButtons.GetComponent<Canvas>().enabled = true;
+            player.arrowParent.SetActive(aP);
+            player.stayClose.SetActive(sC);
+
+            player.visionLight.pointLightOuterRadius = player.GetVision();
+            player.cameraFlashing = false;
+        }
 
 
 
@@ -144,6 +164,7 @@ public class ScreenshotHandler : MonoBehaviour
         {
             player.text.color = Color.red;
         }
+        player.visionLight.intensity = 1f;
 
         player.targetMarker.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -158,11 +179,14 @@ public class ScreenshotHandler : MonoBehaviour
     public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
     {
 
-
-        SoundEvent se = new SoundEvent();
-        se.UnitGameObjectPos = player.transform.position;
-        se.UnitSound = cameraSound;
-        EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+        if (!meeting)
+        {
+            SoundEvent se = new SoundEvent();
+            se.UnitGameObjectPos = player.transform.position;
+            se.UnitSound = cameraSound;
+            EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+        }
+       
 
         player.cameraFlashing = true;
 

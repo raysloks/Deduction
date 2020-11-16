@@ -9,7 +9,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
 {
     [HideInInspector] public ulong target;
     [HideInInspector] public GameController game;
-
+    private bool currentEvidence = false;
     public Button button;
     public Image targetImage;
     public TMP_Text nameText;
@@ -68,6 +68,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     {
         if(Evidence != null)
         {
+            currentEvidence = true;
             int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
             if (e == 1)
             {
@@ -77,8 +78,13 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
                 SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
                 sendEvidenceEvent.byteArray = ba;
                 sendEvidenceEvent.Evidence = e;
+                sendEvidenceEvent.positionOfTarget = transform.position;
                 EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
             }
         }       
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        currentEvidence = false;
     }
 }
