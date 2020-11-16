@@ -1807,11 +1807,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1351519162036644445, guid: 7478647d618676848a4d0db655fc84b8,
         type: 3}
-      propertyPath: m_AlphaBlendOnOverlap
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1351519162036644445, guid: 7478647d618676848a4d0db655fc84b8,
-        type: 3}
       propertyPath: m_PointLightDistance
       value: 0
       objectReference: {fileID: 0}
