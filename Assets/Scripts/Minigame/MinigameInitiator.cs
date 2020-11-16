@@ -18,7 +18,8 @@ public class MinigameInitiator : Interactable
 
     private void Start()
     {
-        FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
+        if (minigame_index > 0)
+            FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
     }
 
     public override bool CanInteract(GameController game)

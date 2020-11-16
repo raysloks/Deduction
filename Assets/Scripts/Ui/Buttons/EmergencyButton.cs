@@ -22,7 +22,9 @@ public class EmergencyButton : Interactable
 
     private void OnDestroy()
     {
-        EventSystem.Current.UnregisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+        var es = EventSystem.Current;
+        if (es != null)
+            es.UnregisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
     private void PhaseChanged(EventCallbacks.Event ev)
