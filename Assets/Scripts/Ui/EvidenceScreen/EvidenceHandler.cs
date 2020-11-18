@@ -46,7 +46,7 @@ public class EvidenceHandler : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main)
+        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
         {
             this.gameObject.SetActive(true);
             foreach (Transform child in Content.transform)

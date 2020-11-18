@@ -325,12 +325,10 @@ public class NetworkHandler
             sendEvidenceEvent.idOfTarget = message.id;
             sendEvidenceEvent.positionOfTarget = message.IntiatorPos;
             sendEvidenceEvent.gc = game;
+            //Send to MeetingListener
+            EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
         }
-        else
-        {
-            Debug.Log("No Pos");
-        }
-        EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
+        
     }
 
     internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)

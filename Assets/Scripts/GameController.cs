@@ -461,7 +461,6 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Voting || phase == GamePhase.Discussion)
         {
             Debug.Log("Send The List");
-            byte[] test = new byte[10];
             SendEvidence message = new SendEvidence();
             message.picturePos = pos;
             message.IntiatorPos = player;

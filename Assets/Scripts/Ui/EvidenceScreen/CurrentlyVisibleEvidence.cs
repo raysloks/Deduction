@@ -8,12 +8,14 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 {
     public GameObject vis;
     public float speed = 10f;
+    public Texture texture;
     private RawImage ri;
     Vector2 center;
     private bool moving = false;
-    int moveLater = 0;
+    public LayerMask arrowLayer;
     Queue qt = new Queue();
 
+    private RaycastHit2D hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,15 +34,26 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     }
     IEnumerator moveArrow(Vector2 target)
     {
+        bool notHit = true;
         moving = true;
         Vector3 axis = new Vector3(0, 0, 1);
-        while (Vector2.Distance(target, vis.transform.position) < 0.1f)
+        hit = Physics2D.Linecast(target, center, arrowLayer);
+
+        while (notHit)
         {
-            vis.transform.RotateAround(center, axis, Time.deltaTime * speed);
-           
+            hit = Physics2D.Linecast(target, center, arrowLayer);
+            if(hit.collider != null)
+            {
+                notHit = false;
+            }
+            else
+            {
+                vis.transform.RotateAround(center, axis, Time.deltaTime * speed);
+            }
+
             yield return null;
         }
-        Debug.Log("End");
+        Debug.Log("End " + Vector2.Distance(target, vis.transform.position) + "X ABS " + Mathf.Abs(target.y - vis.transform.position.y) + "Y ABS " + Mathf.Abs(target.x - vis.transform.position.x));
         moving = false;
     }
     public void ShowEvidence(EventCallbacks.Event eventInfo)
@@ -59,11 +72,11 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             ri.texture = sampleTexture;
             if (!moving)
             {
-              //  StartCoroutine(moveArrow(see.positionOfTarget));
+                StartCoroutine(moveArrow(see.positionOfTarget));
             }
             else
             {
-              //  qt.Enqueue(see.positionOfTarget);
+                qt.Enqueue(see.positionOfTarget);
             }
         }
 
@@ -72,9 +85,11 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main)
+        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
         {
-            ri.texture = null;
+            moving = false;
+            qt.Clear();
+            ri.texture = texture;
         }
     }
 

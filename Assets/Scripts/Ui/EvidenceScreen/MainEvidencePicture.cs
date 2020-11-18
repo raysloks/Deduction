@@ -15,6 +15,7 @@ public class MainEvidencePicture : MonoBehaviour
     public GameController gc;
     private RawImage ri;
     private bool sentEvidence = false;
+    public Texture texture;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +42,9 @@ public class MainEvidencePicture : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main)
+        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
         {
-
+            sentEvidence = false;
             ri.texture = null;
         }
     }

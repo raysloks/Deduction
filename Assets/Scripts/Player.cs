@@ -17,13 +17,6 @@ public class Player : Mob
     public GameController controller;
 
     [HideInInspector]public Light2D visionLight;
-
-    [Header("Camera Flash Stuff")]
-    public GameObject canvasButtons;
-    public GameObject targetMarker;
-    public TextMeshProUGUI text;
-    public GameObject arrowParent;
-    public GameObject stayClose;
     [HideInInspector] public bool cameraFlashing = false;
 
     private new void Awake()

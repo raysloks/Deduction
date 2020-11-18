@@ -26,6 +26,8 @@ public class ItemButton : MonoBehaviour
     private int maxPhotos = 3;
     private int photosTaken = 0;
 
+    delegate void Calculation();
+    Calculation Click;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,19 +35,12 @@ public class ItemButton : MonoBehaviour
         myItemImage = buttonItemImage.GetComponent<Image>();
         SetItem(1);
     }
-
-    public void Click()
+    
+    public void ItemClick()
     {
-        switch (myItem)
-        {
-            case Item.None:
-                NoneClick();
-                break;
-            case Item.Camera:
-                CameraClick();               
-                break;
-        }
+        Click();
     }
+    
     private void NoneClick()
     {
         float closestDistance = 2f;
@@ -99,10 +94,12 @@ public class ItemButton : MonoBehaviour
         switch (myItem)
         {
             case Item.None:
+                Click = () => NoneClick();
                 myItemImage.enabled = false;
                 text.text = "Pickup";
                 break;
             case Item.Camera:
+                Click = () => CameraClick();
                 myItemImage.enabled = true;
                 myItemImage.sprite = CameraSprite;
                 photosTaken = 0;

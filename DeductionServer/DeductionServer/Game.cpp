@@ -59,6 +59,7 @@ void Game::tick(int64_t now)
 			for (auto i : toBeEjected)
 				handler.killMob(i, -1ul);
 			toBeEjected.clear();
+			teleportToMeeting();
 			break;
 		case GamePhase::Ejection:
 			if (settings.taskbarUpdateStyle == 1)

@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using TMPro;
 using EventCallbacks;
-
 using UnityEngine.EventSystems;
 
 public class VoteButton : MonoBehaviour, IPointerEnterHandler
@@ -22,7 +21,11 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
 
     private int votesReceivedCount = 0;
     private int votesCastCount = 0;
-    
+
+    void Start()
+    {
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+    }
 
     public void ResetVoteCountAndState()
     {
@@ -66,7 +69,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(Evidence != null)
+        if(Evidence != null && currentEvidence == false)
         {
             currentEvidence = true;
             int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
@@ -86,5 +89,15 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         currentEvidence = false;
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Setup || pc.phase == GamePhase.Main)
+        {
+            currentEvidence = false;
+        }
     }
 }
