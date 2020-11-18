@@ -22,6 +22,17 @@ public class Mob : MonoBehaviour
         inCamo = false;
     }
 
+    protected void Update()
+    {
+        MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+        {
+            renderer.GetPropertyBlock(materialPropertyBlock);
+            materialPropertyBlock.SetVector("_FeetPos", (Vector2)transform.position);
+            renderer.SetPropertyBlock(materialPropertyBlock);
+        }
+    }
+
     public void SetType(ulong type)
     {
         this.type = type;
@@ -34,7 +45,7 @@ public class Mob : MonoBehaviour
 
     public void SetName(string name)
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = name;
+        GetComponentInChildren<TextMeshPro>().text = name;
     }
 
     public virtual void EnterCamo()
@@ -75,7 +86,7 @@ public class Mob : MonoBehaviour
         {
             spr[i].enabled = false;
         }
-        var tmp = GetComponentInChildren<TextMeshProUGUI>();
+        var tmp = GetComponentInChildren<TextMeshPro>();
         if (tmp != null)
             tmp.enabled = false;
     }
@@ -88,7 +99,7 @@ public class Mob : MonoBehaviour
         {
             spr[i].enabled = true;
         }
-        var tmp = GetComponentInChildren<TextMeshProUGUI>();
+        var tmp = GetComponentInChildren<TextMeshPro>();
         if (tmp != null)
             tmp.enabled = true;
     }

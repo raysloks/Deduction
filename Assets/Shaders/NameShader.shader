@@ -51,6 +51,8 @@ Properties {
 
 	_CullMode("Cull Mode", Float) = 0
 	_ColorMask("Color Mask", Float) = 15
+
+	_FeetPos("Feet Position", vector) = (0, 0, 0, 1)
 }
 
 SubShader{
@@ -96,6 +98,7 @@ SubShader{
 		#include "Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc"
 
 		sampler2D _ShapeLightTexture0;
+		float4 _FeetPos;
 
 		struct vertex_t {
 			UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -138,9 +141,12 @@ SubShader{
 			vert.y += _VertexOffsetY;
 			float4 vPosition = UnityObjectToClipPos(vert);
 
-			float4 positionCS = UnityObjectToClipPos(input.vertex);
-			float4 clipVertex = positionCS / positionCS.w;
+			float4 pos = UnityWorldToClipPos(_FeetPos);
+			float4 clipVertex = pos / pos.w;
 			output.lightingUV = ComputeScreenPos(clipVertex).xy;
+			float4 positionCS = UnityObjectToClipPos(input.vertex);
+			clipVertex = positionCS / positionCS.w;
+			output.lightingUV = lerp(output.lightingUV, ComputeScreenPos(clipVertex).xy, 0.1);
 
 			float2 pixelSize = vPosition.w;
 			pixelSize /= float2(_ScaleX, _ScaleY) * abs(mul((float2x2)UNITY_MATRIX_P, _ScreenParams.xy));
@@ -239,14 +245,16 @@ SubShader{
 			clip(c.a - 0.001);
 			#endif
 
-			half4 light = tex2D(_ShapeLightTexture0, input.lightingUV + float2(0.0, -1.5 / 6.0 / 2.0));
-			light = max(light, tex2D(_ShapeLightTexture0, input.lightingUV));
+			half4 light = tex2D(_ShapeLightTexture0, input.lightingUV);
 			light.a = (light.r + light.g + light.b) / 3.0;
 			light.a -= 0.2;;
 			light.a *= 5;
 			light = max(0.0, min(1.0, 0.5 - cos(min(1, light) * 3.14159265) * (0.5 + 0.5 / 256.0)));
 			c *= light;
 			c *= light.a;
+			float2 inside = step(0, input.lightingUV) * step(input.lightingUV, 1);
+			inside = max(inside, _FeetPos.w);
+			c *= inside.x * inside.y;
 
 			return c;
 		}

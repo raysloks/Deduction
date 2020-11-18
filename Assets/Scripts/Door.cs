@@ -7,6 +7,10 @@ public class Door : MonoBehaviour
 
     private void Awake()
     {
-        FindObjectOfType<DoorManager>().doors.Add(index, GetComponent<Animator>());
+        DoorManager doorManager = FindObjectOfType<DoorManager>();
+        if (doorManager.doors.ContainsKey(index))
+            FindObjectOfType<GameController>().CreateInfoPopup("Duplicate door index " + index + ".");
+        else
+            doorManager.doors.Add(index, GetComponent<Animator>());
     }
 }

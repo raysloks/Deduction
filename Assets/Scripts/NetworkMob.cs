@@ -15,7 +15,7 @@ public class NetworkMob : Mob
 
     public long time;
 
-    private void Update()
+    private new void Update()
     {
         snapshots.RemoveAll((snapshot) => snapshot.time < time - 150000000);
 
@@ -37,6 +37,8 @@ public class NetworkMob : Mob
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
         time += (long)(Time.deltaTime * 1000000000);
+
+        base.Update();
     }
 
     public void AddSnapshot(Snapshot snapshot)

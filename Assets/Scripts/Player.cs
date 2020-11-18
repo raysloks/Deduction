@@ -25,7 +25,7 @@ public class Player : Mob
         visionLight = GetComponentInChildren<Light2D>();
     }
 
-    private void Update()
+    private new void Update()
     {
         Vector3 move = new Vector2();
         if (canMove && (!EventSystem.current.currentSelectedGameObject || controller.phase == GamePhase.Main))
@@ -74,6 +74,7 @@ public class Player : Mob
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
+        base.Update();
     }
 
     public float GetVision()
