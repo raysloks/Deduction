@@ -421,8 +421,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingLayerID: 807542147
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &1351519161533191170
 MonoBehaviour:
@@ -808,20 +808,18 @@ MonoBehaviour:
   inCamo: 0
   type: 0
   role: 0
-  sprites:
-  - {fileID: 21300000, guid: f37b0a4044a85d3479588aacbc24b4b3, type: 3}
-  - {fileID: 21300000, guid: 8135811ac7a25ea4c8f18b89d2791362, type: 3}
-  - {fileID: 21300000, guid: ed76a2c3d01d6f84ab62b8838b96b6a8, type: 3}
   killCooldown: 0
   sabotageCooldown: 0
   canMove: 1
   emergencyButtonsLeft: 0
   controller: {fileID: 0}
+  visionLight: {fileID: 0}
   canvasButtons: {fileID: 0}
   targetMarker: {fileID: 0}
   text: {fileID: 0}
-  MeetingCanvas: {fileID: 0}
   arrowParent: {fileID: 0}
+  stayClose: {fileID: 0}
+  cameraFlashing: 0
 --- !u!61 &7079949951497706956
 BoxCollider2D:
   m_ObjectHideFlags: 0
