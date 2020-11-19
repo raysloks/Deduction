@@ -19,7 +19,8 @@ public class EvidenceHandler : MonoBehaviour
     {
         Debug.Log("Add");
         List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
-        Dictionary<Vector3, List<Vector3>> vec3dict = ScreenshotHandler.GetListOfPicturesPositions();
+        List<List<Vector3>> vec3list = ScreenshotHandler.GetListOfPicturesPositions();
+        List<Vector3> vec3 = ScreenshotHandler.GetListOfPlayerPositions();
 
         int index = 0;
         //cipher.ElementAt(index);
@@ -31,8 +32,8 @@ public class EvidenceHandler : MonoBehaviour
             bool isLoaded = sampleTexture.LoadImage(picture);
             // apply this texure as per requirement on image or material
             GameObject image = Instantiate(PicturePrefab, Content.transform);
-            image.GetComponent<EvidencePicture>().picturePos = vec3dict.ElementAt(index).Value;
-            image.GetComponent<EvidencePicture>().playerPos = vec3dict.ElementAt(index).Key;
+            image.GetComponent<EvidencePicture>().picturePos = vec3list.ElementAt(index);
+            image.GetComponent<EvidencePicture>().playerPos = vec3.ElementAt(index);
             index++;
             if (isLoaded)
             {
@@ -46,7 +47,7 @@ public class EvidenceHandler : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
+        if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
             this.gameObject.SetActive(true);
             foreach (Transform child in Content.transform)

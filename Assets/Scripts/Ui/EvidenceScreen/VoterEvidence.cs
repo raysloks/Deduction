@@ -10,6 +10,8 @@ public class VoterEvidence : MonoBehaviour
     [HideInInspector] public Evidence myEvidence;
     [HideInInspector] public byte[] ba;
     private GameController gc;
+    public VoteButton vb;
+    public GameObject newEvidence;
 
     // Start is called before the first frame update
     void Start()
@@ -27,25 +29,27 @@ public class VoterEvidence : MonoBehaviour
         myEvidence = (Evidence)see.Evidence;
         if (myEvidence == Evidence.Picture)
         {
+            Debug.Log("PictureEvidence");
             Vector3 playerPos = see.positionOfTarget;
-            ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos);
-           // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
-           
+            ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
+            // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
         }
     }
     public void SetEvidence2(EventCallbacks.Event eventInfo)
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
         ba = see.byteArray;
-        
+        vb.currentEvidence = false;
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Setup || pc.phase == GamePhase.Main)
+        if (pc.phase == GamePhase.Setup || pc.previous == GamePhase.EndOfMeeting)
         {
+            newEvidence.SetActive(false);
+            myEvidence = Evidence.None;
             ba = null;
         }
     }

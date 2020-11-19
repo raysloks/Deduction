@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using EventCallbacks;
 
 public class ItemButton : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class ItemButton : MonoBehaviour
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
         SetItem(1);
+
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
     
     public void ItemClick()
@@ -108,8 +111,13 @@ public class ItemButton : MonoBehaviour
         }
     }
 
-    public static void SetItemStatic(int item)
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
-        instance.SetItem(item);
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Setup)
+        {
+            SetItem(1);
+        }
     }
 }

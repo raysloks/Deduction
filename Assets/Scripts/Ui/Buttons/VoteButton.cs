@@ -8,7 +8,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
 {
     [HideInInspector] public ulong target;
     [HideInInspector] public GameController game;
-    private bool currentEvidence = false;
+    [HideInInspector] public bool currentEvidence = false;
     public Button button;
     public Image targetImage;
     public TMP_Text nameText;
@@ -21,10 +21,12 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
 
     private int votesReceivedCount = 0;
     private int votesCastCount = 0;
+    byte[] picture = null;
 
     void Start()
     {
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+
     }
 
     public void ResetVoteCountAndState()
@@ -71,19 +73,31 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     {
         if(Evidence != null && currentEvidence == false)
         {
+            foreach(Transform child in transform.parent)
+            {
+                child.GetComponent<VoteButton>().currentEvidence = false;
+            }
             currentEvidence = true;
             int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
+            Evidence.GetComponent<VoterEvidence>().newEvidence.SetActive(false);
+
+            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+
+            sendEvidenceEvent.Evidence = e;
+            sendEvidenceEvent.positionOfTarget = transform.position;
             if (e == 1)
             {
                 Debug.Log("EVIDENCE 1 cursor.");
-
                 byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
-                SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+                picture = ba;
                 sendEvidenceEvent.byteArray = ba;
-                sendEvidenceEvent.Evidence = e;
-                sendEvidenceEvent.positionOfTarget = transform.position;
-                EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
             }
+            else if(e == 0)
+            {
+                Debug.Log("EVIDENCE 0 cursor.");
+            }
+
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
         }       
     }
     public void OnPointerExit(PointerEventData eventData)
@@ -95,9 +109,10 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Setup || pc.phase == GamePhase.Main)
+        if (pc.phase == GamePhase.Setup || pc.previous == GamePhase.EndOfMeeting)
         {
             currentEvidence = false;
         }
     }
+
 }

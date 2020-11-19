@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class CurrentlyVisibleEvidence : MonoBehaviour
 {
     public GameObject vis;
+    private Vector3 arrowOrginalPos;
     public float speed = 10f;
     public Texture texture;
     private RawImage ri;
     Vector2 center;
     private bool moving = false;
+    private bool firstMove = false;
     public LayerMask arrowLayer;
     Queue qt = new Queue();
 
@@ -19,7 +21,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        center = new Vector2(Screen.width / 2, Screen.height / 2);
+        center = transform.position;
+        arrowOrginalPos = vis.transform.position;
         ri = GetComponent<RawImage>();
         EventSystem.Current.RegisterListener(EVENT_TYPE.SHOW_EVIDENCE, ShowEvidence);
 
@@ -55,10 +58,15 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         }
         Debug.Log("End " + Vector2.Distance(target, vis.transform.position) + "X ABS " + Mathf.Abs(target.y - vis.transform.position.y) + "Y ABS " + Mathf.Abs(target.x - vis.transform.position.x));
         moving = false;
+        if(firstMove == false)
+        {
+            firstMove = true;
+            vis.GetComponent<Image>().enabled = true;
+        }
     }
     public void ShowEvidence(EventCallbacks.Event eventInfo)
     {
-
+        
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
 
         if (see.Evidence == 1)
@@ -78,6 +86,17 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             {
                 qt.Enqueue(see.positionOfTarget);
             }
+        }else if(see.Evidence == 0)
+        {
+            ri.texture = texture;
+            if (!moving)
+            {
+                StartCoroutine(moveArrow(see.positionOfTarget));
+            }
+            else
+            {
+                qt.Enqueue(see.positionOfTarget);
+            }
         }
 
     }
@@ -85,9 +104,12 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
+        if (pc.phase == GamePhase.Main || pc.previous == GamePhase.EndOfMeeting)
         {
+            vis.transform.position = arrowOrginalPos;
+            vis.GetComponent<Image>().enabled = false;
             moving = false;
+            firstMove = false;
             qt.Clear();
             ri.texture = texture;
         }

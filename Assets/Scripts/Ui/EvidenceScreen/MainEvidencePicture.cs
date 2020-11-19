@@ -14,14 +14,22 @@ public class MainEvidencePicture : MonoBehaviour
     public GameObject MainPicture;
     public GameController gc;
     private RawImage ri;
+    private Image buttonImage;
     private bool sentEvidence = false;
+    [HideInInspector]public bool lockable = false;
     public Texture texture;
+    public Button lockButton;
+    private UnityEngine.Color normalColor;
+    private UnityEngine.Color pressedColor;
     // Start is called before the first frame update
     void Start()
     {
         ri = MainPicture.GetComponent<RawImage>();
+        buttonImage = lockButton.GetComponent<Image>();
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
-
+        var colors = lockButton.colors;
+        normalColor = colors.normalColor;
+        pressedColor = colors.pressedColor;
     }
 
     public void SetMainPicture(Texture tex)
@@ -33,19 +41,38 @@ public class MainEvidencePicture : MonoBehaviour
     {
         if (sentEvidence == false)
         {
+            lockButton.interactable = false;
+            lockable = false;
             sentEvidence = true;
             gc.SendEvidence(pos, player);
         }
+    }
+    public void ClickLock()
+    {
+        lockable = !lockable;
+        changeButtonColor(lockable);
+    }
+    private void changeButtonColor(bool l)
+    {
+
+        if (l == true)
+            buttonImage.color = pressedColor;
+        else
+            buttonImage.color = normalColor;
+
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Main || pc.phase == GamePhase.Setup)
+        if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
+            lockable = false;
+            changeButtonColor(lockable);
             sentEvidence = false;
             ri.texture = null;
+            lockButton.interactable = true;
         }
     }
 

@@ -750,21 +750,15 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
 {
 	auto it = players.find(endpoint);
+	std::cout << "Enter Evidence Handler!" << std::endl;
 
 	if (it != players.end())
 	{
 		auto&& player = it->second;
 
 		auto&& mob = mobs[player.mob];
-		game.teleportPlayersForPhoto(message.picturePos);
-		SendEvidence ev = message;
-
-		ev.id = player.mob;
-		ev.picturePos = message.picturePos;
-		ev.IntiatorPos = message.IntiatorPos;
-
-		std::cout << "Enter Evidence Handler!" << std::endl;
-		Broadcast(ev);
+		game.teleportPlayersForPhoto(message.picturePos, message.IntiatorPos, player.mob);
+		
 	}
 }
 

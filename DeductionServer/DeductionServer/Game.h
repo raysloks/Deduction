@@ -30,7 +30,7 @@ public:
 	void setPhase(GamePhase phase, int64_t timer);
 
 	void teleportPlayersToEllipse(const Vec2& position, const Vec2& size);
-	void teleportPlayersForPhoto(std::vector<Vec3> go);
+	void teleportPlayersForPhoto(std::vector<Vec3> go, Vec3 initiatorPos, uint64_t mob);
 	void teleportToMeeting();
 	std::vector<Vec3> GetPlayersPos();
 	void startGameCountdown();

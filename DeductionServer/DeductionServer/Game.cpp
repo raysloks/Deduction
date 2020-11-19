@@ -155,7 +155,7 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 	}
 }
 
-void Game::teleportPlayersForPhoto(std::vector<Vec3> go)
+void Game::teleportPlayersForPhoto(std::vector<Vec3> go, Vec3 initiatorPos, uint64_t mob)
 {
 	std::vector<size_t> mobs;
 	for (auto player : handler.players)
@@ -177,6 +177,14 @@ void Game::teleportPlayersForPhoto(std::vector<Vec3> go)
 
 		mob.position = message.to;
 	}
+
+	SendEvidence ev;
+
+	ev.id = mob;
+	ev.picturePos = go;
+	ev.IntiatorPos = initiatorPos;
+
+	handler.Broadcast(ev);
 }
 std::vector<Vec3> Game::GetPlayersPos() {
 

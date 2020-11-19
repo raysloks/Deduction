@@ -14,7 +14,9 @@ public class ScreenshotHandler : MonoBehaviour
     private List<byte[]> byteList = new List<byte[]>();
     private Dictionary<Vector3, List<Vector3>> ve3dic = new Dictionary<Vector3, List<Vector3>>();
  
-    //  private List<Vector3> vec3 = new List<Vector3>();
+    private List<List<Vector3>> vec3List = new List<List<Vector3>>();
+    private List<Vector3> vec3 = new List<Vector3>();
+
     public GameController game;
     public GameObject lights;
     public GameObject mainCamera;
@@ -23,7 +25,7 @@ public class ScreenshotHandler : MonoBehaviour
     [Header("Camera Flash Stuff")]
     public GameObject canvasButtons;
     public GameObject targetMarker;
-    public TextMeshProUGUI text;
+    public TextMeshPro text;
     public GameObject arrowParent;
     public GameObject stayClose;
     private bool aP;
@@ -44,21 +46,30 @@ public class ScreenshotHandler : MonoBehaviour
 
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
 
-    public IEnumerator TakeScreenshot(int width, int height, bool meeting, Vector3 pos)
+    public IEnumerator TakeScreenshot(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
     {
         myCamera.enabled = true;
-
+        float counter = 0.3f;
         Vector3 orgPos = transform.position;
         Vector3 orgPos2 = lights.transform.position;
         Vector3 orgPos3 = mainCamera.transform.position;
         if (meeting)
-        {
+        {         
+
+            while (counter > 0)
+            {
+                counter -= Time.deltaTime;
+                yield return null;
+            }
             transform.position = new Vector3(pos.x, pos.y, transform.position.z);
             lights.transform.position = new Vector3(pos.x, pos.y, lights.transform.position.z);
             mainCamera.transform.position = new Vector3(pos.x, pos.y, mainCamera.transform.position.z);
-            Debug.Log("StartScreenshot current Light/Camera/MainCamera Pos" + lights.transform.position + " " + transform.position + " " + mainCamera.transform.position+ "VS original" + orgPos2 + " " + orgPos + " " + orgPos3);
+            yield return frameEnd;
+
             DisableUI();
         }
+        Debug.Log("StartScreenshot current Light/Camera/MainCamera Pos" + lights.transform.position + " " + transform.position + " " + mainCamera.transform.position + "VS original" + orgPos2 + " " + orgPos + " " + orgPos3);
+
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
        
         yield return frameEnd;     
@@ -71,14 +82,14 @@ public class ScreenshotHandler : MonoBehaviour
         byte[] byteArray = renderResult.EncodeToPNG();
 
         if (!meeting){          
-            List<Vector3> vec3 = new List<Vector3>();
+            List<Vector3> vec33 = new List<Vector3>();
             foreach (KeyValuePair<ulong, Mob> m in game.handler.mobs)
             {
-                vec3.Add(m.Value.transform.position);
+                vec33.Add(m.Value.transform.position);
             }
 
             GetAllPlayerPositions message = new GetAllPlayerPositions();
-            message.playerPos = vec3;
+            message.playerPos = vec33;
             game.handler.link.Send(message);
 
             byteList.Add(byteArray);
@@ -94,13 +105,16 @@ public class ScreenshotHandler : MonoBehaviour
 
             transform.position = orgPos;
             lights.transform.position = orgPos2;
-
             mainCamera.transform.position = orgPos3;
             Debug.Log("EndScreenshot " + lights.transform.position + " " + myCamera.transform.position + " " + mainCamera.transform.position);
-            
+
+            va.ba = byteArray;
+            va.newEvidence.SetActive(true);
+            /*
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.byteArray = byteArray;
             EventSystem.Current.FireEvent(EVENT_TYPE.SNAPSHOT_EVIDENCE, sendEvidenceEvent);
+            */
         }
         myCamera.enabled = false;
        
@@ -141,7 +155,7 @@ public class ScreenshotHandler : MonoBehaviour
             yield return null;
         }
 
-        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, meeting, pos);
+        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, meeting, pos, null);
 
         
     }
@@ -154,7 +168,7 @@ public class ScreenshotHandler : MonoBehaviour
         canvasButtons.GetComponent<Canvas>().enabled = false;
         arrowParent.SetActive(false);
         stayClose.SetActive(false);
-        player.visionLight.intensity = 10f;
+        player.visionLight.intensity = 1f;
 
         targetMarker.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -181,13 +195,15 @@ public class ScreenshotHandler : MonoBehaviour
     }
 
     public void AddPos(List<Vector3> list, Vector3 playerPos)
-    {      
+    {
+        instance.vec3.Add(playerPos);
+        instance.vec3List.Add(list);
         instance.ve3dic.Add(playerPos, list);
     }
 
-    public static void TakeScreenshot_Static(int width, int height, bool meeting, Vector3 pos)
+    public static void TakeScreenshot_Static(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
     {
-        instance.StartCoroutine(instance.TakeScreenshot(width, height, meeting, pos));
+        instance.StartCoroutine(instance.TakeScreenshot(width, height, meeting, pos, va));
     }
 
     public static void StartCameraFlash(float time, bool meeting, Vector3 pos)
@@ -199,9 +215,14 @@ public class ScreenshotHandler : MonoBehaviour
     {
         return instance.byteList;
     }
-    public static Dictionary<Vector3, List<Vector3>> GetListOfPicturesPositions()
+    public static List<List<Vector3>> GetListOfPicturesPositions()
     {       
-        return instance.ve3dic;
+        return instance.vec3List;
+    }
+
+    public static List<Vector3> GetListOfPlayerPositions()
+    {
+        return instance.vec3;
     }
 
     public static void ClearListOfPicturesTaken()
@@ -217,8 +238,10 @@ public class ScreenshotHandler : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Setup)
+        if (pc.phase == GamePhase.Setup )
         {
+            vec3.Clear();
+            vec3List.Clear();
             ve3dic.Clear();
             byteList.Clear();
         }
