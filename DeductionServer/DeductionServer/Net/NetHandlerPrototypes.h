@@ -18,14 +18,17 @@
 	void MobStateUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);
 	void MobTeleportHandler(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message);
 	void MobUpdateHandler(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message);
+	void PhotoPoseHandler(const asio::ip::udp::endpoint& endpoint, const PhotoPose& message);
 	void PickupCooldownHandler(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message);
 	void PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
+	void PresentEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message);
 	void ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void ResetGameSettingsHandler(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
 	void SabotageTaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
+	void TakePhotoHandler(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message);

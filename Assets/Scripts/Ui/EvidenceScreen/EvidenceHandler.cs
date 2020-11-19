@@ -7,40 +7,26 @@ using System.Linq;
 
 public class EvidenceHandler : MonoBehaviour
 {
-    public GameObject Content;
-    public GameObject PicturePrefab;
+    public Transform content;
+    public GameObject picturePrefab;
 
-    void Start()
+    private void Start()
     {
-
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
+
     public void AddAllEvidence()
     {
-        Debug.Log("Add");
-        List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
-        List<List<Vector3>> vec3list = ScreenshotHandler.GetListOfPicturesPositions();
-        List<Vector3> vec3 = ScreenshotHandler.GetListOfPlayerPositions();
-
-        int index = 0;
-        //cipher.ElementAt(index);
-        foreach (byte[] picture in b)
-        {        
-            
-            Texture2D sampleTexture = new Texture2D(2, 2);
-            // the size of the texture will be replaced by image size
-            bool isLoaded = sampleTexture.LoadImage(picture);
-            // apply this texure as per requirement on image or material
-            GameObject image = Instantiate(PicturePrefab, Content.transform);
-            image.GetComponent<EvidencePicture>().picturePos = vec3list.ElementAt(index);
-            image.GetComponent<EvidencePicture>().playerPos = vec3.ElementAt(index);
-            index++;
-            if (isLoaded)
+        GameController game = FindObjectOfType<GameController>();
+        foreach (var n in game.screenshotHandler.photos)
+        {
+            Photo photo = n.Value;
+            if (photo.poses[photo.photographer].index == game.handler.playerMobId)
             {
-                image.GetComponent<RawImage>().texture = sampleTexture;
+                var go = Instantiate(picturePrefab, content);
+                go.GetComponent<RawImage>().texture = photo.texture;
             }
         }
-        gameObject.SetActive(false);
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)
@@ -49,12 +35,11 @@ public class EvidenceHandler : MonoBehaviour
 
         if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
-            this.gameObject.SetActive(true);
-            foreach (Transform child in Content.transform)
+            gameObject.SetActive(true);
+            foreach (Transform child in content.transform)
             {
                 Destroy(child.gameObject);
             }
-
         }
     }
 }

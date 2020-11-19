@@ -70,13 +70,19 @@ namespace EventCallbacks
         public GameObject final;
         public ulong idOfTarget;
         public Vector3 positionOfTarget;
-
-
     }
+
+    public class PresentEvidenceEvent : Event
+    {
+        public int index;
+        public int presenter;
+    }
+
     public class CooldownEvent : Event
     {
         public int child;
     }
+
     public class MobEjectedEvent : Event
     {
         public Mob mob;

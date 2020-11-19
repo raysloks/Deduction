@@ -31,7 +31,7 @@ public class VoterEvidence : MonoBehaviour
         {
             Debug.Log("PictureEvidence");
             Vector3 playerPos = see.positionOfTarget;
-            ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
+            //ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
             // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
         }
     }

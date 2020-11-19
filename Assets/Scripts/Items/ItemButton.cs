@@ -43,7 +43,7 @@ public class ItemButton : MonoBehaviour
     {
         Click();
     }
-    
+
     private void NoneClick()
     {
         float closestDistance = 2f;
@@ -58,36 +58,33 @@ public class ItemButton : MonoBehaviour
                 Debug.Log("Close " + Vector2.Distance(child.position, player.transform.position));
             }
             index++;
-
         }
         if (childGo != null)
         {
-            
             int item = (int)childGo.GetComponent<ItemContainer>().item;
             if (item != 0)
             {
-               SetItem(item);
+                SetItem(item);
 
-               childGo.GetComponent<ItemContainer>().ItemTaken();
-               PickupCooldown message = new PickupCooldown();
-               message.child = index;
-               gc.handler.link.Send(message);
+                childGo.GetComponent<ItemContainer>().ItemTaken();
+                PickupCooldown message = new PickupCooldown();
+                message.child = index;
+                gc.handler.link.Send(message);
             }
-            
         }
     }
+
     private void CameraClick()
     {
         if (photosTaken < maxPhotos)
         {
-            ScreenshotHandler.StartCameraFlash(0.25f, false, Vector3.zero);
+            gc.handler.link.Send(new TakePhoto());
+            photosTaken++;
         }
-        photosTaken++;
-        if(photosTaken >= maxPhotos)
+        if (photosTaken >= maxPhotos)
         {
             SetItem(0);
         }
-
     }
 
     public void SetItem(int item)

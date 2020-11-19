@@ -1,50 +1,41 @@
 using System.IO;
 using System.Collections.Generic;
-using UnityEngine;
 
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
 public struct SendEvidence
 {
-	public List<Vector3> picturePos;
-	public ulong id;
-	public Vector3 IntiatorPos;
+	public List<PhotoPose> poses;
+	public int photographer;
+	public ulong index;
 
 	public void Serialize(BinaryWriter writer)
 	{
 		{
-			ushort size = (ushort)this.picturePos.Count;
+			ushort size = (ushort)this.poses.Count;
 			writer.Write(size);
-			foreach (var i in this.picturePos)
-		{
-			writer.Write(i.x);
-			writer.Write(i.y);
-			writer.Write(i.z);
+			foreach (var i in this.poses)
+		i.Serialize(writer);
 		}
-		}
-		writer.Write((ulong)id);
-		{
-			writer.Write(IntiatorPos.x);
-			writer.Write(IntiatorPos.y);
-			writer.Write(IntiatorPos.z);
-		}
+		writer.Write((int)photographer);
+		writer.Write((ulong)index);
 	}
 
 	public static SendEvidence Deserialize(BinaryReader reader)
 	{
 		SendEvidence _ret = new SendEvidence();
 	{
-		_ret.picturePos = new List<Vector3>();
+		_ret.poses = new List<PhotoPose>();
 		ushort size = reader.ReadUInt16();
 		for (int i = 0; i < size; ++i)
 		{
-			Vector3 element;
-		element = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
-			_ret.picturePos.Add(element);
+			PhotoPose element = new PhotoPose();
+		element = PhotoPose.Deserialize(reader);
+			_ret.poses.Add(element);
 		}
 	}
-		_ret.id = (ulong)reader.ReadUInt64();
-		_ret.IntiatorPos = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+		_ret.photographer = (int)reader.ReadInt32();
+		_ret.index = (ulong)reader.ReadUInt64();
 		return _ret;
 	}
 };

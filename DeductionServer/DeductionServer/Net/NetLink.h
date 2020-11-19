@@ -25,14 +25,17 @@
 #include "MobStateUpdate.h"
 #include "MobTeleport.h"
 #include "MobUpdate.h"
+#include "PhotoPose.h"
 #include "PickupCooldown.h"
 #include "PlayerUpdate.h"
 #include "PlayerVoted.h"
+#include "PresentEvidence.h"
 #include "ReportAttempted.h"
 #include "ResetGameSettings.h"
 #include "RestartRequested.h"
 #include "SabotageTaskUpdate.h"
 #include "SendEvidence.h"
+#include "TakePhoto.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
 #include "TeleportToMeeting.h"
@@ -68,14 +71,17 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const PhotoPose& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message);

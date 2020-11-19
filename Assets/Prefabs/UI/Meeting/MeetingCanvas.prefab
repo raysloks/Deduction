@@ -382,8 +382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63aadb561825e04aaa1aee58300b60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Content: {fileID: 7663112437078920475}
-  PicturePrefab: {fileID: 338866124949090606, guid: ba6eaf86e1b26d94a903bbc49e48a1f9,
+  content: {fileID: 7663112437078920468}
+  picturePrefab: {fileID: 338866124949090606, guid: ba6eaf86e1b26d94a903bbc49e48a1f9,
     type: 3}
 --- !u!1 &7663112436938831896
 GameObject:
@@ -624,7 +624,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainPicture: {fileID: 7663112437237446495}
   gc: {fileID: 0}
+  lockable: 0
   texture: {fileID: 0}
+  lockButton: {fileID: 0}
 --- !u!1 &7663112437124555165
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,8 +797,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 57}
-  m_SizeDelta: {x: 600, y: 400}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7663112437237446490
 CanvasRenderer:
@@ -1232,8 +1234,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 26.67}
-  m_SizeDelta: {x: 600, y: 400}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7663112438082181415
 CanvasRenderer:

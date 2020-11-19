@@ -17,6 +17,8 @@ public class Mob : MonoBehaviour
 
     public ulong role = 0;
 
+    public ulong spriteIndex = 0;
+
     protected void Awake()
     {
         inCamo = false;
@@ -40,11 +42,13 @@ public class Mob : MonoBehaviour
 
     public void SetSprite(ulong sprite)
     {
+        spriteIndex = sprite;
         spriteResolver.SetCategoryAndLabel("Head", "Head " + (sprite + 1));
     }
 
     public void SetName(string name)
     {
+        this.name = name;
         GetComponentInChildren<TextMeshPro>().text = name;
     }
 

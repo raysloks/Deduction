@@ -137,7 +137,6 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 	{
 		mobs.push_back(player.second.mob);
 	}
-
 	
 	float offset = handler.rng.next_float() * (float)M_PI * 2.0f;
 	for (size_t i = 0; i < mobs.size(); ++i)
@@ -146,7 +145,9 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 
 		MobTeleport message;
 		message.from = mob.position;
-		message.to = position + Vec2(cosf(i * (float)M_PI * 2.0f / mobs.size() + offset), sinf(i * (float)M_PI * 2.0f / mobs.size() + offset)) * size;
+		message.to = position + Vec2(
+			cosf(i * (float)M_PI * 2.0f / mobs.size() + offset), 
+			sinf(i * (float)M_PI * 2.0f / mobs.size() + offset)) * size;
 		message.time = handler.time;
 		message.id = mobs[i];
 		handler.Broadcast(message);
@@ -155,39 +156,8 @@ void Game::teleportPlayersToEllipse(const Vec2& position, const Vec2& size)
 	}
 }
 
-void Game::teleportPlayersForPhoto(std::vector<Vec3> go, Vec3 initiatorPos, uint64_t mob)
+std::vector<Vec3> Game::GetPlayersPos()
 {
-	std::vector<size_t> mobs;
-	for (auto player : handler.players)
-	{
-		mobs.push_back(player.second.mob);
-	}
-
-
-	for (size_t i = 0; i < mobs.size(); ++i)
-	{
-		auto&& mob = handler.mobs[mobs[i]];
-
-		MobTeleport message;
-		message.from = mob.position;
-		message.to = go[i];
-		message.time = handler.time;
-		message.id = mobs[i];
-		handler.Broadcast(message);
-
-		mob.position = message.to;
-	}
-
-	SendEvidence ev;
-
-	ev.id = mob;
-	ev.picturePos = go;
-	ev.IntiatorPos = initiatorPos;
-
-	handler.Broadcast(ev);
-}
-std::vector<Vec3> Game::GetPlayersPos() {
-
 	std::vector<size_t> mobs;
 	for (auto player : handler.players)
 	{
@@ -661,5 +631,39 @@ void Game::checkForMapChange()
 			restartSetup();
 		}
 	}
+}
+
+void Game::takePhoto(uint64_t photographer)
+{
+	Photo photo;
+	photo.photographer = -1ull;
+
+	for (size_t i = 0; i < handler.mobs.size(); ++i)
+	{
+		auto&& mob = handler.mobs[i];
+		if (mob.enabled && mob.type != MobType::Ghost)
+		{
+			if (i == photographer)
+				photo.photographer = photo.poses.size();
+
+			PhotoPose pose;
+			pose.dead = mob.type == MobType::Corpse;
+			pose.position = mob.position;
+			pose.index = i;
+
+			photo.poses.push_back(pose);
+		}
+	}
+
+	if (photo.photographer == -1ull)
+		return;
+
+	SendEvidence message;
+	message.poses = photo.poses;
+	message.photographer = photo.photographer;
+	message.index = photos.size();
+	handler.Broadcast(message);
+
+	photos.push_back(photo);
 }
 

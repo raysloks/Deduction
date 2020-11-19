@@ -4,246 +4,185 @@ using UnityEngine;
 using EventCallbacks;
 using System.IO;
 using TMPro;
+using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Rendering;
 
+[RequireComponent(typeof(Camera))]
 public class ScreenshotHandler : MonoBehaviour
 {
-    private static ScreenshotHandler instance;
+    public GameController game;
+    public Light2D visionLight;
+
+    public GameObject dummyPrefab;
+    public Transform dummyContainer;
 
     private Camera myCamera;
-    public Player player;
-    private List<byte[]> byteList = new List<byte[]>();
-    private Dictionary<Vector3, List<Vector3>> ve3dic = new Dictionary<Vector3, List<Vector3>>();
- 
-    private List<List<Vector3>> vec3List = new List<List<Vector3>>();
-    private List<Vector3> vec3 = new List<Vector3>();
 
-    public GameController game;
-    public GameObject lights;
-    public GameObject mainCamera;
-    public List<AudioClip> cameraSound;
+    private RenderTexture renderTexture;
 
-    [Header("Camera Flash Stuff")]
-    public GameObject canvasButtons;
-    public GameObject targetMarker;
-    public TextMeshPro text;
-    public GameObject arrowParent;
-    public GameObject stayClose;
-    private bool aP;
-    private bool sC;
+    private List<Mob> dummies = new List<Mob>();
 
-    // Start is called before the first frame update
-    void Awake()
+    private Photo photo;
+
+    private float visionLightInnerRadius;
+    private float visionLightOuterRadius;
+
+    private Vector3 offset;
+
+    public Dictionary<ulong, Photo> photos = new Dictionary<ulong, Photo>();
+
+    private void Awake()
     {
-        instance = this;
-        myCamera = gameObject.GetComponent<Camera>();
+        myCamera = GetComponent<Camera>();
         myCamera.enabled = false;
+
+        offset = transform.position;
     }
 
-    void Start()
+    private void Update()
     {
-        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
-    }
-
-    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
-
-    public IEnumerator TakeScreenshot(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
-    {
-        myCamera.enabled = true;
-        float counter = 0.3f;
-        Vector3 orgPos = transform.position;
-        Vector3 orgPos2 = lights.transform.position;
-        Vector3 orgPos3 = mainCamera.transform.position;
-        if (meeting)
-        {         
-
-            while (counter > 0)
+        foreach (var n in photos)
+        {
+            if (n.Value.texture == null)
             {
-                counter -= Time.deltaTime;
-                yield return null;
+                RecreateScreenshot(600, 450, n.Value);
+                break;
             }
-            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
-            lights.transform.position = new Vector3(pos.x, pos.y, lights.transform.position.z);
-            mainCamera.transform.position = new Vector3(pos.x, pos.y, mainCamera.transform.position.z);
-            yield return frameEnd;
-
-            DisableUI();
         }
-        Debug.Log("StartScreenshot current Light/Camera/MainCamera Pos" + lights.transform.position + " " + transform.position + " " + mainCamera.transform.position + "VS original" + orgPos2 + " " + orgPos + " " + orgPos3);
+    }
 
-        myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
-       
-        yield return frameEnd;     
+    private void OnEnable()
+    {
+        RenderPipelineManager.endCameraRendering += OnRenderEnd;
+    }
 
-        RenderTexture renderTexture = myCamera.targetTexture;
+    private void OnDisable()
+    {
+        RenderPipelineManager.endCameraRendering -= OnRenderEnd;
+    }
 
-        Texture2D renderResult = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.ARGB32, false);
+    private void OnRenderEnd(ScriptableRenderContext context, Camera camera)
+    {
+        if (camera == myCamera)
+        {
+            OnPostRender();
+        }
+    }
+
+    public void SetDummyPositions()
+    {
+        for (int i = dummies.Count; i < photo.poses.Count; ++i)
+        {
+            var dummy = Instantiate(dummyPrefab, dummyContainer);
+            dummies.Add(dummy.GetComponent<Mob>());
+        }
+
+        for (int i = 0; i < photo.poses.Count; ++i)
+        {
+            PhotoPose pose = photo.poses[i];
+            dummies[i].gameObject.SetActive(true);
+            Transform transform = dummies[i].transform;
+            transform.position = pose.position;
+            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+            dummies[i].characterTransform.localScale = new Vector3(pose.flipped ? -1f : 1f, 1f, 1f);
+            Mob originalMob = game.handler.mobs[pose.index];
+            dummies[i].SetSprite(originalMob.spriteIndex);
+            dummies[i].SetName(originalMob.name);
+        }
+
+        for (int i = photo.poses.Count; i < dummies.Count; ++i)
+        {
+            dummies[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void DisableDummies()
+    {
+        foreach (var dummy in dummies)
+            dummy.gameObject.SetActive(false);
+    }
+
+    public void Prepare()
+    {
+        SetDummyPositions();
+
+        game.mobContainer.gameObject.SetActive(false);
+
+        transform.position = dummies[photo.photographer].transform.position + offset;
+
+        visionLight.transform.SetParent(dummies[photo.photographer].transform, false);
+        visionLightInnerRadius = visionLight.pointLightInnerRadius;
+        visionLightOuterRadius = visionLight.pointLightOuterRadius;
+
+        // TEMP
+        visionLight.pointLightInnerRadius = 5f;
+        visionLight.pointLightOuterRadius = 10f;
+    }
+
+    public void Restore()
+    {
+        visionLight.pointLightOuterRadius = visionLightOuterRadius;
+        visionLight.pointLightInnerRadius = visionLightInnerRadius;
+        visionLight.transform.SetParent(game.player.transform, false);
+
+        game.mobContainer.gameObject.SetActive(true);
+
+        DisableDummies();
+    }
+
+    public Photo RecordPhoto()
+    {
+        Photo photo = new Photo();
+        photo.photographer = -1;
+        foreach (var n in game.handler.mobs)
+        {
+            ulong index = n.Key;
+            Mob mob = n.Value;
+            if (mob.gameObject.activeSelf)
+            {
+                if (index == game.handler.playerMobId)
+                    photo.photographer = photo.poses.Count;
+
+                PhotoPose pose = new PhotoPose();
+                pose.index = index;
+                pose.position = mob.transform.position;
+                pose.flipped = mob.characterTransform.localScale.x < 0f;
+                photo.poses.Add(pose);
+            }
+        }
+        if (photo.photographer == -1)
+            return null;
+        return photo;
+    }
+
+    public void RecreateScreenshot(int width, int height, Photo photo)
+    {
+        if (this.photo == null)
+        {
+            this.photo = photo;
+
+            renderTexture = RenderTexture.GetTemporary(width, height, 0);
+            myCamera.targetTexture = renderTexture;
+
+            photo.texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+
+            Prepare();
+
+            myCamera.Render();
+        }
+    }
+
+    private void OnPostRender()
+    {
         Rect rect = new Rect(0, 0, renderTexture.width, renderTexture.height);
-        renderResult.ReadPixels(rect, 0, 0);
-        byte[] byteArray = renderResult.EncodeToPNG();
-
-        if (!meeting){          
-            List<Vector3> vec33 = new List<Vector3>();
-            foreach (KeyValuePair<ulong, Mob> m in game.handler.mobs)
-            {
-                vec33.Add(m.Value.transform.position);
-            }
-
-            GetAllPlayerPositions message = new GetAllPlayerPositions();
-            message.playerPos = vec33;
-            game.handler.link.Send(message);
-
-            byteList.Add(byteArray);
-            StartCoroutine(EndCameraFlash(5f));
-
-        }
+        photo.texture.ReadPixels(rect, 0, 0);
+        photo.texture.Apply();
+        photo = null;
 
         RenderTexture.ReleaseTemporary(renderTexture);
+        renderTexture = null;
         myCamera.targetTexture = null;
-      
-        if (meeting) {
-            EnableUI();
 
-            transform.position = orgPos;
-            lights.transform.position = orgPos2;
-            mainCamera.transform.position = orgPos3;
-            Debug.Log("EndScreenshot " + lights.transform.position + " " + myCamera.transform.position + " " + mainCamera.transform.position);
-
-            va.ba = byteArray;
-            va.newEvidence.SetActive(true);
-            /*
-            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-            sendEvidenceEvent.byteArray = byteArray;
-            EventSystem.Current.FireEvent(EVENT_TYPE.SNAPSHOT_EVIDENCE, sendEvidenceEvent);
-            */
-        }
-        myCamera.enabled = false;
-       
-
-
-
-    }
-
-    public IEnumerator EndCameraFlash(float Sec)
-    {
-        if(player.role == 0)
-        {
-            while (player.visionLight.pointLightOuterRadius > player.GetVision())
-            {               
-                player.visionLight.pointLightOuterRadius -= Sec * Time.deltaTime;
-                yield return null;
-            }           
-        }
-        EnableUI();
-    }
-
-    public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
-    {
-
-        SoundEvent se = new SoundEvent();
-        se.UnitGameObjectPos = player.transform.position;
-        se.UnitSound = cameraSound;
-        EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
-        
-
-        DisableUI();
-
-        float counter = Sec;
-
-        while (counter > 0)
-        {            
-            counter -= Time.deltaTime;
-            yield return null;
-        }
-
-        ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, meeting, pos, null);
-
-        
-    }
-    void DisableUI()
-    {
-        player.cameraFlashing = true;
-
-        aP = arrowParent.activeSelf;
-        sC = stayClose.activeSelf;
-        canvasButtons.GetComponent<Canvas>().enabled = false;
-        arrowParent.SetActive(false);
-        stayClose.SetActive(false);
-        player.visionLight.intensity = 1f;
-
-        targetMarker.GetComponent<SpriteRenderer>().enabled = false;
-
-        player.visionLight.pointLightOuterRadius = player.controller.settings.impostorVision;
-        text.color = Color.white;
-    }
-    void EnableUI()
-    {
-        if (player.role == 0)
-            text.color = Color.white;
-        else
-            text.color = Color.red;
-        
-        player.visionLight.intensity = 1f;
-
-        targetMarker.GetComponent<SpriteRenderer>().enabled = true;
-
-        canvasButtons.GetComponent<Canvas>().enabled = true;
-        arrowParent.SetActive(aP);
-        stayClose.SetActive(sC);
-
-        player.visionLight.pointLightOuterRadius = player.GetVision();
-        player.cameraFlashing = false;
-    }
-
-    public void AddPos(List<Vector3> list, Vector3 playerPos)
-    {
-        instance.vec3.Add(playerPos);
-        instance.vec3List.Add(list);
-        instance.ve3dic.Add(playerPos, list);
-    }
-
-    public static void TakeScreenshot_Static(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
-    {
-        instance.StartCoroutine(instance.TakeScreenshot(width, height, meeting, pos, va));
-    }
-
-    public static void StartCameraFlash(float time, bool meeting, Vector3 pos)
-    {
-        instance.StartCoroutine(instance.CameraFlash(time, meeting, pos));
-    }
-
-    public static List<byte[]> GetListOfPicturesTaken()
-    {
-        return instance.byteList;
-    }
-    public static List<List<Vector3>> GetListOfPicturesPositions()
-    {       
-        return instance.vec3List;
-    }
-
-    public static List<Vector3> GetListOfPlayerPositions()
-    {
-        return instance.vec3;
-    }
-
-    public static void ClearListOfPicturesTaken()
-    {
-        instance.byteList.Clear();
-    }
-    public static byte[] GetLastPicture()
-    {
-        return instance.byteList[instance.byteList.Count - 1];      
-    }
-
-    public void PhaseChanged(EventCallbacks.Event eventInfo)
-    {
-        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
-
-        if (pc.phase == GamePhase.Setup )
-        {
-            vec3.Clear();
-            vec3List.Clear();
-            ve3dic.Clear();
-            byteList.Clear();
-        }
+        Restore();
     }
 }

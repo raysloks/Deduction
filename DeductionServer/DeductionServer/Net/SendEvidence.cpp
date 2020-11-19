@@ -4,15 +4,17 @@
 
 #include <iostream>
 
+#include "PhotoPose.h"
+
 void SendEvidence::serialize(std::ostream& os) const
 {
 	{
-		uint16_t size = this->picturePos.size();
+		uint16_t size = this->poses.size();
 		os.write((char*)&size, sizeof(size));
-		os.write((char*)this->picturePos.data(), sizeof(Vec3) * size);
+		os.write((char*)this->poses.data(), sizeof(PhotoPose) * size);
 	}
-	os.write((char*)&id, (sizeof(id) + 3) / 4 * 4);
-	os.write((char*)&IntiatorPos, (sizeof(IntiatorPos) + 3) / 4 * 4);
+	os.write((char*)&photographer, (sizeof(photographer) + 3) / 4 * 4);
+	os.write((char*)&index, (sizeof(index) + 3) / 4 * 4);
 }
 
 void SendEvidence::deserialize(std::istream& is)
@@ -20,10 +22,10 @@ void SendEvidence::deserialize(std::istream& is)
 	{
 		uint16_t size;
 		is.read((char*)&size, sizeof(size));
-		this->picturePos.resize(size);
-		is.read((char*)this->picturePos.data(), sizeof(Vec3) * size);
+		this->poses.resize(size);
+		is.read((char*)this->poses.data(), sizeof(PhotoPose) * size);
 	}
-	is.read((char*)&id, (sizeof(id) + 3) / 4 * 4);
-	is.read((char*)&IntiatorPos, (sizeof(IntiatorPos) + 3) / 4 * 4);
+	is.read((char*)&photographer, (sizeof(photographer) + 3) / 4 * 4);
+	is.read((char*)&index, (sizeof(index) + 3) / 4 * 4);
 }
 

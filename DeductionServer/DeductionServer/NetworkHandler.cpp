@@ -549,9 +549,14 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
+		mob.flipped = message.flipped;
 		mob.position = message.position;
 		mob.time = message.time;
 	}
+}
+
+void NetworkHandler::PhotoPoseHandler(const asio::ip::udp::endpoint & endpoint, const PhotoPose & message)
+{
 }
 
 void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
@@ -620,6 +625,30 @@ void NetworkHandler::PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint,
 			else
 				reply.target = message.target;
 			Broadcast(reply);
+		}
+	}
+}
+
+void NetworkHandler::PresentEvidenceHandler(const asio::ip::udp::endpoint & endpoint, const PresentEvidence & message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
+
+		if (mob.type == MobType::Player && game.phase == GamePhase::Discussion || game.phase == GamePhase::Voting)
+		{
+			if (message.index < game.photos.size())
+			{
+				if (game.photos[message.index].photographer == player.mob)
+				{
+					PresentEvidence reply;
+					reply.index = message.index;
+					reply.presenter = player.mob;
+					Broadcast(reply);
+				}
+			}
 		}
 	}
 }
@@ -749,16 +778,20 @@ void NetworkHandler::VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, 
 
 void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
 {
-	auto it = players.find(endpoint);
-	std::cout << "Enter Evidence Handler!" << std::endl;
+}
 
+void NetworkHandler::TakePhotoHandler(const asio::ip::udp::endpoint & endpoint, const TakePhoto & message)
+{
+	auto it = players.find(endpoint);
 	if (it != players.end())
 	{
 		auto&& player = it->second;
-
 		auto&& mob = mobs[player.mob];
-		game.teleportPlayersForPhoto(message.picturePos, message.IntiatorPos, player.mob);
-		
+
+		if (mob.type == MobType::Player)
+		{
+			game.takePhoto(player.mob);
+		}
 	}
 }
 
@@ -772,13 +805,12 @@ void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& end
 	game.teleportToMeeting();
 }
 
-void NetworkHandler::HideAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message) {
-
+void NetworkHandler::HideAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message)
+{
 }
 
-
-void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message) {
-	
+void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message)
+{	
 	auto it = players.find(endpoint);
 
 	if (it != players.end())
@@ -790,11 +822,8 @@ void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint&
 		Pp.id = player.mob;
 		Pp.player = mobs[player.mob].position;
 		Send(endpoint, Pp);
-
 	}
 }
-
-
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{

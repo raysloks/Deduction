@@ -15,14 +15,13 @@
 #include "Net/GameSettings.h"
 #include "Map.h"
 #include "Role.h"
+#include "Photo.h"
 
 class NetworkHandler;
 
 class Game
 {
 public:
-
-
 	Game(NetworkHandler& handler);
 
 	void tick(int64_t now);
@@ -30,7 +29,6 @@ public:
 	void setPhase(GamePhase phase, int64_t timer);
 
 	void teleportPlayersToEllipse(const Vec2& position, const Vec2& size);
-	void teleportPlayersForPhoto(std::vector<Vec3> go, Vec3 initiatorPos, uint64_t mob);
 	void teleportToMeeting();
 	std::vector<Vec3> GetPlayersPos();
 	void startGameCountdown();
@@ -65,6 +63,8 @@ public:
 
 	void checkForMapChange();
 
+	void takePhoto(uint64_t photographer);
+
 
 	GamePhase phase;
 
@@ -86,6 +86,8 @@ public:
 	std::vector<std::shared_ptr<SabotageTask>> sabotageTasks;
 
 	bool voiceEnabled;
+
+	std::vector<Photo> photos;
 
 };
 

@@ -13,6 +13,7 @@ public:
 	uint64_t id;
 	int64_t time;
 	Vec3 position;
+	bool flipped;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

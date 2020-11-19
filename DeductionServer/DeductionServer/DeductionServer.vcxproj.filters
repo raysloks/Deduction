@@ -151,6 +151,16 @@
     <ClInclude Include="Net\HideAttempted.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\PhotoPose.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\TakePhoto.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Photo.h" />
+    <ClInclude Include="Net\PresentEvidence.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -282,6 +292,16 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\HideAttempted.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\PhotoPose.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TakePhoto.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Photo.cpp" />
+    <ClCompile Include="Net\PresentEvidence.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

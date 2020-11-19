@@ -75,8 +75,7 @@ public class NetworkHandler
         {
             if (!mobs.ContainsKey(message.id))
             {
-                mobs.Add(message.id, UnityEngine.Object.Instantiate(game.prefab, message.position, Quaternion.identity).GetComponent<NetworkMob>());
-                UnityEngine.Object.DontDestroyOnLoad(mobs[message.id].gameObject);
+                mobs.Add(message.id, UnityEngine.Object.Instantiate(game.prefab, message.position, Quaternion.identity, game.mobContainer).GetComponent<NetworkMob>());
                 UpdateName(message.id);
             }
             Mob mob = mobs[message.id];
@@ -260,14 +259,7 @@ public class NetworkHandler
 
         SoundEvent se = new SoundEvent();
         se.UnitGameObjectPos = game.player.transform.position;
-        if (gameOverEvent.victory == true)
-        {
-            se.UnitSound = game.gameWinSounds;
-        }
-        else
-        {        
-            se.UnitSound = game.gameLostSounds;
-        }
+        se.UnitSound = gameOverEvent.victory ? game.gameWinSounds : game.gameLostSounds;
         EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
     }
 
@@ -316,19 +308,10 @@ public class NetworkHandler
 
     internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
     {
-        SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-        if(message.picturePos != null)
-        {
-            Debug.Log("This is the player " + message.id + " count vec3 vs mobs "+ message.picturePos.Count+ " VS " + mobs.Count);
-            sendEvidenceEvent.vec3List = message.picturePos;
-            sendEvidenceEvent.Evidence = 1;
-            sendEvidenceEvent.idOfTarget = message.id;
-            sendEvidenceEvent.positionOfTarget = message.IntiatorPos;
-            sendEvidenceEvent.gc = game;
-            //Send to MeetingListener
-            EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, sendEvidenceEvent);
-        }
-        
+        Photo photo = new Photo();
+        photo.poses = message.poses;
+        photo.photographer = message.photographer;
+        game.screenshotHandler.photos.Add(message.index, photo);
     }
 
     internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)
@@ -348,12 +331,17 @@ public class NetworkHandler
 
     internal void GetAllPlayerPositionsHandler(IPEndPoint endpoint, GetAllPlayerPositions message)
     {
-        if (message.id == playerMobId)
-        {
-            Debug.Log("You sent this pp");
-            game.screenshotHandler.AddPos(message.playerPos, message.player);
-
-        }
     }
 
+    internal void PhotoPoseHandler(IPEndPoint endpoint, PhotoPose message)
+    {
+    }
+
+    internal void TakePhotoHandler(IPEndPoint endpoint, TakePhoto message)
+    {
+    }
+
+    internal void PresentEvidenceHandler(IPEndPoint endpoint, PresentEvidence message)
+    {
+    }
 }

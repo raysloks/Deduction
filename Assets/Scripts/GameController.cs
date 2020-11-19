@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour
 
     public ScreenshotHandler screenshotHandler;
 
+    public Transform mobContainer;
+
     private float heartbeat = 0f;
     private float snapshot = 0f;
 
@@ -188,7 +190,7 @@ public class GameController : MonoBehaviour
         if (snapshot <= 0f)
         {
             if (connectionState == ConnectionState.Connected)
-                handler.link.Send(new MobUpdate { position = player.transform.position, time = time });
+                handler.link.Send(new MobUpdate { position = player.transform.position, time = time, flipped = player.characterTransform.localScale.x < 0f });
             snapshot += 0.05f;
         }
 
@@ -252,7 +254,7 @@ public class GameController : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Q))
                         Kill();
                 }
-		    }
+            }
 
 
             // Report
@@ -453,18 +455,6 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Setup)
         {
             handler.link.Send(new GameStartRequested());
-        }
-    }
-
-    public void SendEvidence(List<Vector3> pos, Vector3 player)
-    {
-        if (phase == GamePhase.Voting || phase == GamePhase.Discussion)
-        {
-            Debug.Log("Send The List");
-            SendEvidence message = new SendEvidence();
-            message.picturePos = pos;
-            message.IntiatorPos = player;
-            handler.link.Send(message);
         }
     }
 

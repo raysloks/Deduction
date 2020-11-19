@@ -33,5 +33,7 @@ public:
 	int64_t sabotageCooldown;
 
 	Vec3 color;
+
+	bool flipped;
 };
 
