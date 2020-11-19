@@ -174,8 +174,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1681519691
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb8994ce126608e42bcb135d6bb83c9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -949,17 +949,17 @@ PrefabInstance:
     - target: {fileID: -6010139627254057656, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.000000059604645
+      value: -0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: -6010139627254057656, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0
+      value: -0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: -6010139627254057656, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.33500004
+      value: 0.37222227
       objectReference: {fileID: 0}
     - target: {fileID: -6010139627254057656, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
@@ -989,17 +989,17 @@ PrefabInstance:
     - target: {fileID: -74842594411960043, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0009879321
+      value: 0.001097694
       objectReference: {fileID: 0}
     - target: {fileID: -74842594411960043, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0009997636
+      value: 0.001110971
       objectReference: {fileID: 0}
     - target: {fileID: -74842594411960043, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.226
+      value: 0.2511111
       objectReference: {fileID: 0}
     - target: {fileID: -74842594411960043, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
@@ -1024,22 +1024,22 @@ PrefabInstance:
     - target: {fileID: 7664365068545051688, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0016269833
+      value: 0.0018077567
       objectReference: {fileID: 0}
     - target: {fileID: 7664365068545051688, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0014600977
+      value: 0.0016223043
       objectReference: {fileID: 0}
     - target: {fileID: 8033408282952865857, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.0014850125
+      value: 0.001650013
       objectReference: {fileID: 0}
     - target: {fileID: 8033408282952865857, guid: b2917ef671b7a544ea5da19792818dc8,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.0009699017
+      value: 0.001077693
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 8973593026160820136, guid: b2917ef671b7a544ea5da19792818dc8,

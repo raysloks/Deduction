@@ -13,6 +13,7 @@ TagManager:
   - CellWall
   - Mob
   - Camouflage
+  - Camoflauge
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - Foreground
+  - 
   - MeetingUI
   - Collision
   - Minigame
@@ -47,33 +48,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Test
-    uniqueID: 269567099
-    locked: 0
   - name: Background
     uniqueID: 495506997
-    locked: 0
-  - name: BehindPlayer
-    uniqueID: 3137989141
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Camouflage
-    uniqueID: 105557097
-    locked: 0
-  - name: InFrontOfPlayer
-    uniqueID: 3758238713
-    locked: 0
-  - name: HUD
-    uniqueID: 807542147
-    locked: 0
-  - name: UI
-    uniqueID: 2970777979
-    locked: 0
   - name: Foreground
     uniqueID: 1681519691
     locked: 0
-  - name: Minigame
-    uniqueID: 3968095899
+  - name: UI
+    uniqueID: 2970777979
     locked: 0
