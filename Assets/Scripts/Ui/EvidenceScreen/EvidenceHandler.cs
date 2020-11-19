@@ -15,22 +15,21 @@ public class EvidenceHandler : MonoBehaviour
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
+
+    //Adds all the evidence to the scroll view under the evidence tab
     public void AddAllEvidence()
     {
-        Debug.Log("Add");
         List<byte[]> b = ScreenshotHandler.GetListOfPicturesTaken();
         List<List<Vector3>> vec3list = ScreenshotHandler.GetListOfPicturesPositions();
         List<Vector3> vec3 = ScreenshotHandler.GetListOfPlayerPositions();
 
         int index = 0;
-        //cipher.ElementAt(index);
         foreach (byte[] picture in b)
         {        
             
             Texture2D sampleTexture = new Texture2D(2, 2);
-            // the size of the texture will be replaced by image size
             bool isLoaded = sampleTexture.LoadImage(picture);
-            // apply this texure as per requirement on image or material
+
             GameObject image = Instantiate(PicturePrefab, Content.transform);
             image.GetComponent<EvidencePicture>().picturePos = vec3list.ElementAt(index);
             image.GetComponent<EvidencePicture>().playerPos = vec3.ElementAt(index);
@@ -43,13 +42,14 @@ public class EvidenceHandler : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
         if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
             foreach (Transform child in Content.transform)
             {
                 Destroy(child.gameObject);

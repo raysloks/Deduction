@@ -182,6 +182,8 @@ public class MeetingUiListener : MonoBehaviour
         }
     }
 
+    //Sent from SendEvidenceHandler when sending evidence during meeting.
+    //Sends the evidence info to the vote button of the player who made this evidence
     private void SendEvidence(EventCallbacks.Event eventInfo)
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;

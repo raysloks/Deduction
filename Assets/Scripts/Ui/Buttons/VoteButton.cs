@@ -69,6 +69,8 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
                 finishedVotingIndicator.SetActive(true);
     }
     
+
+    //if pointer enters send event to CurrentlyVisibleEvidence
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(Evidence != null && currentEvidence == false)
@@ -77,12 +79,13 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
             {
                 child.GetComponent<VoteButton>().currentEvidence = false;
             }
+
             currentEvidence = true;
             int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
+
             Evidence.GetComponent<VoterEvidence>().newEvidence.SetActive(false);
 
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-
             sendEvidenceEvent.Evidence = e;
             sendEvidenceEvent.positionOfTarget = transform.position;
             if (e == 1)
@@ -100,11 +103,13 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
             EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
         }       
     }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         currentEvidence = false;
     }
 
+    //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;

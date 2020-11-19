@@ -11,16 +11,18 @@ using EventCallbacks;
 
 public class MainEvidencePicture : MonoBehaviour
 {
+    [HideInInspector] public bool lockable = false;
     public GameObject MainPicture;
     public GameController gc;
+    public Texture texture;
+    public Button lockButton;
+
     private RawImage ri;
     private Image buttonImage;
     private bool sentEvidence = false;
-    [HideInInspector]public bool lockable = false;
-    public Texture texture;
-    public Button lockButton;
     private UnityEngine.Color normalColor;
     private UnityEngine.Color pressedColor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,11 +34,13 @@ public class MainEvidencePicture : MonoBehaviour
         pressedColor = colors.pressedColor;
     }
 
+    //Quick method to change the main pictures image
     public void SetMainPicture(Texture tex)
     {
         ri.texture = tex;
     }
 
+    //When you choose a picture send it to the GC that will send a Send Evidence message to the handler.
     public void LockEvidencePicture(List<Vector3> pos, Vector3 player)
     {
         if (sentEvidence == false)
@@ -47,11 +51,14 @@ public class MainEvidencePicture : MonoBehaviour
             gc.SendEvidence(pos, player);
         }
     }
+
+    //If you press the lock button
     public void ClickLock()
     {
         lockable = !lockable;
         changeButtonColor(lockable);
     }
+
     private void changeButtonColor(bool l)
     {
 
@@ -62,6 +69,7 @@ public class MainEvidencePicture : MonoBehaviour
 
     }
 
+    //End Of Meeting Cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;

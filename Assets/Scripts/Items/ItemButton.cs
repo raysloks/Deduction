@@ -19,16 +19,15 @@ public class ItemButton : MonoBehaviour
 
     [Header("Camera")]
     public GameObject buttonItemImage;
-
     public Sprite CameraSprite;
     public TextMeshProUGUI text;
     private Image myItemImage;
-
     private int maxPhotos = 3;
     private int photosTaken = 0;
 
     delegate void Calculation();
     Calculation Click;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +43,7 @@ public class ItemButton : MonoBehaviour
         Click();
     }
     
+    //if you got no items
     private void NoneClick()
     {
         float closestDistance = 2f;
@@ -76,6 +76,7 @@ public class ItemButton : MonoBehaviour
             
         }
     }
+    //if you got camera item
     private void CameraClick()
     {
         if (photosTaken < maxPhotos)
@@ -90,6 +91,7 @@ public class ItemButton : MonoBehaviour
 
     }
 
+    //set item based on Enum int
     public void SetItem(int item)
     {
         myItem = (Item)item;
@@ -111,11 +113,12 @@ public class ItemButton : MonoBehaviour
         }
     }
 
+    //Start of game cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Setup)
+        if (pc.previous == GamePhase.Setup)
         {
             SetItem(1);
         }

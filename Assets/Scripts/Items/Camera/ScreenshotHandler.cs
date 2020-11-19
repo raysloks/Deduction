@@ -10,13 +10,11 @@ public class ScreenshotHandler : MonoBehaviour
     private static ScreenshotHandler instance;
 
     private Camera myCamera;
-    public Player player;
     private List<byte[]> byteList = new List<byte[]>();
-    private Dictionary<Vector3, List<Vector3>> ve3dic = new Dictionary<Vector3, List<Vector3>>();
- 
     private List<List<Vector3>> vec3List = new List<List<Vector3>>();
     private List<Vector3> vec3 = new List<Vector3>();
 
+    public Player player;
     public GameController game;
     public GameObject lights;
     public GameObject mainCamera;
@@ -46,6 +44,11 @@ public class ScreenshotHandler : MonoBehaviour
 
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
 
+
+    //Takes a screenshot.
+    //If its not a meeting it adds this screenshot to a list and record the players positions
+    //If it is a meeting before taking a picture it moves all the player to the recorded position and moves the camera/Light to the position of the player who took the picture
+    //then it sends that picture to the votebutton of the player that originally took the picture
     public IEnumerator TakeScreenshot(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
     {
         myCamera.enabled = true;
@@ -55,7 +58,7 @@ public class ScreenshotHandler : MonoBehaviour
         Vector3 orgPos3 = mainCamera.transform.position;
         if (meeting)
         {         
-
+            //For some reason need to wait a bit before taking picture. Verkar som att mobsen inte hinner teleporteras av nån anledning
             while (counter > 0)
             {
                 counter -= Time.deltaTime;
@@ -68,7 +71,6 @@ public class ScreenshotHandler : MonoBehaviour
 
             DisableUI();
         }
-        Debug.Log("StartScreenshot current Light/Camera/MainCamera Pos" + lights.transform.position + " " + transform.position + " " + mainCamera.transform.position + "VS original" + orgPos2 + " " + orgPos + " " + orgPos3);
 
         myCamera.targetTexture = RenderTexture.GetTemporary(width, height, 0);
        
@@ -81,15 +83,16 @@ public class ScreenshotHandler : MonoBehaviour
         renderResult.ReadPixels(rect, 0, 0);
         byte[] byteArray = renderResult.EncodeToPNG();
 
-        if (!meeting){          
-            List<Vector3> vec33 = new List<Vector3>();
+        if (!meeting){    
+            
+            List<Vector3> vec3players = new List<Vector3>();
             foreach (KeyValuePair<ulong, Mob> m in game.handler.mobs)
             {
-                vec33.Add(m.Value.transform.position);
+                vec3players.Add(m.Value.transform.position);
             }
 
             GetAllPlayerPositions message = new GetAllPlayerPositions();
-            message.playerPos = vec33;
+            message.playerPos = vec3players;
             game.handler.link.Send(message);
 
             byteList.Add(byteArray);
@@ -106,23 +109,14 @@ public class ScreenshotHandler : MonoBehaviour
             transform.position = orgPos;
             lights.transform.position = orgPos2;
             mainCamera.transform.position = orgPos3;
-            Debug.Log("EndScreenshot " + lights.transform.position + " " + myCamera.transform.position + " " + mainCamera.transform.position);
 
             va.ba = byteArray;
             va.newEvidence.SetActive(true);
-            /*
-            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-            sendEvidenceEvent.byteArray = byteArray;
-            EventSystem.Current.FireEvent(EVENT_TYPE.SNAPSHOT_EVIDENCE, sendEvidenceEvent);
-            */
         }
         myCamera.enabled = false;
-       
-
-
-
     }
 
+    //Ends the camera flash
     public IEnumerator EndCameraFlash(float Sec)
     {
         if(player.role == 0)
@@ -136,6 +130,7 @@ public class ScreenshotHandler : MonoBehaviour
         EnableUI();
     }
 
+    //Starts the camera flash and sound effect
     public IEnumerator CameraFlash(float Sec, bool meeting, Vector3 pos)
     {
 
@@ -198,7 +193,6 @@ public class ScreenshotHandler : MonoBehaviour
     {
         instance.vec3.Add(playerPos);
         instance.vec3List.Add(list);
-        instance.ve3dic.Add(playerPos, list);
     }
 
     public static void TakeScreenshot_Static(int width, int height, bool meeting, Vector3 pos, VoterEvidence va)
@@ -234,6 +228,7 @@ public class ScreenshotHandler : MonoBehaviour
         return instance.byteList[instance.byteList.Count - 1];      
     }
 
+    //End of game cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
@@ -242,7 +237,6 @@ public class ScreenshotHandler : MonoBehaviour
         {
             vec3.Clear();
             vec3List.Clear();
-            ve3dic.Clear();
             byteList.Clear();
         }
     }
