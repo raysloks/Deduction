@@ -12,7 +12,7 @@ TagManager:
   - Ball
   - CellWall
   - Mob
-  - Camoflauge
+  - Camouflage
   layers:
   - Default
   - TransparentFX
@@ -53,17 +53,17 @@ TagManager:
   - name: Background
     uniqueID: 495506997
     locked: 0
-  - name: DoorBehind
+  - name: BehindPlayer
     uniqueID: 3137989141
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: DoorInFront
-    uniqueID: 3758238713
-    locked: 0
   - name: Camouflage
     uniqueID: 105557097
+    locked: 0
+  - name: InFrontOfPlayer
+    uniqueID: 3758238713
     locked: 0
   - name: HUD
     uniqueID: 807542147

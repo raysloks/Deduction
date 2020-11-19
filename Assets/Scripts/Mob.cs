@@ -63,7 +63,7 @@ public class Mob : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         Physics2D.IgnoreLayerCollision(0, 10, true);
-        if (other.CompareTag("Camoflauge"))
+        if (other.CompareTag("Camouflage"))
         {
             EnterCamo();
         }
@@ -72,7 +72,7 @@ public class Mob : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Camoflauge"))
+        if (other.CompareTag("Camouflage"))
         {
             ExitCamo();
         }
