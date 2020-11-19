@@ -88,6 +88,7 @@ public class ScreenshotHandler : MonoBehaviour
             Mob originalMob = game.handler.mobs[pose.index];
             dummies[i].SetSprite(originalMob.spriteIndex);
             dummies[i].SetName(originalMob.name);
+            dummies[i].UpdateFeetPos();
         }
 
         for (int i = photo.poses.Count; i < dummies.Count; ++i)

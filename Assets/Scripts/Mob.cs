@@ -26,6 +26,11 @@ public class Mob : MonoBehaviour
 
     protected void Update()
     {
+        UpdateFeetPos();
+    }
+    
+    public void UpdateFeetPos()
+    {
         MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
         foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
         {
