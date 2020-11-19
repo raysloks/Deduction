@@ -6,20 +6,22 @@ using UnityEngine.UI;
 
 public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    private MainEvidencePicture med;
-    private Texture tex;
-    public Material newMaterial;
-    private Material orginialMaterial;
-    private RawImage ri;
+
+    //***** These get filled in during creation process in Evidence handler
+    //***** shows the positions of all the players and the player that made the picture
     [HideInInspector] public List<Vector3> picturePos;
     [HideInInspector] public Vector3 playerPos;
-    private RectTransform rTrans;
-    public Vector2 change;
-    private Vector2 original;
+    //*****
+
+    public Material newMaterial;  
     public Sprite Lock;
+
+    private MainEvidencePicture med;
+    private Texture tex;
+    private Material orginialMaterial;
+    private RawImage ri;
     private GameObject lockObject;
 
-    // Start is called before the first frame update
     void Start()
     {
         lockObject = transform.GetChild(0).gameObject;
@@ -27,10 +29,9 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
         ri = GetComponent<RawImage>();
         tex = ri.texture;
         orginialMaterial = ri.material;
-      //  original = rTrans.anchoredPosition;
-        rTrans = (RectTransform)transform.GetComponent<RectTransform>();
     }
 
+    //When Pointer Enters picture in scroll view change the main picture to it. If lock button is pressed material will get change too indicate that its lockable on click
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
 
@@ -39,10 +40,20 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
         {
             ri.material = newMaterial;
             lockObject.SetActive(true);
-          //  rTrans.anchoredPosition = change;
         }
     }
 
+    //On Pointer Exit Take away the indicator that shows up if lockable
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        if (med.lockable == true)
+        {
+            ri.material = orginialMaterial;
+            lockObject.SetActive(false);
+        }
+    }
+
+    //Tell the main picture that this is the picture you want to send (Look in MainEvidencepicture)
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         if(med.lockable == true)
@@ -52,17 +63,5 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
             lockObject.GetComponent<Image>().sprite = Lock;
             med.LockEvidencePicture(picturePos, playerPos);
         }       
-    }
-
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        //Output to console the GameObject's name and the following message
-        Debug.Log("Cursor Entering " + name + " GameObject");
-        if (med.lockable == true)
-        {
-            ri.material = orginialMaterial;
-            lockObject.SetActive(false);
-          //  rTrans.anchoredPosition = original;
-        }
-    }
+    }   
 }

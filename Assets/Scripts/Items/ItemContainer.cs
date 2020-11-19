@@ -14,12 +14,11 @@ public class ItemContainer : MonoBehaviour
     public TextMeshPro text;
     public SpriteRenderer sr;
     public Sprite cameraSprite;
+
     // Start is called before the first frame update
     void Start()
     {
-       // item = (Item)UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
         Restock(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
-
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, waitForRestock);
     }
 
@@ -41,7 +40,7 @@ public class ItemContainer : MonoBehaviour
         {
             text.text = Mathf.Round(counter).ToString();
             counter -= Time.deltaTime;
-            yield return null; //Don't freeze Unity
+            yield return null;
         }
 
         text.text = "";

@@ -29,6 +29,7 @@ public class EvidenceHandler : MonoBehaviour
         }
     }
 
+    //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;

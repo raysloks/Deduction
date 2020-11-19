@@ -6,18 +6,22 @@ using UnityEngine.UI;
 
 public class CurrentlyVisibleEvidence : MonoBehaviour
 {
-    public GameObject vis;
-    private Vector3 arrowOrginalPos;
+ 
     public float speed = 10f;
     public Texture texture;
     private RawImage ri;
-    Vector2 center;
+
+    //Arrow stuff
+    public GameObject vis;
+    public LayerMask arrowLayer;
+
+    private Vector3 arrowOrginalPos;
+    private Vector2 center;
+    private Queue qt = new Queue();
+    private RaycastHit2D hit;
     private bool moving = false;
     private bool firstMove = false;
-    public LayerMask arrowLayer;
-    Queue qt = new Queue();
 
-    private RaycastHit2D hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +29,10 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         arrowOrginalPos = vis.transform.position;
         ri = GetComponent<RawImage>();
         EventSystem.Current.RegisterListener(EVENT_TYPE.SHOW_EVIDENCE, ShowEvidence);
-
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
+
+
     void Update()
     {
         if(qt.Count > 0 && !moving)
@@ -35,6 +40,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             moveArrow((Vector2)qt.Dequeue());
         }
     }
+
+    //Move the arrow
     IEnumerator moveArrow(Vector2 target)
     {
         bool notHit = true;
@@ -56,7 +63,7 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 
             yield return null;
         }
-        Debug.Log("End " + Vector2.Distance(target, vis.transform.position) + "X ABS " + Mathf.Abs(target.y - vis.transform.position.y) + "Y ABS " + Mathf.Abs(target.x - vis.transform.position.x));
+      
         moving = false;
         if(firstMove == false)
         {
@@ -64,6 +71,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             vis.GetComponent<Image>().enabled = true;
         }
     }
+
+    //Presents the evidence under the main meeting screen when you hover over a vote button
     public void ShowEvidence(EventCallbacks.Event eventInfo)
     {
         
@@ -72,7 +81,7 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         if (see.Evidence == 1)
         {
 
-            Debug.Log("Show Evidence byteLenght " + see.byteArray.Length);
+            Debug.Log("Show Evidence: byteLenght " + see.byteArray.Length);
             Texture2D sampleTexture = new Texture2D(2, 2);
 
             bool isLoaded = sampleTexture.LoadImage(see.byteArray);
@@ -86,6 +95,7 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             {
                 qt.Enqueue(see.positionOfTarget);
             }
+
         }else if(see.Evidence == 0)
         {
             ri.texture = texture;
@@ -100,6 +110,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         }
 
     }
+
+    //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
