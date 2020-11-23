@@ -20,8 +20,8 @@ public class MainEvidencePicture : MonoBehaviour
     private RawImage ri;
     private Image buttonImage;
     private bool sentEvidence = false;
-    private Color normalColor;
-    private Color pressedColor;
+    private UnityEngine.Color normalColor; //Can't build without "UnityEngine."
+    private UnityEngine.Color pressedColor;
 
     private void Start()
     {

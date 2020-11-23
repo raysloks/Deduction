@@ -16,7 +16,7 @@ public class Player : Mob
 
     public GameController controller;
 
-    [HideInInspector]public Light2D visionLight;
+    [HideInInspector] public Light2D visionLight;
     [HideInInspector] public bool cameraFlashing = false;
 
     private new void Awake()
@@ -90,13 +90,30 @@ public class Player : Mob
     public override void EnterCamo()
     {
         inCamo = true;
+
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            Color color = spr[i].color;
+            color.a = 0.75f;
+            spr[i].color = color;
+        }
         controller.UpdateHidden();
     }
 
     public override void ExitCamo()
     {
         inCamo = false;
+
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            Color color = spr[i].color;
+            color.a = 1;
+            spr[i].color = color;
+        }
         controller.UpdateHidden();
     }
-
 }

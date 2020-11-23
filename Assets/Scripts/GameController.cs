@@ -5,6 +5,8 @@ using System;
 using EventCallbacks;
 using System.Xml;
 using System.Linq;
+using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class GameController : MonoBehaviour
 {
@@ -59,6 +61,8 @@ public class GameController : MonoBehaviour
 
     public GameObject noteLocation;
 
+    public Light2D globalLight;
+    public bool darknessOnPlay;
 
     public Button reportButton;
 
@@ -148,6 +152,10 @@ public class GameController : MonoBehaviour
         voice.handler = handler;
 
         player.controller = this;
+
+        //Easier level editing
+        canvas.gameObject.SetActive(true);
+        if (darknessOnPlay == true) globalLight.intensity = 0.2f;
     }
 
     private void Update()
@@ -393,7 +401,10 @@ public class GameController : MonoBehaviour
         }
 
         if (phase == GamePhase.Main && previous == GamePhase.Intro)
+        {
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
+            globalLight.intensity = 0.2f;
+        }
 
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 

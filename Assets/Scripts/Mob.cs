@@ -9,7 +9,8 @@ public class Mob : MonoBehaviour
     public SpriteResolver spriteResolver;
     public Transform characterTransform;
     public Animator animator;
-    public bool inCamo;
+
+    [HideInInspector] public bool inCamo;
 
     public bool IsAlive => type == 0;
 
@@ -57,18 +58,6 @@ public class Mob : MonoBehaviour
         GetComponentInChildren<TextMeshPro>().text = name;
     }
 
-    public virtual void EnterCamo()
-    {
-        inCamo = true;
-        Hide();
-    }
-
-    public virtual void ExitCamo()
-    {
-        inCamo = false;
-        Reveal();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         Physics2D.IgnoreLayerCollision(0, 10, true);
@@ -76,7 +65,6 @@ public class Mob : MonoBehaviour
         {
             EnterCamo();
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -85,6 +73,35 @@ public class Mob : MonoBehaviour
         {
             ExitCamo();
         }
+    }
+
+    public virtual void EnterCamo()
+    {
+        inCamo = true;
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            Color color = spr[i].color;
+            color.a = 0.75f;
+            spr[i].color = color;
+        }
+        if (GameObject.FindWithTag("Player").GetComponent<Player>().inCamo == false)
+            Hide();
+    }
+
+    public virtual void ExitCamo()
+    {
+        inCamo = false;
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            Color color = spr[i].color;
+            color.a = 1;
+            spr[i].color = color;
+        }
+        Reveal();
     }
 
     public void Hide()
