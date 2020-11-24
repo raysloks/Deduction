@@ -251,7 +251,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2638985777496528113}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -345,7 +345,7 @@ MonoBehaviour:
   - {x: 0.5, y: 1.49, z: 0}
   m_ShapePathHash: -974211755
   m_Mesh: {fileID: 0}
-  m_InstanceId: 870212
+  m_InstanceId: 1214668
 --- !u!1 &2638985777505113977
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +363,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2638985777505113982
 Transform:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   - {x: 0, y: 0.5, z: 0}
   m_ShapePathHash: -529037411
   m_Mesh: {fileID: 0}
-  m_InstanceId: 870184
+  m_InstanceId: 1214640
 --- !u!1 &2638985777563980258
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2638985777563980263
 Transform:
   m_ObjectHideFlags: 0
@@ -565,7 +565,7 @@ MonoBehaviour:
   - {x: 0, y: 0.75, z: 0}
   m_ShapePathHash: 1584891805
   m_Mesh: {fileID: 0}
-  m_InstanceId: 870216
+  m_InstanceId: 1214672
 --- !u!1 &2638985778546659099
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,7 +718,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2638985778672776113}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -812,4 +812,4 @@ MonoBehaviour:
   - {x: 0.5, y: 1.49, z: 0}
   m_ShapePathHash: -974211755
   m_Mesh: {fileID: 0}
-  m_InstanceId: 870214
+  m_InstanceId: 1214670

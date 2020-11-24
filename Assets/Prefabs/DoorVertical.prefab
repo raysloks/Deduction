@@ -128,15 +128,13 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 7b44111035d6881d0000000069ac4a06831d22307b7912b14bf43964
   m_ShapePath:
-  - {x: -0.1875, y: -0.625, z: 0}
-  - {x: 0.1875, y: -0.625, z: 0}
-  - {x: 0.1875, y: 0, z: -0.000000018626451}
-  - {x: 0.1875, y: 0.75, z: 0}
-  - {x: -0.1875, y: 0.75, z: 0}
-  - {x: -0.1875, y: 0, z: -0.000000018626451}
-  m_ShapePathHash: 1179092893
+  - {x: -0.010000005, y: -0.625, z: 0}
+  - {x: 0.01, y: -0.625, z: 0}
+  - {x: 0.01, y: 0.75, z: 0}
+  - {x: -0.010000005, y: 0.75, z: 0}
+  m_ShapePathHash: 1876619197
   m_Mesh: {fileID: 0}
-  m_InstanceId: 623882
+  m_InstanceId: 1192134
 --- !u!1 &4572704379964637411
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +148,7 @@ GameObject:
   - component: {fileID: 8482193027152553162}
   - component: {fileID: 5406553776591863501}
   m_Layer: 10
-  m_Name: DoorVertical v2
+  m_Name: DoorVertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,12 +343,10 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 7b44111035d6881d0000000069ac4a06831d22307b7912b14bf43964
   m_ShapePath:
-  - {x: -0.1875, y: -0.75, z: 0}
-  - {x: 0.1875, y: -0.75, z: 0}
-  - {x: 0.1875, y: 0, z: -0.000000018626451}
-  - {x: 0.1875, y: 0.626, z: 0}
-  - {x: -0.1875, y: 0.625, z: 0}
-  - {x: -0.1875, y: 0, z: -0.000000018626451}
-  m_ShapePathHash: -1518397159
+  - {x: -0.010000005, y: -0.75, z: 0}
+  - {x: 0.01, y: -0.75, z: 0}
+  - {x: 0.01, y: 0.626, z: 0}
+  - {x: -0.01, y: 0.625, z: 0}
+  m_ShapePathHash: 390139147
   m_Mesh: {fileID: 0}
-  m_InstanceId: 623858
+  m_InstanceId: 1192110
