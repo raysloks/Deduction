@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class Player : Mob
 {
@@ -46,21 +48,20 @@ public class Player : Mob
 
         if (!cameraFlashing)
         {
-            if (inCamo)
-                visionLight.pointLightOuterRadius = GetVision() * 0.8f;
+            if (inCamo && IsAlive)
+                visionLight.pointLightOuterRadius = GetVision() * 0.85f;
             else
                 visionLight.pointLightOuterRadius = GetVision();
         }
         visionLight.pointLightInnerRadius = Mathf.Min(1f, visionLight.pointLightOuterRadius * 0.5f);
         visionLight.shadowIntensity = IsAlive ? 1.0f : 0.0f;
-
-        if (type == 0)
+        for (int i = 0; i < 2; ++i)
         {
-            for (int i = 0; i < 2; ++i)
+            float radius = 0.3f;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, 1 << 10);
+            foreach (var collider in colliders)
             {
-                float radius = 0.3f;
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, 1 << 10);
-                foreach (var collider in colliders)
+                if (type == 0 || collider.CompareTag("Ghost collision"))
                 {
                     Vector2 point = Physics2D.ClosestPoint(transform.position, collider);
                     Vector2 diff = point - (Vector2)transform.position;
@@ -80,7 +81,7 @@ public class Player : Mob
     public float GetVision()
     {
         if (!IsAlive)
-            return 20f;
+            return 50f;
         if (role == 0)
             return Mathf.Max(1.0f, controller.settings.crewmateVision * controller.lightCurrent);
         else

@@ -49,7 +49,8 @@ public class Mob : MonoBehaviour
     public void SetSprite(ulong sprite)
     {
         spriteIndex = sprite;
-        spriteResolver.SetCategoryAndLabel("Head", "Head " + (sprite + 1));
+        if (type == 1) spriteResolver.SetCategoryAndLabel("Heads", "Head " + (sprite + 1) + " Dead");
+        else spriteResolver.SetCategoryAndLabel("Heads", "Head " + (sprite + 1));
     }
 
     public void SetName(string name)

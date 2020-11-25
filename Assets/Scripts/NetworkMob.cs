@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using EventCallbacks;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class NetworkMob : Mob
 {
@@ -32,6 +33,12 @@ public class NetworkMob : Mob
             characterTransform.localScale = new Vector3(1f, 1f, 1f);
 
         animator.SetFloat("Speed", diff.magnitude / ((upper.time - lower.time) / 1000000000f));
+        if (type == 1)
+        {
+            animator.SetBool("Dead", true);
+            SetSprite(spriteIndex);
+        }
+        else animator.SetBool("Dead", false);
 
         transform.position = Vector3.Lerp(lower.position, upper.position, (float)(time - lower.time) / (upper.time - lower.time));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
