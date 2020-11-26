@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   game: {fileID: 5915959410371776244}
   visionLight: {fileID: 1291989912}
-  dummyPrefab: {fileID: 8796570029264027741, guid: 117d78c6b53fd8f4f8bbf5f350c9f0d4,
+  dummyPrefab: {fileID: 6087321610961204929, guid: 9b5bf26a4ff7ecd4386909ddbf3f5f2d,
     type: 3}
   dummyContainer: {fileID: 6564896493446102112}
 --- !u!1 &4792125804708546494
@@ -3683,17 +3683,17 @@ PrefabInstance:
     - target: {fileID: 8218666978735609293, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8218666978735609293, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8218666978735609293, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 8218666979003024475, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}

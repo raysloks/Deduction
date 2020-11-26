@@ -192,6 +192,10 @@ void Game::startGame()
 		mobs.push_back(player.second.mob);
 	}	
 	
+	for (size_t i = 0; i + 1 < mobs.size(); ++i)
+	{
+		std::swap(mobs[i], mobs[handler.rng.next(i, mobs.size() - 1)]);
+	}
 
 	for (size_t i = 0; i < mobs.size(); ++i)
 	{

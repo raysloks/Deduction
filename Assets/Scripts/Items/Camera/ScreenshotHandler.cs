@@ -107,8 +107,6 @@ public class ScreenshotHandler : MonoBehaviour
     {
         SetDummyPositions();
 
-        game.mobContainer.gameObject.SetActive(false);
-
         transform.position = dummies[photo.photographer].transform.position + offset;
 
         visionLight.transform.SetParent(dummies[photo.photographer].transform, false);
@@ -125,8 +123,6 @@ public class ScreenshotHandler : MonoBehaviour
         visionLight.pointLightOuterRadius = visionLightOuterRadius;
         visionLight.pointLightInnerRadius = visionLightInnerRadius;
         visionLight.transform.SetParent(game.player.transform, false);
-
-        game.mobContainer.gameObject.SetActive(true);
 
         DisableDummies();
     }
