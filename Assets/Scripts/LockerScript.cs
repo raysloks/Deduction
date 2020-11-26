@@ -79,13 +79,12 @@ public class LockerScript : Interactable
         occupant.transform.position = this.transform.position + new Vector3(0f, -1f, 0f);
         var script = occupant.GetComponent<Player>();
         if (script != null)
-            occupant.GetComponent<Player>().Hide();
+            occupant.GetComponent<Player>().Reveal();
         else
         {
-            occupant.GetComponent<NetworkMob>().Hide();
+            occupant.GetComponent<NetworkMob>().Reveal();
         }
         occupant = null;
-
     }
 
     IEnumerator FadeInOutline(float seconds)
