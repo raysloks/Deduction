@@ -19,9 +19,7 @@ public class VoterEvidence : MonoBehaviour
         myEvidence = Evidence.None;
         EventSystem.Current.RegisterListener(EVENT_TYPE.SNAPSHOT_EVIDENCE, SetEvidence2);
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
-
     }
-
 
     public void SetEvidence(EventCallbacks.Event eventInfo)
     {
@@ -35,6 +33,7 @@ public class VoterEvidence : MonoBehaviour
             // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
         }
     }
+
     public void SetEvidence2(EventCallbacks.Event eventInfo)
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
@@ -48,7 +47,8 @@ public class VoterEvidence : MonoBehaviour
 
         if (pc.phase == GamePhase.Setup || pc.previous == GamePhase.EndOfMeeting)
         {
-            newEvidence.SetActive(false);
+            if (newEvidence != null)
+                newEvidence.SetActive(false);
             myEvidence = Evidence.None;
             ba = null;
         }
