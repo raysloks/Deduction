@@ -62,7 +62,13 @@ public class LockerScript : Interactable
     public void HidePerson(GameObject body)
     {
         occupant = body;
-        occupant.GetComponent<Player>().Hide();
+        var script = body.GetComponent<Player>();
+        if (script != null)
+            occupant.GetComponent<Player>().Hide();
+        else
+        {
+            occupant.GetComponent<NetworkMob>().Hide();
+        }
         Debug.Log("should hide");
         occupant.transform.position = this.transform.position;
 
@@ -71,7 +77,13 @@ public class LockerScript : Interactable
     public void RemovePerson()
     {
         occupant.transform.position = this.transform.position + new Vector3(0f, -1f, 0f);
-        occupant.GetComponent<Player>().Reveal();
+        var script = occupant.GetComponent<Player>();
+        if (script != null)
+            occupant.GetComponent<Player>().Hide();
+        else
+        {
+            occupant.GetComponent<NetworkMob>().Hide();
+        }
         occupant = null;
 
     }
