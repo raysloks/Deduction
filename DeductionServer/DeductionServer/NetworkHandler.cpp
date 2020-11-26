@@ -807,6 +807,8 @@ void NetworkHandler::TeleportToMeetingHandler(const asio::ip::udp::endpoint& end
 
 void NetworkHandler::HideAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message)
 {
+	HideAttempted hide = message;
+	Broadcast(hide);
 }
 
 void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message)
@@ -824,6 +826,7 @@ void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint&
 		Send(endpoint, Pp);
 	}
 }
+
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{

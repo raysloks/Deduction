@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
 
     public ScreenshotHandler screenshotHandler;
 
+    public LockerManager lockerManager;
+
     public Transform mobContainer;
 
     private float heartbeat = 0f;

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6031572885414928724}
   - component: {fileID: 8435468723113369569}
   - component: {fileID: 4080215491979641625}
+  - component: {fileID: 2242851898714657401}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -54,6 +55,8 @@ MonoBehaviour:
   taskManager: {fileID: 2324288705218545735}
   doorManager: {fileID: 6031572885414928724}
   mapManager: {fileID: 4080215491979641625}
+  screenshotHandler: {fileID: 0}
+  lockerManager: {fileID: 2242851898714657401}
   player: {fileID: 0}
   text: {fileID: 0}
   infoPopupPrefab: {fileID: 4048313694896730516, guid: 6c348963d66bdbd4c9fc904e190e8a48,
@@ -63,6 +66,7 @@ MonoBehaviour:
   connectionMenu: {fileID: 0}
   setupMenu: {fileID: 0}
   setupLeaderMenu: {fileID: 0}
+  canvas: {fileID: 0}
   hud: {fileID: 0}
   deathAnimation: {fileID: 0}
   taskbar: {fileID: 0}
@@ -179,3 +183,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 2324288705218545755}
+--- !u!114 &2242851898714657401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324288705218545754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f847b0994474042bd8f3b2270ba67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

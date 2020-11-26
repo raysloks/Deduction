@@ -8,6 +8,9 @@
 class HideAttempted
 {
 public:
+	int32_t index;
+	uint64_t user;
+
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);
 };

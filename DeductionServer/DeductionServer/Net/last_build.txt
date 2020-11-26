@@ -45,6 +45,8 @@ uint8 taskId[]
 Heartbeat
 int64 time
 HideAttempted
+int32 index
+uint64 user
 KillAttempted
 int64 time
 uint64 target
