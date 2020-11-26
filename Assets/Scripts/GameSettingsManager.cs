@@ -19,7 +19,7 @@ public class GameSettingsManager : MonoBehaviour
     {
         settings = new List<GameSetting>
         {
-            new GameSettingDropdown("Map", "map", game, new List<string>{ "Hangar", "Base", "[Prototyp]" }),
+            new GameSettingDropdown("Map", "map", game, new List<string>{ "Hangar", "Base"/*, "[Prototyp]"*/ }),
             new GameSettingInputField<long>("Impostor Count", "impostorCount", game),
             //new GameSettingInputField<long>("Votes Per Player", "votesPerPlayer", game),
             new GameSettingInputField<long>("Emergency Meetings Per Player", "emergencyMeetingsPerPlayer", game),

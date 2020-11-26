@@ -35,7 +35,7 @@ public class IntroScreen : MonoBehaviour
         ulong role = game.player.role;
         sheen.color = role == 1 ? Color.red : Color.cyan;
         text.color = role == 1 ? Color.red : Color.white;
-        text.text = role == 1 ? "Impostor" : "Crewmate";
+        text.text = role == 1 ? "Spy" : "Soldier";
         foreach (var n in game.handler.mobs)
         {
             Mob mob = n.Value;

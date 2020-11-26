@@ -266,8 +266,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5612481334792538606}
   m_Enabled: 1
-  m_SortingLayerID: -1324189317
-  m_SortingLayer: 2
+  m_SortingLayerID: 1681519691
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!1 &5825312435734893925
 GameObject:
@@ -667,6 +667,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eafffc6accf80d74aa148a4d2ff1fe70, type: 2}
+    - target: {fileID: -2670916935258733265, guid: 1333a7ad32d699f43ab695790e5161a4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -524345955601967524, guid: 1333a7ad32d699f43ab695790e5161a4,
         type: 3}
       propertyPath: m_Layer
@@ -682,11 +687,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eafffc6accf80d74aa148a4d2ff1fe70, type: 2}
+    - target: {fileID: 589006429424527228, guid: 1333a7ad32d699f43ab695790e5161a4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1619880865232028167, guid: 1333a7ad32d699f43ab695790e5161a4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eafffc6accf80d74aa148a4d2ff1fe70, type: 2}
+    - target: {fileID: 1619880865232028167, guid: 1333a7ad32d699f43ab695790e5161a4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2082186458508390134, guid: 1333a7ad32d699f43ab695790e5161a4,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -855,7 +870,7 @@ PrefabInstance:
     - target: {fileID: 1449860677365341736, guid: a8e95c06cb23eec4c99a54827064c801,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1449860677365341736, guid: a8e95c06cb23eec4c99a54827064c801,
         type: 3}
