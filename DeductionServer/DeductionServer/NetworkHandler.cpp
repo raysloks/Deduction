@@ -780,6 +780,10 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 {
 }
 
+void NetworkHandler::SendSensorListHandler(const asio::ip::udp::endpoint & endpoint, const SendSensorList & message)
+{
+}
+
 void NetworkHandler::TakePhotoHandler(const asio::ip::udp::endpoint & endpoint, const TakePhoto & message)
 {
 	auto it = players.find(endpoint);
