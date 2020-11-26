@@ -16,6 +16,7 @@ public class MainEvidencePicture : MonoBehaviour
     public GameController gc;
     public Texture texture;
     public Button lockButton;
+    public GameObject motionSensorMain; 
 
     private RawImage ri;
     private Image buttonImage;
@@ -36,7 +37,16 @@ public class MainEvidencePicture : MonoBehaviour
     //Quick method to change the main pictures image
     public void SetMainPicture(Texture tex)
     {
+        motionSensorMain.SetActive(false);
+        ri.enabled = true;
         ri.texture = tex;
+    }
+
+    public void SetMainSensorList(MotionSensor ms)
+    {
+        ri.enabled = false;
+        motionSensorMain.SetActive(true);
+        motionSensorMain.GetComponent<ShowMotionSensorList>().addAllOptions(ms);
     }
 
     //When you choose a picture send it to the GC that will send a Send Evidence message to the handler.
@@ -47,6 +57,22 @@ public class MainEvidencePicture : MonoBehaviour
             lockButton.interactable = false;
             lockable = false;
             sentEvidence = true;
+        }
+    }
+
+    //When you choose a sensorlist send it to the GC that will send a Send Evidence message to the handler.
+    public void LockEvidenceSensor(MotionSensor ms)
+    {
+        if (sentEvidence == false)
+        {
+            lockButton.interactable = false;
+            lockable = false;
+            sentEvidence = true;
+            SendSensorList message = new SendSensorList
+            {
+                names = ms.names
+            };
+            gc.handler.link.Send(message);
         }
     }
 

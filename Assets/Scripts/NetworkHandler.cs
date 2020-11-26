@@ -344,4 +344,14 @@ public class NetworkHandler
     internal void PresentEvidenceHandler(IPEndPoint endpoint, PresentEvidence message)
     {
     }
+
+    internal void SendSensorListHandler(IPEndPoint endpoint, SendSensorList message)
+    {
+        SendEvidenceEvent seEvent = new SendEvidenceEvent();
+        MotionSensor ms = new MotionSensor();
+        ms.names = message.names;
+        seEvent.MotionSensorEvidence = ms;
+        seEvent.Evidence = 2;
+        EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+    }
 }

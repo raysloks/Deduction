@@ -96,6 +96,7 @@ uint64 target
 PresentEvidence
 uint64 index
 uint64 presenter
+uint8 sensornames[]
 ReportAttempted
 int64 time
 uint64 idOfInitiator
@@ -111,6 +112,8 @@ SendEvidence
 PhotoPose poses[]
 int32 photographer
 uint64 index
+SendSensorList
+string names[]
 TakePhoto
 uint32 index
 uint64 photographer

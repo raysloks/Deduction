@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class VoterEvidence : MonoBehaviour
 {
-    [HideInInspector] public enum Evidence { None, Picture };
+    [HideInInspector] public enum Evidence { None, Picture, MotionSensor };
     [HideInInspector] public Evidence myEvidence;
     [HideInInspector] public byte[] ba;
+    [HideInInspector] public  MotionSensor ms;
     private GameController gc;
     public VoteButton vb;
     public GameObject newEvidence;
@@ -28,17 +29,24 @@ public class VoterEvidence : MonoBehaviour
         if (myEvidence == Evidence.Picture)
         {
             Debug.Log("PictureEvidence");
-            Vector3 playerPos = see.positionOfTarget;
+            
+            // Vector3 playerPos = see.positionOfTarget;
             //ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
             // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
+        }else if(myEvidence == Evidence.MotionSensor)
+        {
+            ms = see.MotionSensorEvidence;
         }
     }
 
     public void SetEvidence2(EventCallbacks.Event eventInfo)
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
-        ba = see.byteArray;
-        vb.currentEvidence = false;
+        if (see.byteArray != null)
+        {
+            ba = see.byteArray;
+            vb.currentEvidence = false;
+        }    
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)

@@ -15,6 +15,9 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     public GameObject vis;
     public LayerMask arrowLayer;
 
+    //motion sensor stuff
+    public GameObject motionSensorEvidence;
+
     private Vector3 arrowOrginalPos;
     private Vector2 center;
     private Queue qt = new Queue();
@@ -46,7 +49,20 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     {
         bool notHit = true;
         moving = true;
-        Vector3 axis = new Vector3(0, 0, 1);
+        Vector3 axis;
+        if (target.y < vis.transform.position.y)
+        {
+           axis = new Vector3(0, 0, -1); // go down
+        }
+        else if(target.y > vis.transform.position.y)
+        {
+            axis = new Vector3(0, 0, 1); // go up
+        }
+        else
+        {
+            axis = new Vector3(0, 0, 1);
+        }
+       
         hit = Physics2D.Linecast(target, center, arrowLayer);
 
         while (notHit)
@@ -59,6 +75,7 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             else
             {
                 vis.transform.RotateAround(center, axis, Time.deltaTime * speed);
+                vis.transform.rotation = Quaternion.LookRotation(Vector3.forward, center);
             }
 
             yield return null;
@@ -77,9 +94,17 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     {
         
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
-
-        if (see.Evidence == 1)
+        if(see.Evidence == 2)
         {
+            Debug.Log("Show Evidence: MotionSensor");
+            ri.enabled = false;
+            motionSensorEvidence.SetActive(true);
+            motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
+        }
+        else if (see.Evidence == 1)
+        {
+            ri.enabled = true;
+            motionSensorEvidence.SetActive(false);
 
             Debug.Log("Show Evidence: byteLenght " + see.byteArray.Length);
             Texture2D sampleTexture = new Texture2D(2, 2);
@@ -87,26 +112,22 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
             bool isLoaded = sampleTexture.LoadImage(see.byteArray);
 
             ri.texture = sampleTexture;
-            if (!moving)
-            {
-                StartCoroutine(moveArrow(see.positionOfTarget));
-            }
-            else
-            {
-                qt.Enqueue(see.positionOfTarget);
-            }
 
         }else if(see.Evidence == 0)
         {
+            ri.enabled = true;
+            motionSensorEvidence.SetActive(false);
             ri.texture = texture;
-            if (!moving)
-            {
-                StartCoroutine(moveArrow(see.positionOfTarget));
-            }
-            else
-            {
-                qt.Enqueue(see.positionOfTarget);
-            }
+            
+        }
+
+        if (!moving)
+        {
+            StartCoroutine(moveArrow(see.positionOfTarget));
+        }
+        else
+        {
+            qt.Enqueue(see.positionOfTarget);
         }
 
     }
@@ -118,8 +139,11 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 
         if (pc.phase == GamePhase.Main || pc.previous == GamePhase.EndOfMeeting)
         {
+
+            motionSensorEvidence.SetActive(false);
             vis.transform.position = arrowOrginalPos;
             vis.GetComponent<Image>().enabled = false;
+            ri.enabled = true;
             moving = false;
             firstMove = false;
             qt.Clear();

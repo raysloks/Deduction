@@ -825,6 +825,11 @@ void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint&
 	}
 }
 
+void NetworkHandler::SendSensorListHandler(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message) {
+	Broadcast(message);
+}
+
+
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
 //{
 //	auto it = players.find(endpoint);
