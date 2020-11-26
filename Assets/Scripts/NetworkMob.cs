@@ -38,7 +38,8 @@ public class NetworkMob : Mob
             animator.SetBool("Dead", true);
             SetSprite(spriteIndex);
         }
-        else animator.SetBool("Dead", false);
+        else
+            animator.SetBool("Dead", false);
 
         transform.position = Vector3.Lerp(lower.position, upper.position, (float)(time - lower.time) / (upper.time - lower.time));
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
