@@ -35,6 +35,7 @@
 #include "RestartRequested.h"
 #include "SabotageTaskUpdate.h"
 #include "SendEvidence.h"
+#include "SendSensorList.h"
 #include "TakePhoto.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
@@ -81,6 +82,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);

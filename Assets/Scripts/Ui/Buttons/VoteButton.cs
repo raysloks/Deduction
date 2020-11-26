@@ -88,7 +88,11 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.Evidence = e;
             sendEvidenceEvent.positionOfTarget = transform.position;
-            if (e == 1)
+            if(e == 2)
+            {
+                sendEvidenceEvent.MotionSensorEvidence = Evidence.GetComponent<VoterEvidence>().ms;
+            }
+            else if (e == 1)
             {
                 Debug.Log("EVIDENCE 1 cursor.");
                 byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;

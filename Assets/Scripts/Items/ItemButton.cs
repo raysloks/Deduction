@@ -10,18 +10,23 @@ public class ItemButton : MonoBehaviour
     private static ItemButton instance;
 
 
-    [HideInInspector]public enum Item { None, Camera };
+    [HideInInspector]public enum Item { None, Camera, MotionSensor };
     [HideInInspector]public Item myItem;
 
     public GameObject itemContainer;
     public GameObject player;
     public GameController gc;
+    public TextMeshProUGUI text;
+    public GameObject buttonItemImage;
+    public EvidenceHandler evidenceHandler;
+    private Image myItemImage;
+
+    [Header("MotionSensor")]
+    public GameObject motionSensorPrefab;
+    public Sprite buttonMotionSensorImage;
 
     [Header("Camera")]
-    public GameObject buttonItemImage;
     public Sprite CameraSprite;
-    public TextMeshProUGUI text;
-    private Image myItemImage;
     private int maxPhotos = 3;
     private int photosTaken = 0;
 
@@ -88,6 +93,15 @@ public class ItemButton : MonoBehaviour
         }
     }
 
+    private void MotionSensorClick()
+    {
+        GameObject ms = Instantiate(motionSensorPrefab, player.transform.position, Quaternion.identity);
+        CheckSensor cs = ms.GetComponent<CheckSensor>();
+        cs.gc = gc;
+        cs.evidenceHandler = evidenceHandler;
+        SetItem(0);
+    }
+
     //set item based on Enum int
     public void SetItem(int item)
     {
@@ -107,6 +121,13 @@ public class ItemButton : MonoBehaviour
                 photosTaken = 0;
                 text.text = "";
                 break;
+            case Item.MotionSensor:
+                Click = () => MotionSensorClick();
+                myItemImage.enabled = true;
+                myItemImage.sprite = buttonMotionSensorImage;
+                text.text = "";
+                break;
+
         }
     }
 

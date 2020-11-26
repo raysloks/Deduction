@@ -66,7 +66,7 @@ namespace EventCallbacks
         public byte[] byteArray;
         public int Evidence;
         public GameController gc;
-
+        public MotionSensor MotionSensorEvidence;
         public GameObject final;
         public ulong idOfTarget;
         public Vector3 positionOfTarget;

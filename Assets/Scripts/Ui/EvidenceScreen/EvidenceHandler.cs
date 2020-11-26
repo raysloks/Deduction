@@ -9,6 +9,8 @@ public class EvidenceHandler : MonoBehaviour
 {
     public Transform content;
     public GameObject picturePrefab;
+    public GameObject sensorPrefab;
+    private List<List<string>> SensorList = new List<List<string>>();
 
     private void Start()
     {
@@ -27,6 +29,21 @@ public class EvidenceHandler : MonoBehaviour
                 go.GetComponent<RawImage>().texture = photo.texture;
             }
         }
+
+        foreach (var s in SensorList)
+        {
+            GameObject go = Instantiate(sensorPrefab, content);
+            MotionSensor m = new MotionSensor();
+            m.names = s;
+            go.GetComponent<MotionSensorEvidence>().ms = m;
+           // go.AddList(s);
+        }
+        gameObject.SetActive(false);
+    }
+
+    public void AddSensorList(List<string> sList)
+    {
+        SensorList.Add(sList);
     }
 
     //End of meeting cleanup

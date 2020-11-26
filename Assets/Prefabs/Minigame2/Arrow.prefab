@@ -68,8 +68,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -326871397
-  m_SortingLayer: 5
+  m_SortingLayerID: -1324189317
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 3a01585aedda6c8499c37837a5c16908, type: 3}
   m_Color: {r: 0.014285803, g: 1, b: 0, a: 1}
@@ -156,8 +156,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1324189317
+  m_SortingLayer: 2
   m_SortingOrder: 4
 --- !u!222 &8250818744001788638
 CanvasRenderer:
@@ -255,5 +255,5 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 8012645887610233988}
   m_maskType: 0
-  _SortingLayerID: 0
+  _SortingLayerID: -1324189317
   _SortingOrder: 4
