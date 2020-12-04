@@ -30,15 +30,6 @@ public class CheckSensor : MonoBehaviour
         }
     }
 
-    private void sendList()
-    {
-        SendSensorList message = new SendSensorList
-        {
-            names = peopleEntered
-        };
-        gc.handler.link.Send(message);
-    }
-
     public void meetingStarted(EventCallbacks.Event eventinfo)
     {
         evidenceHandler.AddSensorList(peopleEntered, secondsIn);

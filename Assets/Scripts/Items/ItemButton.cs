@@ -42,8 +42,7 @@ public class ItemButton : MonoBehaviour
     {
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
-        SetItem(3);
-        SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+      //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
@@ -154,9 +153,13 @@ public class ItemButton : MonoBehaviour
 
         if (pc.previous == GamePhase.Setup)
         {
-           
-            SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
-            SetItem(2);
+           int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+            if(r == 2)
+            {
+                r++;
+            }
+            SetItem(r);
+         //   SetItem(2);
         }
     }
 }

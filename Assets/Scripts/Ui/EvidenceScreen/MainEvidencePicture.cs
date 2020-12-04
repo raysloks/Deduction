@@ -70,11 +70,15 @@ public class MainEvidencePicture : MonoBehaviour
             lockable = false;
             sentEvidence = true;
             List<ulong> temp = ms.secondsIn.Select(item => (ulong)item).ToList();
+            List<byte> dataAsBytes = ms.names
+            .SelectMany(s => Encoding.ASCII.GetBytes(s))
+            .ToList();
             if (ms.names != null)
             {
                 SendSensorList message = new SendSensorList
                 {
-                    names = ms.names
+                    names = dataAsBytes,
+                    times = temp
                 };
                 gc.handler.link.Send(message);
             }

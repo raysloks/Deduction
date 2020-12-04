@@ -48,6 +48,10 @@ public class ItemContainer : MonoBehaviour
 
         text.text = "";
         coolingDown = false;
+        if(random == 2)
+        {
+            random++;
+        }
         Restock(random);
 
     }

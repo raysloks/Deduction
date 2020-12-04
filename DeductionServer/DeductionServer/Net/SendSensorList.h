@@ -2,7 +2,6 @@
 
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
-#include <string>
 #include <vector>
 #include <iostream>
 
@@ -10,7 +9,8 @@
 class SendSensorList
 {
 public:
-	std::vector<std::string> names;
+	std::vector<uint8_t> names;
+	std::vector<uint64_t> times;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

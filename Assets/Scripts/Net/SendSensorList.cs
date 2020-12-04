@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 public struct SendSensorList
 {
-	public List<string> names;
+	public List<byte> names;
+	public List<ulong> times;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -13,12 +14,13 @@ public struct SendSensorList
 			ushort size = (ushort)this.names.Count;
 			writer.Write(size);
 			foreach (var i in this.names)
-		{
-			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(i);
-			ushort string_size = (ushort)bytes.Length;
-			writer.Write(string_size);
-			writer.Write(bytes);
+		writer.Write((byte)i);
 		}
+		{
+			ushort size = (ushort)this.times.Count;
+			writer.Write(size);
+			foreach (var i in this.times)
+		writer.Write((ulong)i);
 		}
 	}
 
@@ -26,17 +28,23 @@ public struct SendSensorList
 	{
 		SendSensorList _ret = new SendSensorList();
 	{
-		_ret.names = new List<string>();
+		_ret.names = new List<byte>();
 		ushort size = reader.ReadUInt16();
 		for (int i = 0; i < size; ++i)
 		{
-			string element;
-		{
-			ushort string_size = reader.ReadUInt16();
-			byte[] bytes = reader.ReadBytes(string_size);
-			element = System.Text.Encoding.UTF8.GetString(bytes);
-		}
+			byte element;
+		element = (byte)reader.ReadByte();
 			_ret.names.Add(element);
+		}
+	}
+	{
+		_ret.times = new List<ulong>();
+		ushort size = reader.ReadUInt16();
+		for (int i = 0; i < size; ++i)
+		{
+			ulong element;
+		element = (ulong)reader.ReadUInt64();
+			_ret.times.Add(element);
 		}
 	}
 		return _ret;

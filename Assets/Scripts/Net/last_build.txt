@@ -117,7 +117,8 @@ int64 timer
 bool completed
 SendEvidence
 SendSensorList
-string names[]
+uint8 names[]
+uint64 times[]
 SmokeGrenadeActivate
 vec3 pos
 TakePhoto

@@ -365,11 +365,15 @@ public class NetworkHandler
         Debug.Log("SendSensor");
         SendEvidenceEvent seEvent = new SendEvidenceEvent();
         MotionSensor ms = new MotionSensor();
-        ms.names = message.names;
-    //    ms.secondsIn = message.times.Select(item => (int)item).ToList();
+        //ms.names = message.names;
+        string byteString = Encoding.UTF8.GetString(message.names.ToArray());
+        Debug.Log(byteString);
+        /*
+        ms.secondsIn = message.times.Select(item => (int)item).ToList();
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+        */
     }
 
 
