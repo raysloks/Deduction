@@ -87,7 +87,26 @@ public class Player : Mob
             return Mathf.Max(1.0f, controller.settings.crewmateVision * controller.lightCurrent);
         else
             return controller.settings.impostorVision;
-    }   
+    }
+
+    private new void OnTriggerEnter2D(Collider2D other)
+    {
+        base.OnTriggerEnter2D(other);
+        if (other.CompareTag("Area"))
+        {
+            controller.areaText.text = other.name;
+            controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
+        }
+    }
+
+    private new void OnTriggerExit2D(Collider2D other)
+    {
+        base.OnTriggerExit2D(other);
+        if (other.CompareTag("Area") && controller.areaText.text == other.name)
+        {
+            controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
+        }
+    }
 
     public override void EnterCamo()
     {
