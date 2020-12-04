@@ -24,7 +24,7 @@ public class LockerScript : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return true;
+        return game.player.IsAlive;
     }
 
     public override void Interact(GameController game)
@@ -64,10 +64,14 @@ public class LockerScript : Interactable
         occupant = body;
         var script = body.GetComponent<Player>();
         if (script != null)
+        {
             occupant.GetComponent<Player>().Hide();
+            occupant.GetComponent<Player>().inLocker = true;
+        }
         else
         {
             occupant.GetComponent<NetworkMob>().Hide();
+            occupant.GetComponent<NetworkMob>().inLocker = true;
         }
         Debug.Log("should hide");
         occupant.transform.position = this.transform.position;
@@ -79,10 +83,14 @@ public class LockerScript : Interactable
         occupant.transform.position = this.transform.position + new Vector3(0f, -1f, 0f);
         var script = occupant.GetComponent<Player>();
         if (script != null)
+        {
             occupant.GetComponent<Player>().Reveal();
+            occupant.GetComponent<Player>().inLocker = false;
+        }
         else
         {
             occupant.GetComponent<NetworkMob>().Reveal();
+            occupant.GetComponent<NetworkMob>().inLocker = false;
         }
         occupant = null;
     }
