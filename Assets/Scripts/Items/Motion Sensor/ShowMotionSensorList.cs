@@ -25,8 +25,8 @@ public class ShowMotionSensorList : MonoBehaviour
         foreach (string Str in s.names)
         {
             TMP_Dropdown.OptionData m_NewData = new TMP_Dropdown.OptionData();
-            //    string final = "Name: " + Str + "  Round Elapsed: " + s.secondsIn[index] + " Sec";
-            string final = "Name: " + Str + " #Entered: " + (index + 1);
+            string final = "Name: " + Str + "  Round Elapsed: " + s.secondsIn[index] + " Sec";
+     //       string final = "Name: " + Str + " #Entered: " + (index + 1);
             m_NewData.text = final;
             m_Dropdown.options.Add(m_NewData);
             index++;

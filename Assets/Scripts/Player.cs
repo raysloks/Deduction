@@ -74,7 +74,7 @@ public class Player : Mob
             }
         }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         base.Update();
     }
