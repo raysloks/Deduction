@@ -11,6 +11,7 @@ public class Mob : MonoBehaviour
     public Animator animator;
 
     [HideInInspector] public bool inCamo;
+    [HideInInspector] public bool inLocker;
 
     public bool IsAlive => type == 0;
 
@@ -23,6 +24,7 @@ public class Mob : MonoBehaviour
     protected void Awake()
     {
         inCamo = false;
+        inLocker = false;
     }
 
     protected void Update()
