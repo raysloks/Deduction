@@ -73,7 +73,6 @@ public class LockerScript : Interactable
             occupant.GetComponent<NetworkMob>().Hide();
             occupant.GetComponent<NetworkMob>().inLocker = true;
         }
-        Debug.Log("should hide");
         occupant.transform.position = this.transform.position;
 
     }
@@ -86,6 +85,7 @@ public class LockerScript : Interactable
         {
             occupant.GetComponent<Player>().Reveal();
             occupant.GetComponent<Player>().inLocker = false;
+            occupant.GetComponent<Player>().canMove = true;
         }
         else
         {

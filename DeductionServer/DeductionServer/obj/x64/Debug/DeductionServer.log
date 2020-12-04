@@ -4,7 +4,141 @@
   Validating architecture
   Starting remote build
   Compiling sources:
+  Coal.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(16,14): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(16,14): warning :     string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(16,14): warning :               ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(34,13): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(34,13): warning :    string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(34,13): warning :              ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(49,14): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(49,14): warning :     string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(49,14): warning :               ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(56,15): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(56,15): warning :      string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(56,15): warning :                ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(96,12): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(96,12): warning :     name += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(96,12): warning :             ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(101,14): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(101,14): warning :       name += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(101,14): warning :               ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(179,9): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(179,9): warning :   real = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(179,9): warning :          ^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(186,9): warning : conversion from ‘uint64_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(186,9): warning :   real = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(186,9): warning :          ^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(193,9): warning : conversion from ‘int32_t’ {aka ‘int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(193,9): warning :   real = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(193,9): warning :          ^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(200,9): warning : conversion from ‘uint32_t’ {aka ‘unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(200,9): warning :   real = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(200,9): warning :          ^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(207,12): warning : conversion from ‘float’ to ‘int64_t’ {aka ‘long int’} may change value [-Wfloat-conversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(207,12): warning :   integer = real;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(207,12): warning :             ^~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(252,14): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(252,14): warning :     string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(252,14): warning :               ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(257,16): warning : conversion from ‘int’ to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(257,16): warning :       string += c;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(257,16): warning :                 ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(378,12): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(378,12): warning :    vector = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(378,12): warning :             ^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(432,12): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(432,12): warning :    vector = integer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Coal.cpp(432,12): warning :             ^~~~~~~
+  DoorSabotage.cpp
+  Game.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,20): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,20): warning :     cosf(i * (float)M_PI * 2.0f / mobs.size() + offset),
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,20): warning :                     ^~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,43): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,43): warning :     cosf(i * (float)M_PI * 2.0f / mobs.size() + offset),
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(149,43): warning :                                   ~~~~~~~~~^~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,20): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,20): warning :     sinf(i * (float)M_PI * 2.0f / mobs.size() + offset)) * size;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,20): warning :                     ^~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,43): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘float’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,43): warning :     sinf(i * (float)M_PI * 2.0f / mobs.size() + offset)) * size;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(150,43): warning :                                   ~~~~~~~~~^~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(203,16): warning : comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int64_t’ {aka ‘long int’} [-Wsign-compare]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(390,27): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(390,27): warning :   message.sabotage = task->sabotage_index;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(390,27): warning :                      ~~~~~~^~~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(392,33): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(392,33): warning :   message.minigame_index = task->minigame_index;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(392,33): warning :                            ~~~~~~^~~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(409,27): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘std::vector<short unsigned int>::value_type’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(409,27): warning :      short_tasks.push_back(i);
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(409,27): warning :                            ^
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(414,32): warning : comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘std::vector<short unsigned int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(414,32): warning :     if (settings.shortTaskCount < short_tasks.size() && settings.shortTaskCount >= 0)
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(414,32): warning :         ~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(424,28): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘std::vector<short unsigned int>::value_type’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(424,28): warning :      long_tasks.push_back(i + 1000);
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(424,28): warning :                           ~~^~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(429,31): warning : comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘std::vector<short unsigned int>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(429,31): warning :     if (settings.longTaskCount < long_tasks.size() && settings.longTaskCount >= 0)
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(429,31): warning :         ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(611,17): warning : conversion from ‘size_t’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(611,17): warning :   message.task = taskCountComplete;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(611,17): warning :                  ^~~~~~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(630,19): warning : comparison of integer expressions of different signedness: ‘int32_t’ {aka ‘int’} and ‘std::vector<std::shared_ptr<Map> >::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(630,19): warning :   if (settings.map < maps.size())
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(630,19): warning :       ~~~~~~~~~~~~~^~~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(667,31): warning : conversion from ‘uint64_t’ {aka ‘long unsigned int’} to ‘int32_t’ {aka ‘int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(667,31): warning :   message.photographer = photo.photographer;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(667,31): warning :                          ~~~~~~^~~~~~~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(367,32): warning : comparison of integer expressions of different signedness: ‘int64_t’ {aka ‘long int’} and ‘const uint64_t’ {aka ‘const long unsigned int’} [-Wsign-compare]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(367,32): warning :     return task->sabotage_index == index;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Game.cpp(367,32): warning :            ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+  LightSabotage.cpp
+  main.cpp
+  Map.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(30,48): warning : conversion from ‘float’ to ‘int64_t’ {aka ‘long int’} may change value [-Wfloat-conversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(30,48): warning :     lights->duration = element["duration"].real * 1'000'000'000;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(38,33): warning : conversion from ‘int64_t’ {aka ‘long int’} to ‘std::vector<short unsigned int>::value_type’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(38,33): warning :      doors->doors.push_back(door.integer);
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(38,33): warning :                             ~~~~~^~~~~~~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(39,47): warning : conversion from ‘float’ to ‘int64_t’ {aka ‘long int’} may change value [-Wfloat-conversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(39,47): warning :     doors->duration = element["duration"].real * 1'000'000'000;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(46,47): warning : conversion from ‘float’ to ‘int64_t’ {aka ‘long int’} may change value [-Wfloat-conversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(46,47): warning :     voice->duration = element["duration"].real * 1'000'000'000;
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(53,46): warning : conversion from ‘float’ to ‘int64_t’ {aka ‘long int’} may change value [-Wfloat-conversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Map.cpp(53,46): warning :     nuke->duration = element["duration"].real * 1'000'000'000;
+  MatchmakerHandler.cpp
+  LobbyIdentity.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(10,35): warning : conversion from ‘std::__cxx11::basic_string<char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(10,35): warning :    uint16_t size = this->lobby.size();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(10,35): warning :                    ~~~~~~~~~~~~~~~~^~
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(15,37): warning : conversion from ‘std::__cxx11::basic_string<char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(15,37): warning :    uint16_t size = this->address.size();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyIdentity.cpp(15,37): warning :                    ~~~~~~~~~~~~~~~~~~^~
+  LobbyRequest.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyRequest.cpp(10,35): warning : conversion from ‘std::__cxx11::basic_string<char>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyRequest.cpp(10,35): warning :    uint16_t size = this->lobby.size();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\LobbyRequest.cpp(10,35): warning :                    ~~~~~~~~~~~~~~~~^~
+  MatchmakerLink.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\MatchmakerLink.cpp(55,17): warning : conversion from ‘std::basic_istream<char>::int_type’ {aka ‘int’} to ‘char’ may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\MatchmakerLink.cpp(55,17): warning :   char c = is.get();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Matchmaker\MatchmakerLink.cpp(55,17): warning :            ~~~~~~^~
+  Mob.cpp
   NetworkHandler.cpp
-C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(640,35): warning : suggest parentheses around ‘&&’ within ‘||’ [-Wparentheses]
-  Linking objects
-  DeductionServer.vcxproj -> C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\bin\x64\Debug\DeductionServer.out
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\NetworkHandler.cpp(644,35): warning : suggest parentheses around ‘&&’ within ‘||’ [-Wparentheses]
+  AbilityUsed.cpp
+  DoorUpdate.cpp
+  GameOver.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameOver.cpp(10,37): warning : conversion from ‘std::vector<long unsigned int>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameOver.cpp(10,37): warning :    uint16_t size = this->winners.size();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameOver.cpp(10,37): warning :                    ~~~~~~~~~~~~~~~~~~^~
+  GamePhaseUpdate.cpp
+  GameSettings.cpp
+  GameSettingSet.cpp
+  GameSettingsUpdate.cpp
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameSettingsUpdate.cpp(10,36): warning : conversion from ‘std::vector<long int>::size_type’ {aka ‘long unsigned int’} to ‘uint16_t’ {aka ‘short unsigned int’} may change value [-Wconversion]
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameSettingsUpdate.cpp(10,36): warning :    uint16_t size = this->values.size();
+C:\Users\woode\Documents\GitHub\Deduction\DeductionServer\DeductionServer\Net\GameSettingsUpdate.cpp(10,36): warning :                    ~~~~~~~~~~~~~~~~~^~
+  GameStartRequested.cpp

@@ -6,7 +6,7 @@ using EventCallbacks;
 using System.Xml;
 using System.Linq;
 using UnityEngine.Experimental.Rendering.Universal;
-
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -58,6 +58,8 @@ public class GameController : MonoBehaviour
 
     public Button killButton;
     public Text killCooldownText;
+
+    public TextMeshProUGUI areaText;
 
     public GameObject targetMarker;
 
@@ -511,6 +513,7 @@ public class GameController : MonoBehaviour
 
     public void CreateInfoPopup(string info)
     {
+        if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup"));
         var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
     }
