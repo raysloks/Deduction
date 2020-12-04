@@ -6,5 +6,6 @@ public class MotionSensor
 {
     public int player;
     public List<string> names = new List<string>();
+    public List<int> secondsIn = new List<int>();
 
 }

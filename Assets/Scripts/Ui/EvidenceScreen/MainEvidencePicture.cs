@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System;
 using EventCallbacks;
+using System.Linq;
 
 public class MainEvidencePicture : MonoBehaviour
 {
@@ -68,11 +69,15 @@ public class MainEvidencePicture : MonoBehaviour
             lockButton.interactable = false;
             lockable = false;
             sentEvidence = true;
-            SendSensorList message = new SendSensorList
+            List<ulong> temp = ms.secondsIn.Select(item => (ulong)item).ToList();
+            if (ms.names != null)
             {
-                names = ms.names
-            };
-            gc.handler.link.Send(message);
+                SendSensorList message = new SendSensorList
+                {
+                    names = ms.names
+                };
+                gc.handler.link.Send(message);
+            }
         }
     }
 

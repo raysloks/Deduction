@@ -4,16 +4,19 @@ using UnityEngine;
 using System;
 using TMPro;
 using EventCallbacks;
+
 public class ItemContainer : MonoBehaviour
 {
 
-    [HideInInspector] public enum Item { None, Camera };
+    [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade };
     [HideInInspector] public Item item;
     private bool waitingForCountDown = false;
     private bool coolingDown = false;
     public TextMeshPro text;
     public SpriteRenderer sr;
     public Sprite cameraSprite;
+    public Sprite motionSensorSprite;
+    public Sprite smokeGrenadeSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +30,11 @@ public class ItemContainer : MonoBehaviour
     {
         item = Item.None;
         sr.sprite = null;
-
     }
 
-    private IEnumerator WaitFunction()
+    private IEnumerator WaitFunction(int random)
     {
+        ItemTaken();
         float counter = 30f;
 
         coolingDown = true;
@@ -45,7 +48,7 @@ public class ItemContainer : MonoBehaviour
 
         text.text = "";
         coolingDown = false;
-        Restock(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+        Restock(random);
 
     }
 
@@ -61,11 +64,11 @@ public class ItemContainer : MonoBehaviour
         {
             if(child == this.transform)
             {
-                if (index == (lookFor - 1))
+                if (index == (lookFor))
                 {
-                    StartCoroutine(WaitFunction());
+                    StartCoroutine(WaitFunction(e.random));
+                    break;
                 }
-                break;
             }
             index++;
         }
@@ -78,6 +81,12 @@ public class ItemContainer : MonoBehaviour
         {
             case Item.Camera:
                 sr.sprite = cameraSprite;
+                break;
+            case Item.MotionSensor:
+                sr.sprite = motionSensorSprite;
+                break;
+            case Item.SmokeGrenade:
+                sr.sprite = smokeGrenadeSprite;
                 break;
         }
     }

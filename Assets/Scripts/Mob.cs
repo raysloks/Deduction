@@ -78,6 +78,20 @@ public class Mob : MonoBehaviour
         }
     }
 
+    void OnParticleCollision(GameObject other)
+    {
+     //   int numCollisionEvents = ps.GetCollisionEvents(other, collisionEvents);
+        if (other.gameObject.tag == "Camouflage")
+        {
+            EnterCamo();
+            Debug.Log("Collisons: " + other.gameObject.name);
+        }
+    }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        print("No longer in contact with " + other.transform.name);
+    }
+
     public virtual void EnterCamo()
     {
         inCamo = true;

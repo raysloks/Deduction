@@ -26,6 +26,7 @@ public class VoterEvidence : MonoBehaviour
     {
         SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
         myEvidence = (Evidence)see.Evidence;
+        Debug.Log((int)myEvidence);
         if (myEvidence == Evidence.Picture)
         {
             Debug.Log("PictureEvidence");
@@ -35,6 +36,7 @@ public class VoterEvidence : MonoBehaviour
             // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
         }else if(myEvidence == Evidence.MotionSensor)
         {
+            Debug.Log("MotionEvidence");
             ms = see.MotionSensorEvidence;
         }
     }

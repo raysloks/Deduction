@@ -28,8 +28,7 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
         lockObject = transform.GetChild(0).gameObject;
         med = transform.parent.gameObject.GetComponent<MainEvidencePicture>();
         ri = GetComponent<RawImage>();
-        tex = ri.texture;
-        orginialMaterial = ri.material;
+     //   orginialMaterial = ri.material;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -38,7 +37,7 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
         med.SetMainSensorList(ms);
         if (med.lockable == true)
         {
-            ri.material = newMaterial;
+          //  ri.material = newMaterial;
             lockObject.SetActive(true);
         }
     }
@@ -48,7 +47,7 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (med.lockable == true)
         {
-            ri.material = orginialMaterial;
+           // ri.material = orginialMaterial;
             lockObject.SetActive(false);
         }
     }
@@ -59,7 +58,7 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
         if (med.lockable == true)
         {
             lockObject.SetActive(true);
-            ri.material = orginialMaterial;
+          //  ri.material = orginialMaterial;
             lockObject.GetComponent<Image>().sprite = Lock;
             med.LockEvidenceSensor(ms);
         }

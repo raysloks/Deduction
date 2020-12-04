@@ -9,6 +9,7 @@ class PickupCooldown
 {
 public:
 	int64_t child;
+	int32_t random;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

@@ -63,6 +63,8 @@ public class GameController : MonoBehaviour
 
     public GameObject noteLocation;
 
+    public GameObject smokeGrenadePrefab;
+
     public Light2D globalLight;
     public bool darknessOnPlay;
 
@@ -79,6 +81,7 @@ public class GameController : MonoBehaviour
     public long time;
     public long timeout;
     public bool TimerOn => timer != 0;
+    public float roundTimer = 0f;
 
     // public bool nearEmergencyButton = false;
 
@@ -168,6 +171,7 @@ public class GameController : MonoBehaviour
         matchmaker.link.Poll();
 
         time += (long)(Time.deltaTime * 1000000000);
+        roundTimer += Time.deltaTime;
 
         if (time > timeout && timeout != 0)
         {
@@ -408,6 +412,11 @@ public class GameController : MonoBehaviour
             globalLight.intensity = 0.2f;
         }
 
+        if (phase == GamePhase.Main)
+        {
+            roundTimer = 0f;
+        }
+
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
 
         player.canMove = phase == GamePhase.Setup || phase == GamePhase.Main || phase == GamePhase.GameOver;
@@ -519,5 +528,10 @@ public class GameController : MonoBehaviour
                 entry.Value.Hide();
             }
         }
+    }
+
+    public void SpawnSmokeGrenade(Vector2 pos)
+    {
+        GameObject sg = Instantiate(smokeGrenadePrefab, pos, Quaternion.identity);
     }
 }

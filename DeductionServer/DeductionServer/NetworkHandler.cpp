@@ -780,8 +780,9 @@ void NetworkHandler::SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint
 {
 }
 
-void NetworkHandler::SendSensorListHandler(const asio::ip::udp::endpoint & endpoint, const SendSensorList & message)
+void NetworkHandler::SendSensorListHandler(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message)
 {
+	Broadcast(message);
 }
 
 void NetworkHandler::TakePhotoHandler(const asio::ip::udp::endpoint & endpoint, const TakePhoto & message)
@@ -830,6 +831,12 @@ void NetworkHandler::GetAllPlayerPositionsHandler(const asio::ip::udp::endpoint&
 		Send(endpoint, Pp);
 	}
 }
+
+void NetworkHandler::SmokeGrenadeActivateHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message)
+{
+	Broadcast(message);
+}
+
 
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)

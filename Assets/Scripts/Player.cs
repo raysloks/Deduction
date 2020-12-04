@@ -37,6 +37,7 @@ public class Player : Mob
 
             move = Vector3.ClampMagnitude(move, 1f);
             transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
+            
         }
 
         if (move.x > 0f)
@@ -73,7 +74,7 @@ public class Player : Mob
             }
         }
 
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
 
         base.Update();
     }
@@ -117,4 +118,5 @@ public class Player : Mob
         }
         controller.UpdateHidden();
     }
-}
+    
+ }

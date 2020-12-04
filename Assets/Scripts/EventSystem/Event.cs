@@ -81,6 +81,7 @@ namespace EventCallbacks
     public class CooldownEvent : Event
     {
         public int child;
+        public int random;
     }
 
     public class MobEjectedEvent : Event

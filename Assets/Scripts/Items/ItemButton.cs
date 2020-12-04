@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using EventCallbacks;
+using System;
 
 public class ItemButton : MonoBehaviour
 {
     private static ItemButton instance;
 
 
-    [HideInInspector]public enum Item { None, Camera, MotionSensor };
+    [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade };
     [HideInInspector]public Item myItem;
 
     public GameObject itemContainer;
@@ -30,6 +31,9 @@ public class ItemButton : MonoBehaviour
     private int maxPhotos = 3;
     private int photosTaken = 0;
 
+    [Header("SmokeGrenade")]
+    public Sprite SmokeGrenadeSprite;
+
     delegate void Calculation();
     Calculation Click;
 
@@ -38,7 +42,8 @@ public class ItemButton : MonoBehaviour
     {
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
-        SetItem(1);
+        SetItem(3);
+        SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
@@ -61,6 +66,7 @@ public class ItemButton : MonoBehaviour
                 childGo = child.gameObject;
                 closestDistance = Vector2.Distance(child.position, player.transform.position);
                 Debug.Log("Close " + Vector2.Distance(child.position, player.transform.position));
+                break;
             }
             index++;
         }
@@ -74,6 +80,7 @@ public class ItemButton : MonoBehaviour
                 childGo.GetComponent<ItemContainer>().ItemTaken();
                 PickupCooldown message = new PickupCooldown();
                 message.child = index;
+                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
                 gc.handler.link.Send(message);
             }
         }
@@ -102,11 +109,21 @@ public class ItemButton : MonoBehaviour
         SetItem(0);
     }
 
+    private void SmokeGrenadeClick()
+    {
+        SmokeGrenadeActivate message = new SmokeGrenadeActivate();
+        message.pos = player.transform.position;
+        gc.handler.link.Send(message);
+        SetItem(0);
+    }
+
     //set item based on Enum int
     public void SetItem(int item)
     {
         myItem = (Item)item;
 
+        text.text = "";
+        myItemImage.enabled = true;
         switch (myItem)
         {
             case Item.None:
@@ -116,18 +133,17 @@ public class ItemButton : MonoBehaviour
                 break;
             case Item.Camera:
                 Click = () => CameraClick();
-                myItemImage.enabled = true;
                 myItemImage.sprite = CameraSprite;
                 photosTaken = 0;
-                text.text = "";
                 break;
             case Item.MotionSensor:
                 Click = () => MotionSensorClick();
-                myItemImage.enabled = true;
                 myItemImage.sprite = buttonMotionSensorImage;
-                text.text = "";
                 break;
-
+            case Item.SmokeGrenade:
+                Click = () => SmokeGrenadeClick();
+                myItemImage.sprite = SmokeGrenadeSprite;
+                break;
         }
     }
 
@@ -138,7 +154,9 @@ public class ItemButton : MonoBehaviour
 
         if (pc.previous == GamePhase.Setup)
         {
-            SetItem(1);
+           
+            SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+            SetItem(2);
         }
     }
 }

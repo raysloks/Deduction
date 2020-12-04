@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -318,6 +319,7 @@ public class NetworkHandler
     {
         CooldownEvent cdEvent = new CooldownEvent();
         cdEvent.child = (int)message.child;
+        cdEvent.random = message.random;
         EventSystem.Current.FireEvent(EVENT_TYPE.PICKUP_WAIT, cdEvent);
     }
 
@@ -367,11 +369,18 @@ public class NetworkHandler
 
     internal void SendSensorListHandler(IPEndPoint endpoint, SendSensorList message)
     {
+        Debug.Log("SendSensor");
         SendEvidenceEvent seEvent = new SendEvidenceEvent();
         MotionSensor ms = new MotionSensor();
         ms.names = message.names;
+    //    ms.secondsIn = message.times.Select(item => (int)item).ToList();
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+    }
+
+    internal void SmokeGrenadeActivateHandler(IPEndPoint endpoint, SmokeGrenadeActivate message)
+    {
+        game.SpawnSmokeGrenade((Vector2)message.pos);
     }
 }
