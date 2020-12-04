@@ -86,6 +86,10 @@ vec3 position
 bool flipped
 bool moving
 bool dead
+PhotoTaken
+PhotoPose poses[]
+int32 photographer
+uint64 index
 PickupCooldown
 int64 child
 int32 random
@@ -112,9 +116,6 @@ uint16 minigame_index
 int64 timer
 bool completed
 SendEvidence
-PhotoPose poses[]
-int32 photographer
-uint64 index
 SendSensorList
 string names[]
 SmokeGrenadeActivate

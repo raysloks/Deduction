@@ -15,8 +15,8 @@ public struct SendSensorList
 			foreach (var i in this.names)
 		{
 			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(i);
-			ushort size2 = (ushort)bytes.Length;
-			writer.Write(size2);
+			ushort string_size = (ushort)bytes.Length;
+			writer.Write(string_size);
 			writer.Write(bytes);
 		}
 		}
@@ -32,8 +32,8 @@ public struct SendSensorList
 		{
 			string element;
 		{
-			ushort size2 = reader.ReadUInt16();
-			byte[] bytes = reader.ReadBytes(size2);
+			ushort string_size = reader.ReadUInt16();
+			byte[] bytes = reader.ReadBytes(string_size);
 			element = System.Text.Encoding.UTF8.GetString(bytes);
 		}
 			_ret.names.Add(element);

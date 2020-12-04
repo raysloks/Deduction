@@ -41,8 +41,8 @@ void serializeFieldCs(std::ofstream& f, Field field)
 		{
 			f << "		{" << std::endl;
 			f << "			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(" << field.name << ");" << std::endl;
-			f << "			ushort size = (ushort)bytes.Length;" << std::endl;
-			f << "			writer.Write(size);" << std::endl;
+			f << "			ushort string_size = (ushort)bytes.Length;" << std::endl;
+			f << "			writer.Write(string_size);" << std::endl;
 			f << "			writer.Write(bytes);" << std::endl;
 			f << "		}" << std::endl;
 			break;
@@ -123,8 +123,8 @@ void deserializeFieldCs(std::ofstream& f, Field field)
 		if (field.type_name == "string")
 		{
 			f << "		{" << std::endl;
-			f << "			ushort size = reader.ReadUInt16();" << std::endl;
-			f << "			byte[] bytes = reader.ReadBytes(size);" << std::endl;
+			f << "			ushort string_size = reader.ReadUInt16();" << std::endl;
+			f << "			byte[] bytes = reader.ReadBytes(string_size);" << std::endl;
 			f << "			" << field.name << " = System.Text.Encoding.UTF8.GetString(bytes);" << std::endl;
 			f << "		}" << std::endl;
 			break;

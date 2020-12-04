@@ -519,11 +519,11 @@ public class GameController : MonoBehaviour
     {
         foreach (KeyValuePair<ulong, Mob> entry in handler.mobs)
         {
-            if (player.inCamo)
+            if (player.inCamo && !entry.Value.inLocker && !player.inLocker)
             {
                 entry.Value.Reveal();
             }
-            if (!player.inCamo && entry.Value.inCamo)
+            if ((!player.inCamo && entry.Value.inCamo) || (player.inLocker && entry.Value.inCamo))
             {
                 entry.Value.Hide();
             }

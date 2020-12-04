@@ -559,6 +559,10 @@ void NetworkHandler::PhotoPoseHandler(const asio::ip::udp::endpoint & endpoint, 
 {
 }
 
+void NetworkHandler::PhotoTakenHandler(const asio::ip::udp::endpoint & endpoint, const PhotoTaken & message)
+{
+}
+
 void NetworkHandler::PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
 {
 	auto it = players.find(endpoint);

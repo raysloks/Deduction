@@ -34,7 +34,8 @@ public class VoterEvidence : MonoBehaviour
             // Vector3 playerPos = see.positionOfTarget;
             //ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
             // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
-        }else if(myEvidence == Evidence.MotionSensor)
+        }
+        else if (myEvidence == Evidence.MotionSensor)
         {
             Debug.Log("MotionEvidence");
             ms = see.MotionSensorEvidence;

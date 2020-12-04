@@ -128,7 +128,7 @@ public class NetworkHandler
     }
 
     internal void GamePhaseUpdateHandler(IPEndPoint endpoint, GamePhaseUpdate message)
-    {      
+    {
         game.SetGamePhase((GamePhase)message.phase, message.timer, (GamePhase)message.previous);
     }
 
@@ -309,10 +309,6 @@ public class NetworkHandler
 
     internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
     {
-        Photo photo = new Photo();
-        photo.poses = message.poses;
-        photo.photographer = message.photographer;
-        game.screenshotHandler.photos.Add(message.index, photo);
     }
 
     internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)
@@ -346,9 +342,6 @@ public class NetworkHandler
                 game.player.canMove = false;
             game.lockerManager.Lockers[message.index].HidePerson(mobs[message.user].gameObject);
         }
-        
-
-
     }
 
     internal void GetAllPlayerPositionsHandler(IPEndPoint endpoint, GetAllPlayerPositions message)
@@ -379,8 +372,16 @@ public class NetworkHandler
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
     }
 
+
     internal void SmokeGrenadeActivateHandler(IPEndPoint endpoint, SmokeGrenadeActivate message)
     {
         game.SpawnSmokeGrenade((Vector2)message.pos);
+    }
+    internal void PhotoTakenHandler(IPEndPoint endpoint, PhotoTaken message)
+    {
+        Photo photo = new Photo();
+        photo.poses = message.poses;
+        photo.photographer = message.photographer;
+        game.screenshotHandler.photos.Add(message.index, photo);
     }
 }
