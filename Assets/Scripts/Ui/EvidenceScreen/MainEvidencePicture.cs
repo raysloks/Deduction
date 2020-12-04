@@ -70,9 +70,19 @@ public class MainEvidencePicture : MonoBehaviour
             lockable = false;
             sentEvidence = true;
             List<ulong> temp = ms.secondsIn.Select(item => (ulong)item).ToList();
-            List<byte> dataAsBytes = ms.names
-            .SelectMany(s => Encoding.ASCII.GetBytes(s))
-            .ToList();
+            string s = "";
+            int index = 0;
+            foreach(string s2 in ms.names)
+            {
+                if (index == (ms.names.Count - 1))
+                    s += s2;
+                else
+                    s += s2 + "-";
+                index++;
+            }
+
+            List<byte> dataAsBytes = Encoding.ASCII.GetBytes(s).ToList();
+
             if (ms.names != null)
             {
                 SendSensorList message = new SendSensorList

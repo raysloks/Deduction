@@ -154,12 +154,7 @@ public class ItemButton : MonoBehaviour
         if (pc.previous == GamePhase.Setup)
         {
            int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
-            if(r == 2)
-            {
-                r++;
-            }
-            SetItem(r);
-         //   SetItem(2);
+            SetItem(2);
         }
     }
 }
