@@ -55,7 +55,14 @@ namespace EventCallbacks
 
             foreach(EventListener el in eventListeners[eventType])
             {
-                el(eventInfo);
+                try
+                {
+                    el(eventInfo);
+                }
+                catch
+                {
+
+                }
             }
         }
     }
