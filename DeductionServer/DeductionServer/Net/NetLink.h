@@ -26,6 +26,7 @@
 #include "MobTeleport.h"
 #include "MobUpdate.h"
 #include "PhotoPose.h"
+#include "PhotoTaken.h"
 #include "PickupCooldown.h"
 #include "PlayerUpdate.h"
 #include "PlayerVoted.h"
@@ -73,6 +74,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PhotoPose& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const PhotoTaken& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);

@@ -308,10 +308,6 @@ public class NetworkHandler
 
     internal void SendEvidenceHandler(IPEndPoint endpoint, SendEvidence message)
     {
-        Photo photo = new Photo();
-        photo.poses = message.poses;
-        photo.photographer = message.photographer;
-        game.screenshotHandler.photos.Add(message.index, photo);
     }
 
     internal void PickupCooldownHandler(IPEndPoint endpoint, PickupCooldown message)
@@ -344,9 +340,6 @@ public class NetworkHandler
                 game.player.canMove = false;
             game.lockerManager.Lockers[message.index].HidePerson(mobs[message.user].gameObject);
         }
-        
-
-
     }
 
     internal void GetAllPlayerPositionsHandler(IPEndPoint endpoint, GetAllPlayerPositions message)
@@ -373,5 +366,13 @@ public class NetworkHandler
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+    }
+
+    internal void PhotoTakenHandler(IPEndPoint endpoint, PhotoTaken message)
+    {
+        Photo photo = new Photo();
+        photo.poses = message.poses;
+        photo.photographer = message.photographer;
+        game.screenshotHandler.photos.Add(message.index, photo);
     }
 }

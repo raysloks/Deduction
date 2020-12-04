@@ -662,7 +662,7 @@ void Game::takePhoto(uint64_t photographer)
 	if (photo.photographer == -1ull)
 		return;
 
-	SendEvidence message;
+	PhotoTaken message;
 	message.poses = photo.poses;
 	message.photographer = photo.photographer;
 	message.index = photos.size();

@@ -14,8 +14,8 @@ public struct PlayerUpdate
 		writer.Write((ulong)mob);
 		{
 			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(name);
-			ushort size = (ushort)bytes.Length;
-			writer.Write(size);
+			ushort string_size = (ushort)bytes.Length;
+			writer.Write(string_size);
 			writer.Write(bytes);
 		}
 	}
@@ -26,8 +26,8 @@ public struct PlayerUpdate
 		_ret.id = (ulong)reader.ReadUInt64();
 		_ret.mob = (ulong)reader.ReadUInt64();
 		{
-			ushort size = reader.ReadUInt16();
-			byte[] bytes = reader.ReadBytes(size);
+			ushort string_size = reader.ReadUInt16();
+			byte[] bytes = reader.ReadBytes(string_size);
 			_ret.name = System.Text.Encoding.UTF8.GetString(bytes);
 		}
 		return _ret;

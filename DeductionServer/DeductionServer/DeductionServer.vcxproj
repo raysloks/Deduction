@@ -110,6 +110,7 @@
     <ClCompile Include="Net\MobUpdate.cpp" />
     <ClCompile Include="Net\NetLink.cpp" />
     <ClCompile Include="Net\PhotoPose.cpp" />
+    <ClCompile Include="Net\PhotoTaken.cpp" />
     <ClCompile Include="Net\PickupCooldown.cpp" />
     <ClCompile Include="Net\PlayerUpdate.cpp" />
     <ClCompile Include="Net\PlayerVoted.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Net\NetHandlerPrototypes.h" />
     <ClInclude Include="Net\NetLink.h" />
     <ClInclude Include="Net\PhotoPose.h" />
+    <ClInclude Include="Net\PhotoTaken.h" />
     <ClInclude Include="Net\PickupCooldown.h" />
     <ClInclude Include="Net\PlayerUpdate.h" />
     <ClInclude Include="Net\PlayerVoted.h" />

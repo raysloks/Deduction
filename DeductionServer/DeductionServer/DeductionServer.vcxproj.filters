@@ -164,6 +164,9 @@
     <ClInclude Include="Net\SendSensorList.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\PhotoTaken.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -308,6 +311,9 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\SendSensorList.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\PhotoTaken.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
