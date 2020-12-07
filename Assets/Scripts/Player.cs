@@ -94,17 +94,25 @@ public class Player : Mob
         base.OnTriggerEnter2D(other);
         if (other.CompareTag("Area"))
         {
-            controller.areaText.text = other.name;
-            controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
+            if (!inLocker)
+            {
+                controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
+                controller.areaText.text = other.name;
+            }
+            else
+                controller.areaText.GetComponent<Animator>().SetBool("InLocker", true);
         }
     }
 
     private new void OnTriggerExit2D(Collider2D other)
     {
         base.OnTriggerExit2D(other);
-        if (other.CompareTag("Area") && controller.areaText.text == other.name)
+        if (other.CompareTag("Area") /*&& controller.areaText.text == other.name*/)
         {
-            controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
+            if (controller.areaText.GetComponent<Animator>().GetBool("InLocker") == false)
+                controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
+            else
+                controller.areaText.GetComponent<Animator>().SetBool("InLocker", false);
         }
     }
 
@@ -137,5 +145,4 @@ public class Player : Mob
         }
         controller.UpdateHidden();
     }
-    
  }

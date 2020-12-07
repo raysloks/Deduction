@@ -8,6 +8,7 @@ public class TaskManager : MonoBehaviour
 
     public GameObject indicatorPrefab;
     public Transform indicatorParent;
+    public Sprite fakeIndicator;
 
     public RectTransform taskWindow;
 
@@ -35,6 +36,8 @@ public class TaskManager : MonoBehaviour
         {
             var indicator = Instantiate(indicatorPrefab, indicatorParent);
             indicators.Add(indicator);
+            if (game.player.role == 1)
+                indicator.GetComponent<SpriteRenderer>().sprite = fakeIndicator;
         }
 
         for (int i = 0; i < tasks.Count; ++i)

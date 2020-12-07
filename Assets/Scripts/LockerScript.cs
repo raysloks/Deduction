@@ -1,26 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class LockerScript : Interactable
 {
     public int locker_index;
     public bool occupied;
     public GameObject occupant;
-    private GameController game;
     public SpriteRenderer outline;
-    // Start is called before the first frame update
+    public SpriteRenderer highlight;
+
     void Start()
     {
         if (locker_index > 0)
             FindObjectOfType<LockerManager>().Lockers[locker_index] = this;
         occupied = false;
+        GetComponent<ShadowCaster2D>().castsShadows = false;
     }
-
-    private void Awake()
-    {
-
-    }
+    
 
     public override bool CanInteract(GameController game)
     {
@@ -29,9 +27,8 @@ public class LockerScript : Interactable
 
     public override void Interact(GameController game)
     {
-        this.game = game;
+        //this.game = game;
         game.handler.link.Send(new HideAttempted { index = locker_index, user = game.handler.playerMobId });
-
     }
 
     public override void Highlight(bool highlighted)
@@ -43,12 +40,6 @@ public class LockerScript : Interactable
             else
                 StartCoroutine(FadeOutOutline(0.2f));
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void AttemptToHide(GameObject body)
@@ -67,6 +58,8 @@ public class LockerScript : Interactable
         {
             occupant.GetComponent<Player>().Hide();
             occupant.GetComponent<Player>().inLocker = true;
+            outline.enabled = false;
+            GetComponent<ShadowCaster2D>().castsShadows = true;
         }
         else
         {
@@ -86,6 +79,8 @@ public class LockerScript : Interactable
             occupant.GetComponent<Player>().Reveal();
             occupant.GetComponent<Player>().inLocker = false;
             occupant.GetComponent<Player>().canMove = true;
+            outline.enabled = true;
+            GetComponent<ShadowCaster2D>().castsShadows = false;
         }
         else
         {
@@ -122,6 +117,4 @@ public class LockerScript : Interactable
             yield return null;
         }
     }
-
-
 }
