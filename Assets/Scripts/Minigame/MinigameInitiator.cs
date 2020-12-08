@@ -7,19 +7,33 @@ using UnityEngine.UIElements;
 public class MinigameInitiator : Interactable
 {
     public GameObject minigame;
-
     public int minigame_index;
-
     public SpriteRenderer outline;
-
     public bool alwaysActive = false;
+    public AudioClip audioClip;
 
     private GameController game;
+    private AudioSource audioSource;
 
     private void Start()
     {
         if (minigame_index > 0)
             FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
+        game = FindObjectOfType<GameController>();
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
+
+    private void Update()
+    {
+        if (audioClip && audioSource)
+        {
+            bool shouldPlaySound = alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 ||
+               game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
+            if (shouldPlaySound && !audioSource.isPlaying)
+                audioSource.Play();
+            if (!shouldPlaySound && audioSource.isPlaying)
+                audioSource.Stop();
+        }
     }
 
     public override bool CanInteract(GameController game)
@@ -30,7 +44,6 @@ public class MinigameInitiator : Interactable
 
     public override void Interact(GameController game)
     {
-        this.game = game;
         game.popup.ActivatePopup(minigame, this);
     }
 
