@@ -34,7 +34,11 @@ void MatchmakerHandler::addServer(const std::string & lobby, const asio::ip::udp
 	lobbies[server] = lobby;
 	servers[lobby] = server;
 
-	vacant_lobbies.push(lobby);
+	vacant_lobbies.push_back(lobby);
+
+	int64_t overflow = vacant_lobbies.size() - 1000;
+	if (overflow > 0)
+		vacant_lobbies.erase(vacant_lobbies.begin(), vacant_lobbies.begin() + overflow);
 }
 
 void MatchmakerHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)
@@ -56,8 +60,8 @@ void MatchmakerHandler::LobbyRequestHandler(const asio::ip::udp::endpoint & endp
 	{
 		while (vacant_lobbies.size() > 0)
 		{
-			auto lobby = vacant_lobbies.front();
-			vacant_lobbies.pop();
+			auto lobby = vacant_lobbies.back();
+			vacant_lobbies.pop_back();
 			auto it = servers.find(lobby);
 			if (it != servers.end())
 			{
