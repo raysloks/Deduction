@@ -311,18 +311,7 @@ void Game::restartSetup()
 {
 	fixAllSabotages();
 	setPhase(GamePhase::Setup, 0);
-	teleportPlayersToEllipse(map->spawnPos, map->spawnSize);
-	for (size_t i = 0; i < handler.mobs.size(); ++i)
-		handler.removeMob(i);
-	for (auto player : handler.players)
-	{
-		auto&& mob = handler.mobs[player.second.mob];
-		mob.enabled = true;
-		mob.type = MobType::Player;
-		mob.role = Role::Crewmate;
-	}
-	handler.updateMobStates();
-	handler.updateMobRoles();
+	resetMobs(true);
 }
 
 void Game::resetVotes()
@@ -579,6 +568,7 @@ void Game::endGame(int64_t now, Role winner)
 	}
 	handler.Broadcast(message);
 	setPhase(GamePhase::GameOver, now + 10'000'000'000);
+	resetMobs(false);
 }
 
 void Game::removeCorpses()
@@ -669,5 +659,23 @@ void Game::takePhoto(uint64_t photographer)
 	handler.Broadcast(message);
 
 	photos.push_back(photo);
+}
+
+void Game::resetMobs(bool roles)
+{
+	teleportPlayersToEllipse(map->spawnPos, map->spawnSize);
+	for (size_t i = 0; i < handler.mobs.size(); ++i)
+		handler.removeMob(i);
+	for (auto player : handler.players)
+	{
+		auto&& mob = handler.mobs[player.second.mob];
+		mob.enabled = true;
+		mob.type = MobType::Player;
+		if (roles)
+			mob.role = Role::Crewmate;
+	}
+	handler.updateMobStates();
+	if (roles)
+		handler.updateMobRoles();
 }
 

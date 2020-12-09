@@ -65,6 +65,8 @@ public:
 
 	void takePhoto(uint64_t photographer);
 
+	void resetMobs(bool roles);
+
 
 	GamePhase phase;
 
