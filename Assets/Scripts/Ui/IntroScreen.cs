@@ -6,6 +6,7 @@ using EventCallbacks;
 public class IntroScreen : MonoBehaviour
 {
     public Text text;
+    public Text extraText;
     public Image sheen;
     public Transform mobDisplayContainer;
     public GameObject mobDisplayPrefab;
@@ -36,6 +37,15 @@ public class IntroScreen : MonoBehaviour
         sheen.color = role == 1 ? Color.red : Color.cyan;
         text.color = role == 1 ? Color.red : Color.white;
         text.text = role == 1 ? "Spy" : "Soldier";
+        if (role == 0)
+        {
+            if (game.settings.impostorCount == 1)
+                extraText.text = "There is <color=red>A Spy</color> in our ranks...";
+            else extraText.text = "There are <color=red>" + game.settings.impostorCount + " Spies</color> in our ranks...";
+        }
+        else
+            extraText.text = "";
+
         foreach (var n in game.handler.mobs)
         {
             Mob mob = n.Value;

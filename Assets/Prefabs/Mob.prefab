@@ -718,6 +718,11 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.x
       value: 0.23617111
       objectReference: {fileID: 0}
+    - target: {fileID: 2082186458508390134, guid: 1333a7ad32d699f43ab695790e5161a4,
+        type: 3}
+      propertyPath: m_Bounds.m_Center.z
+      value: -0.0001
+      objectReference: {fileID: 0}
     - target: {fileID: 2969949084874186699, guid: 1333a7ad32d699f43ab695790e5161a4,
         type: 3}
       propertyPath: m_Name
@@ -752,6 +757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428638930582094336, guid: 1333a7ad32d699f43ab695790e5161a4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 6695482915732151522, guid: 1333a7ad32d699f43ab695790e5161a4,
         type: 3}

@@ -101,6 +101,7 @@ MonoBehaviour:
   minigame_index: 0
   outline: {fileID: 1368123981062287680}
   alwaysActive: 0
+  audioClip: {fileID: 0}
 --- !u!58 &3604052726584254773
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 71271918c01cba94aa03189233968cce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
