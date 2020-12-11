@@ -169,7 +169,7 @@ public class MeetingUiListener : MonoBehaviour
         {
             skipButton.VoteReceived(voterPrefab, handler.mobs[voterId].sprite);
         }
-        else if(voteButtons.ContainsKey(targetId))
+        else if (voteButtons.ContainsKey(targetId))
         {
             if (voterId == ulong.MaxValue - 2)
             {

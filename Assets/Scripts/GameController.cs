@@ -36,6 +36,9 @@ public class GameController : MonoBehaviour
     public Text text;
 
     public GameObject infoPopupPrefab;
+    public GameObject confirmPopupPrefab;
+
+    private GameObject currentConfirmPopup;
 
 
     public InputField nameInputField;
@@ -247,7 +250,7 @@ public class GameController : MonoBehaviour
                 {
                     foreach (var n in handler.mobs)
                     {
-                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf)
+                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf && !n.Value.inLocker)
                         {
                             float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                             if (distance < targetDistance)
@@ -516,9 +519,18 @@ public class GameController : MonoBehaviour
 
     public void CreateInfoPopup(string info)
     {
-        if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup"));
+        //if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup")); // what was this for??
         var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
+    }
+
+    public Button CreateConfirmPopup(string text)
+    {
+        if (currentConfirmPopup != null)
+            Destroy(currentConfirmPopup);
+        currentConfirmPopup = Instantiate(confirmPopupPrefab, canvas.transform);
+        currentConfirmPopup.GetComponentInChildren<Text>().text = text;
+        return currentConfirmPopup.GetComponentInChildren<Button>();
     }
 
     public void UpdateHidden()

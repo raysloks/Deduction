@@ -26,7 +26,6 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     void Start()
     {
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
-
     }
 
     public void ResetVoteCountAndState()
@@ -43,6 +42,12 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
         button.interactable = false;
         if (confirmedIndicator != null)
             confirmedIndicator.SetActive(false);
+    }
+
+    public void ConfirmVote()
+    {
+        Button confirmButton = game.CreateConfirmPopup("Vote for " + nameText.text + "?");
+        confirmButton.onClick.AddListener(Vote);
     }
 
     public void Vote()
@@ -88,7 +93,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
             sendEvidenceEvent.Evidence = e;
             sendEvidenceEvent.positionOfTarget = transform.position;
-            if(e == 2)
+            if (e == 2)
             {
                 sendEvidenceEvent.MotionSensorEvidence = Evidence.GetComponent<VoterEvidence>().ms;
             }
@@ -99,7 +104,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
                 picture = ba;
                 sendEvidenceEvent.byteArray = ba;
             }
-            else if(e == 0)
+            else if (e == 0)
             {
                 Debug.Log("EVIDENCE 0 cursor.");
             }
