@@ -365,7 +365,7 @@ public class NetworkHandler
         MotionSensor ms = new MotionSensor();
         
         string byteString = Encoding.UTF8.GetString(message.names.ToArray());
-        List<string> dada = byteString.Split('-').ToList();
+        List<string> dada = byteString.Split(';').ToList();
         foreach(string s in dada)
         {
             Debug.Log(s);

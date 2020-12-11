@@ -5,7 +5,7 @@ using System;
 using TMPro;
 using EventCallbacks;
 
-public class ItemContainer : MonoBehaviour
+public class ItemContainer : Interactable
 {
 
     [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade };
@@ -17,6 +17,7 @@ public class ItemContainer : MonoBehaviour
     public Sprite cameraSprite;
     public Sprite motionSensorSprite;
     public Sprite smokeGrenadeSprite;
+    public SpriteRenderer outline;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +89,76 @@ public class ItemContainer : MonoBehaviour
             case Item.SmokeGrenade:
                 sr.sprite = smokeGrenadeSprite;
                 break;
+        }
+    }
+
+    private void NoneClick(GameController game)
+    {
+            int item2 = (int)item;
+            if (item2 != 0)
+            {
+                game.itemButton.GetComponent<ItemButton>().SetItem(item2);
+
+                ItemTaken();
+                PickupCooldown message = new PickupCooldown();
+                message.child = transform.GetSiblingIndex();
+                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                game.handler.link.Send(message);
+            }
+        
+    }
+
+
+    public override bool CanInteract(GameController game)
+    {
+        return !coolingDown;
+     //   return alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 ||
+     //       game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
+    }
+
+    public override void Interact(GameController game)
+    {
+        NoneClick(game);
+      //  game.popup.ActivatePopup(minigame, this);
+    }
+
+    public override void Highlight(bool highlighted)
+    {
+        
+        if (outline != null)
+        {
+            if (highlighted)
+                StartCoroutine(FadeInOutline(0.2f));
+            else
+                StartCoroutine(FadeOutOutline(0.2f));
+        }
+    }
+
+    IEnumerator FadeInOutline(float seconds)
+    {
+        float counter = 0;
+
+        while (counter < seconds)
+        {
+            Color color = outline.color;
+            color.a = counter / seconds;
+            outline.color = color;
+            counter += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeOutOutline(float seconds)
+    {
+        float counter = seconds;
+
+        while (counter > 0f)
+        {
+            Color color = outline.color;
+            color.a = counter / seconds;
+            outline.color = color;
+            counter -= Time.deltaTime;
+            yield return null;
         }
     }
 

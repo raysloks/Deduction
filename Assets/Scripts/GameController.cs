@@ -75,6 +75,8 @@ public class GameController : MonoBehaviour
 
     public Button reportButton;
 
+    public Button itemButton;
+
 
     public Button useButton;
 
@@ -229,6 +231,7 @@ public class GameController : MonoBehaviour
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
         reportButton.gameObject.SetActive(player.IsAlive);
+        itemButton.gameObject.SetActive(player.IsAlive);
         hud.gameObject.SetActive(phase == GamePhase.Main);
         taskbar.gameObject.SetActive(
             phase == GamePhase.Main || 
@@ -516,7 +519,7 @@ public class GameController : MonoBehaviour
 
     public void CreateInfoPopup(string info)
     {
-        if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup"));
+        //if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup")); // what was this for??
         var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
     }
@@ -525,7 +528,7 @@ public class GameController : MonoBehaviour
     {
         if (currentConfirmPopup != null)
             Destroy(currentConfirmPopup);
-        currentConfirmPopup = Instantiate(confirmPopupPrefab);
+        currentConfirmPopup = Instantiate(confirmPopupPrefab, canvas.transform);
         currentConfirmPopup.GetComponentInChildren<Text>().text = text;
         return currentConfirmPopup.GetComponentInChildren<Button>();
     }

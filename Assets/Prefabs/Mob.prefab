@@ -279,13 +279,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4332343737916310266}
   - component: {fileID: 7642521908793270006}
-  m_Layer: 0
-  m_Name: Trigger
+  m_Layer: 13
+  m_Name: CloseMobTrigger
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4332343737916310266
 Transform:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 2.5
 --- !u!1 &7276069933197916914
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 1609881731253788887}
   - component: {fileID: 5681363817262165513}
   - component: {fileID: 2562642536566455267}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mob
   m_TagString: Mob
   m_Icon: {fileID: 0}
