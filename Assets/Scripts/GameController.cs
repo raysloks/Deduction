@@ -516,7 +516,7 @@ public class GameController : MonoBehaviour
 
     public void CreateInfoPopup(string info)
     {
-        if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup"));
+        //if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup")); // what was this for??
         var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
     }
@@ -525,7 +525,7 @@ public class GameController : MonoBehaviour
     {
         if (currentConfirmPopup != null)
             Destroy(currentConfirmPopup);
-        currentConfirmPopup = Instantiate(confirmPopupPrefab);
+        currentConfirmPopup = Instantiate(confirmPopupPrefab, canvas.transform);
         currentConfirmPopup.GetComponentInChildren<Text>().text = text;
         return currentConfirmPopup.GetComponentInChildren<Button>();
     }
