@@ -10,6 +10,7 @@ public class LockerScript : Interactable
     public GameObject occupant;
     public SpriteRenderer outline;
     public SpriteRenderer highlight;
+    public Vector3 exitDirection;
 
     void Start()
     {
@@ -72,7 +73,7 @@ public class LockerScript : Interactable
 
     public void RemovePerson()
     {
-        occupant.transform.position = this.transform.position + new Vector3(0f, -1f, 0f);
+        occupant.transform.position = this.transform.position + exitDirection;
         var script = occupant.GetComponent<Player>();
         if (script != null)
         {

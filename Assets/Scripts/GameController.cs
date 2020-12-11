@@ -244,7 +244,7 @@ public class GameController : MonoBehaviour
                 {
                     foreach (var n in handler.mobs)
                     {
-                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf)
+                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf && !n.Value.inLocker)
                         {
                             float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
                             if (distance < targetDistance)

@@ -327,7 +327,6 @@ public class NetworkHandler
     {
         if (game.lockerManager.Lockers[message.index].occupied == true)
         {
-            Debug.Log("but why?");
             game.lockerManager.Lockers[message.index].occupied = false;
             game.lockerManager.Lockers[message.index].RemovePerson();
             if (message.user == playerMobId)
@@ -335,7 +334,6 @@ public class NetworkHandler
         }
         else if (game.lockerManager.Lockers[message.index].occupied == false)
         {
-            Debug.Log("called correct");
             game.lockerManager.Lockers[message.index].occupied = true;
             //game.lockerManager.Lockers[message.index].occupant = mobs[message.user].gameObject;
             if (message.user == playerMobId)
