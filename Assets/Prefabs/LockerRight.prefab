@@ -104,6 +104,7 @@ MonoBehaviour:
   occupant: {fileID: 0}
   outline: {fileID: 1190150189749410076}
   highlight: {fileID: 1190150189018422719}
+  exitDirection: {x: -1, y: -0.5, z: 0}
 --- !u!70 &1190150188962330728
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

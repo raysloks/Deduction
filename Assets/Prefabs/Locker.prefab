@@ -103,6 +103,7 @@ MonoBehaviour:
   occupant: {fileID: 0}
   outline: {fileID: 3222774133044344568}
   highlight: {fileID: 8709238297206920958}
+  exitDirection: {x: 0, y: -1, z: 0}
 --- !u!58 &4997109430998083469
 CircleCollider2D:
   m_ObjectHideFlags: 0
