@@ -14,6 +14,10 @@ public class IgnoreTab : MonoBehaviour
     {
         if (addedChar == 9)
             return (char)0;
+        else if(addedChar == ';')
+        {
+            return ':';
+        }
         return addedChar;
     }
 }

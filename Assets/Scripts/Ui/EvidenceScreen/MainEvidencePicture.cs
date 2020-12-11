@@ -77,7 +77,7 @@ public class MainEvidencePicture : MonoBehaviour
                 if (index == (ms.names.Count - 1))
                     s += s2;
                 else
-                    s += s2 + "-";
+                    s += s2 + ";";
                 index++;
             }
 

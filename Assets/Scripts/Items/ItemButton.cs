@@ -14,14 +14,14 @@ public class ItemButton : MonoBehaviour
     [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade };
     [HideInInspector]public Item myItem;
 
-    public GameObject itemContainer;
     public GameObject player;
     public GameController gc;
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI text2;
     public GameObject buttonItemImage;
     public EvidenceHandler evidenceHandler;
+    public GameObject ItemContainers;
     private Image myItemImage;
-
+    private Image backgroundImage;
     [Header("MotionSensor")]
     public GameObject motionSensorPrefab;
     public Sprite buttonMotionSensorImage;
@@ -42,9 +42,15 @@ public class ItemButton : MonoBehaviour
     {
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
-      //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+        backgroundImage = GetComponent<Image>();
+        //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
 
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+
+        if(ItemContainers == null)
+        {
+            ItemContainers = GameObject.Find("ItemContainers");
+        }
     }
     
     public void ItemClick()
@@ -58,7 +64,7 @@ public class ItemButton : MonoBehaviour
         float closestDistance = 2f;
         GameObject childGo = null;
         int index = 0;
-        foreach (Transform child in itemContainer.transform)
+        foreach (Transform child in ItemContainers.transform)
         {
             if (Vector2.Distance(child.position, player.transform.position) < closestDistance)
             {
@@ -121,14 +127,16 @@ public class ItemButton : MonoBehaviour
     {
         myItem = (Item)item;
 
-        text.text = "";
+        text2.text = "Item";
         myItemImage.enabled = true;
+        backgroundImage.enabled = true;
         switch (myItem)
         {
             case Item.None:
                 Click = () => NoneClick();
                 myItemImage.enabled = false;
-                text.text = "Pickup";
+                backgroundImage.enabled = false;
+                text2.text = "";
                 break;
             case Item.Camera:
                 Click = () => CameraClick();

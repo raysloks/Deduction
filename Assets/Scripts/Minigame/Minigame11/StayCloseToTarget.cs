@@ -14,11 +14,12 @@ public class StayCloseToTarget : MonoBehaviour
     private Player player;
     private int numberOfActive = 0;
     public List<AudioClip> correctSounds;
+    private bool reduce = false;
     // Start is called before the first frame update
     void Start()
     {
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, resetGame);
-        smallbar = transform.GetChild(0).gameObject.transform.GetChild(1);
+        smallbar = transform.GetChild(0).gameObject.transform.GetChild(2);
         orignialScale = smallbar.localScale;
         player = transform.parent.gameObject.GetComponent<Player>();
     }
@@ -26,6 +27,13 @@ public class StayCloseToTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (reduce)
+        {
+            if (smallbar.localScale.x > 0.05f)
+            {
+                smallbar.localScale -= new Vector3(((sliderGain * 2) * Time.deltaTime), 0f, 0f);
+            }
+        }
         if(mobs.Count > 0 && !isDone)
         {
             if (player.canMove == true)
@@ -48,6 +56,7 @@ public class StayCloseToTarget : MonoBehaviour
         if(col.tag == "Mob" && mobs.Contains(col.gameObject) == false)
         {
             Debug.Log("BOOYAH ENTER");
+            reduce = false;
             mobs.Add(col.gameObject);
         }
     }
@@ -60,7 +69,8 @@ public class StayCloseToTarget : MonoBehaviour
             mobs.Remove(col.gameObject);
             if (mobs.Count == 0 && isDone == false)
             {
-                smallbar.localScale = orignialScale;
+                reduce = true;
+                //smallbar.localScale = orignialScale;
             }
         }
     }

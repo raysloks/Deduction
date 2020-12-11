@@ -23,7 +23,10 @@ public class MinigamePopupScript : MonoBehaviour
         if (minigame == null)
         {
             minigame = Instantiate(prefab, minigameContainer);
-            initiator = ini;
+            if(ini != null)
+            {
+                initiator = ini;
+            }
             player.canMove = false;
         }
     }

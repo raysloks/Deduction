@@ -72,6 +72,8 @@ public class GameController : MonoBehaviour
 
     public Button reportButton;
 
+    public Button itemButton;
+
 
     public Button useButton;
 
@@ -226,6 +228,7 @@ public class GameController : MonoBehaviour
         targetMarker.SetActive(false);
         killButton.gameObject.SetActive(player.role == 1 && player.IsAlive);
         reportButton.gameObject.SetActive(player.IsAlive);
+        itemButton.gameObject.SetActive(player.IsAlive);
         hud.gameObject.SetActive(phase == GamePhase.Main);
         taskbar.gameObject.SetActive(
             phase == GamePhase.Main || 

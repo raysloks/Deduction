@@ -41,7 +41,9 @@ public class PasswordChecker : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             //string actualPassword = password.text.Split(' ');
-            if (StringComparison(finalPass, myText.text.Trim()) == true)
+            string s1 = finalPass;
+            string s2 = myText.text.Trim();
+            if (StringComparison(s1.ToLower(), s2.ToLower()) == true)
             {
                 doneText.text = "Done";
                 Debug.Log("Done");
@@ -61,7 +63,33 @@ public class PasswordChecker : MonoBehaviour
         }
     }
 
-    public static bool StringComparison(string s1, string s2)
+    public void CheckInput()
+    {
+        //string actualPassword = password.text.Split(' ');
+        string s1 = finalPass;
+        string s2 = myText.text.Trim();
+        if (StringComparison(s1.ToLower(), s2.ToLower()) == true)
+        {
+            doneText.text = "Done";
+            Debug.Log("Done");
+            FindObjectOfType<MinigamePopupScript>().MinigameWon();
+        }
+        else
+        {
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = worldPosition;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+        //    doneText.text = "Wrong Password";
+        //    myText.text = "";
+            Debug.Log(finalPass + " " + myText.text.Trim());
+        }
+    }
+
+
+
+    public bool StringComparison(string s1, string s2)
     {
         if (s1.Length != (s2.Length - 1))
         {
@@ -70,7 +98,7 @@ public class PasswordChecker : MonoBehaviour
         }
         for (int i = 0; i < s1.Length - 1; i++)
         {
-            if (s1[i] != s2[i])
+            if (s1[i] != s2[i] )
             {
                 Debug.Log("The " + i.ToString() + "th character is different. " + s1[i] + " vs " + s2[i]);
                 return false;
