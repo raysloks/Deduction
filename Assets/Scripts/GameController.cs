@@ -36,6 +36,9 @@ public class GameController : MonoBehaviour
     public Text text;
 
     public GameObject infoPopupPrefab;
+    public GameObject confirmPopupPrefab;
+
+    private GameObject currentConfirmPopup;
 
 
     public InputField nameInputField;
@@ -516,6 +519,15 @@ public class GameController : MonoBehaviour
         if (!info.Contains("index")) Destroy(GameObject.FindWithTag("Info popup"));
         var go = Instantiate(infoPopupPrefab, canvas.transform);
         go.GetComponentInChildren<Text>().text = info;
+    }
+
+    public Button CreateConfirmPopup(string text)
+    {
+        if (currentConfirmPopup != null)
+            Destroy(currentConfirmPopup);
+        currentConfirmPopup = Instantiate(confirmPopupPrefab);
+        currentConfirmPopup.GetComponentInChildren<Text>().text = text;
+        return currentConfirmPopup.GetComponentInChildren<Button>();
     }
 
     public void UpdateHidden()
