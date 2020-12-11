@@ -18,7 +18,7 @@ public class VoiceIndicator : MonoBehaviour
 
     private void Update()
     {
-        if (voicePlayer != null)
+        if (voicePlayer != null && voicePlayer.gameObject.activeInHierarchy)
         {
             float loudness = voicePlayer.GetLoudness();
             SetStage(loudness);
