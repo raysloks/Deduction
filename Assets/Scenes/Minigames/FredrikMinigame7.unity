@@ -459,6 +459,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: FredrikMinigame7
       objectReference: {fileID: 0}
+    - target: {fileID: 5104443750605436235, guid: 36484c6facaf80349acfd21800b107a1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -89.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5104443750605436235, guid: 36484c6facaf80349acfd21800b107a1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -52
+      objectReference: {fileID: 0}
+    - target: {fileID: 5777513785198782680, guid: 36484c6facaf80349acfd21800b107a1,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.000091552734
+      objectReference: {fileID: 0}
     - target: {fileID: 7329201446855638252, guid: 36484c6facaf80349acfd21800b107a1,
         type: 3}
       propertyPath: m_LocalPosition.x
