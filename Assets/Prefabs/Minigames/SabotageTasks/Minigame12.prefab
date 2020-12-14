@@ -30,6 +30,7 @@ RectTransform:
   - {fileID: 6073496444093281440}
   - {fileID: 6073496444685667217}
   - {fileID: 860897400981877204}
+  - {fileID: 185639919696036275}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1244,3 +1245,154 @@ RectTransform:
   m_AnchoredPosition: {x: 443, y: 98}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &2097536697032397955
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 38100605744465695}
+    m_Modifications:
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1252
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 628
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080425892551211863, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Minigame helpboxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_text
+      value: 'Locate the frequency
+
+
+        This minigame is completed by tuning
+        the radio wheel. Listen carefully, if you hear static you must turn the wheel
+        until the static is gone. Be careful to not rotate it too far. Once you hear
+        no more static the game is completed. Good luck.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 158.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6868765439346847972, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9155456492416769683, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 158.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed4febe814058b94ebc12005ace31d4e, type: 3}
+--- !u!224 &185639919696036275 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2097536697032397955}
+  m_PrefabAsset: {fileID: 0}

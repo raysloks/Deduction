@@ -369,6 +369,7 @@ RectTransform:
   - {fileID: 5987323528132122382}
   - {fileID: 1939239342264365033}
   - {fileID: 2555020787891037580}
+  - {fileID: 5381942221103576683}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1264,3 +1265,163 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1001 &6140671190746080091
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5927061528005089388}
+    m_Modifications:
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1252
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 628
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080425892551211863, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Minigame helpboxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_text
+      value: 'Today''s Password
+
+
+        For this minigame you have to enter the
+        password into empty field. The password can be found on the note on the screen.
+        Enter the password and the minigame is completed. Good luck.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 125.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6868765439346847972, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 590.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 280.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9155456492416769683, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 125.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed4febe814058b94ebc12005ace31d4e, type: 3}
+--- !u!224 &5381942221103576683 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6140671190746080091}
+  m_PrefabAsset: {fileID: 0}
