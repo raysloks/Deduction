@@ -10,7 +10,6 @@ public class MinigameInitiator : Interactable
     public int minigame_index;
     public SpriteRenderer outline;
     public bool alwaysActive = false;
-    public AudioClip audioClip;
 
     private GameController game;
     private AudioSource audioSource;
@@ -25,7 +24,7 @@ public class MinigameInitiator : Interactable
 
     private void Update()
     {
-        if (audioClip && audioSource)
+        if (audioSource)
         {
             bool shouldPlaySound = alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 ||
                game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
