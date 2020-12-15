@@ -82,15 +82,15 @@ public class Mob : MonoBehaviour
     }
 
     public void setGhostAppearance(){
-        ghostFire.active = true;
-        shoes.active = false;
-        torsos.active = false;
+        ghostFire.SetActive(true);
+        shoes.SetActive(false);
+        torsos.SetActive(false);
     }
 
     public void setAliveAppearance(){
-        ghostFire.active = false;
-        shoes.active = true;
-        torsos.active = true;
+        ghostFire.SetActive(false);
+        shoes.SetActive(true);
+        torsos.SetActive(true);
     }
 
     protected void OnTriggerExit2D(Collider2D other)
