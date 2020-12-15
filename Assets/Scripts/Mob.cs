@@ -9,6 +9,9 @@ public class Mob : MonoBehaviour
     public SpriteResolver spriteResolver;
     public Transform characterTransform;
     public Animator animator;
+    public GameObject ghostFire;
+    public GameObject shoes;
+    public GameObject torsos;
 
     [HideInInspector] public bool inCamo;
     [HideInInspector] public bool inLocker;
@@ -46,6 +49,12 @@ public class Mob : MonoBehaviour
     public void SetType(ulong type)
     {
         this.type = type;
+        if(type==2){
+            setGhostAppearance();
+        }else if(type==0){
+            setAliveAppearance();
+        }
+        
     }
 
     public void SetSprite(ulong sprite)
@@ -70,6 +79,18 @@ public class Mob : MonoBehaviour
         {
             EnterCamo();
         }
+    }
+
+    public void setGhostAppearance(){
+        ghostFire.active = true;
+        shoes.active = false;
+        torsos.active = false;
+    }
+
+    public void setAliveAppearance(){
+        ghostFire.active = false;
+        shoes.active = true;
+        torsos.active = true;
     }
 
     protected void OnTriggerExit2D(Collider2D other)
