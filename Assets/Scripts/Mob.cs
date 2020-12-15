@@ -50,9 +50,9 @@ public class Mob : MonoBehaviour
     {
         this.type = type;
         if(type==2){
-            setGhostAppearance();
+            SetGhostAppearance();
         }else if(type==0){
-            setAliveAppearance();
+            SetAliveAppearance();
         }
         
     }
@@ -81,16 +81,18 @@ public class Mob : MonoBehaviour
         }
     }
 
-    public void setGhostAppearance(){
+    public void SetGhostAppearance(){
+        SetTransparent();
         ghostFire.SetActive(true);
         shoes.SetActive(false);
         torsos.SetActive(false);
     }
 
-    public void setAliveAppearance(){
+    public void SetAliveAppearance(){
         ghostFire.SetActive(false);
         shoes.SetActive(true);
         torsos.SetActive(true);
+        SetOpaque();
     }
 
     protected void OnTriggerExit2D(Collider2D other)
@@ -115,17 +117,32 @@ public class Mob : MonoBehaviour
         print("No longer in contact with " + other.transform.name);
     }
 
+    public void SetTransparent(){
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < spr.Length; i++)
+            {
+                Color color = spr[i].color;
+                color.a = 0.75f;
+                spr[i].color = color;
+        }
+    }
+
+    public void SetOpaque(){
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < spr.Length; i++)
+            {
+                Color color = spr[i].color;
+                color.a = 1;
+                spr[i].color = color;
+        }
+    }
+
     public virtual void EnterCamo()
     {
         inCamo = true;
-        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < spr.Length; i++)
-        {
-            Color color = spr[i].color;
-            color.a = 0.75f;
-            spr[i].color = color;
-        }
+        SetTransparent();
+        
         if (GameObject.FindWithTag("Player").GetComponent<Player>().inCamo == false)
             Hide();
     }
@@ -133,14 +150,9 @@ public class Mob : MonoBehaviour
     public virtual void ExitCamo()
     {
         inCamo = false;
-        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < spr.Length; i++)
-        {
-            Color color = spr[i].color;
-            color.a = 1;
-            spr[i].color = color;
-        }
+        SetOpaque();
+
         Reveal();
     }
 
