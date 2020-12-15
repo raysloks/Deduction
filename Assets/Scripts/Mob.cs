@@ -82,7 +82,6 @@ public class Mob : MonoBehaviour
     }
 
     public void SetGhostAppearance(){
-        SetTransparent();
         ghostFire.SetActive(true);
         shoes.SetActive(false);
         torsos.SetActive(false);
@@ -92,7 +91,6 @@ public class Mob : MonoBehaviour
         ghostFire.SetActive(false);
         shoes.SetActive(true);
         torsos.SetActive(true);
-        SetOpaque();
     }
 
     protected void OnTriggerExit2D(Collider2D other)
