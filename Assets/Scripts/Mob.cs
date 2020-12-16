@@ -34,7 +34,7 @@ public class Mob : MonoBehaviour
     {
         UpdateFeetPos();
     }
-    
+
     public void UpdateFeetPos()
     {
         MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
@@ -49,12 +49,15 @@ public class Mob : MonoBehaviour
     public void SetType(ulong type)
     {
         this.type = type;
-        if(type==2){
+        if (type == 2)
+        {
             SetGhostAppearance();
-        }else if(type==0){
+        }
+        else if (type == 0)
+        {
             SetAliveAppearance();
         }
-        
+
     }
 
     public void SetSprite(ulong sprite)
@@ -81,13 +84,15 @@ public class Mob : MonoBehaviour
         }
     }
 
-    public void SetGhostAppearance(){
+    public void SetGhostAppearance()
+    {
         ghostFire.SetActive(true);
         shoes.SetActive(false);
         torsos.SetActive(false);
     }
 
-    public void SetAliveAppearance(){
+    public void SetAliveAppearance()
+    {
         ghostFire.SetActive(false);
         shoes.SetActive(true);
         torsos.SetActive(true);
@@ -103,7 +108,7 @@ public class Mob : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-     //   int numCollisionEvents = ps.GetCollisionEvents(other, collisionEvents);
+        //   int numCollisionEvents = ps.GetCollisionEvents(other, collisionEvents);
         if (other.gameObject.tag == "Camouflage")
         {
             EnterCamo();
@@ -115,23 +120,25 @@ public class Mob : MonoBehaviour
         print("No longer in contact with " + other.transform.name);
     }
 
-    public void SetTransparent(){
+    public void SetTransparent()
+    {
         SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < spr.Length; i++)
-            {
-                Color color = spr[i].color;
-                color.a = 0.75f;
-                spr[i].color = color;
+        {
+            Color color = spr[i].color;
+            color.a = 0.75f;
+            spr[i].color = color;
         }
     }
 
-    public void SetOpaque(){
+    public void SetOpaque()
+    {
         SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < spr.Length; i++)
-            {
-                Color color = spr[i].color;
-                color.a = 1;
-                spr[i].color = color;
+        {
+            Color color = spr[i].color;
+            color.a = 1;
+            spr[i].color = color;
         }
     }
 
@@ -140,7 +147,7 @@ public class Mob : MonoBehaviour
         inCamo = true;
 
         SetTransparent();
-        
+
         if (GameObject.FindWithTag("Player").GetComponent<Player>().inCamo == false)
             Hide();
     }
@@ -180,5 +187,17 @@ public class Mob : MonoBehaviour
         var tmp = GetComponentInChildren<TextMeshPro>();
         if (tmp != null)
             tmp.enabled = true;
+    }
+
+    public void SetColor(float r, float g, float b)
+    {
+        SpriteRenderer[] spr = characterTransform.GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < spr.Length; i++)
+        {
+            Color color = spr[i].color;
+            color = new Color(r, g, b, 1.0f);
+            spr[i].color = color;
+        }
     }
 }

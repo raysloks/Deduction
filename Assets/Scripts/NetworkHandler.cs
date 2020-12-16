@@ -142,7 +142,7 @@ public class NetworkHandler
 
         if (message.idOfInitiator == playerMobId)
             game.player.emergencyButtonsLeft -= 1;
-
+        game.player.inLocker = false;
         umei.EventDescription = "Meeting Got Started";
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
@@ -209,7 +209,7 @@ public class NetworkHandler
             Mob mob = mobs[message.update.id];
             mob.SetType(message.type);
             mob.SetSprite(message.sprite);
-            //mob.sprite.color = new Color(message.color.x, message.color.y, message.color.z);
+            mob.SetColor(message.color.x, message.color.y, message.color.z);
         }
     }
 
