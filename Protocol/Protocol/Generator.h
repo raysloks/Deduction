@@ -17,9 +17,8 @@ public:
 
 	bool builtins_in_superdirectory = false;
 
-	bool is_up = false;
-	bool is_down = false;
-
 	bool mutex = false;
+	bool up = false;
+	bool down = false;
 };
 

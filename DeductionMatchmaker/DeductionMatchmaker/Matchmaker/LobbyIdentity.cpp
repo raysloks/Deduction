@@ -16,7 +16,7 @@ void LobbyIdentity::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->address.data(), size);
 	}
-	os.write((char*)&port, (sizeof(port) + 3) / 4 * 4);
+	os.write((char*)&this->port, (sizeof(this->port) + 3) / 4 * 4);
 }
 
 void LobbyIdentity::deserialize(std::istream& is)
@@ -33,6 +33,6 @@ void LobbyIdentity::deserialize(std::istream& is)
 		this->address.resize(size);
 		is.read((char*)this->address.data(), size);
 	}
-	is.read((char*)&port, (sizeof(port) + 3) / 4 * 4);
+	is.read((char*)&this->port, (sizeof(this->port) + 3) / 4 * 4);
 }
 

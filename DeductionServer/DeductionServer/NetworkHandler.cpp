@@ -365,7 +365,11 @@ uint64_t NetworkHandler::getUnusedSprite() const
 	return players.size();
 }
 
-void NetworkHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)
+void NetworkHandler::AcceptHandler(const asio::ip::udp::endpoint & endpoint)
+{
+}
+
+void NetworkHandler::ConnectHandler(const asio::ip::udp::endpoint & endpoint)
 {
 }
 
@@ -387,29 +391,6 @@ void NetworkHandler::AbilityUsedHandler(const asio::ip::udp::endpoint & endpoint
 			}
 		}
 	}
-}
-
-void NetworkHandler::DoorUpdateHandler(const asio::ip::udp::endpoint & endpoint, const DoorUpdate & message)
-{
-}
-
-void NetworkHandler::GameOverHandler(const asio::ip::udp::endpoint & endpoint, const GameOver & message)
-{
-}
-
-void NetworkHandler::GamePhaseUpdateHandler(const asio::ip::udp::endpoint & endpoint, const GamePhaseUpdate & message)
-{
-	// client shouldn't tell server when to switch phase like this
-
-	//if (message.phase == 1 && game.phase != GamePhase::Main)
-	//{
-	//	game.removeCorpses();
-	//	game.setPhase(GamePhase::Main, message.timer);
-	//}
-	//else if (message.phase == 2 && game.phase != GamePhase::Meeting)
-	//{
-	//	game.setPhase(GamePhase::Meeting, message.timer);
-	//}
 }
 
 void NetworkHandler::GameSettingsHandler(const asio::ip::udp::endpoint & endpoint, const GameSettings & message)
@@ -438,10 +419,6 @@ void NetworkHandler::GameStartRequestedHandler(const asio::ip::udp::endpoint & e
 			game.startGameCountdown();
 		}
 	}
-}
-
-void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)
-{
 }
 
 void NetworkHandler::HeartbeatHandler(const asio::ip::udp::endpoint & endpoint, const Heartbeat & message)
@@ -497,10 +474,6 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 	}
 }
 
-void NetworkHandler::LightUpdateHandler(const asio::ip::udp::endpoint & endpoint, const LightUpdate & message)
-{
-}
-
 void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & endpoint, const MeetingRequested & message)
 {
 	std::cout << "Meeting Started" << std::endl;;
@@ -519,29 +492,6 @@ void NetworkHandler::MeetingRequestedHandler(const asio::ip::udp::endpoint & end
 	}
 }
 
-void NetworkHandler::MobEjectedHandler(const asio::ip::udp::endpoint & endpoint, const MobEjected & message)
-{
-}
-
-void NetworkHandler::MobRemovedHandler(const asio::ip::udp::endpoint & endpoint, const MobRemoved & message)
-{
-	// client should not be able to tell server to kill a mob this way
-
-	//killMob(message.id);
-}
-
-void NetworkHandler::MobRoleUpdateHandler(const asio::ip::udp::endpoint & endpoint, const MobRoleUpdate & message)
-{
-}
-
-void NetworkHandler::MobStateUpdateHandler(const asio::ip::udp::endpoint & endpoint, const MobStateUpdate & message)
-{
-}
-
-void NetworkHandler::MobTeleportHandler(const asio::ip::udp::endpoint & endpoint, const MobTeleport & message)
-{
-}
-
 void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, const MobUpdate & message)
 {
 	auto it = players.find(endpoint);
@@ -553,10 +503,6 @@ void NetworkHandler::MobUpdateHandler(const asio::ip::udp::endpoint & endpoint, 
 		mob.position = message.position;
 		mob.time = message.time;
 	}
-}
-
-void NetworkHandler::PhotoPoseHandler(const asio::ip::udp::endpoint & endpoint, const PhotoPose & message)
-{
 }
 
 void NetworkHandler::PhotoTakenHandler(const asio::ip::udp::endpoint & endpoint, const PhotoTaken & message)
@@ -714,10 +660,6 @@ void NetworkHandler::SabotageTaskUpdateHandler(const asio::ip::udp::endpoint & e
 		if (mob.type == MobType::Player)
 			game.fixSabotage(message.sabotage);
 	}
-}
-
-void NetworkHandler::TaskListUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message)
-{
 }
 
 void NetworkHandler::TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message)

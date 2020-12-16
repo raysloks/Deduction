@@ -3,10 +3,10 @@ Net
 NetworkHandler
 Deduction/
 cpp
-super mutex
+super mutex up
 ../../DeductionServer/DeductionServer/Net/
 cs
-
+down
 ../../Assets/Scripts/Net/
 
 DeductionMatchmaker
@@ -14,11 +14,11 @@ Matchmaker
 MatchmakerHandler
 Matchmaker/
 cpp
-super
+super up
 ../../DeductionMatchmaker/DeductionMatchmaker/Matchmaker/
 cpp
-super
+super down
 ../../DeductionServer/DeductionServer/Matchmaker/
 cs
-
+down
 ../../Assets/Scripts/Matchmaker/

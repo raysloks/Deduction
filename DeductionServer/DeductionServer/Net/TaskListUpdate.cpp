@@ -11,9 +11,9 @@ void TaskListUpdate::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->tasks.data(), sizeof(uint16_t) * size);
 	}
-	os.write((char*)&password, (sizeof(password) + 3) / 4 * 4);
-	os.write((char*)&passwordSuffix, (sizeof(passwordSuffix) + 3) / 4 * 4);
-	os.write((char*)&passwordLocation, (sizeof(passwordLocation) + 3) / 4 * 4);
+	os.write((char*)&this->password, (sizeof(this->password) + 3) / 4 * 4);
+	os.write((char*)&this->passwordSuffix, (sizeof(this->passwordSuffix) + 3) / 4 * 4);
+	os.write((char*)&this->passwordLocation, (sizeof(this->passwordLocation) + 3) / 4 * 4);
 }
 
 void TaskListUpdate::deserialize(std::istream& is)
@@ -24,8 +24,8 @@ void TaskListUpdate::deserialize(std::istream& is)
 		this->tasks.resize(size);
 		is.read((char*)this->tasks.data(), sizeof(uint16_t) * size);
 	}
-	is.read((char*)&password, (sizeof(password) + 3) / 4 * 4);
-	is.read((char*)&passwordSuffix, (sizeof(passwordSuffix) + 3) / 4 * 4);
-	is.read((char*)&passwordLocation, (sizeof(passwordLocation) + 3) / 4 * 4);
+	is.read((char*)&this->password, (sizeof(this->password) + 3) / 4 * 4);
+	is.read((char*)&this->passwordSuffix, (sizeof(this->passwordSuffix) + 3) / 4 * 4);
+	is.read((char*)&this->passwordLocation, (sizeof(this->passwordLocation) + 3) / 4 * 4);
 }
 

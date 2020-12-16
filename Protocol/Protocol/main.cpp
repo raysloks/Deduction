@@ -19,7 +19,8 @@
 
 #include "Config.h"
 
-const std::vector<std::string> basic_types = { "bool",
+const std::vector<std::string> basic_types = {
+	"bool",
 	"float", "double",
 	"int8", "int16", "int32", "int64",
 	"uint8", "uint16", "uint32", "uint64",
@@ -84,12 +85,6 @@ int main()
 				}
 
 				type.fields.push_back(field);
-			}
-
-			if (!type.up && !type.down)
-			{
-				type.up = true;
-				type.down = true;
 			}
 
 			types[entry.path().stem().string()] = type;

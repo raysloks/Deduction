@@ -332,20 +332,24 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 		if (can_connect)
 		{
 			uint8_t message_index = 1;
-			for (auto type : types) // TODO only message types
+			for (auto [name, type] : types) // TODO only message types
 			{
-				f << "	public void Send(in " << type.first << " message)" << std::endl;
-				f << "	{" << std::endl;
-				f << "		if (endpoint == null)" << std::endl; // perhaps there is a better solution?
-				f << "			return;" << std::endl;
-				f << "		MemoryStream stream = new MemoryStream();" << std::endl;
-				f << "		BinaryWriter writer = new BinaryWriter(stream);" << std::endl;
-				f << "		writer.Write((byte)" << std::to_string(message_index) << ");" << std::endl;
-				f << "		message.Serialize(writer);" << std::endl;
-				f << "		byte[] bytes = stream.ToArray();" << std::endl;
-				f << "		client.SendAsync(bytes, bytes.Length, endpoint);" << std::endl;
-				f << "	}" << std::endl << std::endl;
-				++message_index;
+				if (up && type.down || down && type.up)
+				{
+					f << "	public void Send(in " << name << " message)" << std::endl;
+					f << "	{" << std::endl;
+					f << "		if (endpoint == null)" << std::endl; // perhaps there is a better solution?
+					f << "			return;" << std::endl;
+					f << "		MemoryStream stream = new MemoryStream();" << std::endl;
+					f << "		BinaryWriter writer = new BinaryWriter(stream);" << std::endl;
+					f << "		writer.Write((byte)" << std::to_string(message_index) << ");" << std::endl;
+					f << "		message.Serialize(writer);" << std::endl;
+					f << "		byte[] bytes = stream.ToArray();" << std::endl;
+					f << "		client.SendAsync(bytes, bytes.Length, endpoint);" << std::endl;
+					f << "	}" << std::endl << std::endl;
+				}
+				if (type.down || type.up)
+					++message_index;
 			}
 		}
 
@@ -396,15 +400,19 @@ void CsGenerator::generate(const std::map<std::string, Structure>& types, const 
 
 			{
 				uint8_t message_index = 1;
-				for (auto type : types) // TODO only message types
+				for (auto [name, type] : types) // TODO only message types
 				{
-					f << "		case " << std::to_string(message_index) << ":" << std::endl;
-					f << "		{" << std::endl;
-					f << "			" << type.first << " message = " << type.first << ".Deserialize(reader);" << std::endl;
-					f << "			message_queue.Enqueue(() => handler." << type.first << "Handler(endpoint, message));" << std::endl;
-					f << "			break;" << std::endl;
-					f << "		}" << std::endl;
-					++message_index;
+					if (up && type.up || down && type.down)
+					{
+						f << "		case " << std::to_string(message_index) << ":" << std::endl;
+						f << "		{" << std::endl;
+						f << "			" << name << " message = " << name << ".Deserialize(reader);" << std::endl;
+						f << "			message_queue.Enqueue(() => handler." << name << "Handler(endpoint, message));" << std::endl;
+						f << "			break;" << std::endl;
+						f << "		}" << std::endl;
+					}
+					if (type.down || type.up)
+						++message_index;
 				}
 			}
 

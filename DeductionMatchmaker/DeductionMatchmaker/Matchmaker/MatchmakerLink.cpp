@@ -70,11 +70,12 @@ void MatchmakerLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endp
 					os.write((const char*)&crc, sizeof(crc));
 					os.put(1);
 					socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
+					handler->AcceptHandler(endpoint);
 					break;
 				}
 				case 1:
 				{
-					handler->ConnectionHandler(endpoint);
+					handler->ConnectHandler(endpoint);
 					break;
 				}
 				default:

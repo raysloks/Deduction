@@ -6,8 +6,8 @@
 
 void PlayerUpdate::serialize(std::ostream& os) const
 {
-	os.write((char*)&id, (sizeof(id) + 3) / 4 * 4);
-	os.write((char*)&mob, (sizeof(mob) + 3) / 4 * 4);
+	os.write((char*)&this->id, (sizeof(this->id) + 3) / 4 * 4);
+	os.write((char*)&this->mob, (sizeof(this->mob) + 3) / 4 * 4);
 	{
 		uint16_t size = this->name.size();
 		os.write((char*)&size, sizeof(size));
@@ -17,8 +17,8 @@ void PlayerUpdate::serialize(std::ostream& os) const
 
 void PlayerUpdate::deserialize(std::istream& is)
 {
-	is.read((char*)&id, (sizeof(id) + 3) / 4 * 4);
-	is.read((char*)&mob, (sizeof(mob) + 3) / 4 * 4);
+	is.read((char*)&this->id, (sizeof(this->id) + 3) / 4 * 4);
+	is.read((char*)&this->mob, (sizeof(this->mob) + 3) / 4 * 4);
 	{
 		uint16_t size;
 		is.read((char*)&size, sizeof(size));

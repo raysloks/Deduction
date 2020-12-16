@@ -15,7 +15,11 @@ void MatchmakerHandler::UpdateLobby()
 	link.Connect(asio::ip::udp::endpoint(asio::ip::address::from_string("172.105.79.194"), 58712));
 }
 
-void MatchmakerHandler::ConnectionHandler(const asio::ip::udp::endpoint & endpoint)
+void MatchmakerHandler::AcceptHandler(const asio::ip::udp::endpoint & endpoint)
+{
+}
+
+void MatchmakerHandler::ConnectHandler(const asio::ip::udp::endpoint & endpoint)
 {
 	LobbyIdentity message;
 	message.port = handler->link.socket.local_endpoint().port();

@@ -2,7 +2,8 @@
 
 #include <fstream>
 
-std::map<std::string, std::string> basic_translations = { {"bool", "bool"},
+std::map<std::string, std::string> basic_translations = {
+	{"bool", "bool"},
 	{"float", "float"}, {"double", "double"},
 	{"int8", "int8_t"}, {"int16", "int16_t"}, {"int32", "int32_t"}, {"int64", "int64_t"},
 	{"uint8", "uint8_t"}, {"uint16", "uint16_t"}, {"uint32", "uint32_t"}, {"uint64", "uint64_t"},
@@ -22,6 +23,7 @@ void serializeFieldCpp(std::ofstream& f, Field field)
 	switch (field.special)
 	{
 	case FS_NONE:
+	{
 		if (field.type)
 		{
 			if (!field.type->flat())
@@ -33,43 +35,63 @@ void serializeFieldCpp(std::ofstream& f, Field field)
 		if (field.type_name == "string")
 		{
 			f << "	{" << std::endl;
-			f << "		uint16_t size = this->" << field.name << ".size();" << std::endl;
+			f << "		uint16_t size = " << field.name << ".size();" << std::endl;
 			f << "		os.write((char*)&size, sizeof(size));" << std::endl;
-			f << "		os.write((char*)this->" << field.name << ".data(), size);" << std::endl;
+			f << "		os.write((char*)" << field.name << ".data(), size);" << std::endl;
 			f << "	}" << std::endl;
 			break;
 		}
 		f << "	os.write((char*)&" << field.name << ", (sizeof(" << field.name << ") + 3) / 4 * 4);" << std::endl;
-		break;
+	}
+	break;
 	case FS_POINTER:
+	{
 		f << "	if (" << field.name << ")" << std::endl;
 		f << "	{" << std::endl;
 		f << "		os.put(true);" << std::endl;
-		f << "		" << field.name << "->serialize(os);" << std::endl;
+		Field value = field;
+		value.name = "value";
+		value.special = FS_NONE;
+		if (value.flat())
+		{
+			f << "		os.write((char*)" << field.name << ".get(), sizeof(" << translateCpp(field.type_name) << "));" << std::endl;
+		}
+		else
+		{
+			f << "		auto&& value = *" << field.name << ";" << std::endl;
+			serializeFieldCpp(f, value);
+		}
 		f << "	}" << std::endl;
 		f << "	else" << std::endl;
 		f << "	{" << std::endl;
 		f << "		os.put(false);" << std::endl;
 		f << "	}" << std::endl;
-		break;
+	}
+	break;
 	case FS_VECTOR:
+	{
 		f << "	{" << std::endl;
-		f << "		uint16_t size = this->" << field.name << ".size();" << std::endl;
+		f << "		uint16_t size = " << field.name << ".size();" << std::endl;
 		f << "		os.write((char*)&size, sizeof(size));" << std::endl;
-		if (field.type)
+		Field element = field;
+		element.name = "element";
+		element.special = FS_NONE;
+		if (element.flat())
 		{
-			if (!field.type->flat())
-			{
-				f << "		for (size_t i = 0; i < size; ++i)" << std::endl;
-				f << "			this->" << field.name << "[i]->serialize(os);" << std::endl;
-				f << "	}" << std::endl;
-				break;
-			}
+			// TODO add static assert that type is trivially copyable
+			f << "		os.write((char*)" << field.name << ".data(), sizeof(" << translateCpp(field.type_name) << ") * size);" << std::endl;
 		}
-		// TODO add static assert that type is trivially copyable
-		f << "		os.write((char*)this->" << field.name << ".data(), sizeof(" << translateCpp(field.type_name) << ") * size);" << std::endl;
+		else
+		{
+			f << "		for (size_t i = 0; i < size; ++i)" << std::endl;
+			f << "		{" << std::endl;
+			f << "			auto&& element = " << field.name << "[i];" << std::endl;
+			serializeFieldCpp(f, element);
+			f << "		}" << std::endl;
+		}
 		f << "	}" << std::endl;
-		break;
+	}
+	break;
 	}
 }
 
@@ -78,6 +100,7 @@ void deserializeFieldCpp(std::ofstream& f, Field field)
 	switch (field.special)
 	{
 	case FS_NONE:
+	{
 		if (field.type)
 		{
 			if (!field.type->flat())
@@ -91,38 +114,58 @@ void deserializeFieldCpp(std::ofstream& f, Field field)
 			f << "	{" << std::endl;
 			f << "		uint16_t size;" << std::endl;
 			f << "		is.read((char*)&size, sizeof(size));" << std::endl;
-			f << "		this->" << field.name << ".resize(size);" << std::endl;
-			f << "		is.read((char*)this->" << field.name << ".data(), size);" << std::endl;
+			f << "		" << field.name << ".resize(size);" << std::endl;
+			f << "		is.read((char*)" << field.name << ".data(), size);" << std::endl;
 			f << "	}" << std::endl;
 			break;
 		}
 		f << "	is.read((char*)&" << field.name << ", (sizeof(" << field.name << ") + 3) / 4 * 4);" << std::endl;
-		break;
+	}
+	break;
 	case FS_POINTER:
+	{
 		f << "	if (is.get())" << std::endl;
 		f << "	{" << std::endl;
 		f << "		" << field.name << " = std::make_unique<" << field.type_name << ">();" << std::endl;
-		f << "		" << field.name << "->deserialize(is);" << std::endl;
+		Field value = field;
+		value.name = "value";
+		value.special = FS_NONE;
+		if (value.flat())
+		{
+			f << "		is.read((char*)" << field.name << ".get(), sizeof(" << translateCpp(field.type_name) << "));" << std::endl;
+		}
+		else
+		{
+			f << "		auto&& value = *" << field.name << ";" << std::endl;
+			deserializeFieldCpp(f, value);
+		}
 		f << "	}" << std::endl;
-		break;
+	}
+	break;
 	case FS_VECTOR:
+	{
 		f << "	{" << std::endl;
 		f << "		uint16_t size;" << std::endl;
 		f << "		is.read((char*)&size, sizeof(size));" << std::endl;
-		f << "		this->" << field.name << ".resize(size);" << std::endl;
-		if (field.type)
+		f << "		" << field.name << ".resize(size);" << std::endl;
+		Field element = field;
+		element.name = "element";
+		element.special = FS_NONE;
+		if (element.flat())
 		{
-			if (!field.type->flat())
-			{
-				f << "		for (size_t i = 0; i < size; ++i)" << std::endl;
-				f << "			this->" << field.name << "[i]->deserialize(is);" << std::endl;
-				f << "	}" << std::endl;
-				break;
-			}
+			f << "		is.read((char*)" << field.name << ".data(), sizeof(" << translateCpp(field.type_name) << ") * size);" << std::endl;
 		}
-		f << "		is.read((char*)this->" << field.name << ".data(), sizeof(" << translateCpp(field.type_name) << ") * size);" << std::endl;
+		else
+		{
+			f << "		for (size_t i = 0; i < size; ++i)" << std::endl;
+			f << "		{" << std::endl;
+			f << "			auto&& element = " << field.name << "[i];" << std::endl;
+			deserializeFieldCpp(f, element);
+			f << "		}" << std::endl;
+		}
 		f << "	}" << std::endl;
-		break;
+	}
+	break;
 	}
 }
 
@@ -228,6 +271,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 			{
 				for (auto field : type.second.fields)
 				{
+					field.name = "this->" + field.name;
 					serializeFieldCpp(f, field);
 				}
 			}
@@ -245,6 +289,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 			{
 				for (auto field : type.second.fields)
 				{
+					field.name = "this->" + field.name;
 					deserializeFieldCpp(f, field);
 				}
 			}
@@ -267,20 +312,17 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 		f << "// WARNING : Auto-generated file, changes made will disappear when re-generated." << std::endl << std::endl;
 
-		f << "#include <asio.hpp>" << std::endl;
+		f << "#include <asio.hpp>" << std::endl << std::endl;
 
 		if (can_accept)
 		{
-			f << "#include <map>" << std::endl;
+			f << "#include <map>" << std::endl << std::endl;
 		}
 
 		if (mutex)
 		{
 			f << "#include <mutex>" << std::endl;
 		}
-
-		f << std::endl;
-
 		for (auto type : types)
 		{
 			f << "#include \"" << type.first << ".h\"" << std::endl;
@@ -420,6 +462,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 					f << "					os.write((const char*)&crc, sizeof(crc));" << std::endl;
 					f << "					os.put(1);" << std::endl;
 					f << "					socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});" << std::endl;
+					f << "					handler->AcceptHandler(endpoint);" << std::endl;
 				}
 				f << "					break;" << std::endl;
 				f << "				}" << std::endl;
@@ -431,7 +474,7 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 					{
 						f << "					std::lock_guard lock(mutex);" << std::endl;
 					}
-					f << "					handler->ConnectionHandler(endpoint);" << std::endl;
+					f << "					handler->ConnectHandler(endpoint);" << std::endl;
 				}
 				f << "					break;" << std::endl;
 				f << "				}" << std::endl;
@@ -460,20 +503,20 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 			{
 				uint8_t message_index = 1;
-				for (auto type : types) // TODO only message types
+				for (auto [name, type] : types) // TODO only message types
 				{
-					f << "	case " << std::to_string(message_index) << ":" << std::endl;
-					f << "	{" << std::endl;
-					f << "		" << type.first << " message;" << std::endl;
-					f << "		message.deserialize(is);" << std::endl;
-					if (mutex)
+					if (up && type.up || down && type.down)
 					{
-						f << "		std::lock_guard lock(mutex);" << std::endl;
+						f << "	case " << std::to_string(message_index) << ":" << std::endl;
+						f << "	{" << std::endl;
+						f << "		" << name << " message;" << std::endl;
+						f << "		message.deserialize(is);" << std::endl;
+						f << "		handler->" << name << "Handler(endpoint, message);" << std::endl;
+						f << "		break;" << std::endl;
+						f << "	}" << std::endl;
 					}
-					f << "		handler->" << type.first << "Handler(endpoint, message);" << std::endl;
-					f << "		break;" << std::endl;
-					f << "	}" << std::endl;
-					++message_index;
+					if (type.down || type.up)
+						++message_index;
 				}
 			}
 
@@ -486,17 +529,21 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 
 		{
 			uint8_t message_index = 1;
-			for (auto type : types) // TODO only message types
+			for (auto [name, type] : types) // TODO only message types
 			{
-				f << "void " << link_name << "::Send(const asio::ip::udp::endpoint& endpoint, const " << type.first << "& message)" << std::endl;
-				f << "{" << std::endl;
-				f << "	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();" << std::endl;
-				f << "	std::ostream os(buffer.get());" << std::endl;
-				f << "	os.put(" << std::to_string(message_index) << ");" << std::endl;
-				f << "	message.serialize(os);" << std::endl;
-				f << "	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});" << std::endl;
-				f << "}" << std::endl << std::endl;
-				++message_index;
+				if (up && type.down || down && type.up)
+				{
+					f << "void " << link_name << "::Send(const asio::ip::udp::endpoint& endpoint, const " << name << "& message)" << std::endl;
+					f << "{" << std::endl;
+					f << "	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();" << std::endl;
+					f << "	std::ostream os(buffer.get());" << std::endl;
+					f << "	os.put(" << std::to_string(message_index) << ");" << std::endl;
+					f << "	message.serialize(os);" << std::endl;
+					f << "	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});" << std::endl;
+					f << "}" << std::endl << std::endl;
+				}
+				if (type.down || type.up)
+					++message_index;
 			}
 		}
 
@@ -506,14 +553,20 @@ void CppGenerator::generate(const std::map<std::string, Structure>& types, const
 	{
 		std::ofstream f(destination_path / (protocol.prefix + "HandlerPrototypes.h"));
 
-		if (can_connect)
+		if (can_accept)
 		{
-			f << "	void ConnectionHandler(const asio::ip::udp::endpoint& endpoint);" << std::endl;
+			f << "	void AcceptHandler(const asio::ip::udp::endpoint& endpoint);" << std::endl;
 		}
 
-		for (auto type : types) // TODO only message types
+		if (can_connect)
 		{
-			f << "	void " << type.first << "Handler(const asio::ip::udp::endpoint& endpoint, const " << type.first << "& message);" << std::endl;
+			f << "	void ConnectHandler(const asio::ip::udp::endpoint& endpoint);" << std::endl;
+		}
+
+		for (auto [name, type] : types)
+		{
+			if (up && type.up || down && type.down)
+				f << "	void " << name << "Handler(const asio::ip::udp::endpoint& endpoint, const " << name << "& message);" << std::endl;
 		}
 
 		f.close();

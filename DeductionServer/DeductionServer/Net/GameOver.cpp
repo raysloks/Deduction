@@ -11,7 +11,7 @@ void GameOver::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->winners.data(), sizeof(uint64_t) * size);
 	}
-	os.write((char*)&role, (sizeof(role) + 3) / 4 * 4);
+	os.write((char*)&this->role, (sizeof(this->role) + 3) / 4 * 4);
 }
 
 void GameOver::deserialize(std::istream& is)
@@ -22,6 +22,6 @@ void GameOver::deserialize(std::istream& is)
 		this->winners.resize(size);
 		is.read((char*)this->winners.data(), sizeof(uint64_t) * size);
 	}
-	is.read((char*)&role, (sizeof(role) + 3) / 4 * 4);
+	is.read((char*)&this->role, (sizeof(this->role) + 3) / 4 * 4);
 }
 

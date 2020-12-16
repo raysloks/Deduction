@@ -13,8 +13,8 @@ void PhotoTaken::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->poses.data(), sizeof(PhotoPose) * size);
 	}
-	os.write((char*)&photographer, (sizeof(photographer) + 3) / 4 * 4);
-	os.write((char*)&index, (sizeof(index) + 3) / 4 * 4);
+	os.write((char*)&this->photographer, (sizeof(this->photographer) + 3) / 4 * 4);
+	os.write((char*)&this->index, (sizeof(this->index) + 3) / 4 * 4);
 }
 
 void PhotoTaken::deserialize(std::istream& is)
@@ -25,7 +25,7 @@ void PhotoTaken::deserialize(std::istream& is)
 		this->poses.resize(size);
 		is.read((char*)this->poses.data(), sizeof(PhotoPose) * size);
 	}
-	is.read((char*)&photographer, (sizeof(photographer) + 3) / 4 * 4);
-	is.read((char*)&index, (sizeof(index) + 3) / 4 * 4);
+	is.read((char*)&this->photographer, (sizeof(this->photographer) + 3) / 4 * 4);
+	is.read((char*)&this->index, (sizeof(this->index) + 3) / 4 * 4);
 }
 

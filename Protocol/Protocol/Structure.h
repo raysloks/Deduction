@@ -8,8 +8,6 @@
 class Structure
 {
 public:
-	Structure();
-
 	std::vector<Field> fields;
 
 	std::set<std::string> dependencies, delayed_dependencies, system_dependencies, application_dependencies;

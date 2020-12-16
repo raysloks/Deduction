@@ -3,9 +3,10 @@
 // WARNING : Auto-generated file, changes made will disappear when re-generated.
 
 #include <asio.hpp>
-#include <map>
-#include <mutex>
 
+#include <map>
+
+#include <mutex>
 #include "AbilityUsed.h"
 #include "DoorUpdate.h"
 #include "GameOver.h"
