@@ -116,9 +116,9 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         CheckSensor cs = ms.GetComponent<CheckSensor>();
         cs.gc = gc;
         cs.evidenceHandler = evidenceHandler;
+        SetItem(0);
         gc.player.ResetArrows();
         gc.player.MotionSensorCheck = false;
-        SetItem(0);
     }
 
     private void SmokeGrenadeClick()
