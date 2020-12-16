@@ -20,6 +20,11 @@ public class Player : Mob
 
     [HideInInspector] public Light2D visionLight;
     [HideInInspector] public bool cameraFlashing = false;
+    [HideInInspector] public Vector3 move;
+    [HideInInspector] public bool MotionSensorCheck = false;
+    public GameObject UpDownArrow;
+    public GameObject LeftRightArrow;
+
 
     private new void Awake()
     {
@@ -29,7 +34,7 @@ public class Player : Mob
 
     private new void Update()
     {
-        Vector3 move = new Vector2();
+        move = new Vector2();
         if (canMove && (!EventSystem.current.currentSelectedGameObject || controller.phase == GamePhase.Main))
         {
             move.x += Input.GetAxis("Horizontal");
@@ -76,6 +81,30 @@ public class Player : Mob
 
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y);
 
+        if (MotionSensorCheck)
+        {
+            LeftRightArrow.SetActive(false);
+            UpDownArrow.SetActive(false);
+            if (move.x == 0f && move.y == 0f)
+            {
+
+                Debug.Log("LEFTRIGHT");
+                LeftRightArrow.SetActive(true);
+
+            }
+            else if (Mathf.Abs(move.y) > Mathf.Abs(move.x))
+            {
+                Debug.Log("LEFTRIGHT");
+                LeftRightArrow.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("UPDOWN");
+                UpDownArrow.SetActive(true);
+            }
+        }
+
+
         base.Update();
     }
 
@@ -87,6 +116,13 @@ public class Player : Mob
             return Mathf.Max(1.0f, controller.settings.crewmateVision * controller.lightCurrent);
         else
             return controller.settings.impostorVision;
+    }
+
+    public void ResetArrows()
+    {
+        LeftRightArrow.SetActive(false);
+        UpDownArrow.SetActive(false);
+
     }
 
     private new void OnTriggerEnter2D(Collider2D other)
