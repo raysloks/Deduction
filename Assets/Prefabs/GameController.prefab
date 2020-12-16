@@ -116,6 +116,9 @@ MonoBehaviour:
   dropdownPrefab: {fileID: 7707753019583089417, guid: 319ecb0b1ff29c742910d04fa0e47a86,
     type: 3}
   game: {fileID: 2324288705218545755}
+  grid1: {fileID: 0}
+  grid2: {fileID: 0}
+  spriteCollision: {fileID: 0}
 --- !u!114 &2324288705218545734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +196,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 2324288705218545755}
+  sabotageMenuPrefabs:
+  - {fileID: 7574060461238470259, guid: b68c606b8be7f394b92e20867589178b, type: 3}
+  - {fileID: 8268012837553857763, guid: f49bf6cb8e2a1df4f93efbef2e5a4b2f, type: 3}
 --- !u!114 &2242851898714657401
 MonoBehaviour:
   m_ObjectHideFlags: 0

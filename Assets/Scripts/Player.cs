@@ -131,7 +131,7 @@ public class Player : Mob
     private new void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
-        if (other.CompareTag("Area"))
+        if (other.CompareTag("Area") /*&& controller.areaText.gameObject.activeInHierarchy*/)
         {
             inAreas += 1;
             if (!inLocker)
@@ -157,7 +157,7 @@ public class Player : Mob
     private new void OnTriggerExit2D(Collider2D other)
     {
         base.OnTriggerExit2D(other);
-        if (other.CompareTag("Area"))
+        if (other.CompareTag("Area") /*&& controller.areaText.gameObject.activeInHierarchy*/)
         {
             inAreas -= 1;
             if (inAreas == 0)
@@ -210,7 +210,6 @@ public class Player : Mob
             step++;
             if (step == 2)
             {
-                Debug.Log("Coroutine: " + areaName);
                 controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
                 controller.areaText.text = areaName;
             }

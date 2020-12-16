@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class MapManager : MonoBehaviour
 {
     public GameController game;
+    public GameObject sabotageMenus;
 
     public void CheckForMapChange()
     {
@@ -12,7 +13,15 @@ public class MapManager : MonoBehaviour
         {
             game.doorManager.doors.Clear();
             game.taskManager.minigameInitiators.Clear();
-            SceneManager.LoadScene(game.settings.map);
+            game.GetComponent<SabotageButtonManager>().map = game.settings.map;
+            game.GetComponent<SabotageButtonManager>().UpdateButtons();
+
+            SceneManager.LoadScene(game.GetComponent<SabotageButtonManager>().map);
+        }
+        else
+        {
+            game.GetComponent<SabotageButtonManager>().map = game.settings.map;
+            game.GetComponent<SabotageButtonManager>().UpdateButtons();
         }
     }
 }
