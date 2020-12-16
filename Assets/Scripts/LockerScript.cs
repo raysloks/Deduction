@@ -68,7 +68,6 @@ public class LockerScript : Interactable
             occupant.GetComponent<NetworkMob>().inLocker = true;
         }
         occupant.transform.position = this.transform.position;
-
     }
 
     public void RemovePerson()

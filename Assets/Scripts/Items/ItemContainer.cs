@@ -22,8 +22,8 @@ public class ItemContainer : Interactable
     // Start is called before the first frame update
     void Start()
     {
-        Restock(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
-        EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, waitForRestock);
+        Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length));
+        EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
     }
 
 
@@ -53,7 +53,7 @@ public class ItemContainer : Interactable
 
     }
 
-    public void waitForRestock(EventCallbacks.Event eventInfo)
+    public void WaitForRestock(EventCallbacks.Event eventInfo)
     {
         CooldownEvent e = (CooldownEvent)eventInfo;
 
@@ -102,7 +102,7 @@ public class ItemContainer : Interactable
                 ItemTaken();
                 PickupCooldown message = new PickupCooldown();
                 message.child = transform.GetSiblingIndex();
-                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length));
                 game.handler.link.Send(message);
             }
         

@@ -410,6 +410,9 @@ public class GameController : MonoBehaviour
         {
             taskManager.tasks.Clear();
             taskManager.sabotageTasks.Clear();
+            for (int i = taskManager.indicators.Count - 1; i >= 0 ; i--)
+                Destroy(taskManager.indicators[i]);
+            taskManager.indicators.Clear();
             lightTarget = 1.0f;
             lightCurrent = 1.0f;
         }
@@ -418,6 +421,8 @@ public class GameController : MonoBehaviour
         {
             player.emergencyButtonsLeft = (int)settings.emergencyMeetingsPerPlayer;
             globalLight.intensity = 0.2f;
+            areaText.text = "";
+            areaText.rectTransform.anchoredPosition = new Vector2(0, -65);
         }
 
         if (phase == GamePhase.Main)

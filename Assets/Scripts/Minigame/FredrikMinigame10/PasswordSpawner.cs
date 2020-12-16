@@ -37,7 +37,7 @@ public class PasswordSpawner : MonoBehaviour
 
         int r = (int)(password % (ulong)lines.Length);
         string str = lines[r].Trim();
-        str += (suffix % 10000).ToString().PadLeft(4, '0');
+        str += (suffix % 100).ToString().PadLeft(2, '0');
         return str;
     }
 

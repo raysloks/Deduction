@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 //[ExecuteInEditMode]
 public class SmokeGrenade : MonoBehaviour
 {
-    
+    public AudioClip detonation;
     private ParticleSystem ps;
     private List<PlayerObject> fires = new List<PlayerObject>();
     private List<bool> LastOverlap = new List<bool>();
@@ -15,7 +15,7 @@ public class SmokeGrenade : MonoBehaviour
 
     void Start()
     {
-        ps = GetComponent<ParticleSystem>();       
+        ps = GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -94,5 +94,4 @@ public class SmokeGrenade : MonoBehaviour
             this.Overlapped = o;
         }
     }
-
 }

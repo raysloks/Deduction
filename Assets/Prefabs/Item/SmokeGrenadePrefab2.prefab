@@ -189,7 +189,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 0.6666667, b: 0.23529412, a: 0.7058824}
-      maxColor: {r: 0.594278, g: 0.5915361, b: 0.5943396, a: 0.5019608}
+      maxColor: {r: 0.75, g: 0.75, b: 0.75, a: 0.5019608}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.8784314, b: 0.1882353, a: 0}
@@ -4660,6 +4660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757e4c51a43c02e4b957a02745f48717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detonation: {fileID: 8300000, guid: 552c46f901c5b0c44a441b424a5dd9c7, type: 3}
 --- !u!58 &296963945230021822
 CircleCollider2D:
   m_ObjectHideFlags: 0

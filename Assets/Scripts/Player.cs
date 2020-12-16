@@ -26,6 +26,10 @@ public class Player : Mob
     public GameObject LeftRightArrow;
 
 
+    private AudioSource audioSource;
+    private int inAreas;
+    private string lastArea;
+
     private new void Awake()
     {
         base.Awake();
@@ -42,7 +46,6 @@ public class Player : Mob
 
             move = Vector3.ClampMagnitude(move, 1f);
             transform.position += move * Time.deltaTime * controller.settings.playerSpeed;
-            
         }
 
         if (move.x > 0f)
@@ -130,10 +133,21 @@ public class Player : Mob
         base.OnTriggerEnter2D(other);
         if (other.CompareTag("Area"))
         {
+            inAreas += 1;
             if (!inLocker)
             {
-                controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
-                controller.areaText.text = other.name;
+                lastArea = controller.areaText.text;
+
+                if (inAreas == 1)
+                {
+                    controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
+                    controller.areaText.text = other.name;
+                }
+                else
+                {
+                    controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
+                    StartCoroutine(UpdateAreaName(other.name));
+                }
             }
             else
                 controller.areaText.GetComponent<Animator>().SetBool("InLocker", true);
@@ -143,12 +157,18 @@ public class Player : Mob
     private new void OnTriggerExit2D(Collider2D other)
     {
         base.OnTriggerExit2D(other);
-        if (other.CompareTag("Area") /*&& controller.areaText.text == other.name*/)
+        if (other.CompareTag("Area"))
         {
-            if (controller.areaText.GetComponent<Animator>().GetBool("InLocker") == false)
-                controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
-            else
-                controller.areaText.GetComponent<Animator>().SetBool("InLocker", false);
+            inAreas -= 1;
+            if (inAreas == 0)
+            {
+                if (controller.areaText.GetComponent<Animator>().GetBool("InLocker") == false)
+                    controller.areaText.GetComponent<Animator>().SetTrigger("ExitArea");
+                else
+                    controller.areaText.GetComponent<Animator>().SetBool("InLocker", false);
+            }
+            else if (controller.areaText.text == other.name)
+                controller.areaText.text = lastArea;
         }
     }
 
@@ -181,4 +201,21 @@ public class Player : Mob
         }
         controller.UpdateHidden();
     }
- }
+
+    IEnumerator UpdateAreaName(string areaName)
+    {
+        int step = 0;
+        while (step < 2)
+        {
+            step++;
+            if (step == 2)
+            {
+                Debug.Log("Coroutine: " + areaName);
+                controller.areaText.GetComponent<Animator>().SetTrigger("EnterArea");
+                controller.areaText.text = areaName;
+            }
+            else
+                yield return new WaitForSeconds(controller.areaText.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
+        }
+    }
+}

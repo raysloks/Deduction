@@ -27,11 +27,6 @@ public class TaskManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < tasks.Count; ++i)
-        {
-
-        }
-
         for (int i = indicators.Count; i < tasks.Count; ++i)
         {
             var indicator = Instantiate(indicatorPrefab, indicatorParent);

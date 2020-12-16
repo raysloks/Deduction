@@ -16,7 +16,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade };
     [HideInInspector]public Item myItem;
 
-    public GameObject player;
+    public Player player;
     public GameController gc;
     public TextMeshProUGUI text2;
     public GameObject buttonItemImage;
@@ -47,7 +47,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
-        //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+        //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length)));
 
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
@@ -89,7 +89,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 childGo.GetComponent<ItemContainer>().ItemTaken();
                 PickupCooldown message = new PickupCooldown();
                 message.child = index;
-                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                message.random = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length);
                 gc.handler.link.Send(message);
             }
         }
@@ -102,6 +102,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             gc.handler.link.Send(new TakePhoto());
             photosTaken++;
+            GetComponent<AudioSource>().Play();
         }
         if (photosTaken >= maxPhotos)
         {
@@ -195,7 +196,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (pc.previous == GamePhase.Setup)
         {
-           int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+           int r = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length);
             SetItem(2);
         }
     }
