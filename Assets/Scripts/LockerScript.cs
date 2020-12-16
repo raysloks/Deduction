@@ -14,7 +14,7 @@ public class LockerScript : Interactable
 
     void Start()
     {
-        if (locker_index > 0)
+        if (locker_index >= 0)
             FindObjectOfType<LockerManager>().Lockers[locker_index] = this;
         occupied = false;
         GetComponent<ShadowCaster2D>().castsShadows = false;
