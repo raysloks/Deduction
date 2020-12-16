@@ -125,6 +125,45 @@
 				duration 15
 			}
 			{
+				type "DoorSabotage"
+				doors
+				[
+					6
+					7
+					8
+				]
+				duration 15
+			}
+			{
+				type "DoorSabotage"
+				doors
+				[
+					9
+					10
+					11
+				]
+				duration 15
+			}
+			{
+				type "DoorSabotage"
+				doors
+				[
+					12
+					13
+					14
+				]
+				duration 15
+			}
+			{
+				type "DoorSabotage"
+				doors
+				[
+					15
+					16
+				]
+				duration 15
+			}
+			{
 				type "VoiceSabotage"
 				minigame_index 5100
 			}
