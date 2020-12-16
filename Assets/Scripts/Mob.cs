@@ -163,7 +163,7 @@ public class Mob : MonoBehaviour
 
     public void Hide()
     {
-        SpriteRenderer[] spr = characterTransform.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
         Debug.Log(spr.Length);
 
@@ -178,7 +178,7 @@ public class Mob : MonoBehaviour
 
     public void Reveal()
     {
-        SpriteRenderer[] spr = characterTransform.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
         for (int i = 0; i < spr.Length; i++)
         {
