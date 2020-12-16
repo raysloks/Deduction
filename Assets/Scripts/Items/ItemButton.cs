@@ -6,7 +6,9 @@ using TMPro;
 using EventCallbacks;
 using System;
 
-public class ItemButton : MonoBehaviour
+using UnityEngine.EventSystems;
+
+public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private static ItemButton instance;
 
@@ -36,6 +38,8 @@ public class ItemButton : MonoBehaviour
 
     delegate void Calculation();
     Calculation Click;
+    Calculation Enter;
+    Calculation Exit;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +49,7 @@ public class ItemButton : MonoBehaviour
         backgroundImage = GetComponent<Image>();
         //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
 
-        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
         if(ItemContainers == null)
         {
@@ -111,6 +115,8 @@ public class ItemButton : MonoBehaviour
         CheckSensor cs = ms.GetComponent<CheckSensor>();
         cs.gc = gc;
         cs.evidenceHandler = evidenceHandler;
+        gc.player.ResetArrows();
+        gc.player.MotionSensorCheck = false;
         SetItem(0);
     }
 
@@ -130,6 +136,8 @@ public class ItemButton : MonoBehaviour
         text2.text = "Item";
         myItemImage.enabled = true;
         backgroundImage.enabled = true;
+        Exit = () => Empty();
+        Enter = () => Empty();
         switch (myItem)
         {
             case Item.None:
@@ -146,6 +154,8 @@ public class ItemButton : MonoBehaviour
             case Item.MotionSensor:
                 Click = () => MotionSensorClick();
                 myItemImage.sprite = buttonMotionSensorImage;
+                Exit = () => MotionSensorExit();
+                Enter = () => MotionSensorEnter();
                 break;
             case Item.SmokeGrenade:
                 Click = () => SmokeGrenadeClick();
@@ -153,7 +163,31 @@ public class ItemButton : MonoBehaviour
                 break;
         }
     }
+    //Detect if the Cursor starts to pass over the GameObject
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        Enter();
+    }
 
+    //Detect when Cursor leaves the GameObject
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        Exit();
+    }
+    void MotionSensorEnter()
+    {
+        gc.player.MotionSensorCheck = true;
+    }
+    void MotionSensorExit()
+    {
+
+        gc.player.MotionSensorCheck = false;
+        gc.player.ResetArrows();
+    }
+    void Empty()
+    {
+
+    }
     //Start of game cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {

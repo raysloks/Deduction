@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -4316,7 +4316,7 @@ PrefabInstance:
         type: 3}
       propertyPath: minigame
       value: 
-      objectReference: {fileID: 2729301043339490301, guid: d91d89893154ebc46bfe0fdd8b622052,
+      objectReference: {fileID: 538868670356283478, guid: 62a9a26ca49267b488b8248b19feed3b,
         type: 3}
     - target: {fileID: 1374346512550523741, guid: b141d82627ccc3c4387e5519828aeeb9,
         type: 3}
@@ -5804,7 +5804,7 @@ PrefabInstance:
         type: 3}
       propertyPath: minigame
       value: 
-      objectReference: {fileID: 2729301043339490301, guid: 4d9ac46c2ef6696439bd87dd7710d0e7,
+      objectReference: {fileID: 1955826074275148539, guid: 0243c3ce5c0189944b448960ed71d7ee,
         type: 3}
     - target: {fileID: 1374346512550523741, guid: b141d82627ccc3c4387e5519828aeeb9,
         type: 3}

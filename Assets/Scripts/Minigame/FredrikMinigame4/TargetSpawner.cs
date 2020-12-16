@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TargetSpawner : MonoBehaviour
@@ -34,11 +35,11 @@ public class TargetSpawner : MonoBehaviour
 
         transform.parent.position = GameObject.FindGameObjectWithTag("Player").transform.position;
         transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-        minScreenBounds = bg.GetComponent<SpriteRenderer>().bounds.min;
-        maxScreenBounds = bg.GetComponent<SpriteRenderer>().bounds.max;
+        minScreenBounds = bg.GetComponent<Image>().sprite.bounds.min;
+        maxScreenBounds = bg.GetComponent<Image>().sprite.bounds.max;
       //  Renderer.bounds
-        Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
-        Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
+        Debug.Log("bg bounds min " + bg.GetComponent<Image>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
+        Debug.Log("bg bounds max " + bg.GetComponent<Image>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
         //minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
         //maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
         target = RandomPointInScreenBounds();

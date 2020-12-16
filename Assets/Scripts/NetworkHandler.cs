@@ -382,6 +382,7 @@ public class NetworkHandler
 
     internal void SmokeGrenadeActivateHandler(IPEndPoint endpoint, SmokeGrenadeActivate message)
     {
+        Debug.Log("Spawn Smoke");
         game.SpawnSmokeGrenade((Vector2)message.pos);
     }
     internal void PhotoTakenHandler(IPEndPoint endpoint, PhotoTaken message)

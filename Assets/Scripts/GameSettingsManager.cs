@@ -15,6 +15,13 @@ public class GameSettingsManager : MonoBehaviour
 
     public GameController game;
 
+    [Header("HighContrast")]
+    public GameObject grid1;
+    public GameObject grid2;
+    public GameObject spriteCollision;
+    private bool changed = false;
+    private SpriteRenderer[] sr;
+
     private void Awake()
     {
         settings = new List<GameSetting>
@@ -60,9 +67,36 @@ public class GameSettingsManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+
+        sr = spriteCollision.GetComponentsInChildren<SpriteRenderer>();
+    }
+
     private void Update()
     {
         //window.gameObject.SetActive(game.phase == GamePhase.Setup && game.timer == 0);
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            if(changed == false)
+            {
+                changed = true;
+                foreach (SpriteRenderer s in sr)
+                {
+                    s.color = Color.red;
+                }
+            }
+            else
+            {
+                changed = false;
+                foreach (SpriteRenderer s in sr)
+                {
+                    s.color = Color.white;
+                }
+            }
+
+            Debug.Log("Check " + changed);
+        }
     }
 
     public void UpdateInputDisplay()
