@@ -1629,12 +1629,12 @@ PrefabInstance:
     - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 635.1
+      value: 393.6
       objectReference: {fileID: 0}
     - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 355.2
+      value: 344.7
       objectReference: {fileID: 0}
     - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -1692,6 +1692,61 @@ PrefabInstance:
         text. Lift the stamp and drop it on the notes. Once a note has been stamped,
         please move the note to the correct pile. Good luck!'
       objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -53
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 876.1533
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 488.81787
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5207405414844432123, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1706,6 +1761,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7486517423126475307, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448244495160841410, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448244495160841410, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448244495160841410, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -1725,7 +1800,7 @@ PrefabInstance:
     - target: {fileID: 9155456492416769683, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -750
+      value: -37.182
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed4febe814058b94ebc12005ace31d4e, type: 3}
