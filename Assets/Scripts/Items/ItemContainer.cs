@@ -100,9 +100,11 @@ public class ItemContainer : Interactable
                 game.itemButton.GetComponent<ItemButton>().SetItem(item2);
 
                 ItemTaken();
+                Debug.Log((Enum.GetValues(typeof(Item)).Length) + "Enum");
+            
                 PickupCooldown message = new PickupCooldown();
                 message.child = transform.GetSiblingIndex();
-                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length));
+                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
                 game.handler.link.Send(message);
             }
         
@@ -111,7 +113,7 @@ public class ItemContainer : Interactable
 
     public override bool CanInteract(GameController game)
     {
-        return !coolingDown;
+        return !coolingDown && game.player.IsAlive;
      //   return alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 ||
      //       game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
     }

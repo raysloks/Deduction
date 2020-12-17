@@ -22,6 +22,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public GameObject buttonItemImage;
     public EvidenceHandler evidenceHandler;
     public GameObject ItemContainers;
+    public TextMeshProUGUI infoText;
     private Image myItemImage;
     private Image backgroundImage;
     [Header("MotionSensor")]
@@ -48,7 +49,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
         //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length)));
-
+        SetItem(0);
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
         if(ItemContainers == null)
@@ -102,7 +103,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             gc.handler.link.Send(new TakePhoto());
             photosTaken++;
-            GetComponent<AudioSource>().Play();
+           // GetComponent<AudioSource>().Play();
         }
         if (photosTaken >= maxPhotos)
         {
@@ -142,25 +143,30 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         switch (myItem)
         {
             case Item.None:
+                Debug.Log("None");
                 Click = () => NoneClick();
                 myItemImage.enabled = false;
                 backgroundImage.enabled = false;
                 text2.text = "";
+                infoText.text = "";
                 break;
             case Item.Camera:
                 Click = () => CameraClick();
                 myItemImage.sprite = CameraSprite;
                 photosTaken = 0;
+                infoText.text = "Takes a picture that can be presented during meetings";
                 break;
             case Item.MotionSensor:
                 Click = () => MotionSensorClick();
                 myItemImage.sprite = buttonMotionSensorImage;
                 Exit = () => MotionSensorExit();
                 Enter = () => MotionSensorEnter();
+                infoText.text = "Puts out a motion sensor. Each other player that walks through it will be compiled into a list that can be presented during meetings";
                 break;
             case Item.SmokeGrenade:
                 Click = () => SmokeGrenadeClick();
                 myItemImage.sprite = SmokeGrenadeSprite;
+                infoText.text = "Throws a smoke grenade that covers the area around you with smoke. Hide yourself or distract other players with it";
                 break;
         }
     }
@@ -187,7 +193,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
     void Empty()
     {
-
+        Debug.Log("Empty");
     }
     //Start of game cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
@@ -196,8 +202,10 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (pc.previous == GamePhase.Setup)
         {
-           int r = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length);
-            SetItem(2);
+           int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+
+            Debug.Log((Enum.GetValues(typeof(Item)).Length - 1) + "Enum");
+            SetItem(0);
         }
     }
 }

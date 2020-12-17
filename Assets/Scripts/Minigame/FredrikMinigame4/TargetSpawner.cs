@@ -25,7 +25,7 @@ public class TargetSpawner : MonoBehaviour
     private int targetScore = 10;
     private int hitBabyPenalty = 1;
     private bool GivePoints = true;
-
+    private Vector2 player;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,14 +35,16 @@ public class TargetSpawner : MonoBehaviour
 
         transform.parent.position = GameObject.FindGameObjectWithTag("Player").transform.position;
         transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-        minScreenBounds = bg.GetComponent<Image>().sprite.bounds.min;
-        maxScreenBounds = bg.GetComponent<Image>().sprite.bounds.max;
+        player = transform.position;
+    //    minScreenBounds = bg.GetComponent<BoxCollider2D>().bounds.min;
+    //    maxScreenBounds = bg.GetComponent<BoxCollider2D>().bounds.max;
       //  Renderer.bounds
-        Debug.Log("bg bounds min " + bg.GetComponent<Image>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
-        Debug.Log("bg bounds max " + bg.GetComponent<Image>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
+        Debug.Log("bg bounds min " + bg.GetComponent<SpriteRenderer>().sprite.bounds.min + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0)));
+        Debug.Log("bg bounds max " + bg.GetComponent<SpriteRenderer>().sprite.bounds.max + " Screen Bounds " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0)));
         //minScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(minimize, minimize, 0));
         //maxScreenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - minimize, Screen.height - minimize, 0));
         target = RandomPointInScreenBounds();
+        Debug.Log("TARGET = " + target);
         text.text = score + "/" + targetScore;
         currentPrefab = Instantiate(TargetPrefab, target, Quaternion.identity);
         currentPrefab.transform.SetParent(transform);
@@ -103,6 +105,8 @@ public class TargetSpawner : MonoBehaviour
             }
             currentPrefab.transform.SetParent(transform);
             target = RandomPointInScreenBounds();
+
+            Debug.Log("TARGET = " + target);
             StartCoroutine(SpawnTarget(spawnSeconds));
         }
     }
@@ -110,8 +114,8 @@ public class TargetSpawner : MonoBehaviour
     public Vector2 RandomPointInScreenBounds()
     {
         return new Vector2(
-            Random.Range(minScreenBounds.x, maxScreenBounds.x),
-            Random.Range(minScreenBounds.y , maxScreenBounds.y)
+            Random.Range(player.x - 2f, player.x + 2f),
+            Random.Range(player.y -2f, player.y + 2f)
         );
     }
 }

@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374346512550523731}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 495506997
-  m_SortingLayer: -1
-  m_SortingOrder: 50
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 1fceffc0f3e27424aa678b88287a3d0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,12 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75f386b089a5dd43a87a711fbaf1dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigame: {fileID: 2729301043339490301, guid: d91d89893154ebc46bfe0fdd8b622052,
+  minigame: {fileID: 6435546789317580498, guid: b92b789ff7d0c6b4cb83f486dd48a658,
     type: 3}
-  minigame_index: 0
+  minigame_index: 2
   outline: {fileID: 1368123981062287680}
   alwaysActive: 0
-  audioClip: {fileID: 0}
 --- !u!58 &3604052726584254773
 CircleCollider2D:
   m_ObjectHideFlags: 0

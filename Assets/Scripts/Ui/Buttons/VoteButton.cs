@@ -80,10 +80,15 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     {
         if(Evidence != null && currentEvidence == false)
         {
-            foreach(Transform child in transform.parent)
+            Vector2 smaller = new Vector2(1f, 1f);
+            Vector2 bigger = new Vector2(1.2f, 1.2f);
+
+            foreach (Transform child in transform.parent)
             {
                 child.GetComponent<VoteButton>().currentEvidence = false;
+                child.localScale = smaller;
             }
+            this.gameObject.transform.localScale = bigger;
 
             currentEvidence = true;
             int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
