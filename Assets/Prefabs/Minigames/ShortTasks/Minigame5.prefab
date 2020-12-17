@@ -595,7 +595,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5919190921877258552}
+  - component: {fileID: 7863649990938970915}
   m_Layer: 11
   m_Name: Minigame5
   m_TagString: Untagged
@@ -603,8 +603,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &5919190921877258552
-RectTransform:
+--- !u!4 &7863649990938970915
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -620,11 +620,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5919190921931934752
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +897,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5919190921877258552}
+  m_Father: {fileID: 7863649990938970915}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1040,7 +1035,7 @@ Transform:
   - {fileID: 5919190922301512079}
   - {fileID: 5661181505237456246}
   - {fileID: 2706105661392888055}
-  m_Father: {fileID: 5919190921877258552}
+  m_Father: {fileID: 7863649990938970915}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5919190922847026458
@@ -1119,7 +1114,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5919190921877258552}
+    m_TransformParent: {fileID: 7863649990938970915}
     m_Modifications:
     - target: {fileID: 2272193584288175408, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -1230,6 +1225,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Minigame helpboxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080425892551211863, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}

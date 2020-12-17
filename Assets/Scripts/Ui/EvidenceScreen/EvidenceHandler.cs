@@ -75,16 +75,12 @@ public class EvidenceHandler : MonoBehaviour
         if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
             gameObject.SetActive(true);
-            
+            SensorList2.Clear();
+            SensorList.Clear();
             foreach (Transform child in content.transform)
             {
                 Destroy(child.gameObject);
             }
-        }
-        if(pc.phase == GamePhase.Setup)
-        {
-            SensorList2.Clear();
-            SensorList.Clear();
         }
     }
 }

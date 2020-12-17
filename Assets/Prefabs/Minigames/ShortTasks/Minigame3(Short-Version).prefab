@@ -572,7 +572,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7472769447965487565}
+  - component: {fileID: 428497917063675580}
   m_Layer: 11
   m_Name: Minigame3(Short-Version)
   m_TagString: Untagged
@@ -580,8 +580,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &7472769447965487565
-RectTransform:
+--- !u!4 &428497917063675580
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -595,11 +595,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2349677139292781903
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,7 +626,7 @@ Transform:
   - {fileID: 538868670334614873}
   - {fileID: 1737769226}
   - {fileID: 5679718181070219028}
-  m_Father: {fileID: 7472769447965487565}
+  m_Father: {fileID: 428497917063675580}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6646107756230514702

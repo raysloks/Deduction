@@ -1,4 +1,18 @@
-﻿  CsGenerator.cpp
-  Generating code
-  Finished generating code
-  Protocol.vcxproj -> C:\Users\Fredrik Hammar\Documents\GitHub\Deduction\Protocol\x64\Release\Protocol.exe
+﻿  Generating code
+c:\users\fredrik hammar\documents\github\deduction\protocol\protocol\token.cpp : fatal error C1001: Internal compiler error.
+  (compiler file 'd:\agent\_work\2\s\src\vctools\Compiler\Utc\src\p2\main.c', line 181)
+   To work around this problem, try simplifying or changing the program near the locations listed above.
+  If possible please provide a repro here: https://developercommunity.visualstudio.com 
+  Please choose the Technical Support command on the Visual C++ 
+   Help menu, or open the Technical Support help file for more information
+    link!RaiseException()+0x62
+    link!CxxThrowException()+0x66
+    link!std::_Xout_of_range()+0x1f
+    link!InvokeCompilerPass()+0x43483
+    link!InvokeCompilerPass()+0x30365
+    link!InvokeCompilerPass()+0x314af
+    link!InvokeCompilerPass()+0x4147f
+    link!CloseTypeServerPDB()+0xa5397
+  
+  
+LINK : fatal error LNK1000: Internal error during IMAGE::BuildImage

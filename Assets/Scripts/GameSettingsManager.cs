@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 public class GameSettingsManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class GameSettingsManager : MonoBehaviour
     [Header("HighContrast")]
     public GameObject grid1;
     public GameObject grid2;
+    public GameObject colgrid1;
+    public GameObject colgrid2;
     public GameObject spriteCollision;
     private bool changed = false;
     private SpriteRenderer[] sr;
@@ -81,18 +84,36 @@ public class GameSettingsManager : MonoBehaviour
             if(changed == false)
             {
                 changed = true;
-                foreach (SpriteRenderer s in sr)
+                if(spriteCollision != null)
                 {
-                    s.color = Color.red;
+                    foreach (SpriteRenderer s in sr)
+                    {
+                        s.color = Color.red;
+                    }
                 }
+                colgrid1.GetComponent<Tilemap>().color = Color.red;
+                colgrid2.GetComponent<Tilemap>().color = Color.red;
+                grid1.GetComponent<Tilemap>().color = Color.cyan;
+
+                grid2.GetComponent<Tilemap>().color = Color.cyan;
             }
             else
             {
                 changed = false;
-                foreach (SpriteRenderer s in sr)
+                if (spriteCollision != null)
                 {
-                    s.color = Color.white;
+                    foreach (SpriteRenderer s in sr)
+                    {
+                        s.color = Color.white;
+                    }
                 }
+
+                colgrid1.GetComponent<Tilemap>().color = Color.white;
+                colgrid2.GetComponent<Tilemap>().color = Color.white;
+
+                grid1.GetComponent<Tilemap>().color = Color.white;
+
+                grid2.GetComponent<Tilemap>().color = Color.white;
             }
 
             Debug.Log("Check " + changed);

@@ -6,14 +6,9 @@ public class MainMeetingButton : MonoBehaviour
 {
     public GameObject MainScreen;
     public GameObject EvidenceScreen;
+    public GameObject EvidenceButton;
     // Start is called before the first frame update
     void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
     {
         
     }
@@ -22,5 +17,7 @@ public class MainMeetingButton : MonoBehaviour
     {
         EvidenceScreen.SetActive(false);
 
+        EvidenceButton.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 }

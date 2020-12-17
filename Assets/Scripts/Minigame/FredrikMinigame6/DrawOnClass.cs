@@ -13,13 +13,14 @@ public class DrawOnClass : MonoBehaviour
     private RaycastHit2D hitInfo;
     private bool isDone = false;
     private List<int> indexes = new List<int>();
+    public LayerMask lm;
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButton(0) && isDone == false)
         {
-            hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, lm);
             if (hitInfo)
             {
                 if (hitInfo.collider != null)
