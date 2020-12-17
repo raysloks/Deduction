@@ -104,7 +104,8 @@ public class ItemContainer : Interactable
             
                 PickupCooldown message = new PickupCooldown();
                 message.child = transform.GetSiblingIndex();
-                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+               //Temporary Camera disabled. Change 2 to 1 to add camera back in again.
+                message.random = UnityEngine.Random.Range(2, (Enum.GetValues(typeof(Item)).Length - 1));
                 game.handler.link.Send(message);
             }
         
