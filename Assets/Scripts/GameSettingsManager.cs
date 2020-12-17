@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 
 public class GameSettingsManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class GameSettingsManager : MonoBehaviour
     public GameObject spriteCollision;
     private bool changed = false;
     private SpriteRenderer[] sr;
+
+    public bool accessibilityMode;
 
     private void Awake()
     {
@@ -114,5 +117,10 @@ public class GameSettingsManager : MonoBehaviour
     {
         foreach (var setting in settings)
             setting.GetSelectable().interactable = interactable;
+    }
+
+    public void SetAccessibility(bool value)
+    {
+        accessibilityMode = value;
     }
 }

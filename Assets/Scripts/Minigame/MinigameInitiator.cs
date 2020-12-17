@@ -7,19 +7,27 @@ using UnityEngine.UIElements;
 public class MinigameInitiator : Interactable
 {
     public GameObject minigame;
+    public GameObject altMinigame;
     public int minigame_index;
     public SpriteRenderer outline;
     public bool alwaysActive = false;
 
     private GameController game;
     private AudioSource audioSource;
-
+    private bool accessibilityMode;
     private void Start()
     {
         if (minigame_index > 0)
             FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
         game = FindObjectOfType<GameController>();
         audioSource = GetComponentInChildren<AudioSource>();
+
+        /*if (game.GetComponent<GameSettingsManager>().accessibilityMode && altMinigame != null)
+        {
+            var temp = minigame;
+            minigame = altMinigame;
+            altMinigame = temp;
+        }*/
     }
 
     private void Update()
@@ -32,6 +40,17 @@ public class MinigameInitiator : Interactable
                 audioSource.Play();
             if (!shouldPlaySound && audioSource.isPlaying)
                 audioSource.Stop();
+        }
+        
+        if (accessibilityMode != game.GetComponent<GameSettingsManager>().accessibilityMode)
+        {
+            if (altMinigame != null)
+            {
+                var temp = minigame;
+                minigame = altMinigame;
+                altMinigame = temp;
+            }
+            accessibilityMode = !accessibilityMode;
         }
     }
 

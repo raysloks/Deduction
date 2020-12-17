@@ -118,6 +118,8 @@ public class GameController : MonoBehaviour
     public GamePhase phase = GamePhase.None;
     public long timer;
 
+    public GameObject accessibilityToggle;
+
     private ulong killTarget = ulong.MaxValue;
     private ulong reportTarget = ulong.MaxValue;
 
@@ -444,6 +446,17 @@ public class GameController : MonoBehaviour
         
         this.phase = phase;
         this.timer = timer;
+
+        //Sloppy prototype shit
+        if (phase == GamePhase.Intro && previous == GamePhase.Setup)
+        {
+            accessibilityToggle.SetActive(false);
+        }
+
+        if (phase == GamePhase.Setup && !accessibilityToggle.activeSelf)
+        {
+            accessibilityToggle.SetActive(true);
+        }
     }
 
     public void Kill()

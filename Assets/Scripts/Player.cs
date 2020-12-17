@@ -131,7 +131,7 @@ public class Player : Mob
     private new void OnTriggerEnter2D(Collider2D other)
     {
         base.OnTriggerEnter2D(other);
-        if (other.CompareTag("Area") /*&& controller.areaText.gameObject.activeInHierarchy*/)
+        if (other.CompareTag("Area") && controller.phase == GamePhase.Main)
         {
             inAreas += 1;
             if (!inLocker)
@@ -157,7 +157,7 @@ public class Player : Mob
     private new void OnTriggerExit2D(Collider2D other)
     {
         base.OnTriggerExit2D(other);
-        if (other.CompareTag("Area") /*&& controller.areaText.gameObject.activeInHierarchy*/)
+        if (other.CompareTag("Area") && controller.phase == GamePhase.Main)
         {
             inAreas -= 1;
             if (inAreas == 0)
