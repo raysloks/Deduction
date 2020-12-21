@@ -103,7 +103,8 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             gc.handler.link.Send(new TakePhoto());
             photosTaken++;
-           // GetComponent<AudioSource>().Play();
+            if (GetComponent<AudioSource>().clip != null)
+                GetComponent<AudioSource>().Play();
         }
         if (photosTaken >= maxPhotos)
         {

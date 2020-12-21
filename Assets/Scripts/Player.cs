@@ -25,8 +25,6 @@ public class Player : Mob
     public GameObject UpDownArrow;
     public GameObject LeftRightArrow;
 
-
-    private AudioSource audioSource;
     private int inAreas;
     private string lastArea;
 
@@ -58,7 +56,7 @@ public class Player : Mob
         if (!cameraFlashing)
         {
             if (inCamo && IsAlive)
-                visionLight.pointLightOuterRadius = GetVision() * 0.85f;
+                visionLight.pointLightOuterRadius = role == 0 ? GetVision() * 0.85f : GetVision() * (0.85f - (0.075f * ((controller.settings.impostorVision / controller.settings.crewmateVision) - 1)));
             else
                 visionLight.pointLightOuterRadius = GetVision();
         }
@@ -106,7 +104,6 @@ public class Player : Mob
                 UpDownArrow.SetActive(true);
             }
         }
-
 
         base.Update();
     }
