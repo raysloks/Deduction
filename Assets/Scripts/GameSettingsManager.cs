@@ -17,14 +17,23 @@ public class GameSettingsManager : MonoBehaviour
 
     public GameController game;
 
-    [Header("HighContrast")]
+    [Header("High Contrast")]
     public GameObject grid1;
     public GameObject grid2;
     public GameObject colgrid1;
     public GameObject colgrid2;
     public GameObject spriteCollision;
+    public GameObject minigameInitiator;
+    public GameObject camoHolder;
+    public GameObject ItemContainers;
+    public GameObject lockerHolder;
     private bool changed = false;
     private SpriteRenderer[] sr;
+
+    public Color collisionColor;
+    public Color interactableColor;
+    public Color backgroundColor;
+    public Color camoColor;
 
     public bool accessibilityMode;
 
@@ -87,39 +96,90 @@ public class GameSettingsManager : MonoBehaviour
             if(changed == false)
             {
                 changed = true;
-                if(spriteCollision != null)
-                {
-                    foreach (SpriteRenderer s in sr)
-                    {
-                        s.color = Color.red;
-                    }
-                }
-                colgrid1.GetComponent<Tilemap>().color = Color.red;
-                colgrid2.GetComponent<Tilemap>().color = Color.red;
-                grid1.GetComponent<Tilemap>().color = Color.cyan;
-
-                grid2.GetComponent<Tilemap>().color = Color.cyan;
+                colorChangeCollision(collisionColor);
+                colorChangeInteractables(interactableColor);
+                colorChangeBackground(backgroundColor);
+                colorChangeCamo(camoColor);
             }
             else
             {
                 changed = false;
-                if (spriteCollision != null)
-                {
-                    foreach (SpriteRenderer s in sr)
-                    {
-                        s.color = Color.white;
-                    }
-                }
 
-                colgrid1.GetComponent<Tilemap>().color = Color.white;
-                colgrid2.GetComponent<Tilemap>().color = Color.white;
-
-                grid1.GetComponent<Tilemap>().color = Color.white;
-
-                grid2.GetComponent<Tilemap>().color = Color.white;
+                colorChangeCollision(Color.white);
+                colorChangeInteractables(Color.white);
+                colorChangeBackground(Color.white);
+                colorChangeCamo(Color.white);
             }
 
-            Debug.Log("Check " + changed);
+        }
+    }
+
+    public void colorChangeCamo(Color c)
+    {
+        foreach (Transform s in camoHolder.transform)
+        {           
+             s.GetComponent<SpriteRenderer>().color = c;          
+        }
+    }
+
+    public void colorChangeBackground(Color c)
+    {
+
+        grid1.GetComponent<Tilemap>().color = Color.gray;
+
+        grid2.GetComponent<Tilemap>().color = Color.gray;
+    }
+
+    public void colorChangeCollision(Color c)
+    {
+        if (spriteCollision != null)
+        {
+            foreach (SpriteRenderer s in sr)
+            {
+                s.color = c;
+            }
+        }
+
+        colgrid1.GetComponent<Tilemap>().color = c;
+        colgrid2.GetComponent<Tilemap>().color = c;
+    }
+
+    public void colorChangeInteractables(Color c)
+    {
+        if (minigameInitiator != null)
+        {
+            foreach (Transform s in minigameInitiator.transform)
+            {
+                if (s.gameObject.name != "outline")
+                {
+                    s.GetComponent<SpriteRenderer>().color = c;
+                }
+
+            }
+        }
+
+        if (ItemContainers != null)
+        {
+            foreach (Transform s in ItemContainers.transform)
+            {
+                if (s.gameObject.name != "outline")
+                {
+                    s.GetComponent<SpriteRenderer>().color = c;
+                }
+
+            }
+        }
+
+        if (lockerHolder != null)
+        {
+            foreach (Transform s in lockerHolder.transform)
+            {
+                if (s.gameObject.name != "outline")
+                {
+                    s.GetComponent<SpriteRenderer>().color = c;
+                }
+
+            }
         }
     }
 
