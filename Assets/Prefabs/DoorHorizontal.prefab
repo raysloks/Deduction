@@ -109,7 +109,7 @@ MonoBehaviour:
   - {x: 0, y: 0.625, z: 0}
   m_ShapePathHash: -487094371
   m_Mesh: {fileID: 0}
-  m_InstanceId: 360832
+  m_InstanceId: 1106692
 --- !u!1 &2638985777451582614
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 2638985777451582619}
   - component: {fileID: 7952442574358978751}
   - component: {fileID: 5831596363873843896}
+  - component: {fileID: 3293703577355036340}
   m_Layer: 10
   m_Name: DoorHorizontal
   m_TagString: Untagged
@@ -190,6 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  audioClips:
+  - {fileID: 8300000, guid: 68cd0ed56435b5f4e871f2a4faf5455f, type: 3}
+  - {fileID: 8300000, guid: 51eb2df7b4904d84e9bd08b138164115, type: 3}
 --- !u!95 &5831596363873843896
 Animator:
   serializedVersion: 3
@@ -209,6 +213,103 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &3293703577355036340
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2638985777451582614}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 8178580772933010462, guid: ffa8247eb55abd8478ee370b0d5ba13c,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 2
+  MaxDistance: 8
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2638985777496528113
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +337,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2638985777496528113}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2638985778546659096}
@@ -280,9 +381,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 495506997
-  m_SortingLayer: -1
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: b7b1398e182232943b49bdd8f4c25be2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -345,7 +446,7 @@ MonoBehaviour:
   - {x: 0.5, y: 1.49, z: 0}
   m_ShapePathHash: -974211755
   m_Mesh: {fileID: 0}
-  m_InstanceId: 2913484
+  m_InstanceId: 194398
 --- !u!1 &2638985777505113977
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +556,7 @@ MonoBehaviour:
   - {x: 0, y: 0.5, z: 0}
   m_ShapePathHash: -529037411
   m_Mesh: {fileID: 0}
-  m_InstanceId: 1214640
+  m_InstanceId: 1106714
 --- !u!1 &2638985777563980258
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,9 +848,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 495506997
-  m_SortingLayer: -1
-  m_SortingOrder: 2
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: fbae9887a6c40c143ad6fbbbdd8b1253, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -812,4 +913,4 @@ MonoBehaviour:
   - {x: 0.5, y: 1.49, z: 0}
   m_ShapePathHash: -974211755
   m_Mesh: {fileID: 0}
-  m_InstanceId: 2913486
+  m_InstanceId: 194402

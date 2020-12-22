@@ -331,6 +331,7 @@ public class NetworkHandler
             game.lockerManager.Lockers[message.index].RemovePerson();
             if (message.user == playerMobId)
                 game.player.canMove = true;
+            game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
         }
         else if (game.lockerManager.Lockers[message.index].occupied == false)
         {
@@ -339,6 +340,7 @@ public class NetworkHandler
             if (message.user == playerMobId)
                 game.player.canMove = false;
             game.lockerManager.Lockers[message.index].HidePerson(mobs[message.user].gameObject);
+            game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
         }
     }
 

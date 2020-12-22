@@ -11,16 +11,14 @@ public class LockerScript : Interactable
     public SpriteRenderer outline;
     public SpriteRenderer highlight;
     public Vector3 exitDirection;
-
     void Start()
     {
         if (locker_index >= 0)
             FindObjectOfType<LockerManager>().Lockers[locker_index] = this;
         occupied = false;
         GetComponent<ShadowCaster2D>().castsShadows = false;
+        GetComponentInChildren<AudioSource>().transform.localPosition = new Vector3(0, 0, -transform.position.z);
     }
-    
-
     public override bool CanInteract(GameController game)
     {
         return game.player.IsAlive;

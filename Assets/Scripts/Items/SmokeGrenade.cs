@@ -16,6 +16,7 @@ public class SmokeGrenade : MonoBehaviour
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
+        if (detonation != null) GetComponent<AudioSource>().PlayOneShot(detonation);
     }
 
     void Update()
