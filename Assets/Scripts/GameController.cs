@@ -119,6 +119,7 @@ public class GameController : MonoBehaviour
     public long timer;
 
     public GameObject accessibilityToggle;
+    private bool showAccessibilityToggle = false;
 
     private ulong killTarget = ulong.MaxValue;
     private ulong reportTarget = ulong.MaxValue;
@@ -223,6 +224,12 @@ public class GameController : MonoBehaviour
         //    handler.link.Send(new MeetingRequested());
         if (Input.GetKeyDown(KeyCode.F5))
             handler.link.Send(new RestartRequested());
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            showAccessibilityToggle = !showAccessibilityToggle;
+            accessibilityToggle.SetActive(showAccessibilityToggle);
+        }
 
         for (int i = 0; i < 10; ++i)
         {
@@ -448,15 +455,11 @@ public class GameController : MonoBehaviour
         this.timer = timer;
 
         //Sloppy prototype shit
-        if (phase == GamePhase.Intro && previous == GamePhase.Setup)
-        {
-            accessibilityToggle.SetActive(false);
-        }
+        if (phase == GamePhase.Intro && previous == GamePhase.Setup && !showAccessibilityToggle)
+                accessibilityToggle.SetActive(false);
 
-        if (phase == GamePhase.Setup && !accessibilityToggle.activeSelf)
-        {
+        if (phase == GamePhase.Setup)
             accessibilityToggle.SetActive(true);
-        }
     }
 
     public void Kill()
