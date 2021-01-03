@@ -171,12 +171,13 @@ PrefabInstance:
     - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_text
-      value: '{Name of minigame}
+      value: 'Wire Navigation
 
 
-        Draw  a line to the middle of the maze.
-        Draw with holding in right click and moving the cursor. Start at the green
-        arrow'
+        Draw  a line to the center of the maze. Start
+        at the green arrow. Hold down mouse1, and lead your cursor to the marked
+        area at the center of the maze without letting go off mouse1. Minigame is
+        completed. Good luck.'
       objectReference: {fileID: 0}
     - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
