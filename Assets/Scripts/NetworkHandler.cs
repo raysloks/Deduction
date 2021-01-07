@@ -358,6 +358,10 @@ public class NetworkHandler
 
     internal void PresentEvidenceHandler(IPEndPoint endpoint, PresentEvidence message)
     {
+        PresentEvidenceEvent presentEvidenceEvent = new PresentEvidenceEvent();
+        presentEvidenceEvent.index = (int)message.index;
+        presentEvidenceEvent.presenter = message.presenter;
+        EventSystem.Current.FireEvent(EVENT_TYPE.PRESENT_EVIDENCE, presentEvidenceEvent);
     }
 
     internal void SendSensorListHandler(IPEndPoint endpoint, SendSensorList message)
@@ -378,15 +382,14 @@ public class NetworkHandler
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
-        
     }
-
 
     internal void SmokeGrenadeActivateHandler(IPEndPoint endpoint, SmokeGrenadeActivate message)
     {
         Debug.Log("Spawn Smoke");
         game.SpawnSmokeGrenade((Vector2)message.pos);
     }
+
     internal void PhotoTakenHandler(IPEndPoint endpoint, PhotoTaken message)
     {
         Photo photo = new Photo();

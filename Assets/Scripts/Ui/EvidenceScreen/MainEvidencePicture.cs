@@ -51,13 +51,14 @@ public class MainEvidencePicture : MonoBehaviour
     }
 
     //When you choose a picture send it to the GC that will send a Send Evidence message to the handler.
-    public void LockEvidencePicture(List<Vector3> pos, Vector3 player)
+    public void LockEvidencePicture(int photoIndex)
     {
         if (sentEvidence == false)
         {
             lockButton.interactable = false;
             lockable = false;
             sentEvidence = true;
+            gc.handler.link.Send(new PresentEvidence { index = (ulong)photoIndex, sensornames = new List<byte>() });
         }
     }
 

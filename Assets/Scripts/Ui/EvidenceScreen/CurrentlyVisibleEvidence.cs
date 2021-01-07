@@ -35,10 +35,9 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
-
     void Update()
     {
-        if(qt.Count > 0 && !moving)
+        if (qt.Count > 0 && !moving)
         {
             moveArrow((Vector2)qt.Dequeue());
         }
@@ -52,9 +51,9 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         Vector3 axis;
         if (target.y < vis.transform.position.y)
         {
-           axis = new Vector3(0, 0, -1); // go down
+            axis = new Vector3(0, 0, -1); // go down
         }
-        else if(target.y > vis.transform.position.y)
+        else if (target.y > vis.transform.position.y)
         {
             axis = new Vector3(0, 0, 1); // go up
         }
@@ -62,13 +61,13 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         {
             axis = new Vector3(0, 0, 1);
         }
-       
+
         hit = Physics2D.Linecast(target, center, arrowLayer);
 
         while (notHit)
         {
             hit = Physics2D.Linecast(target, center, arrowLayer);
-            if(hit.collider != null)
+            if (hit.collider != null)
             {
                 notHit = false;
             }
@@ -80,9 +79,9 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 
             yield return null;
         }
-      
+
         moving = false;
-        if(firstMove == false)
+        if (firstMove == false)
         {
             firstMove = true;
             vis.GetComponent<Image>().enabled = true;
@@ -92,42 +91,37 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     //Presents the evidence under the main meeting screen when you hover over a vote button
     public void ShowEvidence(EventCallbacks.Event eventInfo)
     {
-        
-        SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
-        if(see.Evidence == 2)
-        {
-            Debug.Log("Show Evidence: MotionSensor");
-            ri.enabled = false;
-            motionSensorEvidence.SetActive(true);
-            motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
-        }
-        else if (see.Evidence == 1)
-        {
-            ri.enabled = true;
-            motionSensorEvidence.SetActive(false);
 
-            Debug.Log("Show Evidence: byteLenght " + see.byteArray.Length);
-            Texture2D sampleTexture = new Texture2D(2, 2);
-
-            bool isLoaded = sampleTexture.LoadImage(see.byteArray);
-
-            ri.texture = sampleTexture;
-
-        }else if(see.Evidence == 0)
+        if (eventInfo is SendEvidenceEvent see)
         {
-            ri.enabled = true;
-            motionSensorEvidence.SetActive(false);
-            ri.texture = texture;
-            
-        }
+            if (see.Evidence == 2)
+            {
+                Debug.Log("Show Evidence: MotionSensor");
+                ri.enabled = false;
+                motionSensorEvidence.SetActive(true);
+                motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
+            }
+            else if (see.Evidence == 1)
+            {
+                motionSensorEvidence.SetActive(false);
+                ri.enabled = true;
+                ri.texture = see.gc.screenshotHandler.photos[(ulong)see.photoIndex].texture;
+            }
+            else if (see.Evidence == 0)
+            {
+                ri.enabled = true;
+                motionSensorEvidence.SetActive(false);
+                ri.texture = texture;
+            }
 
-        if (!moving)
-        {
-            StartCoroutine(moveArrow(see.positionOfTarget));
-        }
-        else
-        {
-            qt.Enqueue(see.positionOfTarget);
+            if (!moving)
+            {
+                StartCoroutine(moveArrow(see.positionOfTarget));
+            }
+            else
+            {
+                qt.Enqueue(see.positionOfTarget);
+            }
         }
 
     }

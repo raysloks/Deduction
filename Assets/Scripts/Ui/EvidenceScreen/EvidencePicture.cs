@@ -6,14 +6,9 @@ using UnityEngine.UI;
 
 public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
+    [HideInInspector] public int photoIndex;
 
-    //***** These get filled in during creation process in Evidence handler
-    //***** shows the positions of all the players and the player that made the picture
-    [HideInInspector] public List<Vector3> picturePos;
-    [HideInInspector] public Vector3 playerPos;
-    //*****
-
-    public Material newMaterial;  
+    public Material newMaterial;
     public Sprite Lock;
 
     private MainEvidencePicture med;
@@ -61,7 +56,7 @@ public class EvidencePicture : MonoBehaviour, IPointerEnterHandler, IPointerClic
             lockObject.SetActive(true);
             ri.material = orginialMaterial;
             lockObject.GetComponent<Image>().sprite = Lock;
-            med.LockEvidencePicture(picturePos, playerPos);
+            med.LockEvidencePicture(photoIndex);
         }       
     }   
 }

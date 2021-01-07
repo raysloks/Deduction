@@ -591,7 +591,8 @@ void NetworkHandler::PresentEvidenceHandler(const asio::ip::udp::endpoint & endp
 		{
 			if (message.index < game.photos.size())
 			{
-				if (game.photos[message.index].photographer == player.mob)
+				auto&& photo = game.photos[message.index];
+				if (photo.poses[photo.photographer].index == player.mob)
 				{
 					PresentEvidence reply;
 					reply.index = message.index;

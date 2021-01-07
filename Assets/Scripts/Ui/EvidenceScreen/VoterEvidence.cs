@@ -9,7 +9,8 @@ public class VoterEvidence : MonoBehaviour
     [HideInInspector] public enum Evidence { None, Picture, MotionSensor };
     [HideInInspector] public Evidence myEvidence;
     [HideInInspector] public byte[] ba;
-    [HideInInspector] public  MotionSensor ms;
+    [HideInInspector] public MotionSensor ms;
+    [HideInInspector] public int photoIndex = -1;
     private GameController gc;
     public VoteButton vb;
     public GameObject newEvidence;
@@ -24,21 +25,19 @@ public class VoterEvidence : MonoBehaviour
 
     public void SetEvidence(EventCallbacks.Event eventInfo)
     {
-        SendEvidenceEvent see = (SendEvidenceEvent)eventInfo;
-        myEvidence = (Evidence)see.Evidence;
-        Debug.Log((int)myEvidence);
-        if (myEvidence == Evidence.Picture)
+        if (eventInfo is SendEvidenceEvent see)
         {
-            Debug.Log("PictureEvidence");
-            
-            // Vector3 playerPos = see.positionOfTarget;
-            //ScreenshotHandler.TakeScreenshot_Static(Screen.width, Screen.height, true, playerPos, this);
-            // ScreenshotHandler.StartCameraFlash(0f, true, playerPos);
+            myEvidence = (Evidence)see.Evidence;
+            if (myEvidence == Evidence.MotionSensor)
+            {
+                Debug.Log("MotionEvidence");
+                ms = see.MotionSensorEvidence;
+            }
         }
-        else if (myEvidence == Evidence.MotionSensor)
+        if (eventInfo is PresentEvidenceEvent presentEvidenceEvent)
         {
-            Debug.Log("MotionEvidence");
-            ms = see.MotionSensorEvidence;
+            myEvidence = Evidence.Picture;
+            photoIndex = presentEvidenceEvent.index;
         }
     }
 

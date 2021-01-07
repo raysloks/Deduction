@@ -78,7 +78,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
     //if pointer enters send event to CurrentlyVisibleEvidence
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(Evidence != null && currentEvidence == false)
+        if (Evidence != null && currentEvidence == false)
         {
             Vector2 smaller = new Vector2(1f, 1f);
             Vector2 bigger = new Vector2(1.2f, 1.2f);
@@ -88,34 +88,32 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
                 child.GetComponent<VoteButton>().currentEvidence = false;
                 child.localScale = smaller;
             }
-            this.gameObject.transform.localScale = bigger;
+            gameObject.transform.localScale = bigger;
 
             currentEvidence = true;
-            int e = (int)Evidence.GetComponent<VoterEvidence>().myEvidence;
+            VoterEvidence.Evidence e = Evidence.GetComponent<VoterEvidence>().myEvidence;
 
             Evidence.GetComponent<VoterEvidence>().newEvidence.SetActive(false);
 
             SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
-            sendEvidenceEvent.Evidence = e;
+            sendEvidenceEvent.Evidence = (int)e;
             sendEvidenceEvent.positionOfTarget = transform.position;
-            if (e == 2)
+            sendEvidenceEvent.gc = game;
+
+            switch (e)
             {
-                sendEvidenceEvent.MotionSensorEvidence = Evidence.GetComponent<VoterEvidence>().ms;
-            }
-            else if (e == 1)
-            {
-                Debug.Log("EVIDENCE 1 cursor.");
-                byte[] ba = Evidence.GetComponent<VoterEvidence>().ba;
-                picture = ba;
-                sendEvidenceEvent.byteArray = ba;
-            }
-            else if (e == 0)
-            {
-                Debug.Log("EVIDENCE 0 cursor.");
+                case VoterEvidence.Evidence.None:
+                    break;
+                case VoterEvidence.Evidence.Picture:
+                    sendEvidenceEvent.photoIndex = Evidence.GetComponent<VoterEvidence>().photoIndex;
+                    break;
+                case VoterEvidence.Evidence.MotionSensor:
+                    sendEvidenceEvent.MotionSensorEvidence = Evidence.GetComponent<VoterEvidence>().ms;
+                    break;
             }
 
             EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
-        }       
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)

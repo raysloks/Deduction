@@ -70,12 +70,13 @@ namespace EventCallbacks
         public GameObject final;
         public ulong idOfTarget;
         public Vector3 positionOfTarget;
+        public int photoIndex;
     }
 
     public class PresentEvidenceEvent : Event
     {
         public int index;
-        public int presenter;
+        public ulong presenter;
     }
 
     public class CooldownEvent : Event

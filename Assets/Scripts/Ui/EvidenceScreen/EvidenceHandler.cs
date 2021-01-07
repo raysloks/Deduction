@@ -34,6 +34,7 @@ public class EvidenceHandler : MonoBehaviour
             {
                 var go = Instantiate(picturePrefab, content);
                 go.GetComponent<RawImage>().texture = photo.texture;
+                go.GetComponent<EvidencePicture>().photoIndex = (int)n.Key;
             }
         }
         int index = 0;
