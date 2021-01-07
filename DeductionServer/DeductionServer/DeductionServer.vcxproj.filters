@@ -167,6 +167,7 @@
     <ClInclude Include="Net\SmokeGrenadeActivate.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\PhotoTaken.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -316,6 +317,7 @@
     <ClCompile Include="Net\SmokeGrenadeActivate.cpp">
       <Filter>Net</Filter>
     </ClCompile>
+    <ClCompile Include="Net\PhotoTaken.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">
