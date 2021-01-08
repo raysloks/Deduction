@@ -269,7 +269,6 @@ public class GameController : MonoBehaviour
                     {
                         if(n.Value.role == 0 || knifeItem )
                         {
-                            Debug.Log(player.gameObject.name +  "Key " + handler.playerMobId +  " this player VS other " + n.Value.gameObject +  "Key " + n.Key);
 
                             if (n.Value.IsAlive == true && n.Value.gameObject.activeSelf && !n.Value.inLocker && n.Key != handler.playerMobId)
                             {
@@ -293,7 +292,6 @@ public class GameController : MonoBehaviour
                 killButton.interactable = (killTarget != ulong.MaxValue && player.killCooldown < time);
                 if (killTarget != ulong.MaxValue)
                 {
-                    Debug.Log("TargetMarker GameObject: " + handler.mobs[killTarget].gameObject.name);
                     targetMarker.SetActive(true);
                     targetMarker.transform.position = handler.mobs[killTarget].transform.position;
                     if (Input.GetKeyDown(KeyCode.Q) && !knifeItem)
