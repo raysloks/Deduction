@@ -87,6 +87,8 @@ public class GameController : MonoBehaviour
 
     public EvidenceHandler eh;
 
+    public ColorPicker colorPicker;
+
     public float lightTarget = 1.0f;
     public float lightCurrent = 1.0f;
 
@@ -345,6 +347,16 @@ public class GameController : MonoBehaviour
                 else
                     Use();
             }
+
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            player.colorIndex = ((player.colorIndex + 1) % 15);
+            Vector3 tempo = (colorPicker.PickColor(player.colorIndex));
+            player.SetColor(tempo.x, tempo.y, tempo.z);
+            Debug.Log(player.colorIndex + " " + tempo.x + " " + tempo.y + " " + tempo.z);
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);

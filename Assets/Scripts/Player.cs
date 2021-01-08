@@ -15,6 +15,7 @@ public class Player : Mob
 
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public int emergencyButtonsLeft = 0;
+    [HideInInspector] public int colorIndex = 0;
 
     public GameController controller;
 

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8435468723113369569}
   - component: {fileID: 4080215491979641625}
   - component: {fileID: 2242851898714657401}
+  - component: {fileID: 8959598748407034356}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -84,6 +85,7 @@ MonoBehaviour:
   reportButton: {fileID: 0}
   itemButton: {fileID: 0}
   useButton: {fileID: 0}
+  colorPicker: {fileID: 8959598748407034356}
   lightTarget: 1
   lightCurrent: 1
   time: 0
@@ -95,6 +97,7 @@ MonoBehaviour:
   connectionState: 0
   phase: 7
   timer: 0
+  accessibilityToggle: {fileID: 0}
 --- !u!114 &2324288705218545753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +121,18 @@ MonoBehaviour:
   game: {fileID: 2324288705218545755}
   grid1: {fileID: 0}
   grid2: {fileID: 0}
+  colgrid1: {fileID: 0}
+  colgrid2: {fileID: 0}
   spriteCollision: {fileID: 0}
+  minigameInitiator: {fileID: 0}
+  camoHolder: {fileID: 0}
+  ItemContainers: {fileID: 0}
+  lockerHolder: {fileID: 0}
+  collisionColor: {r: 0, g: 0, b: 0, a: 0}
+  interactableColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  camoColor: {r: 0, g: 0, b: 0, a: 0}
+  accessibilityMode: 0
 --- !u!114 &2324288705218545734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sabotageButton: {fileID: 0}
-  sabotageButtonContainer: {fileID: 0}
-  cooldownText: {fileID: 0}
+  sabotageMenus: []
+  playerIcons: []
+  cooldownTexts: []
+  map: 0
 --- !u!114 &4080215491979641625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,9 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 2324288705218545755}
-  sabotageMenuPrefabs:
-  - {fileID: 7574060461238470259, guid: b68c606b8be7f394b92e20867589178b, type: 3}
-  - {fileID: 8268012837553857763, guid: f49bf6cb8e2a1df4f93efbef2e5a4b2f, type: 3}
+  sabotageMenus: {fileID: 0}
 --- !u!114 &2242851898714657401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,5 +223,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57f847b0994474042bd8f3b2270ba67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8959598748407034356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2324288705218545754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58ec3355f36f624e9e43ccd3e8b69ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
