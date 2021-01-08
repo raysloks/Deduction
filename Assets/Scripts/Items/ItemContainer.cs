@@ -24,7 +24,7 @@ public class ItemContainer : Interactable
     // Start is called before the first frame update
     void Start()
     {
-        Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length));
+        Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1));
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
     }
 
@@ -112,8 +112,7 @@ public class ItemContainer : Interactable
             
                 PickupCooldown message = new PickupCooldown();
                 message.child = transform.GetSiblingIndex();
-               //Temporary Camera disabled. Change 2 to 1 to add camera back in again.
-                message.random = UnityEngine.Random.Range(2, (Enum.GetValues(typeof(Item)).Length - 1));
+                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
                 game.handler.link.Send(message);
             }
         
