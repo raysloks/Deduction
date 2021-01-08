@@ -3781,7 +3781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad649e9b0f066d94495949dee3616c83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myText: {fileID: 0}
+  myText: {fileID: 539767252}
   parent: {fileID: 1405227234}
   playerTrigger: {fileID: 1996686082}
   gc: {fileID: 5915959410371776244}
@@ -14784,6 +14784,11 @@ PrefabInstance:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 2800000, guid: 65d0b13a8ec57894290cc16a8dad77e5, type: 3}
+    - target: {fileID: 6993934497886450233, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7535220202143664104, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14860,6 +14865,18 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1210898913}
+    - target: {fileID: 7919884138314284099, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: pulsePrefab
+      value: 
+      objectReference: {fileID: 1917378178822735263, guid: 3ae2544d65eb35f43b2f2b0f1c79ba34,
+        type: 3}
+    - target: {fileID: 7919884138314284099, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: smokePrefab
+      value: 
+      objectReference: {fileID: 5726673685461738565, guid: eb3e9ef180a692f48abcda0239949293,
+        type: 3}
     - target: {fileID: 7919884138314284124, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -15000,6 +15017,11 @@ PrefabInstance:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 2800000, guid: 65d0b13a8ec57894290cc16a8dad77e5, type: 3}
+    - target: {fileID: 7919884139481190664, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7919884139481190666, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: m_IsActive
