@@ -13,7 +13,7 @@ public class Mob : MonoBehaviour
     public GameObject ghostFire;
     public GameObject shoes;
     public GameObject torsos;
-    public HM hm;
+ //   public HM hm;
 
     private bool countDeath = false;
     [HideInInspector] public float timeSpentDead = 0f;
@@ -66,18 +66,22 @@ public class Mob : MonoBehaviour
         }
         else if (type == 0)
         {
+            /*
             if(hm != null){
                 hm.SetAlive(true);
             }
+            */
             countDeath = false;
             timeSpentDead = 0f;
             SetAliveAppearance();
         }else if (type == 1)
         {
             countDeath = true;
+            /*
             if(hm != null){
                 hm.SetAlive(true);
             }
+            */
         }
 
     }
