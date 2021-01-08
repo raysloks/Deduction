@@ -11,6 +11,7 @@ public:
 	int64_t time;
 	uint64_t target;
 	uint64_t killer;
+	bool knife;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

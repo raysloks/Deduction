@@ -87,22 +87,11 @@ public class Player : Mob
             LeftRightArrow.SetActive(false);
             UpDownArrow.SetActive(false);
             if (move.x == 0f && move.y == 0f)
-            {
-
-                Debug.Log("LEFTRIGHT");
                 LeftRightArrow.SetActive(true);
-
-            }
             else if (Mathf.Abs(move.y) > Mathf.Abs(move.x))
-            {
-                Debug.Log("LEFTRIGHT");
                 LeftRightArrow.SetActive(true);
-            }
             else
-            {
-                Debug.Log("UPDOWN");
                 UpDownArrow.SetActive(true);
-            }
         }
 
         base.Update();

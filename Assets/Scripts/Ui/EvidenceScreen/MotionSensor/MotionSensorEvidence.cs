@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,6 +15,7 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public Material newMaterial;
     public Sprite Lock;
+    public TextMeshProUGUI myText;
 
     private MainEvidencePicture med;
     private Texture tex;
@@ -61,5 +62,10 @@ public class MotionSensorEvidence : MonoBehaviour, IPointerEnterHandler, IPointe
             lockObject.GetComponent<Image>().sprite = Lock;
             med.LockEvidenceSensor(ms);
         }
+    }
+
+    public void SetText(int number)
+    {
+        myText.text = "Motion Sensor List: " + number;
     }
 }

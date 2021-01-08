@@ -14,7 +14,7 @@ public class GrassScript : MonoBehaviour
     {
         foreach (Transform t in this.transform)
         {
-            Grass.Add(new grassObject(t, t.GetComponent<SpriteRenderer>().material));
+            Grass.Add(new grassObject(t, t.GetComponent<Animation>()));
 
             t.GetComponent<SpriteRenderer>().material.SetFloat("_GrassSpeed", 2f);
             t.GetComponent<SpriteRenderer>().material.SetFloat("_GrassWind", 2f);
@@ -59,14 +59,10 @@ public class GrassScript : MonoBehaviour
             foreach(grassObject go in grassyMaterial)
             {
                 go.timer += Time.deltaTime;
-
-                go.m.SetFloat("_GrassSpeed", 2f /  (go.timer));
-                go.m.SetFloat("_GrassWind", 2f / (go.timer));
+                go.a.Play();
                 if (go.timer > 2f)
                 {
 
-                    go.m.SetFloat("_GrassSpeed", 2f);
-                    go.m.SetFloat("_GrassWind", 2f);
                     Debug.Log("reset");
                     go.timer = 0f;
                     deleteMaterial.Add(go);
@@ -96,14 +92,14 @@ public class GrassScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player")
+        if(col.tag == "Player" || col.tag == "Mob")
         {
             Entered.Add(new playerObject(col.gameObject, (Vector2)col.transform.position));
         }
     }
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.tag == "Player" || col.tag == "Mob")
         {
             Entered.Remove(new playerObject(col.gameObject, (Vector2)col.transform.position));
         }
@@ -125,14 +121,14 @@ public class GrassScript : MonoBehaviour
 
     public class grassObject
     {
-        public Material m;
+        public Animation a;
         public Transform t;
         private bool waving = false;
         public float timer = 0f;
 
-        public grassObject(Transform t, Material m)
+        public grassObject(Transform t, Animation a)
         {
-            this.m = m;
+            this.a = a;
             this.t = t;
         }
 

@@ -14,6 +14,7 @@
 	void PlayerUpdateHandler(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void PlayerVotedHandler(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void PresentEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message);
+	void PulseEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const PulseEvidence& message);
 	void ReportAttemptedHandler(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void ResetGameSettingsHandler(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void RestartRequestedHandler(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
@@ -21,6 +22,7 @@
 	void SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void SendSensorListHandler(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
 	void SmokeGrenadeActivateHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message);
+	void SmokeGrenadeEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message);
 	void TakePhotoHandler(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message);

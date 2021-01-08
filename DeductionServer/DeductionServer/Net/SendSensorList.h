@@ -11,6 +11,8 @@ class SendSensorList
 public:
 	std::vector<uint8_t> names;
 	std::vector<uint64_t> times;
+	uint64_t player;
+	std::vector<uint64_t> playerIds;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

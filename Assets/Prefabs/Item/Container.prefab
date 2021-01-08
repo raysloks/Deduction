@@ -551,6 +551,8 @@ MonoBehaviour:
   cameraSprite: {fileID: 21300000, guid: 8b45a016527400e4d9fdfb6f2f40acb7, type: 3}
   motionSensorSprite: {fileID: 21300000, guid: d96627d320b055a40bda1a536bbee36e, type: 3}
   smokeGrenadeSprite: {fileID: 21300000, guid: ef9f1e364e235cb4c8b18aca748697cb, type: 3}
+  knifeSprite: {fileID: 21300000, guid: 701cb9463ba10f645b21b1415d6880f4, type: 3}
+  pulseSprite: {fileID: 21300000, guid: b36567df3ac61eb48a201538fc00cc8d, type: 3}
   outline: {fileID: 1634067498}
 --- !u!58 &1368815421
 CircleCollider2D:

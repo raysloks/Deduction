@@ -73,7 +73,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
             if (finishedVotingIndicator)
                 finishedVotingIndicator.SetActive(true);
     }
-    
+
 
     //if pointer enters send event to CurrentlyVisibleEvidence
     public void OnPointerEnter(PointerEventData eventData)
@@ -110,6 +110,12 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
                 case VoterEvidence.Evidence.MotionSensor:
                     sendEvidenceEvent.MotionSensorEvidence = Evidence.GetComponent<VoterEvidence>().ms;
                     break;
+                case VoterEvidence.Evidence.SmokeGrenade:
+                    sendEvidenceEvent.smokeGrenadeEvidence = Evidence.GetComponent<VoterEvidence>().sg;
+                    break;
+                case VoterEvidence.Evidence.PulseChecker:
+                     sendEvidenceEvent.pulseCheckerEvidence = Evidence.GetComponent<VoterEvidence>().pc;
+                     break;
             }
 
             EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);

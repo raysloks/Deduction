@@ -300,7 +300,7 @@ void NetworkHandler::removeMob(uint64_t id)
 	}
 }
 
-void NetworkHandler::killMob(uint64_t id, uint64_t killer)
+void NetworkHandler::killMob(uint64_t id, uint64_t killer, bool knife)
 {
 	auto&& mob = mobs[id];
 	mob.type = MobType::Ghost;
@@ -327,6 +327,7 @@ void NetworkHandler::killMob(uint64_t id, uint64_t killer)
 		message.time = time + game.settings.killCooldown;
 		message.target = id;
 		message.killer = killer;
+		message.knife = knife;
 
 		for (auto player : players)
 		{
@@ -445,16 +446,16 @@ void NetworkHandler::KillAttemptedHandler(const asio::ip::udp::endpoint & endpoi
 	{
 		auto&& player = it->second;
 		auto&& mob = mobs[player.mob];
-		if (mob.type == MobType::Player && mob.role == Role::Impostor && mob.killCooldown < time)
+		if (mob.type == MobType::Player)
 		{
 			if (message.target < mobs.size())
 			{
 				auto&& target = mobs[message.target];
-				if (target.enabled && target.type == MobType::Player && target.role == Role::Crewmate)
+				if (target.enabled && target.type == MobType::Player)
 				{
 					if ((target.position - mob.position).Len() < game.settings.killRange + game.settings.playerSpeed * 0.1f)
 					{
-						killMob(message.target, player.mob);
+						killMob(message.target, player.mob, message.knife);
 
 						MobTeleport reply;
 						reply.from = mob.position;
@@ -784,6 +785,15 @@ void NetworkHandler::SmokeGrenadeActivateHandler(const asio::ip::udp::endpoint& 
 	Broadcast(message);
 }
 
+void NetworkHandler::PulseEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const PulseEvidence& message)
+{
+	Broadcast(message);
+}
+
+void NetworkHandler::SmokeGrenadeEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message)
+{
+	Broadcast(message);
+}
 
 
 //void NetworkHandler::GivenTasksHandler(const asio::ip::udp::endpoint & endpoint, const GivenTasks & message)

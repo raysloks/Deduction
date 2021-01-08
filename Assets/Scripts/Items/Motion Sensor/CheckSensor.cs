@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using EventCallbacks;
+using TMPro;
 
 public class CheckSensor : MonoBehaviour
 {
     private int enter = 0;
     private List<string> peopleEntered = new List<string>();
     private List<int> secondsIn = new List<int>();
+    private List<Sprite> playerSprites = new List<Sprite>();
+    private List<ulong> playerIds = new List<ulong>();
+
     [HideInInspector] public GameController gc;
     [HideInInspector] public EvidenceHandler evidenceHandler;
 
     [HideInInspector] public List<Vector2> fingerPositions;
+    [HideInInspector] public Animation anim;
 
     public LayerMask lm;
 
@@ -22,6 +28,12 @@ public class CheckSensor : MonoBehaviour
     private List<GameObject> goWaitList = new List<GameObject>();
     private bool leftRight = false;
     public SpriteRenderer outline;
+
+    public GameObject LeftRightgo;
+    public GameObject UpDowngo;
+    public GameObject numbergo;
+
+    private int number;
   
     // Start is called before the first frame update
     void Start()
@@ -39,6 +51,7 @@ public class CheckSensor : MonoBehaviour
             Debug.Log("ZERO");
             hit1 = Physics2D.Raycast(transform.position, Vector2.left, 1000f, lm);
             hit2 = Physics2D.Raycast(transform.position, Vector2.right, 1000f, lm);
+            LeftRightgo.SetActive(true);
             leftRight = true;
         }
         else if(Mathf.Abs(gc.player.move.y) > Mathf.Abs(gc.player.move.x))
@@ -46,6 +59,7 @@ public class CheckSensor : MonoBehaviour
             Debug.Log("LEFTRIGHT");
             hit1 = Physics2D.Raycast(transform.position, Vector2.left, 1000f, lm);
             hit2 = Physics2D.Raycast(transform.position, Vector2.right, 1000f, lm);
+            LeftRightgo.SetActive(true);
             leftRight = true;
         }
         else
@@ -53,6 +67,7 @@ public class CheckSensor : MonoBehaviour
             Debug.Log("UP");
             hit1 = Physics2D.Raycast(transform.position, -Vector2.up, 1000f, lm);
             hit2 = Physics2D.Raycast(transform.position, Vector2.up, 1000f, lm);
+            UpDowngo.SetActive(true);
         }
         if (hit1.collider != null && hit2.collider != null)
         {
@@ -106,15 +121,20 @@ public class CheckSensor : MonoBehaviour
     {
         if(col.tag == "Mob")
         {
+            anim.Play();
             StartCoroutine(FadeInOutline2(0.2f));
             enter++;
             peopleEntered.Add(col.gameObject.name);
             int timer = (int)gc.roundTimer;
             secondsIn.Add(timer);
+            playerSprites.Add(col.transform.Find("Heads_1").GetComponent<SpriteRenderer>().sprite);
+            ulong myKey = gc.handler.names.FirstOrDefault(x => x.Value == col.gameObject.name).Key;
+            playerIds.Add(myKey);
             Debug.Log("Enter Col: " + col.gameObject.name + " Number entered: " + enter+ " Seconds In round : " + timer);
         }
         if(col.tag == "Player")
         {
+            anim.Play();
             StartCoroutine(FadeInOutline2(0.2f));
             Debug.Log("Enter");
         }
@@ -122,7 +142,11 @@ public class CheckSensor : MonoBehaviour
 
     public void meetingStarted(EventCallbacks.Event eventinfo)
     {
-        evidenceHandler.AddSensorList(peopleEntered, secondsIn);
+        Debug.Log("Send Motion Sensor List");
+        evidenceHandler.AddSensorList(peopleEntered, secondsIn, (int)gc.roundTimer, playerSprites, number, playerIds);
+        peopleEntered.Clear();
+        secondsIn.Clear();
+        playerSprites.Clear();
     }
 
     IEnumerator FadeOutOutline(float seconds)
@@ -174,6 +198,16 @@ public class CheckSensor : MonoBehaviour
         }
     }
 
+    public void SetNumber(int number)
+    {
+        this.number = number;
+        TextMeshPro[] texts = numbergo.GetComponentsInChildren<TextMeshPro>();
+        foreach (TextMeshPro t in texts)
+        {
+            t.text = number.ToString();
+        }
+    }
+
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
@@ -185,7 +219,7 @@ public class CheckSensor : MonoBehaviour
 
         if(pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
-            Destroy(this.gameObject);
+          //  Destroy(this.gameObject);
         }
     }
 }

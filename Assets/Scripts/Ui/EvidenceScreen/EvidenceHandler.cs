@@ -10,9 +10,12 @@ public class EvidenceHandler : MonoBehaviour
     public Transform content;
     public GameObject picturePrefab;
     public GameObject sensorPrefab;
+    public GameObject pulsePrefab;
+    public GameObject smokePrefab;
     private List<List<string>> SensorList = new List<List<string>>();
     private List<List<int>> SensorList2 = new List<List<int>>();
     public Player player;
+    private GameObject lastSmokePrefab;
 
     private void Start()
     {
@@ -51,21 +54,47 @@ public class EvidenceHandler : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void AddSensorList(List<string> sList, List<int> tList)
+    public void AddSensorList(List<string> sList, List<int> tList, int totalTime, List<Sprite> sprites, int number, List<ulong> playerIds)
     {
+        Debug.Log("EvidenceHandler motion list");
         if (player.IsAlive == false)
         {
             Debug.Log("ya dead son");
             return;
         }
+        Debug.Log("EvidenceHandler motion list2");
         GameObject go = Instantiate(sensorPrefab, content);
         MotionSensor m = new MotionSensor();
         m.names = sList;
         m.secondsIn = tList;
+        m.totalRoundTime = totalTime;
+        m.playerSprites = sprites;
+        m.number = number;
+        m.playerIds = playerIds;
+
         go.GetComponent<MotionSensorEvidence>().ms = m;
+        go.GetComponent<MotionSensorEvidence>().SetText(number);
         Debug.Log("AddList");
         SensorList.Add(sList);
         SensorList2.Add(tList);
+    }
+
+    public void AddPulseCheckerEvidence(PulseCheckerEvidence pc)
+    {
+        GameObject go = Instantiate(pulsePrefab, content);
+        go.GetComponent<PulseCheckerEvidencePrefab>().pce = pc;
+    }
+
+    public void AddSmokeGrenadeEvidence(SGEvidence sge)
+    {
+        //Only latest smoke is shown
+        if(lastSmokePrefab != null)
+        {
+            Destroy(lastSmokePrefab);
+        }
+        lastSmokePrefab = Instantiate(smokePrefab, content);
+        lastSmokePrefab.GetComponent<SmokeGrenadeEvidencePrefab>().sge = sge;
+
     }
 
     //End of meeting cleanup

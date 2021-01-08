@@ -168,6 +168,12 @@
       <Filter>Net</Filter>
     </ClInclude>
     <ClInclude Include="Net\PhotoTaken.h" />
+    <ClInclude Include="Net\PulseEvidence.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\SmokeGrenadeEvidence.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -318,6 +324,12 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\PhotoTaken.cpp" />
+    <ClCompile Include="Net\PulseEvidence.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\SmokeGrenadeEvidence.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Net\last_build.txt">

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CurrentlyVisibleEvidence : MonoBehaviour
 {
- 
+
     public float speed = 10f;
     public Texture texture;
     private RawImage ri;
@@ -17,6 +17,12 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 
     //motion sensor stuff
     public GameObject motionSensorEvidence;
+
+    //Pulse Checker stuff
+    public GameObject pulseCheckerEvidence;
+
+    //Smoke grenade stuff
+    public GameObject SmokeGrenadeEvidence;
 
     private Vector3 arrowOrginalPos;
     private Vector2 center;
@@ -91,28 +97,47 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     //Presents the evidence under the main meeting screen when you hover over a vote button
     public void ShowEvidence(EventCallbacks.Event eventInfo)
     {
-
         if (eventInfo is SendEvidenceEvent see)
         {
-            if (see.Evidence == 2)
-            {
-                Debug.Log("Show Evidence: MotionSensor");
-                ri.enabled = false;
-                motionSensorEvidence.SetActive(true);
-                motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
-            }
-            else if (see.Evidence == 1)
-            {
-                motionSensorEvidence.SetActive(false);
-                ri.enabled = true;
-                ri.texture = see.gc.screenshotHandler.photos[(ulong)see.photoIndex].texture;
-            }
-            else if (see.Evidence == 0)
-            {
+          if(see.Evidence == 4){
+              ri.enabled = false;
+              motionSensorEvidence.SetActive(false);
+              SmokeGrenadeEvidence.SetActive(false);
+              pulseCheckerEvidence.SetActive(true);
+              pulseCheckerEvidence.GetComponent<ShowPulseEvidence>().DisplayPulseEvidence(see.pulseCheckerEvidence);
+          }
+          else if(see.Evidence == 3)
+          {
+              ri.enabled = false;
+              motionSensorEvidence.SetActive(false);
+              pulseCheckerEvidence.SetActive(false);
+              SmokeGrenadeEvidence.SetActive(true);
+              SmokeGrenadeEvidence.GetComponent<ShowSmokeGrenade>().DisplaySmokeEvidence(see.smokeGrenadeEvidence);
+          }
+          else if(see.Evidence == 2)
+          {
+              Debug.Log("Show Evidence: MotionSensor");
+
+              ri.enabled = false;
+              SmokeGrenadeEvidence.SetActive(false);
+              pulseCheckerEvidence.SetActive(false);
+              motionSensorEvidence.SetActive(true);
+              motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
+          }
+          else if (see.Evidence == 1)
+          {
+              ri.enabled = true;
+              pulseCheckerEvidence.SetActive(false);
+              motionSensorEvidence.SetActive(false);
+              SmokeGrenadeEvidence.SetActive(false);
+              ri.texture = see.gc.screenshotHandler.photos[(ulong)see.photoIndex].texture;
+          }
+          else if (see.Evidence == 0)
+          {
                 ri.enabled = true;
                 motionSensorEvidence.SetActive(false);
                 ri.texture = texture;
-            }
+          }
 
             if (!moving)
             {

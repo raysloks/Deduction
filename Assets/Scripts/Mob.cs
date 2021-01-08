@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using TMPro;
+using EventCallbacks;
 using UnityEngine.Experimental.U2D.Animation;
 
 public class Mob : MonoBehaviour
@@ -12,6 +13,10 @@ public class Mob : MonoBehaviour
     public GameObject ghostFire;
     public GameObject shoes;
     public GameObject torsos;
+    public HM hm;
+
+    private bool countDeath = false;
+    [HideInInspector] public float timeSpentDead = 0f;
 
     [HideInInspector] public bool inCamo;
     [HideInInspector] public bool inLocker;
@@ -28,11 +33,16 @@ public class Mob : MonoBehaviour
     {
         inCamo = false;
         inLocker = false;
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
     protected void Update()
     {
         UpdateFeetPos();
+        if (countDeath)
+        {
+            timeSpentDead += Time.deltaTime;
+        }
     }
 
     public void UpdateFeetPos()
@@ -48,6 +58,7 @@ public class Mob : MonoBehaviour
 
     public void SetType(ulong type)
     {
+        
         this.type = type;
         if (type == 2)
         {
@@ -55,7 +66,18 @@ public class Mob : MonoBehaviour
         }
         else if (type == 0)
         {
+            if(hm != null){
+                hm.SetAlive(true);
+            }
+            countDeath = false;
+            timeSpentDead = 0f;
             SetAliveAppearance();
+        }else if (type == 1)
+        {
+            countDeath = true;
+            if(hm != null){
+                hm.SetAlive(true);
+            }
         }
 
     }
@@ -198,6 +220,16 @@ public class Mob : MonoBehaviour
             Color color = spr[i].color;
             color = new Color(r, g, b, 1.0f);
             spr[i].color = color;
+        }
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.Discussion)
+        {
+            countDeath = false;
         }
     }
 }

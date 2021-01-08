@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -7,16 +8,21 @@ using TMPro;
 public class ShowMotionSensorList : MonoBehaviour
 {
 
-    TMP_Dropdown m_Dropdown;
-
+    List<msbrePrefabImage> imageObjects = new List<msbrePrefabImage>();
+    public GameObject content;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        m_Dropdown = GetComponent<TMP_Dropdown>();
+        if(content != null)
+        {
+            imageObjects = content.GetComponentsInChildren<msbrePrefabImage>().ToList();
+            Debug.Log("ImageObjects count" + imageObjects.Count);
+        }
       
     }
-
+    /*
     public void addAllOptions(MotionSensor s)
     {
         m_Dropdown = GetComponent<TMP_Dropdown>();
@@ -39,5 +45,37 @@ public class ShowMotionSensorList : MonoBehaviour
         }
       //  m_Dropdown.Show();
      //   m_Dropdown.RefreshShownValue();
+    }
+    */
+
+    public void addAllOptions(MotionSensor s)
+    {
+        imageObjects = content.GetComponentsInChildren<msbrePrefabImage>().ToList();
+        int index = 0;
+        foreach (string Str in s.names)
+        {
+            if (imageObjects[index].gameObject.activeSelf == false)
+            {
+                imageObjects[index].gameObject.SetActive(true);                
+            }
+            imageObjects[index].SetEvidence(Str, (s.totalRoundTime - s.secondsIn[index]), s.playerSprites[index]);
+            index++;
+        }
+        if (s.names.Count == 0)
+        {
+            imageObjects[0].NoonePassed();
+            index++;
+        }
+        for(int i = index; i < imageObjects.Count; i++)
+        {
+            if(imageObjects[i].gameObject.activeSelf == true)
+            {
+                imageObjects[i].gameObject.SetActive(false);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }

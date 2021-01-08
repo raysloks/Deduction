@@ -13,7 +13,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private static ItemButton instance;
 
 
-    [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade };
+    [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade, Knife, PulseChecker };
     [HideInInspector]public Item myItem;
 
     public Player player;
@@ -25,22 +25,38 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public TextMeshProUGUI infoText;
     private Image myItemImage;
     private Image backgroundImage;
-    [Header("MotionSensor")]
+    public Image infoImage;
+    [Header("Motion Sensor")]
     public GameObject motionSensorPrefab;
     public Sprite buttonMotionSensorImage;
+    public Animation motionSensorBeep;
+    public GameObject MotionSensorUI;
+    private int motionSensorNumber = 1;
 
     [Header("Camera")]
     public Sprite CameraSprite;
-    private int maxPhotos = 3;
+    public int maxPhotos = 3;
     private int photosTaken = 0;
 
-    [Header("SmokeGrenade")]
+    [Header("Smoke Grenade")]
     public Sprite SmokeGrenadeSprite;
+    public TextMeshProUGUI areaText;
+
+
+    [Header("Knife")]
+    public Sprite KnifeSprite;
+
+    [Header("Pulse Checker")]
+    public Sprite pulseSprite;
+    public PulseCheckerUI pcUI;
+    public float PcCD;
 
     delegate void Calculation();
     Calculation Click;
-    Calculation Enter;
-    Calculation Exit;
+    delegate void Calculation2();
+    Calculation2 Enter;
+    delegate void Calculation3();
+    Calculation3 Exit;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +65,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
         //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length)));
-        SetItem(0);
+        SetItem(3);
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
         if(ItemContainers == null)
@@ -114,20 +130,48 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void MotionSensorClick()
     {
+        MotionSensorUI.SetActive(true);
         GameObject ms = Instantiate(motionSensorPrefab, player.transform.position, Quaternion.identity);
         CheckSensor cs = ms.GetComponent<CheckSensor>();
         cs.gc = gc;
         cs.evidenceHandler = evidenceHandler;
+        cs.SetNumber(motionSensorNumber);
+        cs.anim = motionSensorBeep;
         SetItem(0);
         gc.player.ResetArrows();
         gc.player.MotionSensorCheck = false;
+        motionSensorNumber++;
     }
 
     private void SmokeGrenadeClick()
     {
+        SGEvidence sge = new SGEvidence();
+        sge.area = areaText.text;
+        if(areaText.text == "")
+        {
+            sge.area = "Outside";
+        }
+        sge.playerName = player.gameObject.name;
+        sge.playerID = gc.handler.playerMobId;
+        sge.player = player.sprite.sprite;
+        evidenceHandler.AddSmokeGrenadeEvidence(sge);
         SmokeGrenadeActivate message = new SmokeGrenadeActivate();
         message.pos = player.transform.position;
         gc.handler.link.Send(message);
+        SetItem(0);
+    }
+
+    private void KnifeClick()
+    {
+        gc.Kill();
+
+        gc.knifeItem = false;
+        SetItem(0);
+    }
+
+    private void PulseClick()
+    {
+        pcUI.StartCountdown(PcCD);
         SetItem(0);
     }
 
@@ -139,6 +183,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         text2.text = "Item";
         myItemImage.enabled = true;
         backgroundImage.enabled = true;
+        infoImage.enabled = true;
         Exit = () => Empty();
         Enter = () => Empty();
         switch (myItem)
@@ -148,6 +193,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 Click = () => NoneClick();
                 myItemImage.enabled = false;
                 backgroundImage.enabled = false;
+                infoImage.enabled = false;
                 text2.text = "";
                 infoText.text = "";
                 break;
@@ -169,6 +215,18 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 myItemImage.sprite = SmokeGrenadeSprite;
                 infoText.text = "Throws a smoke grenade that covers the area around you with smoke. Hide yourself or distract other players with it";
                 break;
+            case Item.Knife:
+                Click = () => KnifeClick();
+                Exit = () => KnifeExit();
+                Enter = () => KnifeEnter();
+                myItemImage.sprite = KnifeSprite;
+                infoText.text = "Knife. Lets you kill another player. Even if your not a spy. Use does not affect kill cooldown";
+                break;
+            case Item.PulseChecker:
+                Click = () => PulseClick();
+                myItemImage.sprite = pulseSprite;
+                infoText.text = "Pulse Machine. Revealse all enemies around you for its duration. If you find a body while PC is in use you will be able to present the age of the body (In seconds) as evidence";
+                break;
         }
     }
     //Detect if the Cursor starts to pass over the GameObject
@@ -182,16 +240,27 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         Exit();
     }
+
     void MotionSensorEnter()
     {
         gc.player.MotionSensorCheck = true;
     }
     void MotionSensorExit()
     {
-
         gc.player.MotionSensorCheck = false;
         gc.player.ResetArrows();
     }
+
+    void KnifeEnter()
+    {
+        Debug.Log("KnifeEnter");
+        gc.knifeItem = true;
+    }
+    void KnifeExit()
+    {
+        gc.knifeItem = false;
+    }
+
     void Empty()
     {
         Debug.Log("Empty");
@@ -203,10 +272,16 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (pc.previous == GamePhase.Setup)
         {
-           int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+
+            motionSensorNumber = 1;
+            int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
 
             Debug.Log((Enum.GetValues(typeof(Item)).Length - 1) + "Enum");
-            SetItem(0);
+            SetItem(3);
+        }
+        if(pc.phase == GamePhase.Setup)
+        {
+            MotionSensorUI.SetActive(false);
         }
     }
 }

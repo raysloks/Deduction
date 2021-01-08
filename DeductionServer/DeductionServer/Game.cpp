@@ -57,7 +57,7 @@ void Game::tick(int64_t now)
 		case GamePhase::EndOfMeeting:
 			setPhase(GamePhase::Ejection, timer + 3'000'000'000);
 			for (auto i : toBeEjected)
-				handler.killMob(i, -1ul);
+				handler.killMob(i, -1ul, false);
 			toBeEjected.clear();
 			teleportToMeeting();
 			break;

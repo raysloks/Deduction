@@ -51,6 +51,7 @@ KillAttempted
 int64 time
 uint64 target
 uint64 killer
+bool knife
 LightUpdate
 int64 time
 float light
@@ -104,6 +105,10 @@ PresentEvidence
 uint64 index
 uint64 presenter
 uint8 sensornames[]
+PulseEvidence
+int32 deadTime
+uint64 playerId
+uint64 deadId
 ReportAttempted
 int64 time
 uint64 idOfInitiator
@@ -119,8 +124,14 @@ SendEvidence
 SendSensorList
 uint8 names[]
 uint64 times[]
+uint64 player
+uint64 playerIds[]
 SmokeGrenadeActivate
 vec3 pos
+SmokeGrenadeEvidence
+string area
+string playerName
+uint64 playerId
 TakePhoto
 uint32 index
 uint64 photographer

@@ -294,7 +294,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in ReportAttempted message)
+	public void Send(IPEndPoint endpoint, in PulseEvidence message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -304,7 +304,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in ResetGameSettings message)
+	public void Send(IPEndPoint endpoint, in ReportAttempted message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -314,7 +314,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in RestartRequested message)
+	public void Send(IPEndPoint endpoint, in ResetGameSettings message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -324,7 +324,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in SabotageTaskUpdate message)
+	public void Send(IPEndPoint endpoint, in RestartRequested message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -334,7 +334,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in SendEvidence message)
+	public void Send(IPEndPoint endpoint, in SabotageTaskUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -344,7 +344,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in SendSensorList message)
+	public void Send(IPEndPoint endpoint, in SendEvidence message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -354,7 +354,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in SmokeGrenadeActivate message)
+	public void Send(IPEndPoint endpoint, in SendSensorList message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -364,7 +364,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TakePhoto message)
+	public void Send(IPEndPoint endpoint, in SmokeGrenadeActivate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -374,7 +374,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TaskListUpdate message)
+	public void Send(IPEndPoint endpoint, in SmokeGrenadeEvidence message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -384,7 +384,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TaskUpdate message)
+	public void Send(IPEndPoint endpoint, in TakePhoto message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -394,7 +394,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in TeleportToMeeting message)
+	public void Send(IPEndPoint endpoint, in TaskListUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
@@ -404,11 +404,31 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	public void Send(IPEndPoint endpoint, in TaskUpdate message)
 	{
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((byte)37);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in TeleportToMeeting message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)38);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(IPEndPoint endpoint, in VoiceFrame message)
+	{
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)39);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -582,7 +602,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in ReportAttempted message)
+	public void Send(in PulseEvidence message)
 	{
 		if (endpoint == null)
 			return;
@@ -594,7 +614,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in ResetGameSettings message)
+	public void Send(in ReportAttempted message)
 	{
 		if (endpoint == null)
 			return;
@@ -606,7 +626,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in RestartRequested message)
+	public void Send(in ResetGameSettings message)
 	{
 		if (endpoint == null)
 			return;
@@ -618,7 +638,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in SabotageTaskUpdate message)
+	public void Send(in RestartRequested message)
 	{
 		if (endpoint == null)
 			return;
@@ -630,7 +650,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in SendEvidence message)
+	public void Send(in SabotageTaskUpdate message)
 	{
 		if (endpoint == null)
 			return;
@@ -642,7 +662,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in SendSensorList message)
+	public void Send(in SendEvidence message)
 	{
 		if (endpoint == null)
 			return;
@@ -654,7 +674,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in SmokeGrenadeActivate message)
+	public void Send(in SendSensorList message)
 	{
 		if (endpoint == null)
 			return;
@@ -666,7 +686,7 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in TakePhoto message)
+	public void Send(in SmokeGrenadeActivate message)
 	{
 		if (endpoint == null)
 			return;
@@ -678,7 +698,19 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
-	public void Send(in TaskUpdate message)
+	public void Send(in SmokeGrenadeEvidence message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)33);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
+	public void Send(in TakePhoto message)
 	{
 		if (endpoint == null)
 			return;
@@ -690,13 +722,25 @@ public class NetLink
 		client.SendAsync(bytes, bytes.Length, endpoint);
 	}
 
+	public void Send(in TaskUpdate message)
+	{
+		if (endpoint == null)
+			return;
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+		writer.Write((byte)36);
+		message.Serialize(writer);
+		byte[] bytes = stream.ToArray();
+		client.SendAsync(bytes, bytes.Length, endpoint);
+	}
+
 	public void Send(in TeleportToMeeting message)
 	{
 		if (endpoint == null)
 			return;
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
-		writer.Write((byte)35);
+		writer.Write((byte)37);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -708,7 +752,7 @@ public class NetLink
 			return;
 		MemoryStream stream = new MemoryStream();
 		BinaryWriter writer = new BinaryWriter(stream);
-		writer.Write((byte)36);
+		writer.Write((byte)38);
 		message.Serialize(writer);
 		byte[] bytes = stream.ToArray();
 		client.SendAsync(bytes, bytes.Length, endpoint);
@@ -888,29 +932,35 @@ public class NetLink
 		}
 		case 25:
 		{
+			PulseEvidence message = PulseEvidence.Deserialize(reader);
+			message_queue.Enqueue(() => handler.PulseEvidenceHandler(endpoint, message));
+			break;
+		}
+		case 26:
+		{
 			ReportAttempted message = ReportAttempted.Deserialize(reader);
 			message_queue.Enqueue(() => handler.ReportAttemptedHandler(endpoint, message));
 			break;
 		}
-		case 28:
+		case 29:
 		{
 			SabotageTaskUpdate message = SabotageTaskUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.SabotageTaskUpdateHandler(endpoint, message));
 			break;
 		}
-		case 29:
+		case 30:
 		{
 			SendEvidence message = SendEvidence.Deserialize(reader);
 			message_queue.Enqueue(() => handler.SendEvidenceHandler(endpoint, message));
 			break;
 		}
-		case 30:
+		case 31:
 		{
 			SendSensorList message = SendSensorList.Deserialize(reader);
 			message_queue.Enqueue(() => handler.SendSensorListHandler(endpoint, message));
 			break;
 		}
-		case 31:
+		case 32:
 		{
 			SmokeGrenadeActivate message = SmokeGrenadeActivate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.SmokeGrenadeActivateHandler(endpoint, message));
@@ -918,23 +968,29 @@ public class NetLink
 		}
 		case 33:
 		{
+			SmokeGrenadeEvidence message = SmokeGrenadeEvidence.Deserialize(reader);
+			message_queue.Enqueue(() => handler.SmokeGrenadeEvidenceHandler(endpoint, message));
+			break;
+		}
+		case 35:
+		{
 			TaskListUpdate message = TaskListUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.TaskListUpdateHandler(endpoint, message));
 			break;
 		}
-		case 34:
+		case 36:
 		{
 			TaskUpdate message = TaskUpdate.Deserialize(reader);
 			message_queue.Enqueue(() => handler.TaskUpdateHandler(endpoint, message));
 			break;
 		}
-		case 35:
+		case 37:
 		{
 			TeleportToMeeting message = TeleportToMeeting.Deserialize(reader);
 			message_queue.Enqueue(() => handler.TeleportToMeetingHandler(endpoint, message));
 			break;
 		}
-		case 36:
+		case 38:
 		{
 			VoiceFrame message = VoiceFrame.Deserialize(reader);
 			message_queue.Enqueue(() => handler.VoiceFrameHandler(endpoint, message));
@@ -945,6 +1001,6 @@ public class NetLink
 		}
 	}
 
-	public const uint crc = 0x319a0e81;
+	public const uint crc = 0x19da8307;
 	private UdpClient client;
 }

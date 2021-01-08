@@ -80,6 +80,12 @@ public class GameController : MonoBehaviour
 
     public Button useButton;
 
+    [HideInInspector] public bool knifeItem = false;
+    public GameObject knifeKillEffect;
+
+    [HideInInspector] public bool pulseActive = false;
+
+    public EvidenceHandler eh;
 
     public float lightTarget = 1.0f;
     public float lightCurrent = 1.0f;
@@ -251,38 +257,44 @@ public class GameController : MonoBehaviour
         if (phase == GamePhase.Main && player.IsAlive)
         {
             // Kill
-            if (player.role == 1)
+            if (player.role == 1 || knifeItem)
             {
                 killTarget = ulong.MaxValue;
                 float targetDistance = settings.killRange;
-                if (player.killCooldown < time)
+                if (player.killCooldown < time || knifeItem)
                 {
                     foreach (var n in handler.mobs)
                     {
-                        if (n.Value.IsAlive == true && n.Value.role == 0 && n.Value.gameObject.activeSelf && !n.Value.inLocker)
+                        if(n.Value.role == 0 || knifeItem )
                         {
-                            float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
-                            if (distance < targetDistance)
+                            Debug.Log(player.gameObject.name +  "Key " + handler.playerMobId +  " this player VS other " + n.Value.gameObject +  "Key " + n.Key);
+
+                            if (n.Value.IsAlive == true && n.Value.gameObject.activeSelf && !n.Value.inLocker && n.Key != handler.playerMobId)
                             {
-                                killTarget = n.Key;
-                                targetDistance = distance;
+                                float distance = Vector2.Distance(player.transform.position, n.Value.transform.position);
+                                if (distance < targetDistance)
+                                {
+                                    killTarget = n.Key;
+                                    targetDistance = distance;
+                                }
                             }
                         }
                     }
                     killCooldownText.text = "";
                 }
-                else
+                if(player.killCooldown > time)
                 {
                     killCooldownText.text = ((player.killCooldown - time + 999999999) / 1000000000).ToString();
                 }
                 if (!player.canMove)
                     killTarget = ulong.MaxValue;
-                killButton.interactable = killTarget != ulong.MaxValue;
+                killButton.interactable = (killTarget != ulong.MaxValue && player.killCooldown < time);
                 if (killTarget != ulong.MaxValue)
                 {
+                    Debug.Log("TargetMarker GameObject: " + handler.mobs[killTarget].gameObject.name);
                     targetMarker.SetActive(true);
                     targetMarker.transform.position = handler.mobs[killTarget].transform.position;
-                    if (Input.GetKeyDown(KeyCode.Q))
+                    if (Input.GetKeyDown(KeyCode.Q) && !knifeItem)
                         Kill();
                 }
             }
@@ -469,7 +481,8 @@ public class GameController : MonoBehaviour
             KillAttempted message = new KillAttempted
             {
                 target = killTarget,
-                time = time
+                time = time,
+                knife = knifeItem
             };
             handler.link.Send(message);
         }

@@ -32,6 +32,7 @@
 #include "PlayerUpdate.h"
 #include "PlayerVoted.h"
 #include "PresentEvidence.h"
+#include "PulseEvidence.h"
 #include "ReportAttempted.h"
 #include "ResetGameSettings.h"
 #include "RestartRequested.h"
@@ -39,6 +40,7 @@
 #include "SendEvidence.h"
 #include "SendSensorList.h"
 #include "SmokeGrenadeActivate.h"
+#include "SmokeGrenadeEvidence.h"
 #include "TakePhoto.h"
 #include "TaskListUpdate.h"
 #include "TaskUpdate.h"
@@ -81,6 +83,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const PulseEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const ResetGameSettings& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const RestartRequested& message);
@@ -88,6 +91,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);

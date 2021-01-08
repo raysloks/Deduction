@@ -8,7 +8,7 @@ using EventCallbacks;
 public class ItemContainer : Interactable
 {
 
-    [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade };
+    [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade, Knife, PulseChecker };
     [HideInInspector] public Item item;
     private bool waitingForCountDown = false;
     private bool coolingDown = false;
@@ -17,6 +17,8 @@ public class ItemContainer : Interactable
     public Sprite cameraSprite;
     public Sprite motionSensorSprite;
     public Sprite smokeGrenadeSprite;
+    public Sprite knifeSprite;
+    public Sprite pulseSprite;
     public SpriteRenderer outline;
 
     // Start is called before the first frame update
@@ -89,6 +91,12 @@ public class ItemContainer : Interactable
             case Item.SmokeGrenade:
                 sr.sprite = smokeGrenadeSprite;
                 break;
+            case Item.Knife:
+                sr.sprite = knifeSprite;
+                break;
+            case Item.PulseChecker:
+                sr.sprite = pulseSprite;
+                break;
         }
     }
 
@@ -115,14 +123,11 @@ public class ItemContainer : Interactable
     public override bool CanInteract(GameController game)
     {
         return !coolingDown && game.player.IsAlive;
-     //   return alwaysActive || game.taskManager.tasks.Find(x => x.minigame_index == minigame_index && !x.completed) != null && game.player.role == 0 ||
-     //       game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index) != null;
     }
 
     public override void Interact(GameController game)
     {
         NoneClick(game);
-      //  game.popup.ActivatePopup(minigame, this);
     }
 
     public override void Highlight(bool highlighted)

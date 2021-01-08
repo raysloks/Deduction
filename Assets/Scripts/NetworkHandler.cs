@@ -173,10 +173,22 @@ public class NetworkHandler
 
     internal void KillAttemptedHandler(IPEndPoint endpoint, KillAttempted message)
     {
+        Debug.Log("Kill");
         if (message.target == playerMobId)
             game.deathAnimation.Play(mobs[message.target], mobs[message.killer]);
-        if (message.killer == playerMobId || message.killer == ulong.MaxValue)
+        if (message.knife == false && (message.killer == playerMobId || message.killer == ulong.MaxValue))
+        {
             game.player.killCooldown = message.time;
+        }
+        else if(message.knife == true && message.target != playerMobId)
+        {
+            Debug.Log("KnifeKill");
+            KnifeDieEvent de = new KnifeDieEvent();
+            de.UnitGameObjectPos = game.player.transform.position;
+            de.UnitParticle = game.knifeKillEffect;
+         //   se.UnitSound = gameOverEvent.victory ? game.gameWinSounds : game.gameLostSounds;
+            EventSystem.Current.FireEvent(EVENT_TYPE.KNIFE_KILL, de);
+        }
     }
 
     internal void ReportAttemptedHandler(IPEndPoint endpoint, ReportAttempted message)
@@ -186,6 +198,19 @@ public class NetworkHandler
         umei.game = game;
         umei.idOfInitiator = message.idOfInitiator;
         umei.idOfBody = message.target;
+        if(message.idOfInitiator == playerMobId && game.pulseActive == true)
+        {
+            PulseCheckerEvidence pce = new PulseCheckerEvidence();
+            pce.Time = (int)mobs[message.target].timeSpentDead;
+            pce.player = mobs[message.idOfInitiator].sprite.sprite;
+            pce.dead = mobs[message.target].sprite.sprite;
+            pce.playerId = message.idOfInitiator;
+            pce.deadId = message.target;
+            pce.playerName = names[message.idOfInitiator];
+            pce.deadName = names[message.target];
+            game.eh.AddPulseCheckerEvidence(pce);
+            game.pulseActive = false;
+        }
         umei.EventDescription = "BodyReported";
         EventSystem.Current.FireEvent(EVENT_TYPE.MEETING_STARTED, umei);
     }
@@ -379,6 +404,13 @@ public class NetworkHandler
         ms.names = dada;
         
         ms.secondsIn = message.times.Select(item => (int)item).ToList();
+
+        List <Sprite> playerSprites = new List<Sprite>();
+        foreach (ulong id in message.playerIds)
+        {
+            playerSprites.Add(mobs[id].sprite.sprite);
+        }
+        ms.playerSprites = playerSprites;
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
@@ -397,4 +429,30 @@ public class NetworkHandler
         photo.photographer = message.photographer;
         game.screenshotHandler.photos.Add(message.index, photo);
     }
+    internal void PulseEvidenceHandler(IPEndPoint endpoint, PulseEvidence message)
+    {
+        SendEvidenceEvent seEvent = new SendEvidenceEvent();
+        PulseCheckerEvidence pce = new PulseCheckerEvidence();
+        pce.playerName = names[message.playerId];
+        pce.deadName = names[message.deadId];
+        pce.player = mobs[message.playerId].sprite.sprite;
+        pce.dead = mobs[message.deadId].sprite.sprite;
+        pce.Time = message.deadTime;
+        seEvent.pulseCheckerEvidence = pce;
+        seEvent.Evidence = 4;
+        EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+    }
+    internal void SmokeGrenadeEvidenceHandler(IPEndPoint endpoint, SmokeGrenadeEvidence message)
+    {
+        Debug.Log("Smoke Evidence Info  AREA: " + message.area + " PlayerID: " + message.playerId);
+        SendEvidenceEvent seEvent = new SendEvidenceEvent();
+        SGEvidence sg = new SGEvidence();
+        sg.area = message.area;
+        sg.playerName = message.playerName;
+        sg.player = mobs[message.playerId].sprite.sprite;
+        seEvent.smokeGrenadeEvidence = sg;
+        seEvent.Evidence = 3;
+        EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
+    }
+
 }

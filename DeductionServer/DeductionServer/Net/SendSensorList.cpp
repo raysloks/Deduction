@@ -16,6 +16,12 @@ void SendSensorList::serialize(std::ostream& os) const
 		os.write((char*)&size, sizeof(size));
 		os.write((char*)this->times.data(), sizeof(uint64_t) * size);
 	}
+	os.write((char*)&this->player, (sizeof(this->player) + 3) / 4 * 4);
+	{
+		uint16_t size = this->playerIds.size();
+		os.write((char*)&size, sizeof(size));
+		os.write((char*)this->playerIds.data(), sizeof(uint64_t) * size);
+	}
 }
 
 void SendSensorList::deserialize(std::istream& is)
@@ -31,6 +37,13 @@ void SendSensorList::deserialize(std::istream& is)
 		is.read((char*)&size, sizeof(size));
 		this->times.resize(size);
 		is.read((char*)this->times.data(), sizeof(uint64_t) * size);
+	}
+	is.read((char*)&this->player, (sizeof(this->player) + 3) / 4 * 4);
+	{
+		uint16_t size;
+		is.read((char*)&size, sizeof(size));
+		this->playerIds.resize(size);
+		is.read((char*)this->playerIds.data(), sizeof(uint64_t) * size);
 	}
 }
 

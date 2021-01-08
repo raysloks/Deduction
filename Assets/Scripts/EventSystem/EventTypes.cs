@@ -16,6 +16,7 @@
         SHOW_EVIDENCE,
         PRESENT_EVIDENCE,
         SNAPSHOT_EVIDENCE,
-        PICKUP_WAIT
+        PICKUP_WAIT,
+        KNIFE_KILL
     }
 }

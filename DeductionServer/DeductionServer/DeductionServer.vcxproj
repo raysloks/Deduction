@@ -115,6 +115,7 @@
     <ClCompile Include="Net\PlayerUpdate.cpp" />
     <ClCompile Include="Net\PlayerVoted.cpp" />
     <ClCompile Include="Net\PresentEvidence.cpp" />
+    <ClCompile Include="Net\PulseEvidence.cpp" />
     <ClCompile Include="Net\ReportAttempted.cpp" />
     <ClCompile Include="Net\ResetGameSettings.cpp" />
     <ClCompile Include="Net\RestartRequested.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Net\SendEvidence.cpp" />
     <ClCompile Include="Net\SendSensorList.cpp" />
     <ClCompile Include="Net\SmokeGrenadeActivate.cpp" />
+    <ClCompile Include="Net\SmokeGrenadeEvidence.cpp" />
     <ClCompile Include="Net\TakePhoto.cpp" />
     <ClCompile Include="Net\TaskListUpdate.cpp" />
     <ClCompile Include="Net\TaskUpdate.cpp" />
@@ -182,6 +184,7 @@
     <ClInclude Include="Net\PlayerUpdate.h" />
     <ClInclude Include="Net\PlayerVoted.h" />
     <ClInclude Include="Net\PresentEvidence.h" />
+    <ClInclude Include="Net\PulseEvidence.h" />
     <ClInclude Include="Net\ReportAttempted.h" />
     <ClInclude Include="Net\ResetGameSettings.h" />
     <ClInclude Include="Net\RestartRequested.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="Net\SendEvidence.h" />
     <ClInclude Include="Net\SendSensorList.h" />
     <ClInclude Include="Net\SmokeGrenadeActivate.h" />
+    <ClInclude Include="Net\SmokeGrenadeEvidence.h" />
     <ClInclude Include="Net\TakePhoto.h" />
     <ClInclude Include="Net\TaskListUpdate.h" />
     <ClInclude Include="Net\TaskUpdate.h" />

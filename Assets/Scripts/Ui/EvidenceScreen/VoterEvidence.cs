@@ -6,10 +6,14 @@ using UnityEngine.UI;
 
 public class VoterEvidence : MonoBehaviour
 {
-    [HideInInspector] public enum Evidence { None, Picture, MotionSensor };
+    [HideInInspector] public enum Evidence { None, Picture, MotionSensor, SmokeGrenade, PulseChecker };
     [HideInInspector] public Evidence myEvidence;
     [HideInInspector] public byte[] ba;
-    [HideInInspector] public MotionSensor ms;
+
+    [HideInInspector] public  MotionSensor ms;
+    [HideInInspector] public SGEvidence sg;
+    [HideInInspector] public PulseCheckerEvidence pc;
+
     [HideInInspector] public int photoIndex = -1;
     private GameController gc;
     public VoteButton vb;
@@ -32,6 +36,15 @@ public class VoterEvidence : MonoBehaviour
             {
                 Debug.Log("MotionEvidence");
                 ms = see.MotionSensorEvidence;
+            }else if (myEvidence == Evidence.SmokeGrenade)
+            {
+                Debug.Log("SmokeEvidence");
+                sg = see.smokeGrenadeEvidence;
+            }
+            else if (myEvidence == Evidence.PulseChecker)
+            {
+                Debug.Log("PulseEvidence");
+                pc = see.pulseCheckerEvidence;
             }
         }
         if (eventInfo is PresentEvidenceEvent presentEvidenceEvent)
@@ -48,7 +61,7 @@ public class VoterEvidence : MonoBehaviour
         {
             ba = see.byteArray;
             vb.currentEvidence = false;
-        }    
+        }
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)

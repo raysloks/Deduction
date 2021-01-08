@@ -17,7 +17,9 @@ public class MainEvidencePicture : MonoBehaviour
     public GameController gc;
     public Texture texture;
     public Button lockButton;
-    public GameObject motionSensorMain; 
+    public GameObject motionSensorMain;
+    public GameObject pulseCheckerMain;
+    public GameObject smokeGrenadeMain;
 
     private RawImage ri;
     private Image buttonImage;
@@ -38,7 +40,9 @@ public class MainEvidencePicture : MonoBehaviour
     //Quick method to change the main pictures image
     public void SetMainPicture(Texture tex)
     {
+        pulseCheckerMain.SetActive(false);
         motionSensorMain.SetActive(false);
+        smokeGrenadeMain.SetActive(false);
         ri.enabled = true;
         ri.texture = tex;
     }
@@ -46,8 +50,29 @@ public class MainEvidencePicture : MonoBehaviour
     public void SetMainSensorList(MotionSensor ms)
     {
         ri.enabled = false;
+        smokeGrenadeMain.SetActive(false);
+        pulseCheckerMain.SetActive(false);
         motionSensorMain.SetActive(true);
         motionSensorMain.GetComponent<ShowMotionSensorList>().addAllOptions(ms);
+    }
+
+    public void SetPulseChecker(PulseCheckerEvidence pc)
+    {
+        ri.enabled = false;
+        motionSensorMain.SetActive(false);
+        smokeGrenadeMain.SetActive(false);
+        pulseCheckerMain.SetActive(true);
+        pulseCheckerMain.GetComponent<ShowPulseEvidence>().DisplayPulseEvidence(pc);
+    }
+
+    public void SetSmokeGrenade(SGEvidence sge)
+    {
+        pulseCheckerMain.SetActive(false);
+        motionSensorMain.SetActive(false);
+        ri.enabled = false;
+        smokeGrenadeMain.SetActive(true);
+        smokeGrenadeMain.GetComponent<ShowSmokeGrenade>().DisplaySmokeEvidence(sge);
+
     }
 
     //When you choose a picture send it to the GC that will send a Send Evidence message to the handler.
@@ -89,10 +114,48 @@ public class MainEvidencePicture : MonoBehaviour
                 SendSensorList message = new SendSensorList
                 {
                     names = dataAsBytes,
-                    times = temp
+                    times = temp,
+                    player = gc.handler.playerMobId,
+                    playerIds = ms.playerIds
                 };
                 gc.handler.link.Send(message);
             }
+        }
+    }
+
+    public void LockPulseChecker(PulseCheckerEvidence pc)
+    {
+        if (sentEvidence == false)
+        {
+            lockButton.interactable = false;
+            lockable = false;
+            sentEvidence = true;
+
+            PulseEvidence message = new PulseEvidence
+            {
+                deadTime = pc.Time,
+                playerId = pc.playerId,
+                deadId = pc.deadId
+            };
+            gc.handler.link.Send(message);
+        }
+    }
+
+    public void LockSmokeGrenade(SGEvidence sg)
+    {
+        if (sentEvidence == false)
+        {
+            lockButton.interactable = false;
+            lockable = false;
+            sentEvidence = true;
+
+            SmokeGrenadeEvidence message = new SmokeGrenadeEvidence
+            {
+                area = sg.area,
+                playerName = sg.playerName,
+                playerId = sg.playerID
+            };
+            gc.handler.link.Send(message);
         }
     }
 

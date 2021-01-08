@@ -30,6 +30,12 @@ namespace EventCallbacks
         public GameObject UnitParticle;
     }
 
+    public class KnifeDieEvent : Event
+    {
+        public Vector3 UnitGameObjectPos;
+        public GameObject UnitParticle;
+    }
+
     public class DebugEvent : Event
     {
 
@@ -67,6 +73,10 @@ namespace EventCallbacks
         public int Evidence;
         public GameController gc;
         public MotionSensor MotionSensorEvidence;
+        public SGEvidence smokeGrenadeEvidence;
+        public PulseCheckerEvidence pulseCheckerEvidence;
+
+
         public GameObject final;
         public ulong idOfTarget;
         public Vector3 positionOfTarget;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3437154172039286061}
   - component: {fileID: 4501643574376004334}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,8 +66,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Motion Sensor \nList"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 019c23ed14f8bc74793881b06ba95421, type: 2}
+  m_sharedMaterial: {fileID: 8734961114966505687, guid: 019c23ed14f8bc74793881b06ba95421,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -91,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.3
+  m_fontSize: 35.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -187,6 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newMaterial: {fileID: 2100000, guid: b6a4ebddb006a4a4bb0bea6365c7512a, type: 2}
   Lock: {fileID: 21300000, guid: 7612fe382a8908843a84905f3e717187, type: 3}
+  myText: {fileID: 4501643574376004334}
 --- !u!222 &3276670163693357842
 CanvasRenderer:
   m_ObjectHideFlags: 0
