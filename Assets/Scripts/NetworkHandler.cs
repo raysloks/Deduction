@@ -182,12 +182,14 @@ public class NetworkHandler
         }
         else if(message.knife == true && message.target != playerMobId)
         {
+            /*
             Debug.Log("KnifeKill");
             KnifeDieEvent de = new KnifeDieEvent();
             de.UnitGameObjectPos = game.player.transform.position;
             de.UnitParticle = game.knifeKillEffect;
          //   se.UnitSound = gameOverEvent.victory ? game.gameWinSounds : game.gameLostSounds;
             EventSystem.Current.FireEvent(EVENT_TYPE.KNIFE_KILL, de);
+            */
         }
     }
 
