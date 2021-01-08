@@ -454,6 +454,12 @@ public class GameController : MonoBehaviour
             globalLight.intensity = 0.2f;
             areaText.text = "";
             areaText.rectTransform.anchoredPosition = new Vector2(0, -65);
+
+            Dictionary<ulong, Mob> actualMobs = new Dictionary<ulong, Mob>();
+            foreach (KeyValuePair<ulong, Mob> mob in handler.mobs)
+                if (!mob.Value.name.Contains("Clone"))
+                    actualMobs.Add(mob.Key, mob.Value);
+            GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
         }
 
         if (phase == GamePhase.Main)

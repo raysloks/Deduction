@@ -19,15 +19,12 @@ public class ItemContainer : Interactable
     public Sprite smokeGrenadeSprite;
     public Sprite knifeSprite;
     public Sprite pulseSprite;
-    public SpriteRenderer outline;
 
-    // Start is called before the first frame update
     void Start()
     {
         Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1));
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
     }
-
 
     public void ItemTaken()
     {
@@ -128,45 +125,4 @@ public class ItemContainer : Interactable
     {
         NoneClick(game);
     }
-
-    public override void Highlight(bool highlighted)
-    {
-        
-        if (outline != null)
-        {
-            if (highlighted)
-                StartCoroutine(FadeInOutline(0.2f));
-            else
-                StartCoroutine(FadeOutOutline(0.2f));
-        }
-    }
-
-    IEnumerator FadeInOutline(float seconds)
-    {
-        float counter = 0;
-
-        while (counter < seconds)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeOutOutline(float seconds)
-    {
-        float counter = seconds;
-
-        while (counter > 0f)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter -= Time.deltaTime;
-            yield return null;
-        }
-    }
-
 }

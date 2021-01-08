@@ -16,7 +16,7 @@ public class FootstepAudio : MonoBehaviour
 
     private void PlayAudio()
     {
-        if (audioClips.Length > 0 && audioClips[0] != null)
+        if (audioClips.Length > 0 && audioClips[0] != null && GetComponentInParent<Mob>().IsAlive)
         {
             lastFootstep = audioClips[0];
             //audioMixer.GetFloat("FootstepPitch", out lastPitch); //if audioMixer pitch is used instead

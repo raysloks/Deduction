@@ -7,7 +7,6 @@ public class StickyNote : Interactable
 {
     public GameObject bg;
 
-    public SpriteRenderer outline;
     private SpriteRenderer sr;
     private SpriteRenderer sr2;
     TextMeshPro myText;
@@ -43,19 +42,6 @@ public class StickyNote : Interactable
         game.popup.ActivatePopup(bg, null);
     }
 
-    public override void Highlight(bool highlighted)
-    {
-        if (outline != null)
-        {
-
-            Debug.Log("FadeIn sticky");
-            if (highlighted)
-                StartCoroutine(FadeInOutline(0.2f));
-            else
-                StartCoroutine(FadeOutOutline(0.2f));
-        }
-    }
-
     IEnumerator fadeText(float sec, string slow)
     {
         for (int i = 0; i < slow.Length; i++)
@@ -69,34 +55,5 @@ public class StickyNote : Interactable
         sr.enabled = false;
         myText.color = goal2;
         doneFading = true;
-    }
-
-    IEnumerator FadeInOutline(float seconds)
-    {
-        float counter = 0;
-
-        while (counter < seconds)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeOutOutline(float seconds)
-    {
-        float counter = seconds;
-
-        while (counter > 0f)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter -= Time.deltaTime;
-            yield return null;
-        }
-
     }
 }

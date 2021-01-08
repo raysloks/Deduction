@@ -9,7 +9,6 @@ public class MinigameInitiator : Interactable
     public GameObject minigame;
     public GameObject altMinigame;
     public int minigame_index;
-    public SpriteRenderer outline;
     public bool alwaysActive = false;
 
     private GameController game;
@@ -21,13 +20,6 @@ public class MinigameInitiator : Interactable
             FindObjectOfType<TaskManager>().minigameInitiators[minigame_index] = this;
         game = FindObjectOfType<GameController>();
         audioSource = GetComponentInChildren<AudioSource>();
-
-        /*if (game.GetComponent<GameSettingsManager>().accessibilityMode && altMinigame != null)
-        {
-            var temp = minigame;
-            minigame = altMinigame;
-            altMinigame = temp;
-        }*/
     }
 
     private void Update()
@@ -65,17 +57,6 @@ public class MinigameInitiator : Interactable
         game.popup.ActivatePopup(minigame, this);
     }
 
-    public override void Highlight(bool highlighted)
-    {
-        if (outline != null)
-        {
-            if (highlighted)
-                StartCoroutine(FadeInOutline(0.2f));
-            else
-                StartCoroutine(FadeOutOutline(0.2f));
-        }
-    }
-
     public void Solved()
     {
         int task_index = game.taskManager.tasks.FindIndex(x => x.minigame_index == minigame_index);
@@ -88,34 +69,6 @@ public class MinigameInitiator : Interactable
         {
             int sabotage_index = game.taskManager.sabotageTasks.Find(x => x.minigame_index == minigame_index).sabotage;
             game.handler.link.Send(new SabotageTaskUpdate { sabotage = (ushort)sabotage_index });
-        }
-    }
-
-    IEnumerator FadeInOutline(float seconds)
-    {
-        float counter = 0;
-
-        while (counter < seconds)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeOutOutline(float seconds)
-    {
-        float counter = seconds;
-
-        while (counter > 0f)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter -= Time.deltaTime;
-            yield return null;
         }
     }
 }

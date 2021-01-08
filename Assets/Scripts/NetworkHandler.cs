@@ -167,7 +167,10 @@ public class NetworkHandler
     internal void MobRemovedHandler(IPEndPoint endpoint, MobRemoved message)
     {
         if (mobs.ContainsKey(message.id) && message.id != playerMobId)
+        {
+            mobs[message.id].type = 2;
             mobs[message.id].gameObject.SetActive(false);
+        }
         removalTimes[message.id] = message.time;
     }
 
@@ -358,7 +361,8 @@ public class NetworkHandler
             game.lockerManager.Lockers[message.index].RemovePerson();
             if (message.user == playerMobId)
                 game.player.canMove = true;
-            game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
+            if (!game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().isPlaying)
+                game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
         }
         else if (game.lockerManager.Lockers[message.index].occupied == false)
         {
@@ -367,7 +371,8 @@ public class NetworkHandler
             if (message.user == playerMobId)
                 game.player.canMove = false;
             game.lockerManager.Lockers[message.index].HidePerson(mobs[message.user].gameObject);
-            game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
+            if (!game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().isPlaying)
+                game.lockerManager.Lockers[message.index].GetComponentInChildren<AudioSource>().Play();
         }
     }
 

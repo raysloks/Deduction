@@ -315,7 +315,7 @@ MonoBehaviour:
   - {x: 0.5, y: 1.37, z: 0}
   m_ShapePathHash: -1033184539
   m_Mesh: {fileID: 0}
-  m_InstanceId: 1831064
+  m_InstanceId: 324090
 --- !u!1 &2638985778672776113
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.75}
+  m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
 --- !u!114 &5481553976294897869
 MonoBehaviour:
@@ -450,4 +450,4 @@ MonoBehaviour:
   - {x: 0.5, y: 1.37, z: 0}
   m_ShapePathHash: -1033184539
   m_Mesh: {fileID: 0}
-  m_InstanceId: 1831072
+  m_InstanceId: 324098

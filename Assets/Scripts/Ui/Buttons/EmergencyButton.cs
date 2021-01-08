@@ -7,7 +7,6 @@ using EventCallbacks;
 
 public class EmergencyButton : Interactable
 {
-    public Material outline;
     private TextMeshPro text;
     private bool coolingDown = false;
 

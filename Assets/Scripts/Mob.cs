@@ -191,8 +191,6 @@ public class Mob : MonoBehaviour
     {
         SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
 
-        Debug.Log(spr.Length);
-
         for (int i = 0; i < spr.Length; i++)
         {
             spr[i].enabled = false;

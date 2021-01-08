@@ -8,7 +8,7 @@ public class LockerScript : Interactable
     public int locker_index;
     public bool occupied;
     public GameObject occupant;
-    public SpriteRenderer outline;
+    //public SpriteRenderer outline;
     public SpriteRenderer highlight;
     public Vector3 exitDirection;
     void Start()
@@ -28,17 +28,6 @@ public class LockerScript : Interactable
     {
         //this.game = game;
         game.handler.link.Send(new HideAttempted { index = locker_index, user = game.handler.playerMobId });
-    }
-
-    public override void Highlight(bool highlighted)
-    {
-        if (outline != null)
-        {
-            if (highlighted)
-                StartCoroutine(FadeInOutline(0.2f));
-            else
-                StartCoroutine(FadeOutOutline(0.2f));
-        }
     }
 
     public void AttemptToHide(GameObject body)
@@ -86,33 +75,5 @@ public class LockerScript : Interactable
             occupant.GetComponent<NetworkMob>().inLocker = false;
         }
         occupant = null;
-    }
-
-    IEnumerator FadeInOutline(float seconds)
-    {
-        float counter = 0;
-
-        while (counter < seconds)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    IEnumerator FadeOutOutline(float seconds)
-    {
-        float counter = seconds;
-
-        while (counter > 0f)
-        {
-            Color color = outline.color;
-            color.a = counter / seconds;
-            outline.color = color;
-            counter -= Time.deltaTime;
-            yield return null;
-        }
     }
 }

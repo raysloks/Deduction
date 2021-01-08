@@ -884,7 +884,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 9d1b451eb74a3834eb5c2b9181c0d939, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1075,7 +1075,7 @@ MonoBehaviour:
   ghostFire: {fileID: 6806013938094759581}
   shoes: {fileID: 5364627149441326421}
   torsos: {fileID: 9050458914765275940}
-  hm: {fileID: 4185884057937431114}
+  timeSpentDead: 0
   inCamo: 0
   inLocker: 0
   type: 0
