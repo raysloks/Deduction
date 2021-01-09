@@ -66,7 +66,7 @@ public class GrassScript : MonoBehaviour
             {
                 go.timer += Time.deltaTime;
                 go.a.Play();
-                if (go.timer > 2f)
+                if (go.timer > 0.5f)
                 {
 
                     Debug.Log("reset");
