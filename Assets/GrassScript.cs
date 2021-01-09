@@ -54,7 +54,6 @@ public class GrassScript : MonoBehaviour
         {
             foreach (grassObject go in deleteMaterial)
             {
-                Debug.Log("Delete");
                 grassyMaterial.Remove(go);
             }
             deleteMaterial.Clear();
@@ -68,8 +67,6 @@ public class GrassScript : MonoBehaviour
                 go.a.Play();
                 if (go.timer > 0.5f)
                 {
-
-                    Debug.Log("reset");
                     go.timer = 0f;
                     deleteMaterial.Add(go);
                 }
@@ -86,8 +83,6 @@ public class GrassScript : MonoBehaviour
             {
                 if(grassyMaterial.Contains(grassy) == false)
                 {
-
-                    Debug.Log("Check");
                     grassyMaterial.Add(grassy);
                 }
                 // grassy.m
