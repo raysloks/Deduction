@@ -126,6 +126,8 @@ uint8 names[]
 uint64 times[]
 uint64 player
 uint64 playerIds[]
+SetMobColor
+vec3 color
 SmokeGrenadeActivate
 vec3 pos
 SmokeGrenadeEvidence

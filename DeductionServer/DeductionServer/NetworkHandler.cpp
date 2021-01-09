@@ -733,6 +733,19 @@ void NetworkHandler::SendSensorListHandler(const asio::ip::udp::endpoint& endpoi
 	Broadcast(message);
 }
 
+void NetworkHandler::SetMobColorHandler(const asio::ip::udp::endpoint& endpoint, const SetMobColor& message)
+{
+	auto it = players.find(endpoint);
+	if (it != players.end())
+	{
+		auto&& player = it->second;
+		auto&& mob = mobs[player.mob];
+
+		mob.color = message.color;
+		updateMobState(player.mob);
+	}
+}
+
 void NetworkHandler::TakePhotoHandler(const asio::ip::udp::endpoint & endpoint, const TakePhoto & message)
 {
 	auto it = players.find(endpoint);

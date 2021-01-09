@@ -349,12 +349,15 @@ public class GameController : MonoBehaviour
             
         }
 
+        //Change color
+
         if (Input.GetKeyDown(KeyCode.O))
         {
             player.colorIndex = ((player.colorIndex + 1) % 15);
-            Vector3 tempo = (colorPicker.PickColor(player.colorIndex));
-            player.SetColor(tempo.x, tempo.y, tempo.z);
-            Debug.Log(player.colorIndex + " " + tempo.x + " " + tempo.y + " " + tempo.z);
+            Vector3 temp = (colorPicker.PickColor(player.colorIndex));
+            player.SetColor(temp.x, temp.y, temp.z);
+            Debug.Log(player.colorIndex + " " + temp.x + " " + temp.y + " " + temp.z);
+            handler.link.Send(new SetMobColor { color = temp});
         }
 
         connectionMenu.SetActive(connectionState == ConnectionState.None);

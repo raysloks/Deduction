@@ -39,6 +39,7 @@
 #include "SabotageTaskUpdate.h"
 #include "SendEvidence.h"
 #include "SendSensorList.h"
+#include "SetMobColor.h"
 #include "SmokeGrenadeActivate.h"
 #include "SmokeGrenadeEvidence.h"
 #include "TakePhoto.h"
@@ -90,6 +91,7 @@ public:
 	void Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const SetMobColor& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);

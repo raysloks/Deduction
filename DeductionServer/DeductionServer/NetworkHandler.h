@@ -61,15 +61,13 @@ public:
 	void SabotageTaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void SendSensorListHandler(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
+	void SetMobColorHandler(const asio::ip::udp::endpoint& endpoint, const SetMobColor& message);
 	void SmokeGrenadeActivateHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message);
 	void SmokeGrenadeEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message);
 	void TakePhotoHandler(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
 	void TaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message);
 	void TeleportToMeetingHandler(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message);
 	void VoiceFrameHandler(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message);
-
-
-
 
 	template <class message_type>
 	void Broadcast(const message_type& message)

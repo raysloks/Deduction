@@ -21,6 +21,7 @@
 	void SabotageTaskUpdateHandler(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message);
 	void SendEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message);
 	void SendSensorListHandler(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message);
+	void SetMobColorHandler(const asio::ip::udp::endpoint& endpoint, const SetMobColor& message);
 	void SmokeGrenadeActivateHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message);
 	void SmokeGrenadeEvidenceHandler(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message);
 	void TakePhotoHandler(const asio::ip::udp::endpoint& endpoint, const TakePhoto& message);
