@@ -16,6 +16,19 @@ public class NetworkMob : Mob
 
     public long time;
 
+    public HM hm;
+
+    void Awake()
+    {
+        Debug.Log("START");
+        SetHeartMonitor = (bool a) => MobHM(a);
+        if(type != 1)
+        {
+            Debug.Log("TYPE 1 " + this.gameObject.name);
+            MobHM(false);
+        }
+    }
+
     private new void Update()
     {
         snapshots.RemoveAll((snapshot) => snapshot.time < time - 150000000);
@@ -57,5 +70,10 @@ public class NetworkMob : Mob
         if (delta > -50000000)
             time = snapshot.time - 50000000;
         snapshots.Add(snapshot);
+    }
+
+    private void MobHM(bool a)
+    {
+        hm.SetAlive(a);
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using EventCallbacks;
+
 
 public class PulseCheckerUI : MonoBehaviour
 {
@@ -12,10 +14,11 @@ public class PulseCheckerUI : MonoBehaviour
     public GameObject playerTrigger;
     public GameController gc;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-       // myText = GetComponent<TextMeshProUGUI>();
+        // myText = GetComponent<TextMeshProUGUI>();
 
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
 
@@ -56,5 +59,23 @@ public class PulseCheckerUI : MonoBehaviour
 
         gc.pulseActive = false;
         coolingDown = false;        
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
+        {
+            if(coolingDown == true)
+            {
+                counter = 0;
+                playerTrigger.SetActive(false);
+                parent.SetActive(false);
+                gc.pulseActive = false;
+                coolingDown = false;
+
+            }
+        }
     }
 }

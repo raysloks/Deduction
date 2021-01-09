@@ -65,7 +65,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
         //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length)));
-        SetItem(0);
+        SetItem(5);
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
         if(ItemContainers == null)
@@ -277,7 +277,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
 
             Debug.Log((Enum.GetValues(typeof(Item)).Length - 1) + "Enum");
-            SetItem(0);
+            SetItem(5);
         }
         if(pc.phase == GamePhase.Setup)
         {

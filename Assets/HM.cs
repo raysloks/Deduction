@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventCallbacks;
 
 public class HM : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class HM : MonoBehaviour
         m = OrgMaterial;
         Debug.Log("Set to 1");
         m.SetFloat("_OffsetUvX", 1f);
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+
 
     }
     /*
@@ -48,12 +51,24 @@ public class HM : MonoBehaviour
         alive = aliveOrDead;
         if(alive = false)
         {
+            Debug.Log("StopHM");
             animation.Stop();
             m.SetFloat("OffsetUvX", -1f);
         }
         else
         {
+            Debug.Log("PlayHM");
             animation.Play();
+        }
+    }
+
+    public void PhaseChanged(EventCallbacks.Event eventInfo)
+    {
+        PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
+
+        if (pc.phase == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
+        {
+            Activate(false);
         }
     }
 }

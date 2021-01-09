@@ -176,8 +176,8 @@ GameObject:
   - component: {fileID: 2744581224400314267}
   - component: {fileID: 4185884057937431114}
   - component: {fileID: 3588180490279504725}
-  - component: {fileID: 4386588660141300557}
   - component: {fileID: 8205215508334849115}
+  - component: {fileID: 4112614895402684147}
   m_Layer: 14
   m_Name: HeartLine
   m_TagString: Mob
@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OrgMaterial: {fileID: 2100000, guid: 294eb8ac7139d914b8e891c6a5ba5fda, type: 2}
   parent: {fileID: 1331989407037635289}
-  animation: {fileID: 0}
+  animation: {fileID: 8205215508334849115}
 --- !u!114 &3588180490279504725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +289,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updateEveryFrame: 1
---- !u!95 &4386588660141300557
+--- !u!111 &8205215508334849115
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200248360268365358}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 4d3cfe6ad77223f4cb1dfd65b0d04f1c, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!95 &4112614895402684147
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -308,21 +323,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &8205215508334849115
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3200248360268365358}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 4d3cfe6ad77223f4cb1dfd65b0d04f1c, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &5612481334792538606
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,6 +1082,7 @@ MonoBehaviour:
   role: 0
   spriteIndex: 0
   time: 0
+  hm: {fileID: 4185884057937431114}
 --- !u!61 &5681363817262165513
 BoxCollider2D:
   m_ObjectHideFlags: 0

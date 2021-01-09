@@ -35,6 +35,11 @@ public class Player : Mob
         visionLight = GetComponentInChildren<Light2D>();
     }
 
+    void Start()
+    {
+        SetHeartMonitor = (bool a) => DebugHM(a);
+    }
+
     private new void Update()
     {
         move = new Vector2();
@@ -206,5 +211,10 @@ public class Player : Mob
             else
                 yield return new WaitForSeconds(controller.areaText.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         }
+    }
+
+    private void DebugHM(bool a)
+    {
+        Debug.Log("Player HM Debug " + a);
     }
 }

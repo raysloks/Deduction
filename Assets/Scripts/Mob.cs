@@ -29,6 +29,10 @@ public class Mob : MonoBehaviour
 
     public ulong spriteIndex = 0;
 
+    public delegate void SetHM(bool set);
+    public SetHM SetHeartMonitor;
+
+
     protected void Awake()
     {
         inCamo = false;
@@ -66,22 +70,15 @@ public class Mob : MonoBehaviour
         }
         else if (type == 0)
         {
-            /*
-            if(hm != null){
-                hm.SetAlive(true);
-            }
-            */
+            SetHeartMonitor(true);
             countDeath = false;
             timeSpentDead = 0f;
             SetAliveAppearance();
         }else if (type == 1)
         {
             countDeath = true;
-            /*
-            if(hm != null){
-                hm.SetAlive(true);
-            }
-            */
+            Debug.Log("NOT TYPE 1 " + this.gameObject.name);
+            SetHeartMonitor(false);
         }
 
     }
@@ -229,7 +226,7 @@ public class Mob : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.phase == GamePhase.Discussion)
+        if (pc.phase == GamePhase.Discussion || pc.phase == GamePhase.Setup)
         {
             countDeath = false;
         }
