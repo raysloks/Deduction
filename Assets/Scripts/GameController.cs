@@ -356,7 +356,6 @@ public class GameController : MonoBehaviour
             player.colorIndex = ((player.colorIndex + 1) % 15);
             Vector3 temp = (colorPicker.PickColor(player.colorIndex));
             player.SetColor(temp.x, temp.y, temp.z);
-            Debug.Log(player.colorIndex + " " + temp.x + " " + temp.y + " " + temp.z);
             handler.link.Send(new SetMobColor { color = temp});
         }
 
