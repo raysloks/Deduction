@@ -124,6 +124,9 @@ public class Player : Mob
             if (!inLocker)
             {
                 lastArea = controller.areaText.text;
+                if(lastArea == ""){
+                    lastArea = "Outside";
+                }
 
                 if (inAreas == 1)
                 {

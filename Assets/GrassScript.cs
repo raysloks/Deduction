@@ -9,13 +9,19 @@ public class GrassScript : MonoBehaviour
     List<grassObject> grassyMaterial = new List<grassObject>();
 
     List<grassObject> deleteMaterial = new List<grassObject>();
+
+    public float animationSpeed = 2f;
+    public float range;
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform t in this.transform)
-        {
-            Grass.Add(new grassObject(t, t.GetComponent<Animation>()));
-
+        foreach (Transform t in this.transform) { 
+            Animation anim = t.GetComponent<Animation>();
+            Grass.Add(new grassObject(t, anim));
+            foreach (AnimationState state in anim)
+            {
+                state.speed = animationSpeed;
+            }
             t.GetComponent<SpriteRenderer>().material.SetFloat("_GrassSpeed", 2f);
             t.GetComponent<SpriteRenderer>().material.SetFloat("_GrassWind", 2f);
         }
@@ -76,7 +82,7 @@ public class GrassScript : MonoBehaviour
     {
         foreach (grassObject grassy in Grass)
         {
-            if(Vector2.Distance(grassy.t.position, go.position) < 0.25f)
+            if(Vector2.Distance(grassy.t.position, go.position) < range)
             {
                 if(grassyMaterial.Contains(grassy) == false)
                 {

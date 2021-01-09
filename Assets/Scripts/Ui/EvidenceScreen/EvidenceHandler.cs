@@ -26,6 +26,7 @@ public class EvidenceHandler : MonoBehaviour
     {
         if(player.IsAlive == false)
         {
+            gameObject.SetActive(false);
             Debug.Log("ya dead son");
             return;
         }
@@ -59,6 +60,7 @@ public class EvidenceHandler : MonoBehaviour
         Debug.Log("EvidenceHandler motion list");
         if (player.IsAlive == false)
         {
+            gameObject.SetActive(false);
             Debug.Log("ya dead son");
             return;
         }
