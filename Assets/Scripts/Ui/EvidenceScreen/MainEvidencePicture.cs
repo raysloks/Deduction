@@ -13,6 +13,7 @@ using System.Linq;
 public class MainEvidencePicture : MonoBehaviour
 {
     [HideInInspector] public bool lockable = false;
+    [HideInInspector] public bool PictureShowing = false;
     public GameObject MainPicture;
     public GameController gc;
     public Texture texture;
@@ -40,6 +41,7 @@ public class MainEvidencePicture : MonoBehaviour
     //Quick method to change the main pictures image
     public void SetMainPicture(Texture tex)
     {
+        PictureShowing = true;
         pulseCheckerMain.SetActive(false);
         motionSensorMain.SetActive(false);
         smokeGrenadeMain.SetActive(false);
@@ -49,6 +51,7 @@ public class MainEvidencePicture : MonoBehaviour
 
     public void SetMainSensorList(MotionSensor ms)
     {
+        PictureShowing = false;
         ri.enabled = false;
         smokeGrenadeMain.SetActive(false);
         pulseCheckerMain.SetActive(false);
@@ -58,6 +61,7 @@ public class MainEvidencePicture : MonoBehaviour
 
     public void SetPulseChecker(PulseCheckerEvidence pc)
     {
+        PictureShowing = false;
         ri.enabled = false;
         motionSensorMain.SetActive(false);
         smokeGrenadeMain.SetActive(false);
@@ -67,12 +71,12 @@ public class MainEvidencePicture : MonoBehaviour
 
     public void SetSmokeGrenade(SGEvidence sge)
     {
+        PictureShowing = false;
         pulseCheckerMain.SetActive(false);
         motionSensorMain.SetActive(false);
         ri.enabled = false;
         smokeGrenadeMain.SetActive(true);
         smokeGrenadeMain.GetComponent<ShowSmokeGrenade>().DisplaySmokeEvidence(sge);
-
     }
 
     //When you choose a picture send it to the GC that will send a Send Evidence message to the handler.
@@ -95,17 +99,20 @@ public class MainEvidencePicture : MonoBehaviour
             lockButton.interactable = false;
             lockable = false;
             sentEvidence = true;
-            List<ulong> temp = ms.secondsIn.Select(item => (ulong)item).ToList();
             string s = "";
             int index = 0;
-            foreach(string s2 in ms.names)
+            if(ms.names.Count > 0)
             {
-                if (index == (ms.names.Count - 1))
-                    s += s2;
-                else
-                    s += s2 + ";";
-                index++;
+                foreach (string s2 in ms.names)
+                {
+                    if (index == (ms.names.Count - 1))
+                        s += s2;
+                    else
+                        s += s2 + ";";
+                    index++;
+                }
             }
+           
 
             List<byte> dataAsBytes = Encoding.ASCII.GetBytes(s).ToList();
 
@@ -114,9 +121,10 @@ public class MainEvidencePicture : MonoBehaviour
                 SendSensorList message = new SendSensorList
                 {
                     names = dataAsBytes,
-                    times = temp,
+                    times = ms.secondsIn,
                     player = gc.handler.playerMobId,
-                    playerIds = ms.playerIds
+                    playerIds = ms.playerIds,
+                    totalRoundTime = ms.totalRoundTime
                 };
                 gc.handler.link.Send(message);
             }
@@ -183,6 +191,7 @@ public class MainEvidencePicture : MonoBehaviour
             sentEvidence = false;
             ri.texture = null;
             lockButton.interactable = true;
+
         }
     }
 

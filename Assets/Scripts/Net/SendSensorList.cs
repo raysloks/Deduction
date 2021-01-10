@@ -6,9 +6,10 @@ using System.Collections.Generic;
 public struct SendSensorList
 {
 	public List<byte> names;
-	public List<ulong> times;
+	public List<int> times;
 	public ulong player;
 	public List<ulong> playerIds;
+	public int totalRoundTime;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -22,7 +23,7 @@ public struct SendSensorList
 			ushort size = (ushort)this.times.Count;
 			writer.Write(size);
 			foreach (var i in this.times)
-		writer.Write((ulong)i);
+		writer.Write((int)i);
 		}
 		writer.Write((ulong)player);
 		{
@@ -31,6 +32,7 @@ public struct SendSensorList
 			foreach (var i in this.playerIds)
 		writer.Write((ulong)i);
 		}
+		writer.Write((int)totalRoundTime);
 	}
 
 	public static SendSensorList Deserialize(BinaryReader reader)
@@ -47,12 +49,12 @@ public struct SendSensorList
 		}
 	}
 	{
-		_ret.times = new List<ulong>();
+		_ret.times = new List<int>();
 		ushort size = reader.ReadUInt16();
 		for (int i = 0; i < size; ++i)
 		{
-			ulong element;
-		element = (ulong)reader.ReadUInt64();
+			int element;
+		element = (int)reader.ReadInt32();
 			_ret.times.Add(element);
 		}
 	}
@@ -67,6 +69,7 @@ public struct SendSensorList
 			_ret.playerIds.Add(element);
 		}
 	}
+		_ret.totalRoundTime = (int)reader.ReadInt32();
 		return _ret;
 	}
 };

@@ -1,5 +1,6 @@
 up down
 uint8 names[]
-uint64 times[]
+int32 times[]
 uint64 player
 uint64 playerIds[]
+int32 totalRoundTime

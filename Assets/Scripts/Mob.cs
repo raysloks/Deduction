@@ -78,7 +78,7 @@ public class Mob : MonoBehaviour
         {
             countDeath = true;
             Debug.Log("NOT TYPE 1 " + this.gameObject.name);
-            SetHeartMonitor(false);
+           // SetHeartMonitor(false);
         }
 
     }
@@ -148,9 +148,12 @@ public class Mob : MonoBehaviour
         SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < spr.Length; i++)
         {
-            Color color = spr[i].color;
-            color.a = 0.75f;
-            spr[i].color = color;
+            if(spr[i].gameObject.name != "HeartMonitor" || spr[i].gameObject.name != "HeartLine")
+            {
+                Color color = spr[i].color;
+                color.a = 0.75f;
+                spr[i].color = color;
+            }
         }
     }
 
@@ -159,9 +162,12 @@ public class Mob : MonoBehaviour
         SpriteRenderer[] spr = GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < spr.Length; i++)
         {
-            Color color = spr[i].color;
-            color.a = 1;
-            spr[i].color = color;
+            if (spr[i].gameObject.name != "HeartMonitor" || spr[i].gameObject.name != "HeartLine")
+            {
+                Color color = spr[i].color;
+                color.a = 1;
+                spr[i].color = color;
+            }
         }
     }
 
@@ -190,7 +196,10 @@ public class Mob : MonoBehaviour
 
         for (int i = 0; i < spr.Length; i++)
         {
-            spr[i].enabled = false;
+            if (spr[i].gameObject.name != "HeartMonitor" || spr[i].gameObject.name != "HeartLine")
+            {
+                spr[i].enabled = false;
+            }
         }
         var tmp = GetComponentInChildren<TextMeshPro>();
         if (tmp != null)

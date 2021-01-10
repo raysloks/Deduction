@@ -81,7 +81,7 @@ public class VoteButton : MonoBehaviour, IPointerEnterHandler
         if (Evidence != null && currentEvidence == false)
         {
             Vector2 smaller = new Vector2(1f, 1f);
-            Vector2 bigger = new Vector2(1.2f, 1.2f);
+            Vector2 bigger = new Vector2(1.3f, 1.3f);
 
             foreach (Transform child in transform.parent)
             {

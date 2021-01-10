@@ -10,7 +10,7 @@ public class VoterEvidence : MonoBehaviour
     [HideInInspector] public Evidence myEvidence;
     [HideInInspector] public byte[] ba;
 
-    [HideInInspector] public  MotionSensor ms;
+    [HideInInspector] public MotionSensor ms;
     [HideInInspector] public SGEvidence sg;
     [HideInInspector] public PulseCheckerEvidence pc;
 
@@ -29,6 +29,7 @@ public class VoterEvidence : MonoBehaviour
 
     public void SetEvidence(EventCallbacks.Event eventInfo)
     {
+        newEvidence.SetActive(true);
         if (eventInfo is SendEvidenceEvent see)
         {
             myEvidence = (Evidence)see.Evidence;

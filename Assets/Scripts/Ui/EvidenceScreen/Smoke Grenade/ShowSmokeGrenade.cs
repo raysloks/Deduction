@@ -12,7 +12,8 @@ public class ShowSmokeGrenade : MonoBehaviour
 
     public void DisplaySmokeEvidence(SGEvidence sge)
     {
-        player.sprite = sge.player;
+        player.sprite = sge.player.sprite;
+        player.color = sge.player.color;
         description.text = sge.playerName + " Fired A Smoke Grenade In";
         area.text = "Area: " + sge.area;
     }
