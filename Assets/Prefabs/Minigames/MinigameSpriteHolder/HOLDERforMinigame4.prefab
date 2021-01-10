@@ -174,8 +174,9 @@ PrefabInstance:
       value: 'Target Practice
 
 
-        Shoot the enemy soldiers with your cursor
-        and right click. Avoid the babies.'
+        In this minigame you have to use your mouse
+        and aim at the soldiers, the click them. Avoid clicking on the babies, doing
+        so will reduce your score. Good luck.'
       objectReference: {fileID: 0}
     - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -192,6 +193,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7448432167409515675, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a0afeb70d9f523b41832420061dd5039, type: 3}
     - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y

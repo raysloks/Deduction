@@ -170,8 +170,12 @@ PrefabInstance:
     - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_text
-      value: In this minigame you need to get your cursor inside the center circle
-        and keep it in the circle while it moves around
+      value: 'Target Alignment
+
+
+        In this minigame you must press the circle
+        with your mouse1, and follow it across the screen as it moves. Once the timer
+        has run down you have completed the minigame. Good luck.'
       objectReference: {fileID: 0}
     - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -188,6 +192,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7448432167409515675, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ff7d6d72d9690ca4f957b96c9b84a2cf, type: 3}
     - target: {fileID: 8601724686365651943, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_IsActive
