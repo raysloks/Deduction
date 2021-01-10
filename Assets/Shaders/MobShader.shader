@@ -110,6 +110,8 @@
 				light.a *= 5;
 				light = max(0.0, min(1.0, 0.5 - cos(min(1, light) * 3.14159265) * (0.5 + 0.5 / 256.0)));
 				main *= light;
+				main.rgb *= 1.8;
+				main.rgb += (max(main.r, 1) + max(main.g, 1) + max(main.b, 1) - 3) / 2;
 				float2 inside = step(0, i.lightingUV) * step(i.lightingUV, 1);
 				inside = max(inside, _FeetPos.w);
 				main *= inside.x * inside.y;
