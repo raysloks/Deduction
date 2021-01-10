@@ -521,6 +521,8 @@ MonoBehaviour:
   ghostFire: {fileID: 1783324432579249761}
   shoes: {fileID: 2509417399200808499}
   torsos: {fileID: 1529102099710451778}
+  shadow: {fileID: 1351519162000861490}
+  timeSpentDead: 0
   inCamo: 0
   inLocker: 0
   type: 0
@@ -530,6 +532,7 @@ MonoBehaviour:
   sabotageCooldown: 0
   canMove: 1
   emergencyButtonsLeft: 0
+  colorIndex: 0
   controller: {fileID: 0}
   visionLight: {fileID: 0}
   cameraFlashing: 0
