@@ -95,7 +95,7 @@ public class CircleChecker : MonoBehaviour
     {
         float counter = Sec;
 
-        while (counter > 1 && gameStarted)
+        while (counter > 1 && gameStarted )
         {
             text.text = Mathf.Round(counter).ToString();
             counter -= Time.deltaTime;
