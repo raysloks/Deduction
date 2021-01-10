@@ -345,12 +345,9 @@ public class GameController : MonoBehaviour
                 else
                     Use();
             }
-
-            
         }
 
         //Change color
-
         if (Input.GetKeyDown(KeyCode.O))
         {
             player.colorIndex = ((player.colorIndex + 1) % 15);
@@ -459,9 +456,10 @@ public class GameController : MonoBehaviour
 
             Dictionary<ulong, Mob> actualMobs = new Dictionary<ulong, Mob>();
             foreach (KeyValuePair<ulong, Mob> mob in handler.mobs)
-                if (!mob.Value.name.Contains("Clone"))
+                if (mob.Value.IsAlive)
                     actualMobs.Add(mob.Key, mob.Value);
-            GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
+            if (GameObject.FindWithTag("Medical"))
+                GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
         }
 
         if (phase == GamePhase.Main)
@@ -484,7 +482,7 @@ public class GameController : MonoBehaviour
         this.phase = phase;
         this.timer = timer;
 
-        //Sloppy prototype shit
+        //Sloppy prototype stuff
         if (phase == GamePhase.Intro && previous == GamePhase.Setup && !showAccessibilityToggle)
                 accessibilityToggle.SetActive(false);
 
