@@ -12,8 +12,6 @@ public class EvidenceHandler : MonoBehaviour
     public GameObject sensorPrefab;
     public GameObject pulsePrefab;
     public GameObject smokePrefab;
-    private List<List<string>> SensorList = new List<List<string>>();
-    private List<List<int>> SensorList2 = new List<List<int>>();
     public Player player;
     private GameObject lastSmokePrefab;
 
@@ -26,8 +24,7 @@ public class EvidenceHandler : MonoBehaviour
     {
         if(player.IsAlive == false)
         {
-            gameObject.SetActive(false);
-            Debug.Log("ya dead son");
+            this.gameObject.SetActive(false);
             return;
         }
         GameController game = FindObjectOfType<GameController>();
@@ -41,56 +38,44 @@ public class EvidenceHandler : MonoBehaviour
                 go.GetComponent<EvidencePicture>().photoIndex = (int)n.Key;
             }
         }
-        int index = 0;
-        foreach (var s in SensorList)
-        {
-            GameObject go = Instantiate(sensorPrefab, content);
-            MotionSensor m = new MotionSensor();
-            m.names = s;
-            m.secondsIn = SensorList2[index];
-            go.GetComponent<MotionSensorEvidence>().ms = m;
-            index++;
-        }
         
         gameObject.SetActive(false);
     }
 
-    public void AddSensorList(List<string> sList, List<int> tList, int totalTime, List<Sprite> sprites, int number, List<ulong> playerIds)
+    public void AddSensorList(MotionSensor m)
     {
-        Debug.Log("EvidenceHandler motion list");
         if (player.IsAlive == false)
         {
-            gameObject.SetActive(false);
-            Debug.Log("ya dead son");
+            this.gameObject.SetActive(false);
             return;
         }
-        Debug.Log("EvidenceHandler motion list2");
         GameObject go = Instantiate(sensorPrefab, content);
-        MotionSensor m = new MotionSensor();
-        m.names = sList;
-        m.secondsIn = tList;
-        m.totalRoundTime = totalTime;
-        m.playerSprites = sprites;
-        m.number = number;
-        m.playerIds = playerIds;
+        
 
         go.GetComponent<MotionSensorEvidence>().ms = m;
-        go.GetComponent<MotionSensorEvidence>().SetText(number);
-        Debug.Log("AddList");
-        SensorList.Add(sList);
-        SensorList2.Add(tList);
+        go.GetComponent<MotionSensorEvidence>().SetText(m.number);
     }
 
     public void AddPulseCheckerEvidence(PulseCheckerEvidence pc)
     {
+        if (player.IsAlive == false)
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
         GameObject go = Instantiate(pulsePrefab, content);
         go.GetComponent<PulseCheckerEvidencePrefab>().pce = pc;
     }
 
     public void AddSmokeGrenadeEvidence(SGEvidence sge)
     {
+        if (player.IsAlive == false)
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
         //Only latest smoke is shown
-        if(lastSmokePrefab != null)
+        if (lastSmokePrefab != null)
         {
             Destroy(lastSmokePrefab);
         }
@@ -107,8 +92,6 @@ public class EvidenceHandler : MonoBehaviour
         if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
         {
             gameObject.SetActive(true);
-            SensorList2.Clear();
-            SensorList.Clear();
             foreach (Transform child in content.transform)
             {
                 Destroy(child.gameObject);

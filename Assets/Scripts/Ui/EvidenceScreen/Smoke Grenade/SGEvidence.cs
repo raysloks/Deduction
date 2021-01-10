@@ -5,7 +5,7 @@ using UnityEngine;
 public class SGEvidence 
 {
     public string area;
-    public Sprite player;
+    public SpriteRenderer player;
     public string playerName;
     public ulong playerID;
 }

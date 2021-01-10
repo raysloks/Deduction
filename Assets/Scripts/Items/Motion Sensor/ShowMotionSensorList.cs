@@ -10,10 +10,13 @@ public class ShowMotionSensorList : MonoBehaviour
 
     List<msbrePrefabImage> imageObjects = new List<msbrePrefabImage>();
     public GameObject content;
+    public Image ownerSprite;
+    public TextMeshProUGUI rubrik;
+    
     
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if(content != null)
         {
@@ -22,50 +25,35 @@ public class ShowMotionSensorList : MonoBehaviour
         }
       
     }
-    /*
-    public void addAllOptions(MotionSensor s)
-    {
-        m_Dropdown = GetComponent<TMP_Dropdown>();
-        m_Dropdown.ClearOptions();
-        int index = 0;
-        foreach (string Str in s.names)
-        {
-            TMP_Dropdown.OptionData m_NewData = new TMP_Dropdown.OptionData();
-            string final = "Name: " + Str + "  Round Elapsed: " + s.secondsIn[index] + " Sec";
-     //       string final = "Name: " + Str + " #Entered: " + (index + 1);
-            m_NewData.text = final;
-            m_Dropdown.options.Add(m_NewData);
-            index++;
-        }
-        if(s.names.Count == 0)
-        {
-            TMP_Dropdown.OptionData m_NewData = new TMP_Dropdown.OptionData();
-            m_NewData.text = "Noone passed the sensor :(";
-            m_Dropdown.options.Add(m_NewData);
-        }
-      //  m_Dropdown.Show();
-     //   m_Dropdown.RefreshShownValue();
-    }
-    */
 
     public void addAllOptions(MotionSensor s)
     {
-        imageObjects = content.GetComponentsInChildren<msbrePrefabImage>().ToList();
+        ownerSprite.sprite = s.ownerSprite.sprite;
+        ownerSprite.color = s.ownerSprite.color;
+        rubrik.text = s.ownerName + "'s Motion Sensor List";
+        Debug.Log("S Names count: " + s.names.Count + " vs " + imageObjects.Count);
+
+        //    imageObjects = content.GetComponentsInChildren<msbrePrefabImage>().ToList();
         int index = 0;
-        foreach (string Str in s.names)
-        {
-            if (imageObjects[index].gameObject.activeSelf == false)
-            {
-                imageObjects[index].gameObject.SetActive(true);                
-            }
-            imageObjects[index].SetEvidence(Str, (s.totalRoundTime - s.secondsIn[index]), s.playerSprites[index]);
-            index++;
-        }
         if (s.names.Count == 0)
         {
             imageObjects[0].NoonePassed();
             index++;
         }
+        else
+        {
+            foreach (string Str in s.names)
+            {
+                if (imageObjects[index].gameObject.activeSelf == false)
+                {
+                    imageObjects[index].gameObject.SetActive(true);
+                }
+                imageObjects[index].SetEvidence(Str, (s.totalRoundTime - s.secondsIn[index]), s.playerSprites[index]);
+                index++;
+            }
+        }
+        
+        
         for(int i = index; i < imageObjects.Count; i++)
         {
             if(imageObjects[i].gameObject.activeSelf == true)

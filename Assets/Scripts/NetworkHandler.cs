@@ -207,12 +207,12 @@ public class NetworkHandler
         {
             PulseCheckerEvidence pce = new PulseCheckerEvidence();
             pce.Time = (int)mobs[message.target].timeSpentDead;
-            pce.player = mobs[message.idOfInitiator].sprite.sprite;
-            pce.dead = mobs[message.target].sprite.sprite;
+            pce.player = mobs[message.idOfInitiator].sprite;
+            pce.dead = mobs[message.target].sprite;
             pce.playerId = message.idOfInitiator;
             pce.deadId = message.target;
             pce.playerName = names[message.idOfInitiator];
-            pce.deadName = names[message.target];
+            pce.deadName = "This guy -->";
             game.eh.AddPulseCheckerEvidence(pce);
             game.pulseActive = false;
         }
@@ -401,25 +401,31 @@ public class NetworkHandler
         Debug.Log("SendSensor");
         SendEvidenceEvent seEvent = new SendEvidenceEvent();
         MotionSensor ms = new MotionSensor();
-        
+       
         string byteString = Encoding.UTF8.GetString(message.names.ToArray());
-        List<string> dada = byteString.Split(';').ToList();
-        foreach(string s in dada)
+        List<string> tempNames = new List<string>();
+        if (byteString != "")
         {
-            Debug.Log(s);
+            tempNames = byteString.Split(';').ToList();
+            ms.names = tempNames;
         }
-        ms.names = dada;
-        
-        ms.secondsIn = message.times.Select(item => (int)item).ToList();
+        ms.names = tempNames;
 
-        List <Sprite> playerSprites = new List<Sprite>();
+        ms.secondsIn = message.times.ToList();
+
+        ms.totalRoundTime = message.totalRoundTime;
+
+        List <SpriteRenderer> playerSprites = new List<SpriteRenderer>();
         foreach (ulong id in message.playerIds)
         {
-            playerSprites.Add(mobs[id].sprite.sprite);
+            playerSprites.Add(mobs[id].sprite);
         }
         ms.playerSprites = playerSprites;
+        ms.ownerSprite = mobs[message.player].sprite;
+        ms.ownerName = names[message.player];
         seEvent.MotionSensorEvidence = ms;
         seEvent.Evidence = 2;
+        seEvent.idOfTarget = message.player;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
     }
 
@@ -441,12 +447,13 @@ public class NetworkHandler
         SendEvidenceEvent seEvent = new SendEvidenceEvent();
         PulseCheckerEvidence pce = new PulseCheckerEvidence();
         pce.playerName = names[message.playerId];
-        pce.deadName = names[message.deadId];
-        pce.player = mobs[message.playerId].sprite.sprite;
-        pce.dead = mobs[message.deadId].sprite.sprite;
+        pce.deadName = "This Guy -->";
+        pce.player = mobs[message.playerId].sprite;
+        pce.dead = mobs[message.deadId].sprite;
         pce.Time = message.deadTime;
         seEvent.pulseCheckerEvidence = pce;
         seEvent.Evidence = 4;
+        seEvent.idOfTarget = message.playerId;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
     }
     internal void SmokeGrenadeEvidenceHandler(IPEndPoint endpoint, SmokeGrenadeEvidence message)
@@ -456,9 +463,10 @@ public class NetworkHandler
         SGEvidence sg = new SGEvidence();
         sg.area = message.area;
         sg.playerName = message.playerName;
-        sg.player = mobs[message.playerId].sprite.sprite;
+        sg.player = mobs[message.playerId].sprite;
         seEvent.smokeGrenadeEvidence = sg;
         seEvent.Evidence = 3;
+        seEvent.idOfTarget = message.playerId;
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
     }
 

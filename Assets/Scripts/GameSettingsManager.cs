@@ -84,8 +84,10 @@ public class GameSettingsManager : MonoBehaviour
 
     private void Start()
     {
-
-        sr = spriteCollision.GetComponentsInChildren<SpriteRenderer>();
+        if(spriteCollision != null)
+        {
+            sr = spriteCollision.GetComponentsInChildren<SpriteRenderer>();
+        }
     }
 
     private void Update()

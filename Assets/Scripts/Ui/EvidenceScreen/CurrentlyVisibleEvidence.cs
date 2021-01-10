@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using EventCallbacks;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CurrentlyVisibleEvidence : MonoBehaviour
+public class CurrentlyVisibleEvidence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
     public float speed = 10f;
     public Texture texture;
     private RawImage ri;
+    private RectTransform rt;
 
     //Arrow stuff
     public GameObject vis;
@@ -30,6 +32,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     private RaycastHit2D hit;
     private bool moving = false;
     private bool firstMove = false;
+    private bool PictureShowing = false;
+    private Vector2 orgWidhtHeight;
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +41,10 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         center = transform.position;
         arrowOrginalPos = vis.transform.position;
         ri = GetComponent<RawImage>();
-        EventSystem.Current.RegisterListener(EVENT_TYPE.SHOW_EVIDENCE, ShowEvidence);
-        EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+        rt = GetComponent<RectTransform>();
+        orgWidhtHeight = rt.sizeDelta;
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.SHOW_EVIDENCE, ShowEvidence);
+        EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
     }
 
     void Update()
@@ -97,6 +103,7 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
     //Presents the evidence under the main meeting screen when you hover over a vote button
     public void ShowEvidence(EventCallbacks.Event eventInfo)
     {
+        PictureShowing = false;
         if (eventInfo is SendEvidenceEvent see)
         {
           if(see.Evidence == 4){
@@ -126,6 +133,8 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
           }
           else if (see.Evidence == 1)
           {
+              PictureShowing = true;
+              rt.sizeDelta = new Vector2(800, 600);
               ri.enabled = true;
               pulseCheckerEvidence.SetActive(false);
               motionSensorEvidence.SetActive(false);
@@ -134,7 +143,10 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
           }
           else if (see.Evidence == 0)
           {
+                rt.sizeDelta = new Vector2(400, 200);
                 ri.enabled = true;
+                pulseCheckerEvidence.SetActive(false);
+                SmokeGrenadeEvidence.SetActive(false);
                 motionSensorEvidence.SetActive(false);
                 ri.texture = texture;
           }
@@ -150,6 +162,24 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         }
 
     }
+
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        if(PictureShowing == true)
+        {
+            rt.sizeDelta = (orgWidhtHeight * 1.5f);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        if (PictureShowing == true)
+        {
+            rt.sizeDelta = orgWidhtHeight;
+        }
+    }
+
 
     //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)

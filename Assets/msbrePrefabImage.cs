@@ -16,11 +16,12 @@ public class msbrePrefabImage : MonoBehaviour, IPointerEnterHandler, IPointerExi
         
     }
 
-    public void SetEvidence(string s, int time, Sprite sprite)
+    public void SetEvidence(string s, int time, SpriteRenderer sprite)
     {
         string final = s + " Passed " + time + " Seconds ago";
         myText.text = final;
-        playerSprite.sprite = sprite;
+        playerSprite.sprite = sprite.sprite;
+        playerSprite.color = sprite.color;
     }
 
     public void NoonePassed()

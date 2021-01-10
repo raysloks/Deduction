@@ -11,7 +11,7 @@ public class CheckSensor : MonoBehaviour
     private int enter = 0;
     private List<string> peopleEntered = new List<string>();
     private List<int> secondsIn = new List<int>();
-    private List<Sprite> playerSprites = new List<Sprite>();
+    private List<SpriteRenderer> playerSprites = new List<SpriteRenderer>();
     private List<ulong> playerIds = new List<ulong>();
 
     [HideInInspector] public GameController gc;
@@ -127,7 +127,7 @@ public class CheckSensor : MonoBehaviour
             peopleEntered.Add(col.gameObject.name);
             int timer = (int)gc.roundTimer;
             secondsIn.Add(timer);
-            playerSprites.Add(col.transform.Find("Heads_1").GetComponent<SpriteRenderer>().sprite);
+            playerSprites.Add(col.gameObject.GetComponent<Mob>().sprite);
             ulong myKey = gc.handler.names.FirstOrDefault(x => x.Value == col.gameObject.name).Key;
             playerIds.Add(myKey);
             Debug.Log("Enter Col: " + col.gameObject.name + " Number entered: " + enter+ " Seconds In round : " + timer);
@@ -142,11 +142,17 @@ public class CheckSensor : MonoBehaviour
 
     public void meetingStarted(EventCallbacks.Event eventinfo)
     {
+        MotionSensor m = new MotionSensor();
+        m.names = peopleEntered;
+        m.secondsIn = secondsIn;
+        m.totalRoundTime = (int)gc.roundTimer;
+        m.playerSprites = playerSprites;
+        m.number = number;
+        m.playerIds = playerIds;
+        m.ownerSprite = gc.player.sprite;
+        m.ownerName = gc.player.gameObject.name;
         Debug.Log("Send Motion Sensor List");
-        evidenceHandler.AddSensorList(peopleEntered, secondsIn, (int)gc.roundTimer, playerSprites, number, playerIds);
-        peopleEntered.Clear();
-        secondsIn.Clear();
-        playerSprites.Clear();
+        evidenceHandler.AddSensorList(m);
     }
 
     IEnumerator FadeOutOutline(float seconds)
@@ -217,9 +223,17 @@ public class CheckSensor : MonoBehaviour
          //   evidenceHandler.AddSensorList(peopleEntered);
         }
 
-        if(pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
+        if(pc.previous == GamePhase.EndOfMeeting)
         {
-          //  Destroy(this.gameObject);
+            peopleEntered.Clear();
+            secondsIn.Clear();
+            playerSprites.Clear();
+            //  Destroy(this.gameObject);
+        }
+
+        if(pc.phase == GamePhase.Setup)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

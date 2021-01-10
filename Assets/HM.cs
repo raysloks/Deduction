@@ -48,15 +48,18 @@ public class HM : MonoBehaviour
 
     public void SetAlive(bool aliveOrDead)
     {
-        alive = aliveOrDead;
-        if(alive = false)
+        this.alive = aliveOrDead;
+        if(alive == false)
         {
             Debug.Log("StopHM");
             animation.Stop();
-            m.SetFloat("OffsetUvX", -1f);
+            animation.enabled = false;
+          //  m.SetFloat("OffsetUvX", -1f);
         }
         else
         {
+
+            animation.enabled = true;
             Debug.Log("PlayHM");
             animation.Play();
         }

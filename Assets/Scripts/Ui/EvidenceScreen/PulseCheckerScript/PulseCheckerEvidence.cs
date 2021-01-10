@@ -5,8 +5,8 @@ using UnityEngine;
 public class PulseCheckerEvidence
 {
     public int Time;
-    public Sprite player;
-    public Sprite dead;
+    public SpriteRenderer player;
+    public SpriteRenderer dead;
     public string playerName;
     public string deadName;
     public ulong playerId;

@@ -122,6 +122,7 @@
     <ClCompile Include="Net\SabotageTaskUpdate.cpp" />
     <ClCompile Include="Net\SendEvidence.cpp" />
     <ClCompile Include="Net\SendSensorList.cpp" />
+    <ClCompile Include="Net\SetMobColor.cpp" />
     <ClCompile Include="Net\SmokeGrenadeActivate.cpp" />
     <ClCompile Include="Net\SmokeGrenadeEvidence.cpp" />
     <ClCompile Include="Net\TakePhoto.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Net\SabotageTaskUpdate.h" />
     <ClInclude Include="Net\SendEvidence.h" />
     <ClInclude Include="Net\SendSensorList.h" />
+    <ClInclude Include="Net\SetMobColor.h" />
     <ClInclude Include="Net\SmokeGrenadeActivate.h" />
     <ClInclude Include="Net\SmokeGrenadeEvidence.h" />
     <ClInclude Include="Net\TakePhoto.h" />
