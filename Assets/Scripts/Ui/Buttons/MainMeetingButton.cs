@@ -36,7 +36,7 @@ public class MainMeetingButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             child.GetComponent<VoteButton>().currentEvidence = false;
             child.localScale = new Vector2(1f,1f);
         }
-        EvidenceScreen.SetActive(false);
+        EvidenceScreen.SetActive(true);
 
         EvidenceButton.SetActive(true);
         this.gameObject.SetActive(false);

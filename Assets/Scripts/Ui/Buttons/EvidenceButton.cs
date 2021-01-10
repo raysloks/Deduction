@@ -20,7 +20,7 @@ public class EvidenceButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
     public void EvidenceClick()
     {
-        EvidenceScreen.SetActive(true);
+        EvidenceScreen.SetActive(false);
         MainButton.SetActive(true);
         this.gameObject.SetActive(false);
     }
