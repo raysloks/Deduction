@@ -1381,10 +1381,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minigame helpboxes
       objectReference: {fileID: 0}
+    - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_text
+      value: 'Today''s Password
+
+
+        For this minigame you have to enter the
+        password into empty field. The password can be found in an area in the Base. 
+        Enter the password and the minigame is completed. Good luck.'
+      objectReference: {fileID: 0}
     - target: {fileID: 6155267375765598460, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 127.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6868765439346847972, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9155456492416769683, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
