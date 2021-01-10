@@ -13,6 +13,8 @@ Map::Map()
 
 Map::Map(const Coal& coal)
 {
+	loungePos = coal["loungePos"];
+	loungeSize = coal["loungeSize"];
 	spawnPos = coal["spawnPos"];
 	spawnSize = coal["spawnSize"];
 	meetingPos = coal["meetingPos"];

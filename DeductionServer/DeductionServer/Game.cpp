@@ -664,7 +664,7 @@ void Game::takePhoto(uint64_t photographer)
 
 void Game::resetMobs(bool roles)
 {
-	teleportPlayersToEllipse(map->spawnPos, map->spawnSize);
+	teleportPlayersToEllipse(map->loungePos, map->loungeSize);
 	for (size_t i = 0; i < handler.mobs.size(); ++i)
 		handler.removeMob(i);
 	for (auto player : handler.players)
