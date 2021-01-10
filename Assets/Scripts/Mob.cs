@@ -13,6 +13,7 @@ public class Mob : MonoBehaviour
     public GameObject ghostFire;
     public GameObject shoes;
     public GameObject torsos;
+    public GameObject shadow;
  //   public HM hm;
 
     private bool countDeath = false;
@@ -112,6 +113,7 @@ public class Mob : MonoBehaviour
         ghostFire.SetActive(true);
         shoes.SetActive(false);
         torsos.SetActive(false);
+        shadow.SetActive(false);
     }
 
     public void SetAliveAppearance()
@@ -119,6 +121,7 @@ public class Mob : MonoBehaviour
         ghostFire.SetActive(false);
         shoes.SetActive(true);
         torsos.SetActive(true);
+        shadow.SetActive(true);
     }
 
     protected void OnTriggerExit2D(Collider2D other)
