@@ -225,10 +225,6 @@ public class Mob : MonoBehaviour
 
         for (int i = 0; i < spr.Length; i++)
         {
-            if (spr[i].gameObject.name != "HeartMonitor" || spr[i].gameObject.name != "HeartLine")
-            {
-                spr[i].enabled = false;
-            }
             Color color = spr[i].color;
             color = new Color(r, g, b, 1.0f);
             spr[i].color = color;

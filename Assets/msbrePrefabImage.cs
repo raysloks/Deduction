@@ -10,15 +10,10 @@ public class msbrePrefabImage : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public Image playerSprite;
     public TextMeshProUGUI myText;
     public Vector3 scaleChange;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void SetEvidence(string s, int time, SpriteRenderer sprite)
     {
-        string final = s + " Passed " + time + " Seconds ago";
+        string final = s + " Passed " + time + " Seconds Before Meeting";
         myText.text = final;
         playerSprite.sprite = sprite.sprite;
         playerSprite.color = sprite.color;

@@ -9,6 +9,12 @@ public class MainMeetingButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public GameObject MainScreen;
     public GameObject EvidenceScreen;
     public GameObject EvidenceButton;
+    public GameObject voteButtonContents;
+    public GameObject motionSensor;
+    public GameObject smokeGrenade;
+    public GameObject pulseChecker;
+    public RawImage picture;
+
     private RectTransform rt;
     private Vector2 orgWidhtHeight;
   //  public Vector2 biggerWidthHeight;
@@ -21,6 +27,15 @@ public class MainMeetingButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void MainClick()
     {
+        motionSensor.SetActive(false);
+        smokeGrenade.SetActive(false);
+        pulseChecker.SetActive(false);
+        picture.enabled = false;
+        foreach (Transform child in voteButtonContents.transform)
+        {
+            child.GetComponent<VoteButton>().currentEvidence = false;
+            child.localScale = new Vector2(1f,1f);
+        }
         EvidenceScreen.SetActive(false);
 
         EvidenceButton.SetActive(true);

@@ -213,19 +213,19 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             case Item.SmokeGrenade:
                 Click = () => SmokeGrenadeClick();
                 myItemImage.sprite = SmokeGrenadeSprite;
-                infoText.text = "Throws a smoke grenade that covers the area around you with smoke. Hide yourself or distract other players with it";
+                infoText.text = "Throws a smoke grenade that covers the area around you with smoke. Hide yourself or distract other players with it. ";
                 break;
             case Item.Knife:
                 Click = () => KnifeClick();
                 Exit = () => KnifeExit();
                 Enter = () => KnifeEnter();
                 myItemImage.sprite = KnifeSprite;
-                infoText.text = "Knife. Lets you kill another player. Even if your not a spy. Use does not affect kill cooldown";
+                infoText.text = "Knife. Lets you kill another player. Even if your not a spy. Use does not affect spies kill cooldown";
                 break;
             case Item.PulseChecker:
                 Click = () => PulseClick();
                 myItemImage.sprite = pulseSprite;
-                infoText.text = "Pulse Machine. Revealse all enemies around you for its duration. If you find a body while PC is in use you will be able to present the age of the body (In seconds) as evidence";
+                infoText.text = "Pulse Machine. Reveals all enemies around you for its duration. If you report a body while PC is active you will be able to present how old the body is (In seconds) as evidence";
                 break;
         }
     }
