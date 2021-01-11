@@ -63,6 +63,7 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
             new GameSettingToggle("Start With Items", "startWithItems", game),
+            new GameSettingToggle("Add Knife Item (Soldier Kill Option)", "addKnifeItem", game),
             new GameSettingToggle("[DEV]Game Over Enabled", "gameOverEnabled", game)
         };
 

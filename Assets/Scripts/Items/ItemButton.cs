@@ -64,9 +64,15 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
+        int r = (Enum.GetValues(typeof(Item)).Length - 1);
+        if (gc.settings.addKnifeItem && r == 4)
+        {
+            r++;
+        }
+        motionSensorNumber = 1;
         if (gc.settings.startWithItems)
         {
-            SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+            SetItem(r);
         }
         else
         {
@@ -281,10 +287,15 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (pc.previous == GamePhase.Setup)
         {
 
+            int r = (Enum.GetValues(typeof(Item)).Length - 1);
+            if (gc.settings.addKnifeItem && r == 4)
+            {
+                r++;
+            }
             motionSensorNumber = 1;
             if (gc.settings.startWithItems)
             {
-                SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+                SetItem(r);
             }
             else
             {

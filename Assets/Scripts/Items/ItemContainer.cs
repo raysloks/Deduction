@@ -23,7 +23,13 @@ public class ItemContainer : Interactable
 
     void Start()
     {
-        Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1));
+
+        int r = (Enum.GetValues(typeof(Item)).Length - 1);
+        if (gc.settings.addKnifeItem && r == 4)
+        {
+            r++;
+        }
+        Restock(r);
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
         
         
@@ -113,10 +119,16 @@ public class ItemContainer : Interactable
 
                 ItemTaken();
                 Debug.Log((Enum.GetValues(typeof(Item)).Length) + "Enum");
-            
+
+                int r = (Enum.GetValues(typeof(Item)).Length - 1);
+                if (gc.settings.addKnifeItem && r == 4)
+                {
+                    r++;
+                }
+
                 PickupCooldown message = new PickupCooldown();
                 message.child = transform.GetSiblingIndex();
-                message.random = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                message.random = r;
                 game.handler.link.Send(message);
             }
         

@@ -26,6 +26,7 @@ public struct GameSettings
 	public long taskbarUpdateStyle;
 	public long sabotageCooldown;
 	public bool startWithItems;
+	public bool addKnifeItem;
 	public bool gameOverEnabled;
 
 	public void Serialize(BinaryWriter writer)
@@ -52,6 +53,7 @@ public struct GameSettings
 		writer.Write((long)taskbarUpdateStyle);
 		writer.Write((long)sabotageCooldown);
 		writer.Write((bool)startWithItems);
+		writer.Write((bool)addKnifeItem);
 		writer.Write((bool)gameOverEnabled);
 	}
 
@@ -80,6 +82,7 @@ public struct GameSettings
 		_ret.taskbarUpdateStyle = (long)reader.ReadInt64();
 		_ret.sabotageCooldown = (long)reader.ReadInt64();
 		_ret.startWithItems = (bool)reader.ReadBoolean();
+		_ret.addKnifeItem = (bool)reader.ReadBoolean();
 		_ret.gameOverEnabled = (bool)reader.ReadBoolean();
 		return _ret;
 	}

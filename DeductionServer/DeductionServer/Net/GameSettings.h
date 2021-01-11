@@ -30,6 +30,7 @@ public:
 	int64_t taskbarUpdateStyle;
 	int64_t sabotageCooldown;
 	bool startWithItems;
+	bool addKnifeItem;
 	bool gameOverEnabled;
 
 	void serialize(std::ostream& os) const;
