@@ -168,38 +168,38 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 	std::cout << name << " connected from " << endpoint << std::endl;
 }
 
-Vec3 NetworkHandler::generateColor()
-{
-	std::vector<Vec3> colors(10);
-	for (size_t i = 0; i < colors.size(); ++i)
-	{
-		colors[i] = Vec3(
-			rng.next_float() * 0.8f + 0.1f,
-			rng.next_float() * 0.8f + 0.1f,
-			rng.next_float() * 0.8f + 0.1f
-		);
-	}
-
-	std::vector<float> distances(colors.size(), std::numeric_limits<float>::infinity());
-	for (size_t i = 0; i < colors.size(); ++i)
-	{
-		for (auto player : players)
-		{
-			float distance = (colors[i] - mobs[player.second.mob].color).Len();
-			if (distance < distances[i])
-				distances[i] = distance;
-		}
-	}
-
-	size_t most_distant_index = 0;
-	for (size_t i = 1; i < distances.size(); ++i)
-	{
-		if (distances[i] > distances[most_distant_index])
-			most_distant_index = i;
-	}
-
-	return colors[most_distant_index];
-}
+//Vec3 NetworkHandler::generateColor()
+//{
+//	std::vector<Vec3> colors(10);
+//	for (size_t i = 0; i < colors.size(); ++i)
+//	{
+//		colors[i] = Vec3(
+//			rng.next_float() * 0.8f + 0.1f,
+//			rng.next_float() * 0.8f + 0.1f,
+//			rng.next_float() * 0.8f + 0.1f
+//		);
+//	}
+//
+//	std::vector<float> distances(colors.size(), std::numeric_limits<float>::infinity());
+//	for (size_t i = 0; i < colors.size(); ++i)
+//	{
+//		for (auto player : players)
+//		{
+//			float distance = (colors[i] - mobs[player.second.mob].color).Len();
+//			if (distance < distances[i])
+//				distances[i] = distance;
+//		}
+//	}
+//
+//	size_t most_distant_index = 0;
+//	for (size_t i = 1; i < distances.size(); ++i)
+//	{
+//		if (distances[i] > distances[most_distant_index])
+//			most_distant_index = i;
+//	}
+//
+//	return colors[most_distant_index];
+//}
 
 void NetworkHandler::updateMobState(uint64_t id)
 {
