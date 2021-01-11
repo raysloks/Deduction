@@ -16280,6 +16280,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3530295022525873371, guid: 8db377f126743714e8afac96f6b7b0c6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3678514371715907316, guid: 8db377f126743714e8afac96f6b7b0c6,
         type: 3}
       propertyPath: evidenceHandler
@@ -18727,6 +18732,26 @@ PrefabInstance:
     - target: {fileID: 2324288705218545753, guid: 74dd5670b978d2546a1923bad28c71ff,
         type: 3}
       propertyPath: camoColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324288705218545753, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: collisionColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324288705218545753, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: interactableColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324288705218545753, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: backgroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2324288705218545753, guid: 74dd5670b978d2546a1923bad28c71ff,
+        type: 3}
+      propertyPath: camoColor.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2324288705218545754, guid: 74dd5670b978d2546a1923bad28c71ff,
