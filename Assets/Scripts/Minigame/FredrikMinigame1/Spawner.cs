@@ -48,7 +48,7 @@ public class Spawner : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
-        if (timer > spawnRate && taskCompleted == false && transform.childCount < 7f)
+        if (timer > spawnRate && taskCompleted == false && transform.childCount < 9f)
         {
             spawnAmount++;
             newObj = Instantiate(prefab, transform);

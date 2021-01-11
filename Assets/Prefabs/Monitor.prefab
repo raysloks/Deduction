@@ -96,11 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75f386b089a5dd43a87a711fbaf1dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 1368123981062287680}
   minigame: {fileID: 6435546789317580498, guid: b92b789ff7d0c6b4cb83f486dd48a658,
     type: 3}
   altMinigame: {fileID: 0}
   minigame_index: 1
-  outline: {fileID: 1368123981062287680}
   alwaysActive: 0
 --- !u!58 &3604052726584254773
 CircleCollider2D:

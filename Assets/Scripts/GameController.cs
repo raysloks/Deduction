@@ -449,8 +449,9 @@ public class GameController : MonoBehaviour
             foreach (KeyValuePair<ulong, Mob> mob in handler.mobs)
                 if (mob.Value.IsAlive)
                     actualMobs.Add(mob.Key, mob.Value);
-            if (GameObject.FindWithTag("Medical"))
-                GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
+            if (FindObjectOfType<MedicalMonitor>())
+                FindObjectOfType<MedicalMonitor>().SetMobs(actualMobs);
+            //GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
         }
 
         if (phase == GamePhase.Main)

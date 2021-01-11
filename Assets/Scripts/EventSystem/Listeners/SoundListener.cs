@@ -23,7 +23,7 @@ namespace EventCallbacks
             if (NoOfcurrentlyPlayingSounds < maxNoOfSimultaneousSounds && dieSound != null)
             {
                 NoOfcurrentlyPlayingSounds++;
-                AudioSource.PlayClipAtPoint(dieSound, dieEventInfo.UnitGameObjectPos);
+                AudioSource.PlayClipAtPoint(dieSound, dieEventInfo.UnitGameObjectPos, 0.5f);
                 Invoke("SubtractCurrentlyPlayingSounds", dieSound.length);
             }
         }

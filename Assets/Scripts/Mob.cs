@@ -63,7 +63,6 @@ public class Mob : MonoBehaviour
 
     public void SetType(ulong type)
     {
-        
         this.type = type;
         if (type == 2)
         {
@@ -79,7 +78,9 @@ public class Mob : MonoBehaviour
         {
             countDeath = true;
             Debug.Log("NOT TYPE 1 " + this.gameObject.name);
-           // SetHeartMonitor(false);
+            // SetHeartMonitor(false);
+            if (FindObjectOfType<MedicalMonitor>())
+                FindObjectOfType<MedicalMonitor>().minigame.GetComponentInChildren<MedicalMinigame>().UpdateMobs(FindObjectOfType<MedicalMonitor>().mobs);
         }
 
     }
