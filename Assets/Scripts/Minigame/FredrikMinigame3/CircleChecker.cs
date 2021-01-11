@@ -158,8 +158,8 @@ public class CircleChecker : MonoBehaviour
         Vector2 newPoint;
         float angle = Random.Range(0.0F, 1.0F) * (Mathf.PI * 2);
         float radius = Random.Range(0.0F, 1.0F) * circle.radius;
-        newPoint.x = (circlePos.x + radius * Mathf.Cos(angle)) / 2;
-        newPoint.y = (circlePos.y + radius * Mathf.Sin(angle)) / 2;
+        newPoint.x = circlePos.x + radius * Mathf.Cos(angle);
+        newPoint.y = circlePos.y + radius * Mathf.Sin(angle);
 
         return newPoint;
     }
