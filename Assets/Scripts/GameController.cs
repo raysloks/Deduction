@@ -347,15 +347,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-        //Change color
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            player.colorIndex = ((player.colorIndex + 1) % 15);
-            Vector3 temp = (colorPicker.PickColor(player.colorIndex));
-            player.SetColor(temp.x, temp.y, temp.z);
-            handler.link.Send(new SetMobColor { color = temp});
-        }
-
         connectionMenu.SetActive(connectionState == ConnectionState.None);
         setupMenu.SetActive(connectionState == ConnectionState.Connected && phase == GamePhase.Setup && timer == 0);
 
@@ -601,5 +592,12 @@ public class GameController : MonoBehaviour
     public void SpawnSmokeGrenade(Vector2 pos)
     {
         GameObject sg = Instantiate(smokeGrenadePrefab, pos, Quaternion.identity);
+    }
+
+    public void ChangeColor(Vector3 color)
+    {
+        player.SetColor(color.x, color.y, color.z);
+        handler.link.Send(new SetMobColor { color = color });
+        Debug.Log("affirmative");
     }
 }
