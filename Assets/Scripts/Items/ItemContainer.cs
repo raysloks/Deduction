@@ -19,11 +19,18 @@ public class ItemContainer : Interactable
     public Sprite smokeGrenadeSprite;
     public Sprite knifeSprite;
     public Sprite pulseSprite;
+    public GameController gc;
 
     void Start()
     {
         Restock(UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1));
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
+        
+        
+        
+        
+
+        Debug.Log("Sibling Index : " + transform.GetSiblingIndex() + " Random+ " + (Enum.GetValues(typeof(Item)).Length - 1));
     }
 
     public void ItemTaken()

@@ -20,4 +20,5 @@ int64 shortTaskCount
 int64 longTaskCount
 int64 taskbarUpdateStyle
 int64 sabotageCooldown
+bool startWithItems
 bool gameOverEnabled

@@ -50,6 +50,10 @@ public class ShowMotionSensorList : MonoBehaviour
                 }
                 imageObjects[index].SetEvidence(Str, (s.totalRoundTime - s.secondsIn[index]), s.playerSprites[index]);
                 index++;
+                if(index > 28)
+                {
+                    break;
+                }
             }
         }
         

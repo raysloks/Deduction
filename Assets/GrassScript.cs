@@ -12,6 +12,7 @@ public class GrassScript : MonoBehaviour
 
     public float animationSpeed = 2f;
     public float range;
+    public Player player;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +31,9 @@ public class GrassScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Entered.Count > 0)
+        if(Entered.Count > 0 && player.inCamo)
         {
-            foreach(playerObject po in Entered)
+            foreach (playerObject po in Entered)
             {
                 po.timer += Time.deltaTime;
                 if(po.timer > 0f)

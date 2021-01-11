@@ -64,8 +64,16 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
-        //  SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length)));
-        SetItem(2);
+        if (gc.settings.startWithItems)
+        {
+            SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+        }
+        else
+        {
+              SetItem(0);
+        }
+
+        //   SetItem(2);
         EventCallbacks.EventSystem.Current.RegisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
 
         if(ItemContainers == null)
@@ -106,7 +114,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 childGo.GetComponent<ItemContainer>().ItemTaken();
                 PickupCooldown message = new PickupCooldown();
                 message.child = index;
-                message.random = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length);
+                message.random = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1);
                 gc.handler.link.Send(message);
             }
         }
@@ -201,7 +209,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 Click = () => CameraClick();
                 myItemImage.sprite = CameraSprite;
                 photosTaken = 0;
-                infoText.text = "Takes a picture that can be presented during meetings";
+                infoText.text = "Takes a picture that can be presented during meetings. Item can take " + maxPhotos + " Pictures";
                 break;
             case Item.MotionSensor:
                 Click = () => MotionSensorClick();
@@ -274,10 +282,14 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
 
             motionSensorNumber = 1;
-            int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
-
-            Debug.Log((Enum.GetValues(typeof(Item)).Length - 1) + "Enum");
-            SetItem(2);
+            if (gc.settings.startWithItems)
+            {
+                SetItem(UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1)));
+            }
+            else
+            {
+                SetItem(0);
+            }
         }
         if(pc.phase == GamePhase.Setup)
         {

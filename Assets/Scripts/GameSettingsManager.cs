@@ -62,11 +62,13 @@ public class GameSettingsManager : MonoBehaviour
             new GameSettingDropdown("Taskbar Update Style", "taskbarUpdateStyle", game, new List<string>{ "Instant", "End of Meeting", "Start of Meeting" }),
             new GameSettingToggle("Hide Votes Until Everyone Has Voted", "showVotesWhenEveryoneHasVoted", game),
             new GameSettingToggle("Anonymous Votes", "anonymousVotes", game),
+            new GameSettingToggle("Start With Items", "startWithItems", game),
             new GameSettingToggle("[DEV]Game Over Enabled", "gameOverEnabled", game)
         };
 
         game.settings.crewmateVision = 5.0f;
         game.settings.playerSpeed = 5.0f;
+
 
         foreach (var setting in settings)
             setting.CreateInput(this);
@@ -118,9 +120,12 @@ public class GameSettingsManager : MonoBehaviour
 
     public void colorChangeCamo(Color c)
     {
-        foreach (Transform s in camoHolder.transform)
-        {           
-             s.GetComponent<SpriteRenderer>().color = c;          
+        if(camoHolder != null)
+        {
+            foreach (Transform s in camoHolder.transform)
+            {
+                s.GetComponent<SpriteRenderer>().color = c;
+            }
         }
     }
 

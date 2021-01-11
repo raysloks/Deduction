@@ -16,7 +16,10 @@ public class PlayerBall : MonoBehaviour
     public GameObject jumpRope;
     private BoxCollider2D collider;
     private bool jumpDone = false;
+    private bool currentlyHit = false;
     public float speed = 350f;
+
+    private SpriteRenderer sr;
     public List<AudioClip> wrongSounds;
 
     public List<AudioClip> correctSounds;
@@ -32,6 +35,8 @@ public class PlayerBall : MonoBehaviour
     void Start()
     {
         rd = GetComponent<Rigidbody2D>();
+
+        sr = GetComponent<SpriteRenderer>();
         startPos = transform.position;
         text.text = jumps + "/" + TotalJumps;
         collider = jumpRope.GetComponent<BoxCollider2D>();
@@ -114,8 +119,39 @@ public class PlayerBall : MonoBehaviour
             jumpDone = false;
             jumpRope.GetComponent<JumpRope>().speed = (jumpRope.GetComponent<JumpRope>().originalSpeed / 5);
             jumpRope.GetComponent<JumpRope>().GotHit();
+            thisGotHit();
             //Debug.Log("hi");
         }
+    }
+
+    public void thisGotHit()
+    {
+        if (!currentlyHit)
+        {
+            currentlyHit = true;
+            StartCoroutine(Hit(1));
+        }
+
+    }
+
+    IEnumerator Hit(int Sec)
+    {
+        float counter = Sec;
+
+        while (counter > (Sec / 2))
+        {
+            sr.color = Color.Lerp(Color.white, Color.red, counter);
+            counter -= Time.deltaTime;
+            yield return null;
+        }
+
+        while (counter > 0)
+        {
+            sr.color = Color.Lerp(Color.red, Color.white, counter);
+            counter -= Time.deltaTime;
+            yield return null;
+        }
+        currentlyHit = false;
     }
 
 }

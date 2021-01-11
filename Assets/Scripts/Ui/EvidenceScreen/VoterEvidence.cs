@@ -29,6 +29,8 @@ public class VoterEvidence : MonoBehaviour
 
     public void SetEvidence(EventCallbacks.Event eventInfo)
     {
+       
+           
         newEvidence.SetActive(true);
         if (eventInfo is SendEvidenceEvent see)
         {
@@ -53,6 +55,36 @@ public class VoterEvidence : MonoBehaviour
             myEvidence = Evidence.Picture;
             photoIndex = presentEvidenceEvent.index;
         }
+
+        if (vb.currentEvidence = true)
+        {
+            SendEvidenceEvent sendEvidenceEvent = new SendEvidenceEvent();
+            sendEvidenceEvent.Evidence = (int)myEvidence;
+            sendEvidenceEvent.positionOfTarget = transform.position;
+            sendEvidenceEvent.gc = gc;
+
+            switch (myEvidence)
+            {
+                case Evidence.None:
+                    break;
+                case Evidence.Picture:
+                    sendEvidenceEvent.photoIndex = photoIndex;
+                    break;
+                case Evidence.MotionSensor:
+                    sendEvidenceEvent.MotionSensorEvidence = ms;
+                    break;
+                case Evidence.SmokeGrenade:
+                    sendEvidenceEvent.smokeGrenadeEvidence = sg;
+                    break;
+                case Evidence.PulseChecker:
+                    sendEvidenceEvent.pulseCheckerEvidence = pc;
+                    break;
+            }
+
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.SHOW_EVIDENCE, sendEvidenceEvent);
+        }
+
+        
     }
 
     public void SetEvidence2(EventCallbacks.Event eventInfo)
