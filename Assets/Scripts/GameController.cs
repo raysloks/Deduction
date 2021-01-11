@@ -446,11 +446,11 @@ public class GameController : MonoBehaviour
             areaText.rectTransform.anchoredPosition = new Vector2(0, -65);
 
             Dictionary<ulong, Mob> actualMobs = new Dictionary<ulong, Mob>();
-            foreach (KeyValuePair<ulong, Mob> mob in handler.mobs)
+            /*foreach (KeyValuePair<ulong, Mob> mob in handler.mobs)
                 if (mob.Value.IsAlive)
                     actualMobs.Add(mob.Key, mob.Value);
             if (FindObjectOfType<MedicalMonitor>())
-                FindObjectOfType<MedicalMonitor>().SetMobs(actualMobs);
+                FindObjectOfType<MedicalMonitor>().SetMobs(actualMobs);*/
             //GameObject.FindWithTag("Medical").GetComponent<MedicalMonitor>().mobs = actualMobs.Values.ToArray();
         }
 
