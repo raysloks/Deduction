@@ -127,7 +127,7 @@ void NetworkHandler::createPlayer(const asio::ip::udp::endpoint & endpoint, cons
 
 	++lifetimePlayerCount;
 
-	mobs[player.mob].color = generateColor();
+	/*mobs[player.mob].color = generateColor();*/
 
 	{
 		PlayerUpdate message;
