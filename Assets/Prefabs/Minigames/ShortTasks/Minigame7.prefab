@@ -1275,6 +1275,11 @@ PrefabInstance:
       propertyPath: clip
       value: 
       objectReference: {fileID: 8300000, guid: 7e7f5b588b4bffe4991b5276cb6e753a, type: 3}
+    - target: {fileID: 8601724686365651943, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
