@@ -21,9 +21,9 @@ public class DrawOnClass : MonoBehaviour
         if (Input.GetMouseButton(0) && isDone == false)
         {
             hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, lm);
-            if (hitInfo)
+            if (hitInfo.collider != null)
             {
-                if (hitInfo.collider != null)
+                if (hitInfo.collider.tag == "EraseTarget")
                 {
                     UpdateTexture();
                 }

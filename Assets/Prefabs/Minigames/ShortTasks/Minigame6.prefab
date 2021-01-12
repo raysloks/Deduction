@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 6808128789403862633}
   m_Layer: 11
   m_Name: Cut thingy
-  m_TagString: Untagged
+  m_TagString: EraseTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 6808128789426634533}
   m_Layer: 11
   m_Name: Boom mic'
-  m_TagString: Untagged
+  m_TagString: EraseTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 6808128789777300063}
   m_Layer: 11
   m_Name: Lights
-  m_TagString: Untagged
+  m_TagString: EraseTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 6808128790040303482}
   m_Layer: 11
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: EraseTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
