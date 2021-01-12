@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ColorPicker : MonoBehaviour
 {
     public GameController game;
     public ColorButton[] Buttons = new ColorButton[15];
+    public Image colorImage;
     Vector3[] colors = new Vector3[15];
     // Start is called before the first frame update
     void Start()
@@ -26,13 +28,21 @@ public class ColorPicker : MonoBehaviour
         colors[11] = new Vector3(0.6f, 0f, 0.4f); //Dark Magenta
         colors[12] = new Vector3(0.35f, 0.22f, 0f); //Brown
         colors[13] = new Vector3(0.7f, 0.7f, 0.7f); //White
-        colors[14] = new Vector3(0.4f, 0.4f, 0.4f); //Grey       
+        colors[14] = new Vector3(0.4f, 0.4f, 0.4f); //Grey     
+       
     }
 
 
     public Vector3 PickColor(int i)
     {
         return (colors[i]);
+    }
+
+
+    public void HideShowImage()
+    {
+        colorImage.gameObject.SetActive(!colorImage.gameObject.activeSelf);
+        SetButtonColor();
     }
 
     public void SetButtonColor()
@@ -42,5 +52,6 @@ public class ColorPicker : MonoBehaviour
             Buttons[i].RecieveColor(colors[i]);
         }
     }
+
 
 }
