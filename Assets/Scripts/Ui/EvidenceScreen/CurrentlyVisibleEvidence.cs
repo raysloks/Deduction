@@ -5,7 +5,7 @@ using EventCallbacks;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CurrentlyVisibleEvidence : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CurrentlyVisibleEvidence : MonoBehaviour
 {
 
     public float speed = 10f;
