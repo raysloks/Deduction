@@ -163,24 +163,6 @@ public class CurrentlyVisibleEvidence : MonoBehaviour, IPointerEnterHandler, IPo
 
     }
 
-
-    public void OnPointerEnter(PointerEventData pointerEventData)
-    {
-        if(PictureShowing == true)
-        {
-            rt.sizeDelta = (orgWidhtHeight * 1.5f);
-        }
-    }
-
-    public void OnPointerExit(PointerEventData pointerEventData)
-    {
-        if (PictureShowing == true)
-        {
-            rt.sizeDelta = orgWidhtHeight;
-        }
-    }
-
-
     //End of meeting cleanup
     public void PhaseChanged(EventCallbacks.Event eventInfo)
     {
@@ -188,7 +170,6 @@ public class CurrentlyVisibleEvidence : MonoBehaviour, IPointerEnterHandler, IPo
 
         if (pc.phase == GamePhase.Main || pc.previous == GamePhase.EndOfMeeting)
         {
-
             motionSensorEvidence.SetActive(false);
             vis.transform.position = arrowOrginalPos;
             vis.GetComponent<Image>().enabled = false;
