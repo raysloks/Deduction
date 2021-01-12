@@ -85,7 +85,6 @@ public class CircleChecker : MonoBehaviour
         }
         else
         {
-            gameStarted = true;
             target = pointInsideCircle(centerPos);
             StartCoroutine(EndIn(SecondsToEnd));
         }
@@ -94,9 +93,14 @@ public class CircleChecker : MonoBehaviour
     IEnumerator EndIn(int Sec)
     {
         float counter = Sec;
+        gameStarted = true;
 
         while (counter > 1 && gameStarted )
         {
+            if (PlayerInside != true)
+            {
+                gameStarted = false;
+            }
             text.text = Mathf.Round(counter).ToString();
             counter -= Time.deltaTime;
             yield return null;
@@ -110,6 +114,18 @@ public class CircleChecker : MonoBehaviour
             gameStarted = false;
             FindObjectOfType<MinigamePopupScript>().MinigameWon();
         }
+        else
+        {
+
+            StartCoroutine(StartIn(SecondsToStart));
+            transform.position = startPos;
+            sr.color = Color.white;
+            SoundEvent se = new SoundEvent();
+            se.UnitSound = wrongSounds;
+            se.UnitGameObjectPos = transform.position;
+            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
+            StartCoroutine(StartIn(SecondsToStart));
+        }
     }
 
     public Vector2 RandomPointInScreenBounds()
@@ -122,17 +138,10 @@ public class CircleChecker : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Ball" && gameStarted)
+        if (col.gameObject.tag == "Ball")
         {
             PlayerInside = false;
-            transform.position = startPos;
-            gameStarted = false;
-            sr.color = Color.white;
-            SoundEvent se = new SoundEvent();
-            se.UnitSound = wrongSounds;
-            se.UnitGameObjectPos = transform.position;
-            EventCallbacks.EventSystem.Current.FireEvent(EVENT_TYPE.PLAY_SOUND, se);
-            StartCoroutine(StartIn(SecondsToStart));
+            
         }
     }
 
