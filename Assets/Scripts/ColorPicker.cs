@@ -29,11 +29,6 @@ public class ColorPicker : MonoBehaviour
         colors[14] = new Vector3(0.4f, 0.4f, 0.4f); //Grey       
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public Vector3 PickColor(int i)
     {
@@ -47,4 +42,5 @@ public class ColorPicker : MonoBehaviour
             Buttons[i].RecieveColor(colors[i]);
         }
     }
+
 }

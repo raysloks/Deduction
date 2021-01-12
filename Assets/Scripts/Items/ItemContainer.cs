@@ -8,7 +8,7 @@ using EventCallbacks;
 public class ItemContainer : Interactable
 {
 
-    [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade, Knife, PulseChecker };
+    [HideInInspector] public enum Item { None, Camera, MotionSensor, SmokeGrenade, PulseChecker, Knife };
     [HideInInspector] public Item item;
     private bool waitingForCountDown = false;
     private bool coolingDown = false;
@@ -24,10 +24,10 @@ public class ItemContainer : Interactable
     void Start()
     {
 
-        int r = (Enum.GetValues(typeof(Item)).Length - 1);
-        if (gc.settings.addKnifeItem && r == 4)
+        int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+        if (!gc.settings.addKnifeItem && r == 5)
         {
-            r++;
+            r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 2));
         }
         Restock(r);
         EventSystem.Current.RegisterListener(EVENT_TYPE.PICKUP_WAIT, WaitForRestock);
@@ -36,7 +36,7 @@ public class ItemContainer : Interactable
         
         
 
-        Debug.Log("Sibling Index : " + transform.GetSiblingIndex() + " Random+ " + (Enum.GetValues(typeof(Item)).Length - 1));
+        Debug.Log("Sibling Index : " + transform.GetSiblingIndex() + " Random+ " + (Enum.GetValues(typeof(Item)).Length - 2));
     }
 
     public void ItemTaken()
@@ -101,12 +101,13 @@ public class ItemContainer : Interactable
             case Item.SmokeGrenade:
                 sr.sprite = smokeGrenadeSprite;
                 break;
-            case Item.Knife:
-                sr.sprite = knifeSprite;
-                break;
             case Item.PulseChecker:
                 sr.sprite = pulseSprite;
                 break;
+            case Item.Knife:
+                sr.sprite = knifeSprite;
+                break;
+           
         }
     }
 
@@ -120,10 +121,10 @@ public class ItemContainer : Interactable
                 ItemTaken();
                 Debug.Log((Enum.GetValues(typeof(Item)).Length) + "Enum");
 
-                int r = (Enum.GetValues(typeof(Item)).Length - 1);
-                if (gc.settings.addKnifeItem && r == 4)
+                int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                if (!gc.settings.addKnifeItem && r == 5)
                 {
-                    r++;
+                    r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 2));
                 }
 
                 PickupCooldown message = new PickupCooldown();

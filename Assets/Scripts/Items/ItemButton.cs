@@ -13,7 +13,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private static ItemButton instance;
 
 
-    [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade, Knife, PulseChecker };
+    [HideInInspector]public enum Item { None, Camera, MotionSensor, SmokeGrenade, PulseChecker, Knife };
     [HideInInspector]public Item myItem;
 
     public Player player;
@@ -64,10 +64,10 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         instance = this;
         myItemImage = buttonItemImage.GetComponent<Image>();
         backgroundImage = GetComponent<Image>();
-        int r = (Enum.GetValues(typeof(Item)).Length - 1);
-        if (gc.settings.addKnifeItem && r == 4)
+        int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+        if (!gc.settings.addKnifeItem && r == 5)
         {
-            r++;
+            r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 2));
         }
         motionSensorNumber = 1;
         if (gc.settings.startWithItems)
@@ -117,10 +117,16 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 SetItem(item);
 
+                int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+                if (!gc.settings.addKnifeItem && r == 5)
+                {
+                    r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 2));
+                }
+
                 childGo.GetComponent<ItemContainer>().ItemTaken();
                 PickupCooldown message = new PickupCooldown();
                 message.child = index;
-                message.random = UnityEngine.Random.Range(1, Enum.GetValues(typeof(Item)).Length - 1);
+                message.random = r;
                 gc.handler.link.Send(message);
             }
         }
@@ -229,6 +235,11 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 myItemImage.sprite = SmokeGrenadeSprite;
                 infoText.text = "Throws a smoke grenade that covers the area around you with smoke. Hide yourself or distract other players with it. ";
                 break;
+            case Item.PulseChecker:
+                Click = () => PulseClick();
+                myItemImage.sprite = pulseSprite;
+                infoText.text = "Pulse Machine. Reveals all enemies around you for its duration. If you report a body while PC is active you will be able to present how old the body is (In seconds) as evidence";
+                break;
             case Item.Knife:
                 Click = () => KnifeClick();
                 Exit = () => KnifeExit();
@@ -236,11 +247,7 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 myItemImage.sprite = KnifeSprite;
                 infoText.text = "Knife. Lets you kill another player. Even if your not a spy. Use does not affect spies kill cooldown";
                 break;
-            case Item.PulseChecker:
-                Click = () => PulseClick();
-                myItemImage.sprite = pulseSprite;
-                infoText.text = "Pulse Machine. Reveals all enemies around you for its duration. If you report a body while PC is active you will be able to present how old the body is (In seconds) as evidence";
-                break;
+           
         }
     }
     //Detect if the Cursor starts to pass over the GameObject
@@ -287,10 +294,10 @@ public class ItemButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (pc.previous == GamePhase.Setup)
         {
 
-            int r = (Enum.GetValues(typeof(Item)).Length - 1);
-            if (gc.settings.addKnifeItem && r == 4)
+            int r = UnityEngine.Random.Range(1, (Enum.GetValues(typeof(Item)).Length - 1));
+            if (!gc.settings.addKnifeItem && r == 5)
             {
-                r++;
+                r = UnityEngine.Random.Range(1,(Enum.GetValues(typeof(Item)).Length - 2));
             }
             motionSensorNumber = 1;
             if (gc.settings.startWithItems)

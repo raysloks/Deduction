@@ -479,6 +479,7 @@ void Game::resetSettings()
 		settings.shortTaskCount = 3;
 		settings.longTaskCount = 2;
 		settings.taskbarUpdateStyle = 0;
+		settings.addKnifeItem = false;
 		settings.sabotageCooldown = 30'000'000'000;
 		settings.gameOverEnabled = true;
 
