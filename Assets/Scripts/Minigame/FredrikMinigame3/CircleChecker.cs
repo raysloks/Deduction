@@ -116,7 +116,6 @@ public class CircleChecker : MonoBehaviour
         }
         else
         {
-
             StartCoroutine(StartIn(SecondsToStart));
             transform.position = startPos;
             sr.color = Color.white;
