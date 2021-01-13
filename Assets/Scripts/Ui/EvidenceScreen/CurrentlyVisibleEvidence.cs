@@ -106,50 +106,56 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
         PictureShowing = false;
         if (eventInfo is SendEvidenceEvent see)
         {
-          if(see.Evidence == 4){
-              ri.enabled = false;
-              motionSensorEvidence.SetActive(false);
-              SmokeGrenadeEvidence.SetActive(false);
-              pulseCheckerEvidence.SetActive(true);
-              pulseCheckerEvidence.GetComponent<ShowPulseEvidence>().DisplayPulseEvidence(see.pulseCheckerEvidence);
-          }
-          else if(see.Evidence == 3)
-          {
-              ri.enabled = false;
-              motionSensorEvidence.SetActive(false);
-              pulseCheckerEvidence.SetActive(false);
-              SmokeGrenadeEvidence.SetActive(true);
-              SmokeGrenadeEvidence.GetComponent<ShowSmokeGrenade>().DisplaySmokeEvidence(see.smokeGrenadeEvidence);
-          }
-          else if(see.Evidence == 2)
-          {
-              Debug.Log("Show Evidence: MotionSensor");
+            if (see.Evidence == 4)
+            {
+                ri.enabled = false;
+                motionSensorEvidence.SetActive(false);
+                SmokeGrenadeEvidence.SetActive(false);
+                pulseCheckerEvidence.SetActive(true);
+                pulseCheckerEvidence.GetComponent<ShowPulseEvidence>().DisplayPulseEvidence(see.pulseCheckerEvidence);
+            }
+            else if (see.Evidence == 3)
+            {
+                ri.enabled = false;
+                motionSensorEvidence.SetActive(false);
+                pulseCheckerEvidence.SetActive(false);
+                SmokeGrenadeEvidence.SetActive(true);
+                SmokeGrenadeEvidence.GetComponent<ShowSmokeGrenade>().DisplaySmokeEvidence(see.smokeGrenadeEvidence);
+            }
+            else if (see.Evidence == 2)
+            {
+                Debug.Log("Show Evidence: MotionSensor");
 
-              ri.enabled = false;
-              SmokeGrenadeEvidence.SetActive(false);
-              pulseCheckerEvidence.SetActive(false);
-              motionSensorEvidence.SetActive(true);
-              motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
-          }
-          else if (see.Evidence == 1)
-          {
-              PictureShowing = true;
-              rt.sizeDelta = new Vector2(800, 600);
-              ri.enabled = true;
-              pulseCheckerEvidence.SetActive(false);
-              motionSensorEvidence.SetActive(false);
-              SmokeGrenadeEvidence.SetActive(false);
-              ri.texture = see.gc.screenshotHandler.photos[(ulong)see.photoIndex].texture;
-          }
-          else if (see.Evidence == 0)
-          {
+                ri.enabled = false;
+                SmokeGrenadeEvidence.SetActive(false);
+                pulseCheckerEvidence.SetActive(false);
+                motionSensorEvidence.SetActive(true);
+                motionSensorEvidence.GetComponent<ShowMotionSensorList>().addAllOptions(see.MotionSensorEvidence);
+            }
+            else if (see.Evidence == 1)
+            {
+                PictureShowing = true;
+                rt.sizeDelta = new Vector2(800, 600);
+                ri.enabled = true;
+                pulseCheckerEvidence.SetActive(false);
+                motionSensorEvidence.SetActive(false);
+                SmokeGrenadeEvidence.SetActive(false);
+                var gc = see.gc;
+                var screenshotHandler = gc.screenshotHandler;
+                var photos = screenshotHandler.photos;
+                var photo = photos[(ulong)see.photoIndex];
+                var texture = photo.texture;
+                ri.texture = texture;
+            }
+            else if (see.Evidence == 0)
+            {
                 rt.sizeDelta = new Vector2(400, 200);
                 ri.enabled = true;
                 pulseCheckerEvidence.SetActive(false);
                 SmokeGrenadeEvidence.SetActive(false);
                 motionSensorEvidence.SetActive(false);
                 ri.texture = texture;
-          }
+            }
 
             if (!moving)
             {

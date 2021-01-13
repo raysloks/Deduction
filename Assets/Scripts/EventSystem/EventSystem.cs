@@ -53,7 +53,7 @@ namespace EventCallbacks
                 return;
             }
 
-            foreach(EventListener el in eventListeners[eventType])
+            foreach (EventListener el in eventListeners[eventType])
             {
                 try
                 {

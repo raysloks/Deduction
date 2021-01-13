@@ -18749,7 +18749,7 @@ PrefabInstance:
     - target: {fileID: 7403564699563719191, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7403564699563719191, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
@@ -19009,7 +19009,7 @@ PrefabInstance:
     - target: {fileID: 7663112437237446495, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7663112437265483346, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
@@ -19419,7 +19419,7 @@ PrefabInstance:
     - target: {fileID: 7663112438082181414, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7663112438082181414, guid: d7def6bc60e9dc64ab1396b9c6fe7d5e,
         type: 3}
@@ -19632,7 +19632,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 554449081515296814}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
