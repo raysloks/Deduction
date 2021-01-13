@@ -571,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8986386, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -863,6 +863,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Minigame helpboxes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4233310613980023079, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4293979448733394916, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
