@@ -176,10 +176,13 @@ public class CurrentlyVisibleEvidence : MonoBehaviour
 
         if (pc.phase == GamePhase.Main || pc.previous == GamePhase.EndOfMeeting)
         {
+
+            pulseCheckerEvidence.SetActive(false);
+            SmokeGrenadeEvidence.SetActive(false);
             motionSensorEvidence.SetActive(false);
             vis.transform.position = arrowOrginalPos;
             vis.GetComponent<Image>().enabled = false;
-            ri.enabled = true;
+            ri.enabled = false;
             moving = false;
             firstMove = false;
             qt.Clear();
