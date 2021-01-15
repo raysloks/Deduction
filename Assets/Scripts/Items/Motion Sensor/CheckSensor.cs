@@ -34,6 +34,8 @@ public class CheckSensor : MonoBehaviour
     public GameObject numbergo;
 
     private int number;
+
+    public List<TextMeshPro> texts = new List<TextMeshPro>();
   
     // Start is called before the first frame update
     void Start()
@@ -207,11 +209,17 @@ public class CheckSensor : MonoBehaviour
     public void SetNumber(int number)
     {
         this.number = number;
-        TextMeshPro[] texts = numbergo.GetComponentsInChildren<TextMeshPro>();
         foreach (TextMeshPro t in texts)
         {
             t.text = number.ToString();
         }
+    }
+
+    void OnDestroy()
+    {
+        EventCallbacks.EventSystem.Current.UnregisterListener(EVENT_TYPE.PHASE_CHANGED, PhaseChanged);
+        EventCallbacks.EventSystem.Current.UnregisterListener(EVENT_TYPE.MEETING_STARTED, meetingStarted);
+        Debug.Log("Destroy Motion Sensor " + number);
     }
 
     public void PhaseChanged(EventCallbacks.Event eventInfo)
@@ -223,7 +231,7 @@ public class CheckSensor : MonoBehaviour
          //   evidenceHandler.AddSensorList(peopleEntered);
         }
 
-        if(pc.previous == GamePhase.EndOfMeeting)
+        if(pc.phase == GamePhase.EndOfMeeting)
         {
             peopleEntered.Clear();
             secondsIn.Clear();
@@ -231,8 +239,12 @@ public class CheckSensor : MonoBehaviour
             //  Destroy(this.gameObject);
         }
 
-        if(pc.phase == GamePhase.Setup)
-        {
+        if(pc.phase == GamePhase.Setup || pc.phase == GamePhase.GameOver)
+        {          
+            peopleEntered.Clear();
+            secondsIn.Clear();
+            playerSprites.Clear();
+           
             Destroy(this.gameObject);
         }
     }

@@ -13,6 +13,7 @@ public class MeetingUiListener : MonoBehaviour
     public NoticeBoard noticeBoard;
     public GameObject blackout;
     public GameObject evidenceScreen;
+    public Button gavelButton;
 
     public RadialLayout radialLayout;
     public VoteButton skipButton;
@@ -73,6 +74,8 @@ public class MeetingUiListener : MonoBehaviour
         skipButton.game = game;
         skipButton.target = ulong.MaxValue;
         skipButton.ResetVoteCountAndState();
+
+        gavelButton.interactable = true;
 
         radialLayout.fDistance = circleLayoutDistance;
 

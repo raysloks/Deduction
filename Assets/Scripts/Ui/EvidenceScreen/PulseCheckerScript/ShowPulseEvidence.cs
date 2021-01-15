@@ -18,7 +18,7 @@ public class ShowPulseEvidence : MonoBehaviour
         body.sprite = pce.dead.sprite;
         player.color = pce.player.color;
         body.color = pce.dead.color;
-        string final = pce.playerName + " Found " + pce.deadName + "\n" + "\n" + "This body is this sec old:";
+        string final = pce.playerName + " Found " + pce.deadName + "\n" + "\n" + "This body is this old (in seconds):";
         Description.text = final;
     }
 

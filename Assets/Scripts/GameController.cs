@@ -85,7 +85,9 @@ public class GameController : MonoBehaviour
 
     [HideInInspector] public bool pulseActive = false;
 
+    public GameObject evidenceHolder;
     public EvidenceHandler eh;
+    public Button gavelButton;
 
     public ColorPicker colorPicker;
 
@@ -426,6 +428,19 @@ public class GameController : MonoBehaviour
     public void SetGamePhase(GamePhase phase, long timer, GamePhase previous)
     {
         popup.DeactivatePopup();
+
+        if(phase == GamePhase.EndOfMeeting){
+            gavelButton.interactable = false;
+        }
+        /*
+        if (phase == GamePhase.Setup || phase == GamePhase.GameOver || phase == GamePhase.EndOfMeeting)
+        {
+            foreach (Transform child in evidenceHolder.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        */
 
         if (phase == GamePhase.Setup || phase == GamePhase.GameOver)
         {

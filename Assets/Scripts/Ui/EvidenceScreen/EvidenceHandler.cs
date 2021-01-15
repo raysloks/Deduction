@@ -14,6 +14,8 @@ public class EvidenceHandler : MonoBehaviour
     public GameObject smokePrefab;
     public Player player;
     private GameObject lastSmokePrefab;
+    public Button gavelButton;
+    public GameObject voteButton;
 
     private void Start()
     {
@@ -89,13 +91,17 @@ public class EvidenceHandler : MonoBehaviour
     {
         PhaseChangedEvent pc = (PhaseChangedEvent)eventInfo;
 
-        if (pc.previous == GamePhase.EndOfMeeting || pc.phase == GamePhase.Setup)
+        if (pc.phase == GamePhase.EndOfMeeting || pc.phase == GamePhase.GameOver || pc.phase == GamePhase.Setup)
         {
-            gameObject.SetActive(true);
             foreach (Transform child in content.transform)
             {
                 Destroy(child.gameObject);
             }
+            gavelButton.interactable = false;
+            gavelButton.gameObject.SetActive(true);
+            voteButton.SetActive(false);
+            this.gameObject.SetActive(false);
         }
+
     }
 }

@@ -70,7 +70,6 @@ public class ItemContainer : Interactable
         CooldownEvent e = (CooldownEvent)eventInfo;
 
         int lookFor = e.child;
-        Debug.Log("LookFor " + lookFor);
         int index = 0;
         Transform p = transform.parent;
         foreach (Transform child in p)
