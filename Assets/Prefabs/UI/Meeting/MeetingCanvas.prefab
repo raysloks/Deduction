@@ -323,8 +323,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7663112437237446488}
   - {fileID: 7663112438556796521}
+  - {fileID: 7663112437237446488}
   m_Father: {fileID: 7663112437696436945}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -389,6 +389,8 @@ MonoBehaviour:
   pulsePrefab: {fileID: 0}
   smokePrefab: {fileID: 0}
   player: {fileID: 0}
+  gavelButton: {fileID: 0}
+  voteButton: {fileID: 0}
 --- !u!1 &7663112436938831896
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +803,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7663112436907242610}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1473,7 +1475,7 @@ RectTransform:
   - {fileID: 7663112436938831897}
   - {fileID: 7663112436622488579}
   m_Father: {fileID: 7663112436907242610}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
