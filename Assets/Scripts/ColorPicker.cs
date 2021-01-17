@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ColorPicker : MonoBehaviour
 {
+    public int current;
+
     public GameController game;
     public ColorButton[] Buttons = new ColorButton[15];
     public Image colorImage;
@@ -49,9 +51,17 @@ public class ColorPicker : MonoBehaviour
     {
         for (int i = 0; i < 15; i++)
         {
-            Buttons[i].RecieveColor(colors[i]);
+            Buttons[i].RecieveColor(colors[i], (i));
         }
     }
 
+    public void Deactivate(int index)
+    {
+        Buttons[index].BeingUsed();
+    }
 
+    public void Reactivate(int index)
+    {
+        Buttons[index].NoLongerUsed();
+    }
 }

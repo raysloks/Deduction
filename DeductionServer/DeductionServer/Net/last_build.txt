@@ -2,6 +2,9 @@ AbilityUsed
 int64 time
 uint64 ability
 uint64 target
+ColorTaken
+int32 id
+int32 former
 DoorUpdate
 uint16 door
 bool open
@@ -131,6 +134,8 @@ uint64 playerIds[]
 int32 totalRoundTime
 SetMobColor
 vec3 color
+int32 id
+int32 former
 SmokeGrenadeActivate
 vec3 pos
 SmokeGrenadeEvidence

@@ -5,7 +5,7 @@
 // Application should implement this class using the prototypes in HandlerPrototypes.h
 #include "../NetworkHandler.h"
 
-const uint32_t NetLink::crc = 0x46c48fd1;
+const uint32_t NetLink::crc = 0x54047710;
 NetLink::NetLink() : io_context(), socket(io_context)
 {
 }
@@ -102,189 +102,189 @@ void NetLink::Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& e
 		handler->AbilityUsedHandler(endpoint, message);
 		break;
 	}
-	case 5:
+	case 6:
 	{
 		GameSettings message;
 		message.deserialize(is);
 		handler->GameSettingsHandler(endpoint, message);
 		break;
 	}
-	case 6:
+	case 7:
 	{
 		GameStartRequested message;
 		message.deserialize(is);
 		handler->GameStartRequestedHandler(endpoint, message);
 		break;
 	}
-	case 7:
+	case 8:
 	{
 		GetAllPlayerPositions message;
 		message.deserialize(is);
 		handler->GetAllPlayerPositionsHandler(endpoint, message);
 		break;
 	}
-	case 9:
+	case 10:
 	{
 		Heartbeat message;
 		message.deserialize(is);
 		handler->HeartbeatHandler(endpoint, message);
 		break;
 	}
-	case 10:
+	case 11:
 	{
 		HideAttempted message;
 		message.deserialize(is);
 		handler->HideAttemptedHandler(endpoint, message);
 		break;
 	}
-	case 11:
+	case 12:
 	{
 		KillAttempted message;
 		message.deserialize(is);
 		handler->KillAttemptedHandler(endpoint, message);
 		break;
 	}
-	case 13:
+	case 14:
 	{
 		MeetingRequested message;
 		message.deserialize(is);
 		handler->MeetingRequestedHandler(endpoint, message);
 		break;
 	}
-	case 19:
+	case 20:
 	{
 		MobUpdate message;
 		message.deserialize(is);
 		handler->MobUpdateHandler(endpoint, message);
 		break;
 	}
-	case 20:
+	case 21:
 	{
 		PhotoTaken message;
 		message.deserialize(is);
 		handler->PhotoTakenHandler(endpoint, message);
 		break;
 	}
-	case 21:
+	case 22:
 	{
 		PickupCooldown message;
 		message.deserialize(is);
 		handler->PickupCooldownHandler(endpoint, message);
 		break;
 	}
-	case 22:
+	case 23:
 	{
 		PlayerUpdate message;
 		message.deserialize(is);
 		handler->PlayerUpdateHandler(endpoint, message);
 		break;
 	}
-	case 23:
+	case 24:
 	{
 		PlayerVoted message;
 		message.deserialize(is);
 		handler->PlayerVotedHandler(endpoint, message);
 		break;
 	}
-	case 24:
+	case 25:
 	{
 		PresentEvidence message;
 		message.deserialize(is);
 		handler->PresentEvidenceHandler(endpoint, message);
 		break;
 	}
-	case 25:
+	case 26:
 	{
 		PulseEvidence message;
 		message.deserialize(is);
 		handler->PulseEvidenceHandler(endpoint, message);
 		break;
 	}
-	case 26:
+	case 27:
 	{
 		ReportAttempted message;
 		message.deserialize(is);
 		handler->ReportAttemptedHandler(endpoint, message);
 		break;
 	}
-	case 27:
+	case 28:
 	{
 		ResetGameSettings message;
 		message.deserialize(is);
 		handler->ResetGameSettingsHandler(endpoint, message);
 		break;
 	}
-	case 28:
+	case 29:
 	{
 		RestartRequested message;
 		message.deserialize(is);
 		handler->RestartRequestedHandler(endpoint, message);
 		break;
 	}
-	case 29:
+	case 30:
 	{
 		SabotageTaskUpdate message;
 		message.deserialize(is);
 		handler->SabotageTaskUpdateHandler(endpoint, message);
 		break;
 	}
-	case 30:
+	case 31:
 	{
 		SendEvidence message;
 		message.deserialize(is);
 		handler->SendEvidenceHandler(endpoint, message);
 		break;
 	}
-	case 31:
+	case 32:
 	{
 		SendSensorList message;
 		message.deserialize(is);
 		handler->SendSensorListHandler(endpoint, message);
 		break;
 	}
-	case 32:
+	case 33:
 	{
 		SetMobColor message;
 		message.deserialize(is);
 		handler->SetMobColorHandler(endpoint, message);
 		break;
 	}
-	case 33:
+	case 34:
 	{
 		SmokeGrenadeActivate message;
 		message.deserialize(is);
 		handler->SmokeGrenadeActivateHandler(endpoint, message);
 		break;
 	}
-	case 34:
+	case 35:
 	{
 		SmokeGrenadeEvidence message;
 		message.deserialize(is);
 		handler->SmokeGrenadeEvidenceHandler(endpoint, message);
 		break;
 	}
-	case 35:
+	case 36:
 	{
 		TakePhoto message;
 		message.deserialize(is);
 		handler->TakePhotoHandler(endpoint, message);
 		break;
 	}
-	case 37:
+	case 38:
 	{
 		TaskUpdate message;
 		message.deserialize(is);
 		handler->TaskUpdateHandler(endpoint, message);
 		break;
 	}
-	case 38:
+	case 39:
 	{
 		TeleportToMeeting message;
 		message.deserialize(is);
 		handler->TeleportToMeetingHandler(endpoint, message);
 		break;
 	}
-	case 39:
+	case 40:
 	{
 		VoiceFrame message;
 		message.deserialize(is);
@@ -305,7 +305,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& m
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const ColorTaken& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -314,7 +314,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameOver& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -323,7 +323,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameOver& mess
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameOver& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -332,7 +332,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdat
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameSettings& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -341,16 +341,16 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameSettings& 
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GameSettings& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
-	os.put(7);
+	os.put(6);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GetAllPlayerPositions& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -359,7 +359,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const GivenTasks& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -368,7 +368,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& mes
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const Heartbeat& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -377,7 +377,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const HideAttempted&
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const HideAttempted& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -386,7 +386,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted&
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const KillAttempted& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -395,7 +395,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const LightUpdate& m
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const LightUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -404,7 +404,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequest
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobEjected& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MeetingRequested& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -413,7 +413,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobEjected& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobEjected& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -422,7 +422,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRemoved& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRemoved& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -431,7 +431,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate&
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobRoleUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -440,7 +440,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobStateUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -449,7 +449,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& m
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobTeleport& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -458,7 +458,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& mes
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PhotoTaken& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const MobUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -467,7 +467,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PhotoTaken& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PhotoTaken& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -476,7 +476,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PickupCooldown& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -485,7 +485,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& 
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -494,7 +494,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& m
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PlayerVoted& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -503,7 +503,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PresentEvidenc
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PulseEvidence& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PresentEvidence& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -512,7 +512,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PulseEvidence&
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const PulseEvidence& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -521,16 +521,16 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempte
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const ReportAttempted& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
-	os.put(29);
+	os.put(27);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SabotageTaskUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -539,7 +539,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& 
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendEvidence& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -548,16 +548,16 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SendSensorList& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
-	os.put(33);
+	os.put(32);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeActivate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -566,16 +566,16 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEv
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const SmokeGrenadeEvidence& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
-	os.put(36);
+	os.put(35);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TaskListUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -584,7 +584,7 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& me
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TaskUpdate& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
@@ -593,11 +593,20 @@ void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TeleportToMeet
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }
 
-void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message)
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const TeleportToMeeting& message)
 {
 	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
 	std::ostream os(buffer.get());
 	os.put(39);
+	message.serialize(os);
+	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
+}
+
+void NetLink::Send(const asio::ip::udp::endpoint& endpoint, const VoiceFrame& message)
+{
+	std::shared_ptr<asio::streambuf> buffer = std::make_shared<asio::streambuf>();
+	std::ostream os(buffer.get());
+	os.put(40);
 	message.serialize(os);
 	socket.async_send_to(buffer->data(), endpoint, [buffer](const asio::error_code&, size_t) {});
 }

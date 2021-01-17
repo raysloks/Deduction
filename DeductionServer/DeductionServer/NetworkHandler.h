@@ -26,6 +26,8 @@ public:
 
 	Vec3 generateColor();
 
+	void changeColor(uint32_t id, uint32_t former);
+
 	void updateMobState(uint64_t id);
 	void updateMobStatesForPlayer(const asio::ip::udp::endpoint& endpoint);
 	void updateMobStates();

@@ -53,6 +53,8 @@ public class GameController : MonoBehaviour
 
     public GameObject hud;
 
+    public ColorPicker ColorPicker;
+
     public DeathAnimation deathAnimation;
 
 
@@ -613,10 +615,9 @@ public class GameController : MonoBehaviour
         GameObject sg = Instantiate(smokeGrenadePrefab, pos, Quaternion.identity);
     }
 
-    public void ChangeColor(Vector3 color)
+    public void ChangeColor(Vector3 color, int index, int current)
     {
         player.SetColor(color.x, color.y, color.z);
-        handler.link.Send(new SetMobColor { color = color });
-        Debug.Log("affirmative");
+        handler.link.Send(new SetMobColor { color = color, id = index, former = current });
     }
 }

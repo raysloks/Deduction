@@ -177,6 +177,9 @@
     <ClInclude Include="Net\SetMobColor.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\ColorTaken.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Net\NetLink.cpp">
@@ -334,6 +337,9 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\SetMobColor.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\ColorTaken.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>

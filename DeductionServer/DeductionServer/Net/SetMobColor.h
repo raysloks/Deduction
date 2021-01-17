@@ -11,6 +11,8 @@ class SetMobColor
 {
 public:
 	Vec3 color;
+	int32_t id;
+	int32_t former;
 
 	void serialize(std::ostream& os) const;
 	void deserialize(std::istream& is);

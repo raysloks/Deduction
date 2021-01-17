@@ -9,6 +9,10 @@ public class ColorButton : MonoBehaviour
     private Vector3 color;
     public Button button;
     public ColorPicker colorPicker;
+
+
+    public int index;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +27,28 @@ public class ColorButton : MonoBehaviour
 
     public void SendColor()
     {
-        colorPicker.game.ChangeColor(color);
+        if (!inUse)
+        {
+            colorPicker.game.ChangeColor(color, index, colorPicker.current);
+            inUse = true;
+            colorPicker.current = index;
+        }
     }
 
-    public void RecieveColor(Vector3 recColor)
+    public void RecieveColor(Vector3 recColor, int i)
     {
+        index = i;
         color = recColor;
         Debug.Log(color);
+    }
+
+    public void BeingUsed()
+    {
+        inUse = true;
+    }
+
+    public void NoLongerUsed()
+    {
+        inUse = false;
     }
 }

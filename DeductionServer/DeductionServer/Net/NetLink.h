@@ -8,6 +8,7 @@
 
 #include <mutex>
 #include "AbilityUsed.h"
+#include "ColorTaken.h"
 #include "DoorUpdate.h"
 #include "GameOver.h"
 #include "GamePhaseUpdate.h"
@@ -60,6 +61,7 @@ public:
 	void Connect(const asio::ip::udp::endpoint& endpoint);
 	void Dispatch(asio::streambuf& buffer, const asio::ip::udp::endpoint& endpoint);
 	void Send(const asio::ip::udp::endpoint& endpoint, const AbilityUsed& message);
+	void Send(const asio::ip::udp::endpoint& endpoint, const ColorTaken& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const DoorUpdate& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GameOver& message);
 	void Send(const asio::ip::udp::endpoint& endpoint, const GamePhaseUpdate& message);

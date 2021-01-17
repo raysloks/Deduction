@@ -88,6 +88,7 @@
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="NetworkHandler.cpp" />
     <ClCompile Include="Net\AbilityUsed.cpp" />
+    <ClCompile Include="Net\ColorTaken.cpp" />
     <ClCompile Include="Net\DoorUpdate.cpp" />
     <ClCompile Include="Net\GameOver.cpp" />
     <ClCompile Include="Net\GamePhaseUpdate.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="MobType.h" />
     <ClInclude Include="NetworkHandler.h" />
     <ClInclude Include="Net\AbilityUsed.h" />
+    <ClInclude Include="Net\ColorTaken.h" />
     <ClInclude Include="Net\DoorUpdate.h" />
     <ClInclude Include="Net\GameOver.h" />
     <ClInclude Include="Net\GamePhaseUpdate.h" />

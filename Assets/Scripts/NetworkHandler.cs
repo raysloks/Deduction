@@ -470,4 +470,10 @@ public class NetworkHandler
         EventSystem.Current.FireEvent(EVENT_TYPE.SEND_EVIDENCE, seEvent);
     }
 
+    internal void ColorTakenHandler(IPEndPoint endPoint, ColorTaken message)
+    {
+        game.ColorPicker.Reactivate(message.former);
+        game.ColorPicker.Deactivate(message.id);
+        Debug.Log(message.former + " " + message.id);
+    }
 }

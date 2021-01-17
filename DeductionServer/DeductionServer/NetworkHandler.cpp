@@ -743,7 +743,16 @@ void NetworkHandler::SetMobColorHandler(const asio::ip::udp::endpoint& endpoint,
 
 		mob.color = message.color;
 		updateMobState(player.mob);
+		
+		changeColor(message.id, message.former);
 	}
+}
+
+void NetworkHandler::changeColor(uint32_t id, uint32_t former){
+	ColorTaken message;
+	message.former = former;
+	message.id = id;
+	Broadcast(message);
 }
 
 void NetworkHandler::TakePhotoHandler(const asio::ip::udp::endpoint & endpoint, const TakePhoto & message)

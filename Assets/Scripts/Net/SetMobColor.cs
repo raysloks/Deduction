@@ -6,6 +6,8 @@ using UnityEngine;
 public struct SetMobColor
 {
 	public Vector3 color;
+	public int id;
+	public int former;
 
 	public void Serialize(BinaryWriter writer)
 	{
@@ -14,12 +16,16 @@ public struct SetMobColor
 			writer.Write(color.y);
 			writer.Write(color.z);
 		}
+		writer.Write((int)id);
+		writer.Write((int)former);
 	}
 
 	public static SetMobColor Deserialize(BinaryReader reader)
 	{
 		SetMobColor _ret = new SetMobColor();
 		_ret.color = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+		_ret.id = (int)reader.ReadInt32();
+		_ret.former = (int)reader.ReadInt32();
 		return _ret;
 	}
 };
