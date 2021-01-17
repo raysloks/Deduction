@@ -6,15 +6,19 @@ using EventCallbacks;
 
 public class StayCloseToTarget : MonoBehaviour
 {
-    List<GameObject> mobs = new List<GameObject>();
-    public float sliderGain = 0.1f;
+    //Script that checks if other players are close when Minigame 11 is active
+
     private Vector3 orignialScale;
+    private bool reduce = false;
     private bool isDone = false;
     private Transform smallbar;
     private Player player;
     private int numberOfActive = 0;
+    List<GameObject> mobs = new List<GameObject>();
+
+    public float sliderGain = 0.1f; 
     public List<AudioClip> correctSounds;
-    private bool reduce = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +45,6 @@ public class StayCloseToTarget : MonoBehaviour
                 smallbar.localScale += new Vector3((sliderGain * Time.deltaTime), 0f, 0f);
                 if (smallbar.localScale.x >= 2f)
                 {
-                    Debug.Log("Done");
                     isDone = true;
                     SoundEvent se = new SoundEvent();
                     se.UnitSound = correctSounds;
@@ -55,7 +58,6 @@ public class StayCloseToTarget : MonoBehaviour
     {
         if(col.tag == "Mob" && mobs.Contains(col.gameObject) == false)
         {
-            Debug.Log("BOOYAH ENTER");
             reduce = false;
             mobs.Add(col.gameObject);
         }
@@ -64,13 +66,11 @@ public class StayCloseToTarget : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.tag == "Mob" && mobs.Contains(col.gameObject) == true)
-        {
-            Debug.Log("BOOYAH EXIT");            
+        {         
             mobs.Remove(col.gameObject);
             if (mobs.Count == 0 && isDone == false)
             {
                 reduce = true;
-                //smallbar.localScale = orignialScale;
             }
         }
     }
@@ -103,7 +103,6 @@ public class StayCloseToTarget : MonoBehaviour
         {           
             resetSlider();
             gameObject.SetActive(false);
-            Debug.Log("Reset Stay Close");
         }
     }
 }

@@ -6,58 +6,37 @@ using UnityEngine;
 
 public class MazeGenerator : MonoBehaviour {
 
-    #region Variables:
-    // ------------------------------------------------------
-    // User defined variables - set in editor:
-    // ------------------------------------------------------
     [Header("Maze generation values:")]
-    [Tooltip("How many cells tall is the maze. MUST be an even number. " +
-        "If number is odd, it will be reduced by 1.\n\n" +
-        "Minimum value of 4.")]
     public int mazeRows;
-    [Tooltip("How many cells wide is the maze. Must be an even number. " +
-        "If number is odd, it will be reduced by 1.\n\n" +
-        "Minimum value of 4.")]
     public int mazeColumns;
 
     [Header("Maze object variables:")]
-    [Tooltip("Cell prefab object.")]
     [SerializeField]
     private GameObject cellPrefab;
 
-    [Tooltip("If you want to disable the main sprite so the cell has no background, set to TRUE. This will create a maze with only walls.")]
     public bool disableCellSprite;
 
-    // ------------------------------------------------------
-    // System defined variables - You don't need to touch these:
-    // ------------------------------------------------------
 
     // Variable to store size of centre room. Hard coded to be 2.
     private int centreSize = 2;
 
-    // Dictionary to hold and locate all cells in maze.
     private Dictionary<Vector2, Cell> allCells = new Dictionary<Vector2, Cell>();
-    // List to hold unvisited cells.
     private List<Cell> unvisited = new List<Cell>();
-    // List to store 'stack' cells, cells being checked during generation.
     private List<Cell> stack = new List<Cell>();
 
     // Array will hold 4 centre room cells, from 0 -> 3 these are:
     // Top left (0), top right (1), bottom left (2), bottom right (3).
     private Cell[] centreCells = new Cell[4];
 
-    // Cell variables to hold current and checking Cells.
     private Cell currentCell;
     private Cell checkCell;
 
     // Array of all possible neighbour positions.
     private Vector2[] neighbourPositions = new Vector2[] { new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, -1) };
 
-    // Size of the cells, used to determine how far apart to place cells during generation.
     private float cellSize;
 
     private GameObject mazeParent;
-    #endregion
     private GameObject player;
     public GameObject arrowPrefab;
 
@@ -115,7 +94,6 @@ public class MazeGenerator : MonoBehaviour {
         MakeExit();
     }
 
-    // This is where the fun stuff happens.
     public void RunAlgorithm()
     {
         // Get start cell, make it visited (i.e. remove from unvisited list).
@@ -225,7 +203,6 @@ public class MazeGenerator : MonoBehaviour {
         return neighbours;
     }
 
-    // Compare neighbour with current and remove appropriate walls.
     public void CompareWalls(Cell cCell, Cell nCell)
     {
         // If neighbour is left of current.
@@ -254,8 +231,7 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
-    // Function disables wall of your choosing, pass it the script attached to the desired cell
-    // and an 'ID', where the ID = the wall. 1 = left, 2 = right, 3 = up, 4 = down.
+
     public void RemoveWall(CellScript cScript, int wallID)
     {
         if (wallID == 1) cScript.wallL.SetActive(false);
@@ -287,10 +263,6 @@ public class MazeGenerator : MonoBehaviour {
             c.cellObject.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
-        // Create a List of ints, using this, select one at random and remove it.
-        // We then use the remaining 3 ints to remove 3 of the centre cells from the 'unvisited' list.
-        // This ensures that one of the centre cells will connect to the maze but the other three won't.
-        // This way, the centre room will only have 1 entry / exit point.
         List<int> rndList = new List<int> { 0, 1, 2, 3 };
         int startCell = rndList[Random.Range(0, rndList.Count)];
         rndList.Remove(startCell);

@@ -67,6 +67,8 @@ public class CircleChecker : MonoBehaviour
         }
     }
     
+
+    //Starts Countdown for minigame
     IEnumerator StartIn(int Sec)
     {
         float counter = Sec;
@@ -90,6 +92,7 @@ public class CircleChecker : MonoBehaviour
         }
     }
 
+    //If player is inside circle start the END ÌN countdown and move the ball
     IEnumerator EndIn(int Sec)
     {
         float counter = Sec;
@@ -135,6 +138,7 @@ public class CircleChecker : MonoBehaviour
         );
     }
 
+    //edits Bool to check if player is inside or outside circle
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag == "Ball")
@@ -144,6 +148,7 @@ public class CircleChecker : MonoBehaviour
         }
     }
 
+    //edits Bool to check if player is inside or outside circle
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Ball")
