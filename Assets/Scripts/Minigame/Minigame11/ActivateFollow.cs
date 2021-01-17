@@ -9,6 +9,7 @@ public class ActivateFollow : MonoBehaviour
     public GameObject image2;
     public GameObject image3;
     // Start is called before the first frame update
+    //Shows the right screen of the minigame popup based on players current status
     void Start()
     {
         container = transform.parent.gameObject;

@@ -8,16 +8,17 @@ using TMPro;
 
 public class Knob : MonoBehaviour, IDragHandler
 {
-    float rotationSpeed = 0.2f;
-    
-    private float targetValue;
-    public Slider mySlider;
+    private float rotationSpeed = 0.2f;
     private float Counter = 0f;
+    private float targetValue;
     private bool checkDone = false;
     private bool isDone = false;
+
+    public Slider mySlider;
     public AudioSource audio1;
     public AudioSource audio2;
     public TextMeshProUGUI myText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class Knob : MonoBehaviour, IDragHandler
         audio2.volume = Mathf.Abs(mySlider.value - targetValue) * 0.005f;
         audio1.volume = (175 - Mathf.Abs(mySlider.value - targetValue)) * 0.0002f;
     }
+
     void Update()
     {
         if (checkDone && !isDone)
@@ -34,7 +36,6 @@ public class Knob : MonoBehaviour, IDragHandler
             if(Counter > 1f)
             {
                 isDone = true;
-                Debug.Log("DONE");
                 myText.text = "Done";
                 audio2.volume = 0f;
                 audio1.volume = 0f;

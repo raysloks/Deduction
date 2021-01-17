@@ -34,11 +34,10 @@ public class LineDraw : MonoBehaviour
     {
         isLineStarted = false;
         sizeVector = new Vector2(lineWidth, lineWidth);
-        //myText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         circleCollider = this.transform.GetChild(1).GetComponent<CircleCollider2D>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame. Checks for player right click and creates /destroy line if conditions are met
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && canStart)
