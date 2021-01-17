@@ -172,7 +172,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Doctor the footage. Find what stands out and erase it by using your
-        Cursor/Right click.
+        Cursor/Right click. Good Luck.
       objectReference: {fileID: 0}
     - target: {fileID: 5918970973268639982, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
@@ -199,6 +199,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7448432167409515675, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e5517563e818634e8541b90785195c8, type: 3}
     - target: {fileID: 8965317021835932781, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_AnchoredPosition.y

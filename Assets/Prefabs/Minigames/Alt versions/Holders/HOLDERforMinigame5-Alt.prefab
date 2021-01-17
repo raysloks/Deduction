@@ -172,13 +172,18 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Jump over the constantly rotating ball. Use Mouseclick to jump. Try
-        not to get hit by the ball
+        not to get hit by the ball. Good Luck.
       objectReference: {fileID: 0}
     - target: {fileID: 6868765439346847972, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7448432167409515675, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2144c3351b467cc4ba105327558f219b, type: 3}
     - target: {fileID: 8601724686365651943, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_IsActive

@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2743463258267482356, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3080425892551211863, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
       propertyPath: m_Name
@@ -173,6 +178,11 @@ PrefabInstance:
       propertyPath: m_text
       value: In this minigame you need to get your cursor inside the center circle
         and keep it in the circle while it moves around
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627801310135874011, guid: ed4febe814058b94ebc12005ace31d4e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6868765439346847972, guid: ed4febe814058b94ebc12005ace31d4e,
         type: 3}
